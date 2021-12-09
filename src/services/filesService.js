@@ -11,7 +11,7 @@ let client;
 
 export const setClient = (apiUrl) => {
   try {
-    client = create(apiUrl + '/api/v0');
+    client = create(apiUrl + '/api/v1');
   } catch(e){
     console.log(e);
   }

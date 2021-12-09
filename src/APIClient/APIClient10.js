@@ -58,7 +58,7 @@ class APIClient10 {
     }
 
     getHostConfig() {
-        return this.request('/api/v0/config/show');
+        return this.request('/api/v1/config/show');
     }
 
     getChainInfo() {
@@ -110,27 +110,27 @@ class APIClient10 {
     }
 
     getNetworkFlow() {
-        return this.request('/api/v0/stats/bw');
+        return this.request('/api/v1/stats/bw');
     }
 
     getPeers() {
-        return this.request('/api/v0/swarm/peers?latency=true');
+        return this.request('/api/v1/swarm/peers?latency=true');
     }
 
     getRootHash() {
-        return this.request('/api/v0/files/stat?arg=%2F');
+        return this.request('/api/v1/files/stat?arg=%2F');
     }
 
     getHashByPath(path) {
-        return this.request('/api/v0/files/stat?arg=' + path);
+        return this.request('/api/v1/files/stat?arg=' + path);
     }
 
     getFiles(hash) {
-        return this.request('/api/v0/ls?arg=' + hash);
+        return this.request('/api/v1/ls?arg=' + hash);
     }
 
     getFileStat(hash) {
-        return this.request('/api/v0/files/stat?arg=/btfs/' + hash);
+        return this.request('/api/v1/files/stat?arg=/btfs/' + hash);
     }
 
     getFolder(hash, body, config) {
@@ -138,7 +138,7 @@ class APIClient10 {
     }
 
     catFile(hash, body, config) {
-        return this.request('/api/v0/cat?arg=' + hash, body, config);
+        return this.request('/api/v1/cat?arg=' + hash, body, config);
     }
 
     getPrivateKey() {
@@ -162,7 +162,7 @@ class APIClient10 {
     }
 
     copy(from, to) {
-        return this.request('/api/v0/files/cp?arg=' + from + '&arg=' + to);
+        return this.request('/api/v1/files/cp?arg=' + from + '&arg=' + to);
     }
 
 }
