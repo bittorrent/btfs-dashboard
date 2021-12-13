@@ -165,6 +165,10 @@ class APIClient10 {
         return this.request('/api/v1/files/cp?arg=' + from + '&arg=' + to);
     }
 
+    remove(hash) {
+        return this.request('/api/v1/rm?arg=' + hash);
+    }
+
 }
 
 const Client10 = new APIClient10();
