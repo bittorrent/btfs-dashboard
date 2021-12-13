@@ -1,7 +1,10 @@
 # Usage
 
-:warning: To successfully connect to the BTFS node, you will need to enable the CORS. You can do so by
-setting `cors-allowed-origins: ['*']` in the BTFS config file and then restart the BTFS node.
+:warning: To successfully connect to the BTFS node, you will need to enable the CORS. Follow below commands and then restart the BTFS node.
+```
+btfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
+btfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT","GET","POST"]'
+```
 
 ## Testnet 
 Browser https://dashboard-test.btfs.io 
