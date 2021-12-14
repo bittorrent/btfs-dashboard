@@ -7,7 +7,7 @@ btfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT","GET","P
 ```
 
 ## Testnet 
-Browser https://dashboard-test.btfs.io 
+Browse https://dashboard-test.btfs.io 
 
 ## Docker
 Run docker image and browse http://localhost
