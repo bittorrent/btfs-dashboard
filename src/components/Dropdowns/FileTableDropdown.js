@@ -33,46 +33,63 @@ const FileTableDropdown = ({color, hash, name, size, path, type}) => {
 
     const download = async () => {
         if (type === 1) {
-            Emitter.emit('openDownloadModal', {hash: hash, name: name, size: size, type:1});
+            Emitter.emit('openDownloadModal', {hash: hash, name: name, size: size, type: 1});
         }
         if (type === 2) {
-            Emitter.emit('openDownloadModal', {hash: hash, name: name, size: size, type:2});
+            Emitter.emit('openDownloadModal', {hash: hash, name: name, size: size, type: 2});
         }
-    }
+    };
 
     const remove = async () => {
         let result = await removeFiles(hash, name, path, type);
         if (result) {
-            Emitter.emit('showMessageAlert', {message: 'delete_success', status: 'success', type:'frontEnd'});
+            Emitter.emit('showMessageAlert', {message: 'delete_success', status: 'success', type: 'frontEnd'});
         } else {
-            Emitter.emit('showMessageAlert', {message: 'delete_fail', status: 'error', type:'frontEnd'});
+            Emitter.emit('showMessageAlert', {message: 'delete_fail', status: 'error', type: 'frontEnd'});
         }
         Emitter.emit('updateFiles');
-    }
+    };
+
+    const upload = async () => {
+        Emitter.emit('openUpload2BTFSModal');
+    };
 
     const trigger = (e) => {
         e.preventDefault();
         setTimeout(() => {
             dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover();
         }, 50)
-    }
+    };
 
     return (
         <>
             <a className="text-blueGray-500 py-1 px-3"
-                ref={btnDropdownRef}
-                onClick={(e) => {trigger(e)}}>
+               ref={btnDropdownRef}
+               onClick={(e) => {
+                   trigger(e)
+               }}>
                 <i className="fas fa-ellipsis-v"></i>
             </a>
             <div ref={popoverDropdownRef}
-                className={(dropdownPopoverShow ? "block " : "hidden ") + "_box-shadow text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48 " + themeStyle.bg[color]}>
+                 className={(dropdownPopoverShow ? "block " : "hidden ") + "_box-shadow text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48 " + themeStyle.bg[color]}>
                 <a className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent"
-                    onClick={() => {download()}}>
+                   onClick={(e) => {
+                       upload()
+                   }}>
+                    <i className="w-5 mr-3 fas fa-upload"></i>
+                    {t('upload')}
+                </a>
+                <a className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent"
+                   onClick={() => {
+                       download()
+                   }}>
                     <i className="w-5 mr-3 fas fa-download"></i>
                     {t('download')}
                 </a>
                 <a className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent"
-                    onClick={(e) => {remove()}}>
+                   onClick={(e) => {
+                       remove()
+                   }}>
                     <i className="w-5 mr-3 fas fa-trash-alt"></i>
                     {t('delete')}
                 </a>

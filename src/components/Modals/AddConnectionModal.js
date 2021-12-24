@@ -48,7 +48,7 @@ export default function AddConnectionModal({color}) {
                         style={{height: '300px'}}>
                         <div className="flex-1">
                             {/*content*/}
-                            <div className={"border-0 rounded-lg shadow-lg " + themeStyle.bg[color] + themeStyle.text[color]}>
+                            <div className={"h-full border-0 rounded-lg shadow-lg flex flex-col justify-between " + themeStyle.bg[color] + themeStyle.text[color]}>
                                 {/*header*/}
                                 <div className="flex items-start justify-between p-4">
                                     <p className="text-1xl font-semibold">
@@ -56,7 +56,7 @@ export default function AddConnectionModal({color}) {
                                     </p>
                                 </div>
                                 {/*body*/}
-                                <div className="relative p-4 flex-auto">
+                                <div className="relative p-4">
 
                                     <p className="pb-4">
                                         {t('address_to_connect')}
