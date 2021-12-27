@@ -234,8 +234,7 @@ export default function LocalFilesTable({color}) {
                 </button>
             </div>
 
-            <div
-                className={"relative flex flex-col min-w-0 break-words w-full shadow-lg rounded " + themeStyle.bg[color] + themeStyle.text[color]}>
+            <div className={"relative flex flex-col min-w-0 break-words w-full shadow-lg rounded " + themeStyle.bg[color] + themeStyle.text[color]}>
                 <div className="rounded-t mb-0 px-4 py-3 border-0">
                     <div className="flex flex-wrap items-center">
                         <div className="relative mr-4 flex-1 overflow-overlay">
@@ -251,7 +250,6 @@ export default function LocalFilesTable({color}) {
                                         )
                                     })}
                                 </Breadcrumb>
-
                             </div>
                         </div>
                         <div className="mr-4 flex">
@@ -262,11 +260,8 @@ export default function LocalFilesTable({color}) {
                 <div className="block w-full overflow-x-auto">
                     <table className="items-center w-full bg-transparent border-collapse">
                         <thead>
-                        <tr className='text-xs uppercase whitespace-nowrap'>
-                            <th className={"px-6 border border-solid border-l-0 border-r-0 py-3 text-left font-semibold " + (color === "light"
-                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                            }
+                        <tr className="text-xs uppercase whitespace-nowrap">
+                            <th className={"px-6 border border-solid border-l-0 border-r-0 py-3 text-left font-semibold " + themeStyle.th[color]}
                                 style={{width: '50px'}}>
                                 <input
                                     type="checkbox" name="checkboxHub"
@@ -274,33 +269,17 @@ export default function LocalFilesTable({color}) {
                                     onClick={selectAll}
                                 />
                             </th>
-                            <th className={"px-6 border border-solid border-l-0 border-r-0 py-3 text-left font-semibold " + (color === "light"
-                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                            }
-                                style={{width: '70%'}}
-                            >
+
+                            <th className={"px-6 border border-solid border-l-0 border-r-0 py-3 text-left font-semibold " + themeStyle.th[color]}
+                                style={{width: '70%'}}>
                                 {t('file_name')}
                             </th>
 
-                            <th className={"px-6 border border-l-0 border-r-0 border-solid py-3 text-center font-semibold " + (color === "light"
-                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                            }>
-                                {t('status')}
-                            </th>
-
-                            <th className={"px-6 border border-solid border-l-0 border-r-0 py-3 text-left font-semibold " + (color === "light"
-                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                            }>
+                            <th className={"px-6 border border-solid border-l-0 border-r-0 py-3 text-left font-semibold " + themeStyle.th[color]}>
                                 {t('size')}
                             </th>
 
-                            <th className={"px-6 border border-solid border-l-0 border-r-0 py-3 text-left font-semibold " + (color === "light"
-                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                            }>
+                            <th className={"px-6 border border-solid border-l-0 border-r-0 py-3 text-left font-semibold " + themeStyle.th[color]}>
                             </th>
                         </tr>
                         </thead>
@@ -310,8 +289,7 @@ export default function LocalFilesTable({color}) {
                                 return (
                                     <tr key={index}>
                                         <td className="px-6 text-xs whitespace-nowrap p-4">
-                                            <input
-                                                type="checkbox" name="checkbox"
+                                            <input type="checkbox" name="checkbox"
                                                 className="bg-gray form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
                                                 onClick={(e) => {
                                                     select(e, item['Hash'], item['Name'], item['Type'], item['Size'], breadcrumbName)
@@ -324,19 +302,16 @@ export default function LocalFilesTable({color}) {
                                                 <a className="flex items-center" onClick={() => {
                                                     addPath(item['Hash'], item['Name'], item['Type'], item['Size'])
                                                 }}>
-
                                                     {item['Type'] === 1 && <img
                                                         src={require("assets/img/folder.png").default}
                                                         className="h-12 w-12 bg-white rounded-full border"
                                                         alt="..."
-                                                    ></img>
-                                                    }
+                                                    />}
                                                     {item['Type'] === 2 && <img
                                                         src={require("assets/img/file.png").default}
                                                         className="h-12 w-12 bg-white rounded-full border"
                                                         alt="..."
-                                                    ></img>
-                                                    }
+                                                    />}
                                                     <div className='flex flex-col justify-center'>
                                                         <span className="ml-3 font-bold">
                                                             {item['Name']}
@@ -347,14 +322,6 @@ export default function LocalFilesTable({color}) {
                                                     </div>
                                                 </a>
                                             </div>
-                                        </td>
-
-                                        <td className="">
-                                            <img className='m-auto cursor-pointer'
-                                                 src={require('../../assets/img/btfs_logo.png').default}
-                                                 style={{width: '35px', height: '35px'}}
-                                                 onClick={viewContract}
-                                            />
                                         </td>
 
                                         <td className="px-6 text-xs whitespace-nowrap p-4">

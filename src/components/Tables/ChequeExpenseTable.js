@@ -45,12 +45,7 @@ export default function ChequeExpenseTable({color}) {
 
     return (
         <>
-            <div
-                className={
-                    "relative flex flex-col min-w-0 break-words w-full shadow-lg rounded mt-4 " +
-                    themeStyle.bg[color]
-                }
-            >
+            <div className={"relative flex flex-col min-w-0 break-words w-full shadow-lg rounded mt-4 " + themeStyle.bg[color]}>
                 <div className="rounded-t mb-0 px-4 py-4 border-0">
                     <div className="flex flex-wrap items-center">
                         <div className="relative w-full max-w-full flex-grow flex-1">
@@ -71,47 +66,20 @@ export default function ChequeExpenseTable({color}) {
 
                     <table className="items-center w-full bg-transparent border-collapse">
                         <thead>
-                        <tr>
-                            <th
-                                className={
-                                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                    (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                }
-                            >
+                        <tr className="text-xs uppercase whitespace-nowrap">
+                            <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 {t('host_id')}
                             </th>
 
-                            <th
-                                className={
-                                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                    (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                }
-                            >
+                            <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 {t('blockchain')}
                             </th>
 
-                            <th
-                                className={
-                                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                    (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                }
-                            >
+                            <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 {t('chequebook')}
                             </th>
-                            <th
-                                className={
-                                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                    (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                }
-                            >
+
+                            <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 {t('total_sent')} (WBTT)
                             </th>
 

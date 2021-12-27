@@ -1,6 +1,6 @@
 /*eslint-disable*/
 import React, {useEffect, useState, useCallback, useRef} from "react";
-import { Pagination} from 'antd';
+import {Pagination} from 'antd';
 import PropTypes from "prop-types";
 import {getRootFiles, getHashByPath, getFolerSize, getFiles, searchFiles} from "services/filesService.js";
 import {switchStorageUnit2} from "utils/BTFSUtil.js";
@@ -32,7 +32,15 @@ export default function ReceivedFilesTable({color}) {
     };
 
     const updateFiles = async () => {
-
+        didCancel = false;
+        let {files} = await getRootFiles();
+        await getFolerSize(files);
+        if (!didCancel) {
+            filesAll = files;
+            sliceDate(1);
+            setCurrent(1);
+            setTotal(files.length);
+        }
     };
 
 
@@ -58,9 +66,7 @@ export default function ReceivedFilesTable({color}) {
 
     return (
         <>
-
-            <div
-                className={"relative flex flex-col min-w-0 break-words w-full shadow-lg rounded " + themeStyle.bg[color] + themeStyle.text[color]}>
+            <div className={"relative flex flex-col min-w-0 break-words w-full shadow-lg rounded " + themeStyle.bg[color] + themeStyle.text[color]}>
                 <div className="rounded-t mb-0 px-4 py-3 border-0">
                     <div className="flex flex-wrap items-center">
                         <div className="relative mr-4 flex-1 overflow-overlay">
@@ -71,26 +77,16 @@ export default function ReceivedFilesTable({color}) {
                     <table className="items-center w-full bg-transparent border-collapse">
                         <thead>
                         <tr className='text-xs uppercase whitespace-nowrap'>
-                            <th className={"px-6 border border-solid border-l-0 border-r-0 py-3 text-left font-semibold " + (color === "light"
-                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                            }
-                                style={{width: '70%'}}
-                            >
+                            <th className={"px-6 border border-solid border-l-0 border-r-0 py-3 text-left font-semibold " + themeStyle.th[color]}
+                                style={{width: '70%'}}>
                                 {t('file_name')}
                             </th>
 
-                            <th className={"px-6 border border-l-0 border-r-0 border-solid py-3 text-center font-semibold " + (color === "light"
-                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                            }>
+                            <th className={"px-6 border border-l-0 border-r-0 border-solid py-3 text-center font-semibold " + themeStyle.th[color]}>
                                 {t('status')}
                             </th>
 
-                            <th className={"px-6 border border-solid border-l-0 border-r-0 py-3 text-left font-semibold " + (color === "light"
-                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                            }>
+                            <th className={"px-6 border border-solid border-l-0 border-r-0 py-3 text-left font-semibold " + themeStyle.th[color]}>
                                 {t('size')}
                             </th>
 
@@ -112,14 +108,12 @@ export default function ReceivedFilesTable({color}) {
                                                         src={require("assets/img/folder.png").default}
                                                         className="h-12 w-12 bg-white rounded-full border"
                                                         alt="..."
-                                                    ></img>
-                                                    }
+                                                    />}
                                                     {item['Type'] === 2 && <img
                                                         src={require("assets/img/file.png").default}
                                                         className="h-12 w-12 bg-white rounded-full border"
                                                         alt="..."
-                                                    ></img>
-                                                    }
+                                                    />}
                                                     <div className='flex flex-col justify-center'>
                                                         <span className="ml-3 font-bold">
                                                             {item['Name']}

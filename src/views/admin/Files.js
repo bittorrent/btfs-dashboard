@@ -10,7 +10,7 @@ import DownloadModal from "components/Modals/DownloadModal.js";
 import PreviewModal from "components/Modals/PreviewModal.js";
 import UploadContractModal from "components/Modals/UploadContractModal.js";
 import UploadToBTFSModal from "components/Modals/UploadToBTFSModal.js";
-import ManagerModal from "components/Modals/ManagerModal.js";
+import UploadManagerModal from "components/Modals/UploadManagerModal.js";
 import themeStyle from "utils/themeStyle.js";
 
 export default function Files() {
@@ -64,7 +64,7 @@ export default function Files() {
             <PreviewModal color={theme}/>
             <UploadContractModal color={theme}/>
             <UploadToBTFSModal color={theme}/>
-            <ManagerModal color={theme}/>
+            <UploadManagerModal color={theme}/>
         </>
     );
 }
