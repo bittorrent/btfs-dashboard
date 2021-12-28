@@ -9,6 +9,7 @@ import HostScoreHistoryLineChart from "components/Charts/HostScoreHistoryLineCha
 import RevenueHistoryLineChart from "components/Charts/RevenueHistoryLineChart.js";
 import NetworkLineChart from "components/Charts/NetworkLineChart.js";
 import WithdrawDepositModal from "components/Modals/WithdrawDepositModal.js";
+import QRModal from "components/Modals/QRModal.js";
 
 import {mainContext} from "reducer";
 
@@ -41,6 +42,7 @@ export default function Dashboard() {
                 </div>
             </div>
             <WithdrawDepositModal color={theme}/>
+            <QRModal color={theme}/>
         </>
     );
 }

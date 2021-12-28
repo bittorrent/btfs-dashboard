@@ -33,7 +33,7 @@ export default function NodeBasicStats({color}) {
                         <div className="flex flex-wrap">
                             <div className="w-full md:w-4/12 md:pr-2">
                                 <>
-                                    <div className={"relative break-words rounded  " + themeStyle.bg[color] +  themeStyle.text[color]}>
+                                    <div className={"relative break-words rounded  " + themeStyle.bg[color] + themeStyle.text[color]}>
 
                                         <div className="flex items-center p-4 h-125-px">
                                             <div className="relative w-3/4 h-75-px flex flex-col justify-between">
@@ -42,11 +42,17 @@ export default function NodeBasicStats({color}) {
                                                     <ClipboardCopy value={ID}/>
                                                 </h5>
                                                 <div className="font-semibold ">
-                                                    <Truncate>{ID}</Truncate>
+                                                    <a href={'https://scan-test.btfs.io/#/search/' + ID}
+                                                       target='_blank'>
+                                                        <Truncate>
+                                                            {ID}
+                                                        </Truncate>
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div className="relative w-1/4 flex justify-center">
-                                                <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-pink-500">
+                                                <div
+                                                    className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-pink-500">
                                                     <i className="fas fa-fingerprint"></i>
                                                 </div>
                                             </div>
@@ -57,7 +63,7 @@ export default function NodeBasicStats({color}) {
                             </div>
                             <div className="w-full md:w-4/12 md:pl-2 md:pr-2">
                                 <>
-                                    <div className={"relative break-words rounded " + themeStyle.bg[color] +  themeStyle.text[color]}>
+                                    <div className={"relative break-words rounded " + themeStyle.bg[color] + themeStyle.text[color]}>
 
                                         <div className="flex items-center p-4 h-125-px">
                                             <div className="relative w-3/4 h-75-px flex flex-col justify-between">
@@ -71,7 +77,8 @@ export default function NodeBasicStats({color}) {
                                             </div>
 
                                             <div className="relative w-1/4 flex justify-center">
-                                                <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-lightBlue-500">
+                                                <div
+                                                    className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-lightBlue-500">
                                                     <i className="fas fa-signal"></i>
                                                 </div>
                                             </div>
@@ -83,7 +90,7 @@ export default function NodeBasicStats({color}) {
                             </div>
                             <div className="w-full md:w-4/12 md:pl-2">
                                 <>
-                                    <div className={"relative break-words rounded " + themeStyle.bg[color]  + themeStyle.text[color]}>
+                                    <div className={"relative break-words rounded " + themeStyle.bg[color] + themeStyle.text[color]}>
 
                                         <div className="flex items-center p-4 h-125-px">
                                             <div className="relative w-3/4 h-75-px flex flex-col justify-between">
@@ -96,7 +103,8 @@ export default function NodeBasicStats({color}) {
                                             </div>
 
                                             <div className="relative w-1/4 flex justify-center">
-                                                <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-red-500">
+                                                <div
+                                                    className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-red-500">
                                                     <i className="fab fa-ubuntu"></i>
                                                 </div>
                                             </div>

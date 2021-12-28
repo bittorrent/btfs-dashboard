@@ -70,7 +70,7 @@ export default function ChequeIncomeStats({color}) {
 
                                             <div className='p-4'>
                                                 <span className='font-semibold text-3xl'>{chequeEarning} </span>
-                                                <span className='unit_color text-xs'>WBTT</span>
+                                                <span className='text-xs'>WBTT</span>
                                             </div>
 
                                         </div>

@@ -42,6 +42,17 @@ export default function NodeWalletStats({color}) {
         Emitter.emit('openWithdrawDepositModal', {type: 'withdraw', max: chequeBookBalance});
     };
 
+    const showQR = (e, type) => {
+        e.preventDefault();
+        if (type === 'Cheque') {
+            Emitter.emit('openQRModal', {address: chequeAddress});
+        }
+        if (type === 'BTTC') {
+            Emitter.emit('openQRModal', {address: BTTCAddress});
+        }
+    };
+
+
     return (
         <>
             <div className="relative pb-4">
@@ -50,16 +61,20 @@ export default function NodeWalletStats({color}) {
                         <div className="flex flex-wrap">
                             <div className="w-full xl:w-6/12  xl:pr-2">
                                 <>
-                                    <div className={"relative break-words rounded md:mb-2 xl:mb-0  " + themeStyle.bg[color]  + themeStyle.text[color]}>
+                                    <div
+                                        className={"relative break-words rounded md:mb-2 xl:mb-0  " + themeStyle.bg[color] + themeStyle.text[color]}>
 
                                         <div className="flex items-center p-4 h-180-px">
                                             <div className="relative w-full h-150-px flex flex-col justify-between">
                                                 <h5 className={" uppercase font-bold " + themeStyle.title[color]}>
                                                     BTTC {t('address')}
+                                                    <a onClick={(e) => {
+                                                        showQR(e, 'BTTC')
+                                                    }}><i className="fas fa-qrcode ml-2"></i></a>
                                                     <ClipboardCopy value={BTTCAddress}/>
                                                 </h5>
                                                 <div className="font-semibold ">
-                                                    {BTTCAddress}
+                                                    <a href={'https://scan.bt.io/#/address/' + BTTCAddress} target='_blank'>{BTTCAddress}</a>
                                                 </div>
 
                                                 <div className="font-semibold ">
@@ -69,11 +84,12 @@ export default function NodeWalletStats({color}) {
                                                 <div className='flex flex-col'>
                                                     <div className="">
                                                         <span className='text-lg font-semibold'>{BTTCAddressBTT} </span>
-                                                        <span className='unit_color text-xs'>BTT</span>
+                                                        <span className='text-xs'>BTT</span>
                                                     </div>
                                                     <div className="">
-                                                        <span className='text-lg font-semibold'> {BTTCAddressWBTT} </span>
-                                                        <span className='unit_color text-xs'>WBTT</span>
+                                                        <span
+                                                            className='text-lg font-semibold'> {BTTCAddressWBTT} </span>
+                                                        <span className='text-xs'>WBTT</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -83,23 +99,27 @@ export default function NodeWalletStats({color}) {
                             </div>
                             <div className="w-full xl:w-6/12  xl:pl-2">
                                 <>
-                                    <div className={"relative break-words rounded " + themeStyle.bg[color]  + themeStyle.text[color]}>
+                                    <div
+                                        className={"relative break-words rounded " + themeStyle.bg[color] + themeStyle.text[color]}>
 
                                         <div className="flex items-center p-4 h-180-px">
                                             <div className="relative w-full h-150-px flex flex-col justify-between">
                                                 <h5 className={" uppercase font-bold " + themeStyle.title[color]}>
                                                     {t('chequebook')} {t('address')}
+                                                    <a onClick={(e) => {
+                                                        showQR(e, 'Cheque')
+                                                    }}><i className="fas fa-qrcode ml-2"></i></a>
                                                     <ClipboardCopy value={chequeAddress}/>
                                                 </h5>
 
                                                 <div className='font-semibold'>
-                                                    {chequeAddress}
+                                                    <a href={'https://scan.bt.io/#/address/' + chequeAddress} target='_blank'>{chequeAddress}</a>
                                                 </div>
 
                                                 <div className="">
                                                     <span className='font-semibold'>{t('balance')}: </span>
                                                     <span className='text-lg font-semibold'>{chequeBookBalance}</span>
-                                                    <span className='unit_color text-xs'>WBTT</span>
+                                                    <span className='text-xs'>WBTT</span>
                                                 </div>
 
                                                 <div className='withdraw_deposit'>

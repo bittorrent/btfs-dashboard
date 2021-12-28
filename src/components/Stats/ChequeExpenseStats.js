@@ -71,7 +71,7 @@ export default function ChequeExpenseStats({color}) {
 
                                             <div className='p-4'>
                                                 <span className='font-semibold text-3xl'>{chequeExpense} </span>
-                                                <span className='unit_color text-xs'>WBTT</span>
+                                                <span className='text-xs'>WBTT</span>
                                             </div>
 
                                         </div>
