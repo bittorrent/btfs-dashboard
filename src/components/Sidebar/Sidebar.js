@@ -208,6 +208,12 @@ export default function Sidebar() {
                                     </a>
                                 </li>
                             </ul>
+
+                            <div className="flex justify-between items-center">
+                                <LangDropdown color={theme}/>
+                                <ThemeToggle/>
+                            </div>
+
                         </div>
 
                     </div>

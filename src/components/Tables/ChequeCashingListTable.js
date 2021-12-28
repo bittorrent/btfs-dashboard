@@ -147,7 +147,9 @@ export default function ChequeCashingListTable({color, enableCash}) {
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         <div className='flex'>
-                                            <Truncate>{item['PeerID']}</Truncate>
+                                            <a href={'https://scan-test.btfs.io/#/search/' + item['PeerID']} target='_blank'>
+                                                <Truncate>{item['PeerID']}</Truncate>
+                                            </a>
                                             <ClipboardCopy value={item['PeerID']}/>
                                         </div>
                                     </td>
@@ -158,7 +160,9 @@ export default function ChequeCashingListTable({color, enableCash}) {
 
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         <div className='flex'>
-                                            <Truncate>{item['Vault']}</Truncate>
+                                            <a href={'https://scan.bt.io/#/address/' + item['Vault']} target='_blank'>
+                                                <Truncate>{item['Vault']}</Truncate>
+                                            </a>
                                             <ClipboardCopy value={item['Vault']}/>
                                         </div>
                                     </td>

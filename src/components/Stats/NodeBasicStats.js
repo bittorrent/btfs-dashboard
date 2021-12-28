@@ -42,8 +42,7 @@ export default function NodeBasicStats({color}) {
                                                     <ClipboardCopy value={ID}/>
                                                 </h5>
                                                 <div className="font-semibold ">
-                                                    <a href={'https://scan-test.btfs.io/#/search/' + ID}
-                                                       target='_blank'>
+                                                    <a href={'https://scan-test.btfs.io/#/search/' + ID} target='_blank'>
                                                         <Truncate>
                                                             {ID}
                                                         </Truncate>
