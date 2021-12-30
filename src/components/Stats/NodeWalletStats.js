@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, {useEffect, useState} from "react";
 import ClipboardCopy from "components/Utils/ClipboardCopy";
 import {getNodeWalletStats} from "services/dashboardService.js";
@@ -74,7 +75,7 @@ export default function NodeWalletStats({color}) {
                                                     <ClipboardCopy value={BTTCAddress}/>
                                                 </h5>
                                                 <div className="font-semibold ">
-                                                    <a href={'https://scan.bt.io/#/address/' + BTTCAddress} target='_blank'>{BTTCAddress}</a>
+                                                    <a href={'https://scan.bt.io/#/address/' + BTTCAddress} target='_blank' rel='noreferrer'>{BTTCAddress}</a>
                                                 </div>
 
                                                 <div className="font-semibold ">
@@ -113,7 +114,7 @@ export default function NodeWalletStats({color}) {
                                                 </h5>
 
                                                 <div className='font-semibold'>
-                                                    <a href={'https://scan.bt.io/#/address/' + chequeAddress} target='_blank'>{chequeAddress}</a>
+                                                    <a href={'https://scan.bt.io/#/address/' + chequeAddress} target='_blank' rel='noreferrer'>{chequeAddress}</a>
                                                 </div>
 
                                                 <div className="">

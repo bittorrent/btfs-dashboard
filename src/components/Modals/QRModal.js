@@ -4,7 +4,6 @@ import QRCode from "qrcode.react";
 import ClipboardCopy from "components/Utils/ClipboardCopy";
 import Emitter from "utils/eventBus";
 import themeStyle from "utils/themeStyle.js";
-import {t} from "utils/text.js";
 
 export default function QRModal({color}) {
 
