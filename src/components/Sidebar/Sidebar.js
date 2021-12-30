@@ -176,7 +176,7 @@ export default function Sidebar() {
                                     <a
                                         className={" text-xs  py-3  block" + (themeStyle.link[theme])}
                                     >
-                                        {t('version')} 2.0.0
+                                        {t('version')} 2.0.1
                                     </a>
                                 </li>
 
