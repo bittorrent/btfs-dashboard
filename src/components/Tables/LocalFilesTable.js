@@ -235,7 +235,8 @@ export default function LocalFilesTable({color}) {
                                     {breadcrumbName.length > 0 && breadcrumbName.map((item, index) => {
                                         return (
                                             <Breadcrumb.Item key={index}>
-                                                <a onClick={() => {
+                                                <a  className="font-semibold"
+                                                    onClick={() => {
                                                     minusPath(breadcrumbName[index])
                                                 }}>{item}</a>
                                             </Breadcrumb.Item>
