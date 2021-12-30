@@ -191,7 +191,8 @@ export default function Sidebar() {
                                 </li>
 
                                 <li className="items-center">
-                                    <a
+                                    <a  href='https://github.com/bittorrent/btfs-dashboard/issues'
+                                        target='_blank'
                                         className={" text-xs  py-3  block" + (themeStyle.link[theme])}
                                     >
                                         {t('report_bugs')}
