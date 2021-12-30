@@ -188,14 +188,6 @@ export default function LocalFilesTable({color}) {
         addPath(hash, hash, -1);
     };
 
-    const viewContract = () => {
-        Emitter.emit('openUploadContractModal');
-    };
-
-    const viewManager = () => {
-        Emitter.emit('openManagerModal');
-    };
-
     useEffect(() => {
         const set = async function () {
             setTimeout(() => {
@@ -352,7 +344,6 @@ export default function LocalFilesTable({color}) {
                     }
                 </div>
                 <div className='flex justify-between items-center'>
-                    <a className='ml-8 font-semibold' onClick={viewManager}>Upload Manager</a>
                     <div className='p-4'>Total: {total}</div>
                     <Pagination className='float-right p-4' simple current={current} total={total}
                                 hideOnSinglePage={true}
