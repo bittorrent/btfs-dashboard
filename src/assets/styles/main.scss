@@ -135,11 +135,8 @@
   -o-transition: bottom 1s; /* Opera */
 }
 
-.loading {
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-._checked {
-  border-color: #2b6cb0;
+@media (max-width: 768px) {
+  .modal_center {
+    width: calc(100% - 2rem);
+  }
 }

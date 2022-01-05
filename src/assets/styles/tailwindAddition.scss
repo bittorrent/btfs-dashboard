@@ -255,18 +255,6 @@
   .xl\:w-2\/12 {
     width: 16.666667%;
   }
-  .xl\:h-400-px {
-    height: 400px;
-  }
-  .xl\:h-425-px {
-    height: 425px;
-  }
-  .xl\:h-450-px {
-    height: 450px;
-  }
-  .xl\:h-500-px {
-    height: 500px;
-  }
   .xl\:w-9\/12 {
     width: 75%;
   }
@@ -287,12 +275,4 @@
   }
 }
 
-@media (max-width: 768px) {
-  .modal_center {
-    width: calc(100% - 2rem);
-  }
-}
 
-.xl\:h-400-px {
-  height: 800px;
-}

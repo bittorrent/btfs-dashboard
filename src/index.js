@@ -5,10 +5,10 @@ import {HashRouter, Route, Switch, Redirect} from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import 'antd/dist/antd.css';
 import "assets/styles/tailwind.css";
+import 'assets/styles/tailwindAddition.scss';
 import 'assets/styles/main.scss';
 import 'assets/styles/overwrite.scss';
 import 'assets/styles/theme.scss';
-import 'assets/styles/tailwindAddition.scss';
 
 import Admin from "layouts/Admin.js";
 
