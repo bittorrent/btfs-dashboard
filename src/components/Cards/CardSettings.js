@@ -76,7 +76,7 @@ export default function CardSettings({color}) {
                 <div className="flex-auto px-4 pt-0">
                     <form>
                         <div className="flex flex-wrap">
-                            <div className="w-full lg:w-12/12 px-4">
+                            <div className="w-full px-4">
                                 <div className="relative w-full mb-6">
                                     <label
                                         className="block uppercase text-xs font-bold mb-2"
@@ -86,7 +86,7 @@ export default function CardSettings({color}) {
                                     </label>
                                     <input
                                         type="text"
-                                        className={"border-0 px-3 py-3 placeholder-blueGray-300 rounded text-sm shadow focus:outline-none focus:ring w-full " + themeStyle.bg[color]}
+                                        className={"border px-3 py-3 placeholder-blueGray-300 rounded text-sm shadow focus:outline-none focus:ring w-full " + themeStyle.bg[color]}
                                         defaultValue="http://localhost:5001"
                                         ref={inputRef}
                                     />

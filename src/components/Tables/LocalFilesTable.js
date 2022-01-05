@@ -214,7 +214,7 @@ export default function LocalFilesTable({color}) {
                 <input
                     type="text"
                     placeholder={intl.formatMessage({id: 'search_here'}) + '...'}
-                    className={"search border-0 px-3 py-2 placeholder-blueGray-300 relative rounded text-sm border outline-none focus:outline-none focus:ring w-full pl-10 " + (color === "light" ? "bg-white" : "bg-lightBlue-900 text-white")}
+                    className={"search px-3 py-2 placeholder-blueGray-300 relative rounded text-sm border outline-none focus:outline-none focus:ring w-full pl-10 " + (color === "light" ? "bg-white" : "bg-lightBlue-900 text-white")}
                     ref={inputRef}
                 />
                 <button

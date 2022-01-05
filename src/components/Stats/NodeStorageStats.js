@@ -56,7 +56,7 @@ export default function NodeStorageStats({color}) {
                                                 <div className="flex justify-between">
                                                     <div>
                                                         <span className='text-lg font-semibold'>{uncashed}</span>
-                                                        <span className='unit_color text-xs'>WBTT</span>
+                                                        <span className='text-xs'>WBTT</span>
                                                     </div>
                                                 </div>
 

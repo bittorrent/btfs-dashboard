@@ -44,7 +44,8 @@ export default function ChequeExpenseStats({color}) {
                         <div className="flex flex-wrap">
                             <div className="w-full xl:w-6/12 xl:pr-2">
                                 <>
-                                    <div className={"relative break-words rounded mb-2 xl:mb-0  " + themeStyle.bg[color] + themeStyle.text[color]}>
+                                    <div
+                                        className={"relative break-words rounded mb-2 xl:mb-0  " + themeStyle.bg[color] + themeStyle.text[color]}>
 
                                         <div className=" p-4 h-180-px">
                                             <div className="">
@@ -65,7 +66,8 @@ export default function ChequeExpenseStats({color}) {
 
                             <div className="w-full xl:w-6/12 xl:pr-2">
                                 <>
-                                    <div className={"relative break-words rounded mb-2 xl:mb-0  " + themeStyle.bg[color] + themeStyle.text[color]}>
+                                    <div
+                                        className={"relative break-words rounded mb-2 xl:mb-0  " + themeStyle.bg[color] + themeStyle.text[color]}>
 
                                         <div className=" p-4 h-180-px">
                                             <div className="">
@@ -85,51 +87,50 @@ export default function ChequeExpenseStats({color}) {
                                 </>
                             </div>
 
-                            {/*
-                                <div className="w-full xl:w-6/12 xl:pl-2">
-                                    <>
-                                        <div className={"relative break-words rounded " + themeStyle.bg[color] + themeStyle.text[color]}>
+                            <div className="w-full xl:w-6/12 xl:pl-2">
+                                <>
+                                    <div
+                                        className={"relative break-words rounded " + themeStyle.bg[color] + themeStyle.text[color]}>
 
-                                            <div className="flex flex-col justify-between p-4 h-180-px">
-                                                <div className="">
-                                                    <h5 className={" uppercase font-bold " + themeStyle.title[color]}>
-                                                        {t('expended_cheques_amount')}
-                                                    </h5>
+                                        <div className="flex flex-col justify-between p-4 h-180-px">
+                                            <div className="">
+                                                <h5 className={" uppercase font-bold " + themeStyle.title[color]}>
+                                                    {t('expended_cheques_amount')}
+                                                </h5>
+                                            </div>
+
+                                            <div className='flex justify-between'>
+                                                <div>
+                                                    <span className='font-semibold text-xl'>{chequeExpense} </span>
+                                                    <span className='text-xs'>WBTT</span>
                                                 </div>
-
-                                                <div className='flex justify-between'>
-                                                    <div>
-                                                        <span className='font-semibold text-xl'>{chequeExpense} </span>
-                                                        <span className='unit_color text-xs'>WBTT</span>
-                                                    </div>
-                                                    <div>
-                                                        {cashedPercent} %
-                                                    </div>
+                                                <div>
+                                                    {cashedPercent} %
                                                 </div>
+                                            </div>
 
-                                                <div className="">
-                                                    <Progress className={color} percent={cashedPercent} showInfo={false}
-                                                              strokeWidth={30}
-                                                              strokeColor={strokeColor}/>
+                                            <div className="">
+                                                <Progress className={color} percent={cashedPercent} showInfo={false}
+                                                          strokeWidth={30}
+                                                          strokeColor={strokeColor}/>
+                                            </div>
+
+                                            <div className='flex justify-between'>
+                                                <div>
+                                                    {t('cashed')}
+                                                    <br/>
+                                                    {cashed} <span className='text-xs'>WBTT</span>
                                                 </div>
-
-                                                <div className='flex justify-between'>
-                                                    <div>
-                                                        {t('cashed')}
-                                                        <br/>
-                                                        {cashed} <span className='unit_color text-xs'>WBTT</span>
-                                                    </div>
-                                                    <div>
-                                                        {t('uncashed')}
-                                                        <br/>
-                                                        {uncashed} <span className='unit_color text-xs'>WBTT</span>
-                                                    </div>
+                                                <div>
+                                                    {t('uncashed')}
+                                                    <br/>
+                                                    {uncashed} <span className='text-xs'>WBTT</span>
                                                 </div>
                                             </div>
                                         </div>
-                                    </>
-                                </div>
-                            */}
+                                    </div>
+                                </>
+                            </div>
                         </div>
                     </div>
                 </div>

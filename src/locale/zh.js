@@ -58,7 +58,6 @@ const zh_CN = {
     'receive':'接收',
     'send':'发送',
 
-
 // cheques
 
     'earning': '收益',
@@ -78,6 +77,7 @@ const zh_CN = {
     'cash_history': '兑现历史',
     'cheque_cashing_list': '兑现列表',
     'cheque_cashing_history': '兑现历史',
+    'cheque_detail': '支票详情',
     'expense_cheque_list':'支出列表',
     'cashing':'兑现',
     'est_fee':'预估手续费',

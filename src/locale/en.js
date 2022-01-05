@@ -58,7 +58,6 @@ const en_US = {
     'receive':'Receive',
     'send':'Send',
 
-
 // cheques
 
     'earning': 'Earning',
@@ -78,6 +77,7 @@ const en_US = {
     'cash_history': 'Cash History',
     'cheque_cashing_list': 'Cashing List',
     'cheque_cashing_history': 'Cashing History',
+    'cheque_detail': 'Cheque Detail',
     'expense_cheque_list':' Expense list',
     'cashing':'Cashing',
     'est_fee':'Estimated Transaction Fee',

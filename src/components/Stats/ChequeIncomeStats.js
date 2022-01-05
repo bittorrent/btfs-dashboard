@@ -100,7 +100,7 @@ export default function ChequeIncomeStats({color}) {
                                             <div className='flex justify-between'>
                                                 <div>
                                                     <span className='font-semibold text-xl'>{chequeEarning} </span>
-                                                    <span className='unit_color text-xs'>WBTT</span>
+                                                    <span className='text-xs'>WBTT</span>
                                                 </div>
                                                 <div>
                                                     {cashedPercent} %
@@ -116,12 +116,12 @@ export default function ChequeIncomeStats({color}) {
                                                 <div>
                                                     {t('cashed')}
                                                     <br/>
-                                                    {cashed} <span className='unit_color text-xs'>WBTT</span>
+                                                    {cashed} <span className='text-xs'>WBTT</span>
                                                 </div>
                                                 <div>
                                                     {t('uncashed')}
                                                     <br/>
-                                                    {uncashed} <span className='unit_color text-xs'>WBTT</span>
+                                                    {uncashed} <span className='text-xs'>WBTT</span>
                                                 </div>
                                             </div>
                                         </div>
