@@ -5,6 +5,11 @@ import {getChequeExpenseInfo} from "services/chequeService.js";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
 
+let strokeColor = {
+    '0%': '#108ee9',
+    '100%': '#87d068',
+};
+
 export default function ChequeExpenseStats({color}) {
 
     const [chequeSent, setChequeSent] = useState(0);
@@ -105,10 +110,7 @@ export default function ChequeExpenseStats({color}) {
                                                 <div className="">
                                                     <Progress className={color} percent={cashedPercent} showInfo={false}
                                                               strokeWidth={30}
-                                                              strokeColor={{
-                                                                  from: '#108ee9',
-                                                                  to: '#87d068',
-                                                              }}/>
+                                                              strokeColor={strokeColor}/>
                                                 </div>
 
                                                 <div className='flex justify-between'>

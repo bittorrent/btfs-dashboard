@@ -1,0 +1,41 @@
+
+.dark {
+  .ant-progress-outer {
+    .ant-progress-inner {
+      background-color: lightblue;
+    }
+  }
+  .ant-progress-text {
+    color: lightblue !important;
+  }
+  .ant-select-selector {
+    background-color: lightblue !important;
+  }
+}
+
+.copied_light .ant-message-notice-content {
+  border-radius: 5px;
+  .anticon {
+    top: -2px !important;
+  }
+}
+
+.copied_dark .ant-message-notice-content {
+  background: lightblue;
+  border-radius: 5px;
+  .anticon {
+    top: -2px !important;
+  }
+}
+
+input.dark {
+  background: lightblue !important;
+}
+
+.text-black-900 {
+  color: #131523;
+}
+
+.text-gray-900 {
+  color: #5A607F;
+}

@@ -4,6 +4,11 @@ import {getFilesStorage} from "services/filesService.js";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
 
+let strokeColor = {
+    '0%': '#108ee9',
+    '100%': '#87d068',
+};
+
 export default function FilesStats({color}) {
 
     const [capacity, setCapacity] = useState(0);
@@ -55,10 +60,7 @@ export default function FilesStats({color}) {
                                             </div>
 
                                             <div className="">
-                                                <Progress className={color} percent={percentage} showInfo={false} strokeWidth={30} strokeColor={{
-                                                    from: '#108ee9',
-                                                    to: '#87d068',
-                                                }}/>
+                                                <Progress className={color} percent={percentage} showInfo={false} strokeWidth={30} strokeColor={strokeColor}/>
                                             </div>
 
                                         </div>
