@@ -160,7 +160,7 @@ export default function ChequeCashingListTable({color, enableCash}) {
 
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         <div className='flex'>
-                                            <a href={'https://scan.bt.io/#/address/' + item['Vault']} target='_blank'>
+                                            <a href={'https://testscan.bt.io/#/address/' + item['Vault']} target='_blank'>
                                                 <Truncate>{item['Vault']}</Truncate>
                                             </a>
                                             <ClipboardCopy value={item['Vault']}/>

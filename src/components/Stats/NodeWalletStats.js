@@ -75,7 +75,7 @@ export default function NodeWalletStats({color}) {
                                                     <ClipboardCopy value={BTTCAddress}/>
                                                 </h5>
                                                 <div className="font-semibold ">
-                                                    <a href={'https://scan.bt.io/#/address/' + BTTCAddress} target='_blank' rel='noreferrer'>{BTTCAddress}</a>
+                                                    <a href={'https://testscan.bt.io/#/address/' + BTTCAddress} target='_blank' rel='noreferrer'>{BTTCAddress}</a>
                                                 </div>
 
                                                 <div className="font-semibold ">
@@ -114,7 +114,7 @@ export default function NodeWalletStats({color}) {
                                                 </h5>
 
                                                 <div className='font-semibold'>
-                                                    <a href={'https://scan.bt.io/#/address/' + chequeAddress} target='_blank' rel='noreferrer'>{chequeAddress}</a>
+                                                    <a href={'https://testscan.bt.io/#/address/' + chequeAddress} target='_blank' rel='noreferrer'>{chequeAddress}</a>
                                                 </div>
 
                                                 <div className="">
