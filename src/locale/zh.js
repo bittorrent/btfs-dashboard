@@ -35,6 +35,7 @@ const zh_CN = {
     'cheque_expense': '支票支出',
     'airdrop': '空投',
     'chequebook': '金库',
+    'vault':'金库',
     'contracts':'合约',
     'cashed': '已兑现',
     'uncashed': '未兑现',
