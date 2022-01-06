@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
 
-export default function ChequeDetailTable({color}) {
+export default function ChequeDetailTable({color, type}) {
 
     const [uncashedOrder, setUncashedOrder] = useState('default');
     const [cashedOrder, setCashedOrder] = useState('default');
@@ -22,7 +22,8 @@ export default function ChequeDetailTable({color}) {
     return (
 
         <>
-            <div className={"relative flex flex-col min-w-0 break-words w-full shadow-lg rounded " + themeStyle.bg[color]}>
+            <div
+                className={"relative flex flex-col min-w-0 break-words w-full shadow-lg rounded " + themeStyle.bg[color]}>
 
                 <table className="items-center w-full bg-transparent border-collapse">
                     <thead>
@@ -41,7 +42,8 @@ export default function ChequeDetailTable({color}) {
                         </th>
 
                         <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
-                            {t('chequebook')}
+                            {type === 'earning' && t('chequebook')}
+                            {type === 'expense' && t('recipient')}
                         </th>
 
                         <th className={"cursor-pointer px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}
@@ -59,7 +61,9 @@ export default function ChequeDetailTable({color}) {
                         </th>
 
                         <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
-                            {t('receive')} {t('date')}
+                            {type === 'earning' && t('receive')}
+                            {type === 'expense' && t('sent')}
+                            &nbsp;{t('date')}
                         </th>
 
                     </tr>

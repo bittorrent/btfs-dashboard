@@ -45,22 +45,7 @@ export default function ChequeExpenseTable({color}) {
 
     return (
         <>
-            <div className={"relative flex flex-col min-w-0 break-words w-full shadow-lg rounded mt-4 " + themeStyle.bg[color]}>
-                <div className="rounded-t mb-0 px-4 py-4 border-0">
-                    <div className="flex flex-wrap items-center">
-                        <div className="relative w-full max-w-full flex-grow flex-1">
-
-                            <h3 className={"font-semibold " + themeStyle.title[color]}>
-                                {t('expense_cheque_list')}
-                            </h3>
-
-                        </div>
-
-                        <div className="mr-4">
-
-                        </div>
-                    </div>
-                </div>
+            <div className={"relative flex flex-col min-w-0 break-words w-full shadow-lg rounded " + themeStyle.bg[color]}>
 
                 <div className="block w-full overflow-x-auto">
 

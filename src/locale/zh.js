@@ -79,11 +79,11 @@ const zh_CN = {
     'cheque_cashing_list': '兑现列表',
     'cheque_cashing_history': '兑现历史',
     'cheque_detail': '支票详情',
-    'expense_cheque_list':'支出列表',
     'cashing':'兑现',
     'est_fee':'预估手续费',
     'tx_hash': '交易哈希',
     'date':'日期',
+    'expense_list':'支出列表',
 
 // files
 

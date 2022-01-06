@@ -7,60 +7,87 @@ function ChequeExpenseLineChart({color}) {
 
     useEffect(() => {
 
-        const data = {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            datasets: [
-                {
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    borderColor: 'blue',
-                    fill: false,
-                    cubicInterpolationMode: 'monotone',
-                    tension: 0
-                }
-            ]
-        };
-
-        var config =
-            {
-                type: 'line',
-                data: data,
-
-                options: {
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
+        var config = {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [
+                    {
+                        label: 'Sent',
+                        borderColor: 'red',
+                        backgroundColor: 'rgb(255, 99, 132, 0.3)',
+                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        fill: false,
+                        tension: 0,
                     },
-                    responsive: false,
-                    interaction: {
+                    {
+                        label: 'Sent Amount',
+                        fill: false,
+                        borderColor: 'blue',
+                        backgroundColor: 'rgb(54, 162, 235, 0.3)',
+                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        tension: 0,
+                    },
+                ]
+            },
+
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        mode: "index",
                         intersect: false,
-                    },
-                    scales: {
-                        x: {
-                            display: true,
-                            title: {
-                                display: true
-                            },
-                            ticks: {
-                                color: color === 'light' ? 'black' : 'white'
-                            },
-                        },
-                        y: {
-                            display: true,
-                            title: {
-                                display: true,
-                                text: 'Value',
-                                color: color === 'light' ? 'black' : 'white'
-                            },
-                            ticks: {
-                                color: color === 'light' ? 'black' : 'white'
-                            },
-                            suggestedMin: -100,
-                            suggestedMax: 100
+                        callbacks: {
+                            label: function (context) {
+                                var label = context.dataset.label || '';
+                                if (context.datasetIndex === 1) {
+                                    if (label) {
+                                        label += ' : ' + context.parsed.y + ' WBTT ';
+                                    }
+                                }
+                                if (context.datasetIndex === 0) {
+                                    if (label) {
+                                        label += ' : ' + context.parsed.y + ' ';
+                                    }
+                                }
+                                return label;
+                            }
                         }
-                    }
+
+                    },
                 },
-            };
+                responsive: false,
+                interaction: {
+                    intersect: false,
+                },
+                scales: {
+                    x: {
+                        display: true,
+                        title: {
+                            display: true
+                        },
+                        ticks: {
+                            color: color === 'light' ? 'black' : 'white'
+                        },
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Value',
+                            color: color === 'light' ? 'black' : 'white'
+                        },
+                        ticks: {
+                            color: color === 'light' ? 'black' : 'white'
+                        },
+                        suggestedMin: -100,
+                        suggestedMax: 100
+                    }
+                }
+            },
+        };
 
         var content = document.getElementById('cheque-expense-line-chart-content');
         content.innerHTML = '&nbsp;';

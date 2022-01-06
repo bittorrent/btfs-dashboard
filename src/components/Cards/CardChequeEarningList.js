@@ -9,7 +9,7 @@ import themeStyle from "utils/themeStyle.js";
 import Emitter from "utils/eventBus";
 import {t} from "utils/text.js";
 
-export default function CardChequeCashingIncome({color}) {
+export default function CardChequeEarningList({color}) {
     const intl = useIntl();
     const cashList = useRef([]);
     const [current, setCurrent] = useState('cashList');
@@ -118,7 +118,7 @@ export default function CardChequeCashingIncome({color}) {
                         current === 'cashHistory' && <ChequeCashingHistoryTable color={color}/>
                     }
                     {
-                        current === 'chequeDetail' && <ChequeDetailTable color={color}/>
+                        current === 'chequeDetail' && <ChequeDetailTable color={color} type='earning'/>
                     }
                 </div>
             </div>
@@ -126,10 +126,10 @@ export default function CardChequeCashingIncome({color}) {
     );
 }
 
-CardChequeCashingIncome.defaultProps = {
+CardChequeEarningList.defaultProps = {
     color: "light",
 };
 
-CardChequeCashingIncome.propTypes = {
+CardChequeEarningList.propTypes = {
     color: PropTypes.oneOf(["light", "dark"]),
 };

@@ -79,11 +79,11 @@ const en_US = {
     'cheque_cashing_list': 'Cashing List',
     'cheque_cashing_history': 'Cashing History',
     'cheque_detail': 'Cheque Detail',
-    'expense_cheque_list':' Expense list',
     'cashing':'Cashing',
     'est_fee':'Estimated Transaction Fee',
     'tx_hash': 'TX Hash',
     'date':'Date',
+    'expense_list':'Expense List',
 
 // files
 
