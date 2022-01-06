@@ -27,6 +27,15 @@ export default function ChequeCashingHistoryTable({color}) {
                 <table className="items-center w-full bg-transparent border-collapse">
                     <thead>
                     <tr className="text-xs uppercase whitespace-nowrap">
+                        <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}
+                            style={{width: '50px'}}>
+                           #
+                        </th>
+
+                        <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
+                            {t('tx_hash')}
+                        </th>
+
                         <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                             {t('host_id')}
                         </th>
@@ -45,7 +54,7 @@ export default function ChequeCashingHistoryTable({color}) {
                             }}
                         >
                             <div className='flex items-center'>
-                                <div>{t('uncashed')} (WBTT)</div>
+                                <div>{t('amount')} (WBTT)</div>
                                 <div className='flex flex-col ml-4'>
                                     <i className={"fas fa-sort-up line-height-7px " + ((uncashedOrder === 'ascending') ? 'text-blue' : '')}></i>
                                     <i className={"fas fa-sort-down line-height-7px " + ((uncashedOrder === 'descending') ? 'text-blue' : '')}></i>
@@ -53,19 +62,14 @@ export default function ChequeCashingHistoryTable({color}) {
                             </div>
                         </th>
 
-                        <th className={"cursor-pointer px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " + themeStyle.th[color]}
-                            onClick={() => {
-                                sorting('cashed', cashedOrder === 'ascending' ? 'descending' : 'ascending')
-                            }}
-                        >
-                            <div className='flex items-center'>
-                                <div>{t('cashed')} (WBTT)</div>
-                                <div className='flex flex-col ml-4'>
-                                    <i className={"fas fa-sort-up line-height-7px " + ((cashedOrder === 'ascending') ? 'text-blue' : '')}></i>
-                                    <i className={"fas fa-sort-down line-height-7px " + ((cashedOrder === 'descending') ? 'text-blue' : '')}></i>
-                                </div>
-                            </div>
+                        <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
+                            {t('date')}
                         </th>
+
+                        <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
+                            {t('status')}
+                        </th>
+
                     </tr>
                     </thead>
                     <tbody>

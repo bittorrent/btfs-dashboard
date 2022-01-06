@@ -24,7 +24,6 @@ function HostScoreHistoryLineChart({color}) {
                         {
                             data: [],
                             borderColor: 'blue',
-                            fontColor: 'white',
                             backgroundColor: 'rgb(54, 162, 235, 0.3)',
                             fill: true,
                             cubicInterpolationMode: 'monotone',

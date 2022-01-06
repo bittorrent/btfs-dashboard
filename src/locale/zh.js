@@ -69,8 +69,8 @@ const zh_CN = {
     'cashing_history': '兑现历史',
     'cashing_status':'兑现状态',
     'blockchain': '区块链',
-    'expended_cheques': '支出支票',
-    'expended_cheques_amount': '支出支票数额',
+    'sent_cheques': '支出支票',
+    'sent_cheques_amount': '支出支票数额',
     'cheque_expense_history': '支票支出历史',
     'total_sent': '总支出',
     'cash_list':'兑现列表',
@@ -81,6 +81,8 @@ const zh_CN = {
     'expense_cheque_list':'支出列表',
     'cashing':'兑现',
     'est_fee':'预估手续费',
+    'tx_hash': '交易哈希',
+    'date':'日期',
 
 // files
 

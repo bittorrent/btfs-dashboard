@@ -18,6 +18,7 @@ function NetworkLineChart({color}) {
     const intl = useIntl();
 
     useEffect(() => {
+
         var config = {
             type: "line",
             data: {

@@ -69,8 +69,8 @@ const en_US = {
     'cashing_history': 'Cashing History',
     'cashing_status':'Cashing Status',
     'blockchain': 'Blockchain',
-    'expended_cheques': 'Expended Cheques',
-    'expended_cheques_amount': 'Expended Cheques Amount',
+    'sent_cheques': 'Sent Cheques',
+    'sent_cheques_amount': 'Sent Cheques Amount',
     'cheque_expense_history': 'Cheque Expense History',
     'total_sent': 'Total Sent',
     'cash_list': 'Cash List',
@@ -81,6 +81,8 @@ const en_US = {
     'expense_cheque_list':' Expense list',
     'cashing':'Cashing',
     'est_fee':'Estimated Transaction Fee',
+    'tx_hash': 'TX Hash',
+    'date':'Date',
 
 // files
 

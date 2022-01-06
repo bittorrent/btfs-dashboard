@@ -50,35 +50,12 @@ export default function ChequeExpenseStats({color}) {
                                         <div className=" p-4 h-180-px">
                                             <div className="">
                                                 <h5 className={" uppercase font-bold " + themeStyle.title[color]}>
-                                                    {t('expended_cheques')}
+                                                    {t('sent_cheques')}
                                                 </h5>
                                             </div>
 
                                             <div className='p-4'>
                                                 <span className='font-semibold text-3xl'>{chequeSent}</span>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </>
-                            </div>
-
-                            <div className="w-full xl:w-6/12 xl:pr-2">
-                                <>
-                                    <div
-                                        className={"relative break-words rounded mb-2 xl:mb-0  " + themeStyle.bg[color] + themeStyle.text[color]}>
-
-                                        <div className=" p-4 h-180-px">
-                                            <div className="">
-                                                <h5 className={" uppercase font-bold " + themeStyle.title[color]}>
-                                                    {t('expended_cheques_amount')}
-                                                </h5>
-                                            </div>
-
-                                            <div className='p-4'>
-                                                <span className='font-semibold text-3xl'>{chequeExpense} </span>
-                                                <span className='text-xs'>WBTT</span>
                                             </div>
 
                                         </div>
@@ -95,7 +72,7 @@ export default function ChequeExpenseStats({color}) {
                                         <div className="flex flex-col justify-between p-4 h-180-px">
                                             <div className="">
                                                 <h5 className={" uppercase font-bold " + themeStyle.title[color]}>
-                                                    {t('expended_cheques_amount')}
+                                                    {t('sent_cheques_amount')}
                                                 </h5>
                                             </div>
 
