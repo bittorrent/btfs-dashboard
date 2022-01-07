@@ -46,7 +46,7 @@ export default function NodeRevenueStats({color}) {
                                                 </h5>
                                                 <div className="">
                                                     <span className="text-lg font-semibold">{chequeEarning}</span>
-                                                    <span className='unit_color text-xs'>BTT</span>
+                                                    <span className='text-xs'>BTT</span>
                                                 </div>
                                                 <div className='flex justify-between text-xs'>
                                                     <div className=''>
@@ -74,7 +74,7 @@ export default function NodeRevenueStats({color}) {
                                                 </h5>
                                                 <div className="">
                                                     <span className='text-lg font-semibold'>{chequeEarning}</span>
-                                                    <span className='unit_color text-xs'>WBTT</span>
+                                                    <span className='text-xs'>WBTT</span>
                                                 </div>
 
                                                 {/* <div className='flex justify-between text-xs'>
@@ -111,7 +111,7 @@ export default function NodeRevenueStats({color}) {
                                                 </h5>
                                                 <div className="">
                                                     <span className='text-lg font-semibold'>{chequeExpense}</span>
-                                                    <span className='unit_color text-xs'>WBTT</span>
+                                                    <span className='text-xs'>WBTT</span>
                                                 </div>
 
                                                 <div className='flex'>

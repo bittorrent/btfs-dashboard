@@ -44,7 +44,7 @@ export default function CardHostScore({color}) {
 
     return (
         <>
-            <div className={"relative flex flex-col h-400-px justify-center p-4" + themeStyle.bg[color]}>
+            <div className={"relative flex flex-col h-400-px justify-center p-4" + themeStyle.bg[color] + themeStyle.text[color]}>
                 <div className='flex'>
                     <div className='w-1/2 border-r pr-2'>
                         <HostScoreRingChart data={ringChartData} color={color}/>

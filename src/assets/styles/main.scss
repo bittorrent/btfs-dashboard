@@ -245,6 +245,14 @@
   margin-left: 1rem;
 }
 
+.ml-8 {
+  margin-left: 2rem;
+}
+
+.mt-14 {
+  margin-top: 3.5rem;
+}
+
 .rounded-bl {
   border-bottom-left-radius: 0.25rem;
 }
@@ -369,7 +377,7 @@
 
 @media (min-width: 768px) {
 
-  .md\:break-all{
+  .md\:break-all {
     word-break: break-all;
   }
   .md\:left-64 {

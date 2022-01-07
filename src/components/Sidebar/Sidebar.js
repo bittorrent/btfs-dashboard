@@ -176,7 +176,7 @@ export default function Sidebar() {
                                     <a
                                         className={" text-xs  py-3  block" + (themeStyle.link[theme])}
                                     >
-                                        {t('version')} 2.0.0
+                                        {t('version')} 2.0.1
                                     </a>
                                 </li>
 
@@ -191,7 +191,8 @@ export default function Sidebar() {
                                 </li>
 
                                 <li className="items-center">
-                                    <a
+                                    <a  href='https://github.com/bittorrent/btfs-dashboard/issues'
+                                        target='_blank'
                                         className={" text-xs  py-3  block" + (themeStyle.link[theme])}
                                     >
                                         {t('report_bugs')}
@@ -208,6 +209,12 @@ export default function Sidebar() {
                                     </a>
                                 </li>
                             </ul>
+
+                            <div className="flex justify-between items-center">
+                                <LangDropdown color={theme}/>
+                                <ThemeToggle/>
+                            </div>
+
                         </div>
 
                     </div>

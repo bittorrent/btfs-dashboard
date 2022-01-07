@@ -35,7 +35,7 @@ export default function CardSettings({color}) {
             node_url = node_url.substr(0, node_url.length - 1);
         }
         if (!urlCheck(node_url)) {
-            return;
+         //   return;
         }
         let result = await nodeStatusCheck(node_url);
         if (result) {
@@ -48,9 +48,7 @@ export default function CardSettings({color}) {
             });
             localStorage.setItem('NODE_URL', node_url);
             Emitter.emit('showMessageAlert', {message: 'setting_success', status: 'success', type:'frontEnd'});
-
         } else {
-
             Emitter.emit('showMessageAlert', {message: 'setting_error', status: 'error', type:'frontEnd'});
         }
 

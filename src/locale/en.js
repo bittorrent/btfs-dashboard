@@ -35,6 +35,7 @@ const en_US = {
     'cheque_expense': 'Cheque Expense',
     'airdrop': 'Airdrop',
     'chequebook': 'Vault',
+    'vault':'Vault(s)',
     'contracts': 'Contracts',
     'cashed': 'Cashed',
     'uncashed': 'Uncashed',

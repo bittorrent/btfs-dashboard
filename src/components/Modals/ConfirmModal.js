@@ -117,7 +117,7 @@ export default function ConfirmModal({color}) {
                                     {/*body*/}
                                     <div className="relative p-4 flex-auto">
                                         <p className="pb-4">
-                                            {t('cashing')} {t('from')} {cashList.current.list.length} {t('cheques')}
+                                            {t('cashing')} {t('from')} {cashList.current.list.length} {t('vault')}
                                             <br/>
                                         </p>
                                         <div

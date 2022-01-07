@@ -16,7 +16,7 @@ let didCancel = false;
 let filesAll = [];
 let nameArray = [];
 
-export default function FilesTable({color}) {
+export default function LocalFilesTable({color}) {
     const intl = useIntl();
     const inputRef = useRef(null);
     const batchList = useRef([]);
@@ -235,14 +235,14 @@ export default function FilesTable({color}) {
                                     {breadcrumbName.length > 0 && breadcrumbName.map((item, index) => {
                                         return (
                                             <Breadcrumb.Item key={index}>
-                                                <a onClick={() => {
+                                                <a  className="font-semibold"
+                                                    onClick={() => {
                                                     minusPath(breadcrumbName[index])
                                                 }}>{item}</a>
                                             </Breadcrumb.Item>
                                         )
                                     })}
                                 </Breadcrumb>
-
                             </div>
                         </div>
                         <div className="mr-4 flex">
@@ -251,48 +251,28 @@ export default function FilesTable({color}) {
                     </div>
                 </div>
                 <div className="block w-full overflow-x-auto">
-
                     <table className="items-center w-full bg-transparent border-collapse">
                         <thead>
-                        <tr>
-                            <th className={
-                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                (color === "light"
-                                    ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                    : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                            } style={{width: '50px'}}>
+                        <tr className="text-xs uppercase whitespace-nowrap">
+                            <th className={"px-6 border border-solid border-l-0 border-r-0 py-3 text-left font-semibold " + themeStyle.th[color]}
+                                style={{width: '50px'}}>
                                 <input
                                     type="checkbox" name="checkboxHub"
                                     className="bg-gray form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
                                     onClick={selectAll}
                                 />
                             </th>
-                            <th className={
-                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                (color === "light"
-                                    ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                    : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                            }
-                                style={{width: '70%'}}
-                            >
+
+                            <th className={"px-6 border border-solid border-l-0 border-r-0 py-3 text-left font-semibold " + themeStyle.th[color]}
+                                style={{width: '70%'}}>
                                 {t('file_name')}
                             </th>
 
-                            <th className={
-                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                (color === "light"
-                                    ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                    : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                            }>
+                            <th className={"px-6 border border-solid border-l-0 border-r-0 py-3 text-left font-semibold " + themeStyle.th[color]}>
                                 {t('size')}
                             </th>
 
-                            <th className={
-                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                (color === "light"
-                                    ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                    : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                            }>
+                            <th className={"px-6 border border-solid border-l-0 border-r-0 py-3 text-left font-semibold " + themeStyle.th[color]}>
                             </th>
                         </tr>
                         </thead>
@@ -301,33 +281,30 @@ export default function FilesTable({color}) {
                             files && files.map((item, index) => {
                                 return (
                                     <tr key={index}>
-                                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            <input
-                                                type="checkbox" name="checkbox"
+                                        <td className="px-6 text-xs whitespace-nowrap p-4">
+                                            <input type="checkbox" name="checkbox"
                                                 className="bg-gray form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
                                                 onClick={(e) => {
                                                     select(e, item['Hash'], item['Name'], item['Type'], item['Size'], breadcrumbName)
                                                 }}
                                             />
                                         </td>
-                                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs break-all p-4 text-left" style={{minWidth: '350px'}}>
+                                        <td className="px-6 text-xs break-all p-4 text-left"
+                                            style={{minWidth: '350px'}}>
                                             <div className='flex'>
                                                 <a className="flex items-center" onClick={() => {
                                                     addPath(item['Hash'], item['Name'], item['Type'], item['Size'])
                                                 }}>
-
                                                     {item['Type'] === 1 && <img
                                                         src={require("assets/img/folder.png").default}
                                                         className="h-12 w-12 bg-white rounded-full border"
                                                         alt="..."
-                                                    ></img>
-                                                    }
+                                                    />}
                                                     {item['Type'] === 2 && <img
                                                         src={require("assets/img/file.png").default}
                                                         className="h-12 w-12 bg-white rounded-full border"
                                                         alt="..."
-                                                    ></img>
-                                                    }
+                                                    />}
                                                     <div className='flex flex-col justify-center'>
                                                         <span className="ml-3 font-bold">
                                                             {item['Name']}
@@ -340,11 +317,11 @@ export default function FilesTable({color}) {
                                             </div>
                                         </td>
 
-                                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                        <td className="px-6 text-xs whitespace-nowrap p-4">
                                             {switchStorageUnit2(item['Size'])}
                                         </td>
 
-                                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                                        <td className="px-6 text-xs whitespace-nowrap p-4 text-right">
                                             <FileTableDropdown color={color} hash={item['Hash']} name={item['Name']}
                                                                size={item['Size']}
                                                                path={breadcrumbName} type={item['Type']}/>
@@ -362,7 +339,7 @@ export default function FilesTable({color}) {
                         </div>
                     }
                     {
-                        (files && total===0) && <div className='w-full flex justify-center p-4'>
+                        (files && total === 0) && <div className='w-full flex justify-center p-4'>
                             {t('no_data')}
                         </div>
                     }
@@ -379,10 +356,10 @@ export default function FilesTable({color}) {
     );
 }
 
-FilesTable.defaultProps = {
+LocalFilesTable.defaultProps = {
     color: "light",
 };
 
-FilesTable.propTypes = {
+LocalFilesTable.propTypes = {
     color: PropTypes.oneOf(["light", "dark"]),
 };

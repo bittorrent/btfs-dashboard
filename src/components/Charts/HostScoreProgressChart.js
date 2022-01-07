@@ -3,12 +3,12 @@ import {Progress} from 'antd';
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
 
-export default function HostScoreProgressChart({color, data}) {
+let strokeColor = {
+    '0%': '#108ee9',
+    '100%': '#87d068',
+};
 
-    let strokeColor = {
-        '0%': '#108ee9',
-        '100%': '#87d068',
-    }
+export default function HostScoreProgressChart({color, data}) {
 
     return (
 

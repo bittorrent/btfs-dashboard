@@ -1,12 +1,11 @@
 import React, {useContext} from "react";
 import {mainContext} from 'reducer';
 import FilesStats from "components/Stats/FilesStats.js";
-import FilesTable from "components/Tables/FilesTable.js";
 import ImportModal from "components/Modals/ImportModal.js";
 import UploadModal from "components/Modals/UploadModal.js";
 import DownloadModal from "components/Modals/DownloadModal.js";
 import PreviewModal from "components/Modals/PreviewModal.js";
-
+import LocalFilesTable from "components/Tables/LocalFilesTable";
 
 export default function Files() {
 
@@ -23,13 +22,9 @@ export default function Files() {
                         </div>
                     </div>
                 </div>
-
                 <ImportModal color={theme}/>
-
-                <div className="w-full">
-                    <FilesTable color={theme}/>
-                </div>
             </div>
+            <LocalFilesTable color={theme}/>
             <UploadModal color={theme}/>
             <DownloadModal color={theme}/>
             <PreviewModal color={theme}/>

@@ -38,16 +38,16 @@ export default function FileControl({itemSelected, unSelect, color, data}) {
     return (
         <>
             <footer id="fileControl"
-                    className={"fixed md:left-64 bottom-0 z-50 bg-white shadow " + themeStyle.bg[color]}>
+                    className={"fixed md:left-64 bottom-0 z-50 bg-white shadow border-t " + themeStyle.text[color] + themeStyle.th[color]}>
                 <div className="container mx-auto px-6">
 
                     <div className="flex flex-wrap items-center md:justify-between justify-center h-20">
-                        <div className="text-sm text-blueGray-500 font-semibold py-1 text-center md:text-left">
+                        <div className="text-sm font-semibold py-1 text-center md:text-left">
                             {t('items_selected')} : {itemSelected}
                         </div>
                         <div className="flex flex-wrap list-none md:justify-end  justify-center px-5">
                             <div>
-                                <a className={"text-center  text-sm font-semibold block py-1 px-3 " + themeStyle.link[color]}
+                                <a className={"text-center  text-sm font-semibold block py-1 px-3 "}
                                    onClick={download}
                                    disabled={(itemSelected === 1) ? false : true}
                                 >
@@ -57,7 +57,7 @@ export default function FileControl({itemSelected, unSelect, color, data}) {
                             </div>
 
                             <div>
-                                <a className={"text-center  text-sm font-semibold block py-1 px-3 " + themeStyle.link[color]}
+                                <a className={"text-center  text-sm font-semibold block py-1 px-3 "}
                                    onClick={remove}
                                    disabled={(itemSelected === 0) ? true : false}
                                 >
@@ -66,9 +66,8 @@ export default function FileControl({itemSelected, unSelect, color, data}) {
                                 </a>
                             </div>
                         </div>
-                        <div className=" font-semibold py-1 text-center md:text-left">
-                            <a className={" " + themeStyle.text[color]}
-                               onClick={unSelect}
+                        <div className="font-semibold py-1 text-center md:text-left">
+                            <a onClick={unSelect}
                                disabled={(itemSelected === 0) ? true : false}
                             >
                                 {t('unselect_all')}
