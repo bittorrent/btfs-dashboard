@@ -84,6 +84,7 @@ const zh_CN = {
     'tx_hash': '交易哈希',
     'date':'日期',
     'expense_list':'支出列表',
+    'recipient': '接收者',
 
 // files
 

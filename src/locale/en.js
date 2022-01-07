@@ -84,6 +84,7 @@ const en_US = {
     'tx_hash': 'TX Hash',
     'date':'Date',
     'expense_list':'Expense List',
+    'recipient': 'Recipient',
 
 // files
 

@@ -62,7 +62,7 @@ export default function ChequeDetailTable({color, type}) {
 
                         <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                             {type === 'earning' && t('receive')}
-                            {type === 'expense' && t('sent')}
+                            {type === 'expense' && t('send')}
                             &nbsp;{t('date')}
                         </th>
 
