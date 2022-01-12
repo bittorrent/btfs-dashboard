@@ -56,14 +56,11 @@ export default function CardSettings({color}) {
 
     return (
         <>
-            <div
-                className={"relative flex flex-col min-w-0 break-words w-full mb-4 shadow-lg rounded-lg border-0 " + themeStyle.bg[color] + themeStyle.text[color]}>
+            <div className={"relative flex flex-col min-w-0 break-words w-full mb-4 shadow-lg rounded-lg border-0 " + themeStyle.bg[color] + themeStyle.text[color]}>
                 <div className={"rounded-t mb-0 px-6 py-6 flex justify-between w-full"}>
-
                     <h5 className={"font-bold uppercase " + themeStyle.title[color]}>
                         {t('system_config')}
                     </h5>
-
                     <button
                         className=" bg-indigo-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                         type="button"
@@ -71,7 +68,6 @@ export default function CardSettings({color}) {
                     >
                         {t('submit')}
                     </button>
-
                 </div>
                 <div className="flex-auto px-4 pt-0">
                     <form>
@@ -93,13 +89,11 @@ export default function CardSettings({color}) {
                                 </div>
                             </div>
                         </div>
-
                     </form>
                 </div>
             </div>
 
-            <div
-                className={"relative flex flex-col min-w-0 break-words w-full mb-4 shadow-lg rounded-lg border-0 " + themeStyle.bg[color] + themeStyle.text[color]}>
+            <div className={"relative flex flex-col min-w-0 break-words w-full mb-4 shadow-lg rounded-lg border-0 " + themeStyle.bg[color] + themeStyle.text[color]}>
                 <div className={"rounded-t mb-0 px-6 py-6 flex justify-between"}>
                     <h5 className={"font-bold uppercase " + themeStyle.title[color]}>
                         {t('security')}
@@ -120,7 +114,6 @@ export default function CardSettings({color}) {
                                 </div>
                             </div>
                         </div>
-
                     </form>
                 </div>
             </div>

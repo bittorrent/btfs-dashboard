@@ -44,7 +44,6 @@ export default function CardNetworkFlow({color}) {
                         </div>
                     </div>
                 </div>
-
                 <div className='p-4 flex-auto'>
                     <div className='flex flex-col relative h-300-px'>
                         <div className='w-full'>

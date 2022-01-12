@@ -63,7 +63,6 @@ export default function CardChequeEarningList({color}) {
                 <div className="rounded-t mb-0 px-2 py-4 border-0">
                     <div className="flex flex-wrap items-center">
                         <div className="relative w-full max-w-full flex-grow flex-1">
-
                             <div className="mr-4">
                                 <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal"
                                       style={{'background': 'transparent'}}>
@@ -84,7 +83,6 @@ export default function CardChequeEarningList({color}) {
                                     </Menu.Item>
                                 </Menu>
                             </div>
-
                         </div>
                     </div>
 

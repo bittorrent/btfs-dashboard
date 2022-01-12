@@ -27,22 +27,16 @@ export default function CardStats({
             </div>
             {
               statIconName ? <div className="relative w-auto pl-2 flex-initial">
-                <div
-                    className={
-                      "text-white p-3 text-center inline-flex items-center justify-center w-8 h-8 shadow-lg rounded-full " +
-                      statIconColor
-                    }
-                >
+                <div className={"text-white p-3 text-center inline-flex items-center justify-center w-8 h-8 shadow-lg rounded-full " + statIconColor}>
                   <i className={statIconName}></i>
                 </div>
               </div> : null
             }
           </div>
-          <p className="whitespace-nowrap text-sm text-blueGray-400 mt-4 ">
+          <p className="whitespace-nowrap text-sm text-blueGray-400 mt-4">
             {!statArrow && <span className="whitespace-nowrap">{statDescription}</span>}
             <span className={statChangeColor + " mr-2"}>
-              <i
-                className={
+              <i className={
                   statArrow === "up"
                     ? "fas fa-arrow-up"
                     : statArrow === "down"
