@@ -225,7 +225,6 @@ export default function LocalFilesTable({color}) {
                     {t('browse')}
                 </button>
             </div>
-
             <div className={"relative flex flex-col min-w-0 break-words w-full shadow-lg rounded " + themeStyle.bg[color] + themeStyle.text[color]}>
                 <div className="rounded-t mb-0 px-4 py-3 border-0">
                     <div className="flex flex-wrap items-center">
@@ -262,16 +261,13 @@ export default function LocalFilesTable({color}) {
                                     onClick={selectAll}
                                 />
                             </th>
-
                             <th className={"px-6 border border-solid border-l-0 border-r-0 py-3 text-left font-semibold " + themeStyle.th[color]}
                                 style={{width: '70%'}}>
                                 {t('file_name')}
                             </th>
-
                             <th className={"px-6 border border-solid border-l-0 border-r-0 py-3 text-left font-semibold " + themeStyle.th[color]}>
                                 {t('size')}
                             </th>
-
                             <th className={"px-6 border border-solid border-l-0 border-r-0 py-3 text-left font-semibold " + themeStyle.th[color]}>
                             </th>
                         </tr>
@@ -316,11 +312,9 @@ export default function LocalFilesTable({color}) {
                                                 </a>
                                             </div>
                                         </td>
-
                                         <td className="px-6 text-xs whitespace-nowrap p-4">
                                             {switchStorageUnit2(item['Size'])}
                                         </td>
-
                                         <td className="px-6 text-xs whitespace-nowrap p-4 text-right">
                                             <FileTableDropdown color={color} hash={item['Hash']} name={item['Name']}
                                                                size={item['Size']}

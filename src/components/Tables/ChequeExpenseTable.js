@@ -46,28 +46,22 @@ export default function ChequeExpenseTable({color}) {
     return (
         <>
             <div className={"relative flex flex-col min-w-0 break-words w-full shadow-lg rounded " + themeStyle.bg[color]}>
-
                 <div className="block w-full overflow-x-auto">
-
                     <table className="items-center w-full bg-transparent border-collapse">
                         <thead>
                         <tr className="text-xs uppercase whitespace-nowrap">
                             <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 {t('host_id')}
                             </th>
-
                             <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 {t('blockchain')}
                             </th>
-
                             <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 {t('chequebook')}
                             </th>
-
                             <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 {t('total_sent')} (WBTT)
                             </th>
-
                         </tr>
                         </thead>
                         <tbody>
@@ -78,19 +72,15 @@ export default function ChequeExpenseTable({color}) {
                                         <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <Truncate>{item['PeerID']}</Truncate>
                                         </td>
-
                                         <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             BTTC
                                         </td>
-
                                         <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <Truncate>{item['Vault']}</Truncate>
                                         </td>
-
                                         <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             {switchBalanceUnit(item['Payout'])}
                                         </td>
-
                                     </tr>
                                 )
                             })

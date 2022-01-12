@@ -12,7 +12,7 @@ export const precision = 1000000000000000000;
 export function switchStorageUnit2(storage) {
     if (storage === null)
         return '--';
-    let num = 0
+    let num = 0;
     if (storage / PiB > 1) {
         num = (storage / PiB).toFixed(2);
         return num + ' PiB'

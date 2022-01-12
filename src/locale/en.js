@@ -116,6 +116,7 @@ const en_US = {
     'add_connection': 'Add Connection',
 
 // setting
+
     'system_config': 'System Config',
     'submit':'Submit',
     'endpoint':'Endpoint',
@@ -124,6 +125,7 @@ const en_US = {
     'private_key': 'Private Key',
 
 // modal
+
     'insert_cid':'Insert an BTFS path (CID) to import. Examples:',
     'chequebook_withdraw':'Vault Withdraw',
     'amount_to_withdraw':'Please enter the amount of WBTT you would like to withdraw.',
@@ -138,6 +140,7 @@ const en_US = {
     'key_warning_2': 'Do Not show the private key to anybody',
 
 //  warning
+
     'no_preview': 'No Preview',
     'node_not_connected':'Looks like your node is not connected',
     'node_connecting':'Node connecting',
@@ -163,9 +166,6 @@ const en_US = {
     'delete_fail':'Delete Failed !',
     'add_connection_failed': 'Add Connection Failed !',
 
-
-
-
-
 };
+
 export default en_US

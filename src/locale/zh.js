@@ -166,6 +166,6 @@ const zh_CN = {
     'delete_fail':'删除失败！',
     'add_connection_failed': '添加链接失败',
 
+};
 
-}
 export default zh_CN

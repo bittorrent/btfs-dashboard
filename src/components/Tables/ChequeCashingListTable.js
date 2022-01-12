@@ -79,11 +79,8 @@ export default function ChequeCashingListTable({color, enableCash}) {
     return (
 
         <>
-            <div
-                className={"relative flex flex-col min-w-0 break-words w-full shadow-lg rounded " + themeStyle.bg[color] + ' ' + themeStyle.text[color]}>
-
+            <div className={"relative flex flex-col min-w-0 break-words w-full shadow-lg rounded " + themeStyle.bg[color] + ' ' + themeStyle.text[color]}>
                 <div className="block w-full overflow-x-auto">
-
                     <table className="items-center w-full bg-transparent border-collapse">
                         <thead>
                         <tr className="text-xs uppercase whitespace-nowrap">
@@ -93,15 +90,12 @@ export default function ChequeCashingListTable({color, enableCash}) {
                             <th className={"px-6 border border-solid py-3  border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 {t('host_id')}
                             </th>
-
                             <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 {t('blockchain')}
                             </th>
-
                             <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 {t('chequebook')}
                             </th>
-
                             <th className={"cursor-pointer px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}
                                 onClick={() => {
                                     sorting('uncashed', uncashedOrder === 'ascending' ? 'descending' : 'ascending')
@@ -115,7 +109,6 @@ export default function ChequeCashingListTable({color, enableCash}) {
                                     </div>
                                 </div>
                             </th>
-
                             <th className={"cursor-pointer px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " + themeStyle.th[color]}
                                 onClick={() => {
                                     sorting('cashed', cashedOrder === 'ascending' ? 'descending' : 'ascending')
@@ -132,7 +125,6 @@ export default function ChequeCashingListTable({color, enableCash}) {
                         </tr>
                         </thead>
                         <tbody>
-
                         {cheques && cheques.map((item, index) => {
                             return (
                                 <tr key={index}>
@@ -153,11 +145,9 @@ export default function ChequeCashingListTable({color, enableCash}) {
                                             <ClipboardCopy value={item['PeerID']}/>
                                         </div>
                                     </td>
-
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         BTTC
                                     </td>
-
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         <div className='flex'>
                                             <a href={'https://testscan.bt.io/#/address/' + item['Vault']} target='_blank'>
@@ -166,23 +156,17 @@ export default function ChequeCashingListTable({color, enableCash}) {
                                             <ClipboardCopy value={item['Vault']}/>
                                         </div>
                                     </td>
-
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         {switchBalanceUnit((item['Payout'] - item['CashedAmount']))}
                                     </td>
-
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         {switchBalanceUnit(item['CashedAmount'])}
                                     </td>
-
                                 </tr>
                             )
-                        })
-                        }
-
+                        })}
                         </tbody>
                     </table>
-
                     {
                         !cheques && <div className='w-full flex justify-center pt-4'>
                             <img alt='loading' src={require('../../assets/img/loading.svg').default}
@@ -191,7 +175,6 @@ export default function ChequeCashingListTable({color, enableCash}) {
                     }
 
                 </div>
-
                 <div className='flex justify-between items-center'>
                     <div className='p-4'>Total: {total}</div>
                     <div>

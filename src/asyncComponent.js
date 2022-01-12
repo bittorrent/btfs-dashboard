@@ -9,13 +9,10 @@ export const AsyncComponent = loadComponent => (
                 Component: null,
             }
         }
-
         componentWillMount() {
-
             if (this.hasLoadedComponent()) {
                 return;
             }
-
             loadComponent()
                 .then(module => module.default)
                 .then((Component) => {
@@ -26,14 +23,12 @@ export const AsyncComponent = loadComponent => (
                     throw err;
                 });
         }
-
         hasLoadedComponent() {
             return this.state.Component !== null;
         }
-
         render() {
             const {Component} = this.state;
             return Component ? ( (window.nodeStatus || window.location.href.indexOf("/admin/settings") !== -1) ? <Component {...this.props} /> : <CardWarning color={window.theme} loading={window.loading}/>) : null;
         }
     }
-)
+);

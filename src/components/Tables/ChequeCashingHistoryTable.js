@@ -23,7 +23,6 @@ export default function ChequeCashingHistoryTable({color}) {
 
         <>
             <div className={"relative flex flex-col min-w-0 break-words w-full shadow-lg rounded " + themeStyle.bg[color]}>
-
                 <table className="items-center w-full bg-transparent border-collapse">
                     <thead>
                     <tr className="text-xs uppercase whitespace-nowrap">
@@ -31,23 +30,18 @@ export default function ChequeCashingHistoryTable({color}) {
                             style={{width: '50px'}}>
                            #
                         </th>
-
                         <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                             {t('tx_hash')}
                         </th>
-
                         <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                             {t('host_id')}
                         </th>
-
                         <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                             {t('blockchain')}
                         </th>
-
                         <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                             {t('chequebook')}
                         </th>
-
                         <th className={"cursor-pointer px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}
                             onClick={() => {
                                 sorting('uncashed', uncashedOrder === 'ascending' ? 'descending' : 'ascending')
@@ -61,15 +55,12 @@ export default function ChequeCashingHistoryTable({color}) {
                                 </div>
                             </div>
                         </th>
-
                         <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                             {t('date')}
                         </th>
-
                         <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                             {t('status')}
                         </th>
-
                     </tr>
                     </thead>
                     <tbody>
@@ -82,9 +73,7 @@ export default function ChequeCashingHistoryTable({color}) {
                     {t('coming_soon')}
                 </div>
 
-
             </div>
-
         </>
     );
 }

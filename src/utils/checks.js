@@ -38,9 +38,7 @@ export const metaMaskCheck = async () => {
     } else {
         return {isInstalled: false, isLogin: false, address: null}
     }
-
 };
-
 
 export const inputCheck = () => {
 

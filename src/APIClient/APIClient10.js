@@ -1,11 +1,9 @@
 import xhr from "axios/index";
 
 class APIClient10 {
-
     constructor() {
         this.apiUrl = localStorage.getItem('NODE_URL') ? localStorage.getItem('NODE_URL') : "http://localhost:5001";
         this.request = async (url, body, config) => {
-
             return new Promise(async (resolve, reject) => {
                 try {
                     let {data} = await xhr.post(

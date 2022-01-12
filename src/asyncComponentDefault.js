@@ -8,13 +8,10 @@ export const AsyncComponent = loadComponent => (
                 Component: null,
             }
         }
-
         componentWillMount() {
-
             if (this.hasLoadedComponent()) {
                 return;
             }
-
             loadComponent()
                 .then(module => module.default)
                 .then((Component) => {
@@ -25,14 +22,12 @@ export const AsyncComponent = loadComponent => (
                     throw err;
                 });
         }
-
         hasLoadedComponent() {
             return this.state.Component !== null;
         }
-
         render() {
             const {Component} = this.state;
             return Component ?  <Component {...this.props} />  : null;
         }
     }
-)
+);

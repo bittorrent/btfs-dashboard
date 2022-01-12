@@ -22,9 +22,7 @@ export default function ChequeDetailTable({color, type}) {
     return (
 
         <>
-            <div
-                className={"relative flex flex-col min-w-0 break-words w-full shadow-lg rounded " + themeStyle.bg[color]}>
-
+            <div className={"relative flex flex-col min-w-0 break-words w-full shadow-lg rounded " + themeStyle.bg[color]}>
                 <table className="items-center w-full bg-transparent border-collapse">
                     <thead>
                     <tr className="text-xs uppercase whitespace-nowrap">
@@ -32,20 +30,16 @@ export default function ChequeDetailTable({color, type}) {
                             style={{width: '50px'}}>
                             #
                         </th>
-
                         <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                             {t('host_id')}
                         </th>
-
                         <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                             {t('blockchain')}
                         </th>
-
                         <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                             {type === 'earning' && t('chequebook')}
                             {type === 'expense' && t('recipient')}
                         </th>
-
                         <th className={"cursor-pointer px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}
                             onClick={() => {
                                 sorting('uncashed', uncashedOrder === 'ascending' ? 'descending' : 'ascending')
@@ -59,13 +53,11 @@ export default function ChequeDetailTable({color, type}) {
                                 </div>
                             </div>
                         </th>
-
                         <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                             {type === 'earning' && t('receive')}
                             {type === 'expense' && t('send')}
                             &nbsp;{t('date')}
                         </th>
-
                     </tr>
                     </thead>
                     <tbody>
@@ -77,10 +69,7 @@ export default function ChequeDetailTable({color, type}) {
                 <div className='w-full flex justify-center p-4'>
                     {t('coming_soon')}
                 </div>
-
-
             </div>
-
         </>
     );
 }
