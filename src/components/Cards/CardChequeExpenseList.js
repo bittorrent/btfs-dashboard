@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useRef} from "react";
+import React, {useState, useCallback} from "react";
 import PropTypes from "prop-types";
 import {Menu} from 'antd';
 import ChequeExpenseTable from "components/Tables/ChequeExpenseTable.js"
@@ -18,8 +18,7 @@ export default function CardChequeExpenseList({color}) {
     return (
 
         <>
-            <div
-                className={
+            <div className={
                     "relative flex flex-col min-w-0 break-words w-full shadow-lg rounded mt-4 " +
                     themeStyle.bg[color] + ' ' + themeStyle.text[color]
                 }

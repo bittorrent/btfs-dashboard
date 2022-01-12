@@ -1,7 +1,6 @@
 import React, {useState, useCallback, useRef} from "react";
 import PropTypes from "prop-types";
-import {useIntl} from 'react-intl';
-import {Tooltip, Menu} from 'antd';
+import {Menu} from 'antd';
 import ChequeCashingListTable from "components/Tables/ChequeCashingListTable.js"
 import ChequeCashingHistoryTable from "components/Tables/ChequeCashingHistoryTable.js"
 import ChequeDetailTable from "components/Tables/ChequeDetailTable.js";
@@ -10,7 +9,6 @@ import Emitter from "utils/eventBus";
 import {t} from "utils/text.js";
 
 export default function CardChequeEarningList({color}) {
-    const intl = useIntl();
     const cashList = useRef([]);
     const [current, setCurrent] = useState('cashList');
     const [cashStatus, setCashStatus] = useState(false);
@@ -54,8 +52,7 @@ export default function CardChequeEarningList({color}) {
     return (
 
         <>
-            <div
-                className={
+            <div className={
                     "relative flex flex-col min-w-0 break-words w-full shadow-lg rounded mt-4 " +
                     themeStyle.bg[color] + ' ' + themeStyle.text[color]
                 }
