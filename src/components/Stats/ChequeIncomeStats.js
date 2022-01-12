@@ -39,21 +39,16 @@ export default function ChequeIncomeStats({color}) {
     return (
         <>
             <div className="relative pt-4 pb-4">
-                <div className=" mx-auto w-full">
-                    <div>
+                <div className="mx-auto w-full">
                         <div className="flex flex-wrap">
                             <div className="w-full xl:w-6/12 xl:pr-2">
-                                <>
-                                    <div
-                                        className={"relative break-words rounded mb-2 xl:mb-0  " + themeStyle.bg[color] + themeStyle.text[color]}>
-
+                                    <div className={"relative break-words rounded mb-2 xl:mb-0  " + themeStyle.bg[color] + themeStyle.text[color]}>
                                         <div className="flex flex-col justify-between p-4 h-180-px">
-                                            <div className="">
-                                                <h5 className={" uppercase font-bold " + themeStyle.title[color]}>
+                                            <div>
+                                                <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
                                                     {t('received_cheques')}
                                                 </h5>
                                             </div>
-
                                             <div className='flex justify-between'>
                                                 <div>
                                                     <span className='font-semibold text-xl'>{chequeReceived} </span>
@@ -62,12 +57,10 @@ export default function ChequeIncomeStats({color}) {
                                                     {cashedPercent} %
                                                 </div>
                                             </div>
-
-                                            <div className="">
+                                            <div>
                                                 <Progress className={color} percent={cashedPercent} showInfo={false}
                                                           strokeWidth={30} strokeColor={strokeColor}/>
                                             </div>
-
                                             <div className='flex justify-between'>
                                                 <div>
                                                     {t('cashed')}
@@ -82,21 +75,16 @@ export default function ChequeIncomeStats({color}) {
                                             </div>
                                         </div>
                                     </div>
-                                </>
                             </div>
 
                             <div className="w-full xl:w-6/12 xl:pl-2">
-                                <>
-                                    <div
-                                        className={"relative break-words rounded " + themeStyle.bg[color] + themeStyle.text[color]}>
-
+                                    <div className={"relative break-words rounded " + themeStyle.bg[color] + themeStyle.text[color]}>
                                         <div className="flex flex-col justify-between p-4 h-180-px">
-                                            <div className="">
-                                                <h5 className={" uppercase font-bold " + themeStyle.title[color]}>
+                                            <div>
+                                                <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
                                                     {t('received_cheques_amount')}
                                                 </h5>
                                             </div>
-
                                             <div className='flex justify-between'>
                                                 <div>
                                                     <span className='font-semibold text-xl'>{chequeEarning} </span>
@@ -106,12 +94,10 @@ export default function ChequeIncomeStats({color}) {
                                                     {cashedPercent} %
                                                 </div>
                                             </div>
-
-                                            <div className="">
+                                            <div>
                                                 <Progress className={color} percent={cashedPercent} showInfo={false}
                                                           strokeWidth={30} strokeColor={strokeColor}/>
                                             </div>
-
                                             <div className='flex justify-between'>
                                                 <div>
                                                     {t('cashed')}
@@ -126,10 +112,8 @@ export default function ChequeIncomeStats({color}) {
                                             </div>
                                         </div>
                                     </div>
-                                </>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </>

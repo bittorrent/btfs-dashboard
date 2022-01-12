@@ -6,7 +6,6 @@ import Emitter from "utils/eventBus";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
 
-
 export default function NodeWalletStats({color}) {
 
     const [BTTCAddress, setBTTCAddress] = useState('--');
@@ -53,83 +52,69 @@ export default function NodeWalletStats({color}) {
         }
     };
 
-
     return (
         <>
             <div className="relative pb-4">
-                <div className=" mx-auto w-full">
-                    <div>
+                <div className="mx-auto w-full">
                         <div className="flex flex-wrap">
-                            <div className="w-full xl:w-6/12  xl:pr-2">
-                                <>
-                                    <div
-                                        className={"relative break-words rounded md:mb-2 xl:mb-0  " + themeStyle.bg[color] + themeStyle.text[color]}>
-
+                            <div className="w-full xl:w-6/12 xl:pr-2">
+                                    <div className={"relative break-words rounded md:mb-2 xl:mb-0  " + themeStyle.bg[color] + themeStyle.text[color]}>
                                         <div className="flex items-center p-4 h-180-px">
                                             <div className="relative w-full h-150-px flex flex-col justify-between">
-                                                <h5 className={" uppercase font-bold " + themeStyle.title[color]}>
+                                                <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
                                                     BTTC {t('address')}
                                                     <a onClick={(e) => {
                                                         showQR(e, 'BTTC')
                                                     }}><i className="fas fa-qrcode ml-2"></i></a>
                                                     <ClipboardCopy value={BTTCAddress}/>
                                                 </h5>
-                                                <div className="font-semibold ">
+                                                <div className="font-semibold">
                                                     <a href={'https://testscan.bt.io/#/address/' + BTTCAddress} target='_blank' rel='noreferrer'>{BTTCAddress}</a>
                                                 </div>
 
-                                                <div className="font-semibold ">
+                                                <div className="font-semibold">
                                                     <span className=''>{t('balance')}: </span>
                                                 </div>
 
                                                 <div className='flex flex-col'>
-                                                    <div className="">
+                                                    <div>
                                                         <span className='text-lg font-semibold'>{BTTCAddressBTT} </span>
                                                         <span className='text-xs'>BTT</span>
                                                     </div>
-                                                    <div className="">
-                                                        <span
-                                                            className='text-lg font-semibold'> {BTTCAddressWBTT} </span>
+                                                    <div>
+                                                        <span className='text-lg font-semibold'> {BTTCAddressWBTT} </span>
                                                         <span className='text-xs'>WBTT</span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </>
                             </div>
-                            <div className="w-full xl:w-6/12  xl:pl-2">
-                                <>
-                                    <div
-                                        className={"relative break-words rounded " + themeStyle.bg[color] + themeStyle.text[color]}>
-
+                            <div className="w-full xl:w-6/12 xl:pl-2">
+                                    <div className={"relative break-words rounded " + themeStyle.bg[color] + themeStyle.text[color]}>
                                         <div className="flex items-center p-4 h-180-px">
                                             <div className="relative w-full h-150-px flex flex-col justify-between">
-                                                <h5 className={" uppercase font-bold " + themeStyle.title[color]}>
+                                                <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
                                                     {t('chequebook')} {t('address')}
                                                     <a onClick={(e) => {
                                                         showQR(e, 'Cheque')
                                                     }}><i className="fas fa-qrcode ml-2"></i></a>
                                                     <ClipboardCopy value={chequeAddress}/>
                                                 </h5>
-
                                                 <div className='font-semibold'>
                                                     <a href={'https://testscan.bt.io/#/address/' + chequeAddress} target='_blank' rel='noreferrer'>{chequeAddress}</a>
                                                 </div>
-
-                                                <div className="">
+                                                <div>
                                                     <span className='font-semibold'>{t('balance')}: </span>
                                                     <span className='text-lg font-semibold'>{chequeBookBalance}</span>
                                                     <span className='text-xs'>WBTT</span>
                                                 </div>
-
                                                 <div className='withdraw_deposit'>
                                                     <button
                                                         className={"border-1 px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 shadow hover:shadow-md inline-flex items-center font-bold " + themeStyle.bg[color]}
                                                         type="button" onClick={onWithdraw}>
                                                         {t('withdraw')}
                                                     </button>
-
                                                     <button
                                                         className={"border-1 px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 shadow hover:shadow-md inline-flex items-center font-bold " + themeStyle.bg[color]}
                                                         type="button" onClick={onDeposit}>
@@ -139,10 +124,8 @@ export default function NodeWalletStats({color}) {
                                             </div>
                                         </div>
                                     </div>
-                                </>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </>
