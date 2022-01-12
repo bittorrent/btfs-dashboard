@@ -34,7 +34,6 @@ export default function FileControl({itemSelected, unSelect, color, data}) {
         }
     };
 
-
     return (
         <>
             <footer id="fileControl"
@@ -47,7 +46,7 @@ export default function FileControl({itemSelected, unSelect, color, data}) {
                         </div>
                         <div className="flex flex-wrap list-none md:justify-end  justify-center px-5">
                             <div>
-                                <a className={"text-center  text-sm font-semibold block py-1 px-3 "}
+                                <a className="text-center text-sm font-semibold block py-1 px-3"
                                    onClick={download}
                                    disabled={(itemSelected === 1) ? false : true}
                                 >
@@ -55,9 +54,8 @@ export default function FileControl({itemSelected, unSelect, color, data}) {
                                     <p>{t('download')}</p>
                                 </a>
                             </div>
-
                             <div>
-                                <a className={"text-center  text-sm font-semibold block py-1 px-3 "}
+                                <a className="text-center text-sm font-semibold block py-1 px-3"
                                    onClick={remove}
                                    disabled={(itemSelected === 0) ? true : false}
                                 >
