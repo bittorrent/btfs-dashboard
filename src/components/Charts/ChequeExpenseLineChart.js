@@ -96,7 +96,6 @@ function ChequeExpenseLineChart({color}) {
         var ctx = document.getElementById("cheque-expense-line-chart").getContext("2d");
         window.chequeExpenseLineChart = new Chart(ctx, config);
 
-
         return () => {
             if (window.chequeExpenseLineChart) {
                 window.chequeExpenseLineChart.destroy();

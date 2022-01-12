@@ -42,6 +42,7 @@ function NetworkLineChart({color}) {
                     },
                 ],
             },
+
             options: {
                 plugins: {
                     legend: {
@@ -148,7 +149,6 @@ function NetworkLineChart({color}) {
         }
     };
 
-
     return (
         <>
             <div className={"relative flex flex-col h-400-px justify-center p-4" + themeStyle.bg[color]}>
@@ -171,6 +171,5 @@ function NetworkLineChart({color}) {
         </>
     );
 }
-
 
 export default memo(NetworkLineChart)

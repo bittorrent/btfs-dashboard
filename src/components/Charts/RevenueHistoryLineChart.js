@@ -67,7 +67,6 @@ function RevenueHistoryLineChart({color}) {
         content.innerHTML = '&nbsp;';
         content.innerHTML =  "<canvas id='revenue-history-line-chart' style='height: 300px; width: 100%'></canvas>";
 
-
         var ctx = document.getElementById("revenue-history-line-chart").getContext("2d");
         window.revenueHistoryLineChart = new Chart(ctx, config);
 
@@ -102,6 +101,5 @@ function RevenueHistoryLineChart({color}) {
         </>
     );
 }
-
 
 export default memo(RevenueHistoryLineChart)

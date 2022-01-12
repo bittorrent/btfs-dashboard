@@ -128,5 +128,4 @@ function ChequeIncomeLineChart({color}) {
     );
 }
 
-
 export default memo(ChequeIncomeLineChart)
