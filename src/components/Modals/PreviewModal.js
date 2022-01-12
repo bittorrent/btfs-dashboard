@@ -79,31 +79,23 @@ export default function PreviewModal({color}) {
         <>
             {showModal ? (
                 <>
-                    <div
-                        className={"fixed flex z-50 modal_center md:w-1/2 md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
+                    <div className={"fixed flex z-50 modal_center md:w-1/2 md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
                         style={{height: '500px'}}>
-                        <button
-                            className="z-100 absolute bg-transparent text-2xl mr-2 font-semibold outline-none focus:outline-none"
+                        <button className="z-100 absolute bg-transparent text-2xl mr-2 font-semibold outline-none focus:outline-none"
                             style={{right: '-25px', top: '-25px'}}
-
                             onClick={close}
                         >
                             <i className="far fa-times-circle text-white"></i>
                         </button>
-
                         <div className="w-full ">
-                            <div
-                                className={" h-full border-0 rounded-lg shadow-lg flex flex-col justify-center items-center" + themeStyle.bg[color] + ' ' + themeStyle.text[color]}>
-
+                            <div className={" h-full border-0 rounded-lg shadow-lg flex flex-col justify-center items-center" + themeStyle.bg[color] + ' ' + themeStyle.text[color]}>
                                 <div className=' w-full h-full relative overflow-auto flex justify-center p-4'>
                                     {file && file.type.indexOf('image') > -1 &&
                                     <img id='_image' alt='' className='m-auto'/>}
                                     {file && file.type.indexOf('video') > -1 &&
-                                    <video id="_videoPlayer" style={{margin: 'auto'}} width='100%' height='100%'
-                                           controls="controls"></video>}
+                                    <video id="_videoPlayer" style={{margin: 'auto'}} width='100%' height='100%' controls="controls"></video>}
                                     {file && file.type.indexOf('audio') > -1 &&
-                                    <audio id="_audioPlayer" style={{margin: 'auto'}} width='100%' height='100%'
-                                           controls="controls"></audio>}
+                                    <audio id="_audioPlayer" style={{margin: 'auto'}} width='100%' height='100%' controls="controls"></audio>}
                                     {file && file.type.indexOf('pdf') > -1 &&
                                     <embed id='_pdf' width='100%' height='100%'/>}
                                     {file && file.type.indexOf('json') > -1 &&
@@ -116,8 +108,7 @@ export default function PreviewModal({color}) {
                                     <div className='flex flex-col items-center justify-center'>
                                         <img alt='disabled' src={require('../../assets/img/disabled.png').default}/>
                                         <div className='p-4 font-semibold'> {t('no_preview')} </div>
-                                    </div>
-                                    }
+                                    </div>}
                                     {
                                         !file && <div className='w-full flex justify-center items-center '>
                                             <img alt="" src={require('../../assets/img/loading.svg').default}
@@ -125,7 +116,6 @@ export default function PreviewModal({color}) {
                                         </div>
                                     }
                                 </div>
-
                             </div>
                         </div>
                     </div>
