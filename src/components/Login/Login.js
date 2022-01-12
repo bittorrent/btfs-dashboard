@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext} from "react";
 import {mainContext} from 'reducer'
 import {Dropdown, Menu} from 'antd';
 import themeStyle from "utils/themeStyle.js";
@@ -53,7 +53,7 @@ const Login = ({color}) => {
 
     return (
         <>
-            <div  className={"mr-3 " + (themeStyle.bg[color])}>
+            <div className={"mr-3 " + themeStyle.bg[color]}>
                 {!account &&
                 <Dropdown overlay={connectMenu} placement="bottomCenter" overlayClassName="connect">
                     <button
