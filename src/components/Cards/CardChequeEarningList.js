@@ -50,13 +50,8 @@ export default function CardChequeEarningList({color}) {
     };
 
     return (
-
         <>
-            <div className={
-                    "relative flex flex-col min-w-0 break-words w-full shadow-lg rounded mt-4 " +
-                    themeStyle.bg[color] + ' ' + themeStyle.text[color]
-                }
-            >
+            <div className={"relative flex flex-col min-w-0 break-words w-full shadow-lg rounded mt-4 " + themeStyle.bg[color] + ' ' + themeStyle.text[color]}>
                 <div className="rounded-t mb-0 px-2 py-4 border-0">
                     <div className="flex flex-wrap items-center">
                         <div className="relative w-full max-w-full flex-grow flex-1">
@@ -82,7 +77,6 @@ export default function CardChequeEarningList({color}) {
                             </div>
                         </div>
                     </div>
-
                     {
                         current === 'cashList' && <div className='pt-4 pl-4 flex items-center h-50-px'>
                             <div className='flex-grow flex-1'>
@@ -102,9 +96,7 @@ export default function CardChequeEarningList({color}) {
                             </button>
                         </div>
                     }
-
                 </div>
-
                 <div className="block w-full overflow-x-auto">
                     {
                         current === 'cashList' && <ChequeCashingListTable enableCash={enableCash} color={color}/>

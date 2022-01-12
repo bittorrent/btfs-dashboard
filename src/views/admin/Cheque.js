@@ -19,7 +19,7 @@ export default function Cheque() {
 
     return (
         <>
-            <div className='mb-4'>
+            <div className='mb-2'>
                 <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal"
                       style={{'background': 'transparent'}}>
                     <Menu.Item key="chequeIncome">
@@ -33,12 +33,9 @@ export default function Cheque() {
                         </h5>
                     </Menu.Item>
                 </Menu>
-
             </div>
-
             {current === 'chequeIncome' && <ChequeIncome color={theme}/>}
             {current === 'chequeExpense' && <ChequeExpense color={theme}/>}
-
             <ConfirmModal color={theme}/>
         </>
     );
