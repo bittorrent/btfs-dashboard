@@ -52,7 +52,7 @@ export default function ChequeCashingListTable({color, enableCash}) {
         if (!didCancel) {
             setCheques(cheques);
             setTotal(total);
-            setCurrent(page)
+            setCurrent(page);
             unSelect();
         }
     };
@@ -171,6 +171,11 @@ export default function ChequeCashingListTable({color, enableCash}) {
                         !cheques && <div className='w-full flex justify-center pt-4'>
                             <img alt='loading' src={require('../../assets/img/loading.svg').default}
                                  style={{width: '50px', height: '50px'}}/>
+                        </div>
+                    }
+                    {
+                        (cheques && total === 0) && <div className='w-full flex justify-center p-4'>
+                            {t('no_data')}
                         </div>
                     }
 

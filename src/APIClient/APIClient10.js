@@ -83,6 +83,10 @@ class APIClient10 {
         return this.request('/api/v1/settlement/list');
     }
 
+    getChequeStats() {
+        return this.request('/api/v1/cheque/stats');
+    }
+
     getChequeTotalIncomeNumbers() {
         return this.request('/api/v1/cheque/receive-total-count');
     }
@@ -95,8 +99,28 @@ class APIClient10 {
         return this.request('/api/v1/cheque/receivelist?arg=' + offset + '&arg=' + limit);
     }
 
+    getChequeCashingHistoryList(offset, limit) {
+        return this.request('/api/v1/cheque/cashlist?arg=' + offset + '&arg=' + limit);
+    }
+
+    getChequeReceivedDetailList(offset, limit) {
+        return this.request('/api/v1/cheque/receive-history-list?arg=' + offset + '&arg=' + limit);
+    }
+
     getChequeExpenseList() {
         return this.request('/api/v1/cheque/sendlist');
+    }
+
+    getChequeSentDetailList(offset, limit) {
+        return this.request('/api/v1/cheque/send-history-list?arg=' + offset + '&arg=' + limit);
+    }
+
+    getChequeEarningHistory() {
+        return this.request('/api/v1/cheque/receive-history-stats');
+    }
+
+    getChequeExpenseHistory() {
+        return this.request('/api/v1/cheque/send-history-stats');
     }
 
     getFilesStorage() {

@@ -125,9 +125,7 @@ function NetworkLineChart({color}) {
     }, [color, intl]);
 
     const update = async () => {
-
         fetchData();
-
         interval = setInterval(async () => {
             fetchData();
         }, 60000);

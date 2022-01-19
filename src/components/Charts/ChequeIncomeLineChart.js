@@ -1,5 +1,6 @@
 import React, {memo, useEffect} from "react";
 import {Chart} from "chart.js";
+import {getChequeEarningHistory} from "services/chequeService.js";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
 
@@ -96,6 +97,8 @@ function ChequeIncomeLineChart({color}) {
         var ctx = document.getElementById("cheque-income-line-chart").getContext("2d");
         window.chequeIncomeLineChart = new Chart(ctx, config);
 
+        update();
+
         return () => {
             if (window.chequeIncomeLineChart) {
                 window.chequeIncomeLineChart.destroy();
@@ -104,6 +107,17 @@ function ChequeIncomeLineChart({color}) {
         }
 
     }, [color]);
+
+    const update = async () => {
+        let data = await getChequeEarningHistory();
+        if (window.chequeIncomeLineChart) {
+            window.chequeIncomeLineChart.data.labels = data.labels;
+            console.log(data.labels, data.data[0]);
+            window.chequeIncomeLineChart.data.datasets[0].data = data.data[0];
+            window.chequeIncomeLineChart.data.datasets[1].data = data.data[1];
+            window.chequeIncomeLineChart.update();
+        }
+    };
 
     return (
         <>

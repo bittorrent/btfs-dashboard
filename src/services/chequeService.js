@@ -38,11 +38,35 @@ export const getChequeCashingList = async (offset, limit) => {
     }
 };
 
+export const getChequeCashingHistoryList = async (offset, limit) => {
+    let data = await Client10.getChequeCashingHistoryList(offset, limit);
+    return {
+        cheques: data['records'] ? data['records'] : [],
+        total: data['total']
+    }
+};
+
+export const getChequeReceivedDetailList = async (offset, limit) => {
+    let data = await Client10.getChequeReceivedDetailList(offset, limit);
+    return {
+        cheques: data['Records'] ? data['Records'] : [],
+        total: data['Total']
+    }
+};
+
 export const getChequeExpenseList = async () => {
     let data = await Client10.getChequeExpenseList();
     return {
         cheques: data['Cheques'] ? data['Cheques'] : [],
         total: data['Len']
+    }
+};
+
+export const getChequeSentDetailList = async () => {
+    let data = await Client10.getChequeSentDetailList();
+    return {
+        cheques: data['Records'] ? data['Records'] : [],
+        total: data['Total']
     }
 };
 
@@ -83,5 +107,55 @@ export const cash = async (cashList, onCashProgress, setErr, setMessage) => {
         console.log(e);
         setErr(true);
         return false;
+    }
+};
+
+export const getChequeEarningHistory = async (flag) => {
+    try {
+        let data = await Client10.getChequeEarningHistory();
+        let x = [];
+        let y1 = [];
+        let y2 = [];
+        data.forEach((item) => {
+            let date = new Date(item['date'] * 1000);
+            x.push((date.getMonth() + 1) + '/' + date.getDate());
+            y1.push(item['total_received']);
+            y2.push(item['total_received_count']);
+        });
+        return {
+            labels: x,
+            data: [y1, y2],
+        }
+    } catch (e) {
+        console.log(e);
+        return {
+            labels: [],
+            data: [],
+        }
+    }
+};
+
+export const getChequeExpenseHistory = async (flag) => {
+    try {
+        let data = await Client10.getChequeExpenseHistory();
+        let x = [];
+        let y1 = [];
+        let y2 = [];
+        data.forEach((item) => {
+            let date = new Date(item['date'] * 1000);
+            x.push((date.getMonth() + 1) + '/' + date.getDate());
+            y1.push(item['total_issued']);
+            y2.push(item['total_issued_count']);
+        });
+        return {
+            labels: x,
+            data: [y1, y2],
+        }
+    } catch (e) {
+        console.log(e);
+        return {
+            labels: [],
+            data: [],
+        }
     }
 };
