@@ -42,8 +42,6 @@ export default function ChequeDetailTable({color, type}) {
             data = await getChequeSentDetailList((page - 1) * 10, 10);
         }
 
-        console.log(data);
-
         let {cheques, total} = data;
 
         if (!didCancel) {

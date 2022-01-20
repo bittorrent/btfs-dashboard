@@ -133,7 +133,6 @@ function ChequeEarningLineChart({color}) {
         let data = await getChequeEarningHistory();
         if (window.ChequeEarningLineChart) {
             window.ChequeEarningLineChart.data.labels = data.labels;
-            console.log(data.labels, data.data[0]);
             window.ChequeEarningLineChart.data.datasets[0].data = data.data[1];
             window.ChequeEarningLineChart.data.datasets[1].data = data.data[0];
             window.ChequeEarningLineChart.update();

@@ -133,7 +133,6 @@ function ChequeExpenseLineChart({color}) {
         let data = await getChequeExpenseHistory();
         if (window.chequeExpenseLineChart) {
             window.chequeExpenseLineChart.data.labels = data.labels;
-            console.log(data.labels, data.data[0]);
             window.chequeExpenseLineChart.data.datasets[0].data = data.data[1];
             window.chequeExpenseLineChart.data.datasets[1].data = data.data[0];
             window.chequeExpenseLineChart.update();
