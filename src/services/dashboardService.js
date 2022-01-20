@@ -126,7 +126,7 @@ export const getNodeStorageStats = async () => {
         let data1 = Client10.getHostPrice();
         let data2 = Client10.getFilesStorage();
         let data3 = Client10.getChequeTotalIncomeNumbers();
-        let data4 = Client10.getChequeValue();
+        let data4 = Client10.getChequeStats();
         return Promise.all([data1, data2, data3, data4]).then((result) => {
             return {
                 capacity: switchStorageUnit2(result[1]['StorageMax']),
@@ -134,7 +134,8 @@ export const getNodeStorageStats = async () => {
                 percentage: new BigNumber(result[1]['RepoSize']).dividedBy(result[1]['StorageMax']).multipliedBy(100).toFixed(2),
                 hostPrice: parseFloat(result[0]['price'] * 30 / precision).toFixed(2),
                 contracts: result[2]['count'],
-                uncashed: switchBalanceUnit((result[3]['totalReceived'] - result[3]['settlement_received_cashed'])),
+                uncashed: switchBalanceUnit(result[3]['total_received_uncashed']),
+                uncashedChange: switchBalanceUnit(result[3]['total_received_daily_uncashed']),
             }
         })
     } catch (e) {

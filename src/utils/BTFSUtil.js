@@ -52,6 +52,14 @@ export function compareStr(prop) {
     }
 }
 
+export function compareInt(prop) {
+    return function (obj1, obj2) {
+        var val1 = obj1[prop];
+        var val2 = obj2[prop];
+        return val1 - val2;
+    }
+}
+
 export function str2bytes(str) {
     var bytes = new Uint8Array(str.length);
     for (var i = 0; i < str.length; i++) {

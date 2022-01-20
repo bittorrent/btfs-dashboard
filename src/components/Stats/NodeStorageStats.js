@@ -14,11 +14,12 @@ export default function NodeStorageStats({color}) {
     const [hostPrice, setHostPrice] = useState(0);
     const [contracts, setContracts] = useState(0);
     const [uncashed, setUncashed] = useState(0);
+    const [uncashedChange, setUncashedChange] = useState(0);
 
     useEffect(() => {
         let didCancel = false;
         const fetchData = async () => {
-            let {capacity, storageUsed, percentage, hostPrice, contracts, uncashed} = await getNodeStorageStats();
+            let {capacity, storageUsed, percentage, hostPrice, contracts, uncashed, uncashedChange} = await getNodeStorageStats();
             if (!didCancel) {
                 setCapacity(capacity);
                 setStorageUsed(storageUsed);
@@ -26,6 +27,7 @@ export default function NodeStorageStats({color}) {
                 setHostPrice(hostPrice);
                 setContracts(contracts);
                 setUncashed(uncashed);
+                setUncashedChange(uncashedChange);
             }
         };
         fetchData();
@@ -46,10 +48,13 @@ export default function NodeStorageStats({color}) {
                                                 <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
                                                     {t('uncashed')} {t('amount')}
                                                 </h5>
-                                                <div className="flex justify-between">
+                                                <div className="flex justify-between items-center">
                                                     <div>
                                                         <span className='text-lg font-semibold'>{uncashed}</span>
                                                         <span className='text-xs'>WBTT</span>
+                                                    </div>
+                                                    <div className='text-red-500'>
+                                                        + {uncashedChange} 24H
                                                     </div>
                                                 </div>
                                                 <div className={themeStyle.link[color]}>

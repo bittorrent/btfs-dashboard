@@ -11,13 +11,13 @@ function ChequeExpenseLineChart({color}) {
         var config = {
             type: 'line',
             data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                labels: [],
                 datasets: [
                     {
                         label: 'Sent',
                         borderColor: 'red',
                         backgroundColor: 'rgb(255, 99, 132, 0.3)',
-                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        data: [],
                         fill: false,
                         tension: 0,
                     },
@@ -26,7 +26,7 @@ function ChequeExpenseLineChart({color}) {
                         fill: false,
                         borderColor: 'blue',
                         backgroundColor: 'rgb(54, 162, 235, 0.3)',
-                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        data: [],
                         tension: 0,
                     },
                 ]
@@ -83,8 +83,6 @@ function ChequeExpenseLineChart({color}) {
                         ticks: {
                             color: color === 'light' ? 'black' : 'white'
                         },
-                        suggestedMin: -100,
-                        suggestedMax: 100
                     }
                 }
             },
@@ -113,8 +111,8 @@ function ChequeExpenseLineChart({color}) {
         if (window.chequeExpenseLineChart) {
             window.chequeExpenseLineChart.data.labels = data.labels;
             console.log(data.labels, data.data[0]);
-            window.chequeExpenseLineChart.data.datasets[0].data = data.data[0];
-            window.chequeExpenseLineChart.data.datasets[1].data = data.data[1];
+            window.chequeExpenseLineChart.data.datasets[0].data = data.data[1];
+            window.chequeExpenseLineChart.data.datasets[1].data = data.data[0];
             window.chequeExpenseLineChart.update();
         }
     };

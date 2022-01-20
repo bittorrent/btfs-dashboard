@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import Client10 from "APIClient/APIClient10.js";
-import {switchBalanceUnit} from "utils/BTFSUtil.js";
+import {switchBalanceUnit, compareInt} from "utils/BTFSUtil.js";
 
 export const getChequeIncomeInfo = async () => {
     let data1 = Client10.getChequeValue();
@@ -8,9 +8,9 @@ export const getChequeIncomeInfo = async () => {
     return Promise.all([data1, data2]).then((result) => {
         return {
             chequeReceived: result[1]['count'],
-            chequeEarning: switchBalanceUnit(result[0]['totalReceived'] ),
-            uncashed: switchBalanceUnit((result[0]['totalReceived'] - result[0]['settlement_received_cashed']) ),
-            cashed: switchBalanceUnit((result[0]['settlement_received_cashed']) ),
+            chequeEarning: switchBalanceUnit(result[0]['totalReceived']),
+            uncashed: switchBalanceUnit((result[0]['totalReceived'] - result[0]['settlement_received_cashed'])),
+            cashed: switchBalanceUnit((result[0]['settlement_received_cashed'])),
             cashedPercent: result[0]['totalReceived'] ? new BigNumber((result[0]['settlement_received_cashed'])).dividedBy(result[0]['totalReceived']).multipliedBy(100).toFixed(0) : 0,
         }
     })
@@ -22,12 +22,37 @@ export const getChequeExpenseInfo = async () => {
     return Promise.all([data1, data2]).then((result) => {
         return {
             chequeSent: result[1]['count'],
-            chequeExpense: switchBalanceUnit(result[0]['totalSent'] ),
-            uncashed: switchBalanceUnit((result[0]['totalSent'] - result[0]['settlement_sent_cashed']) ),
-            cashed: switchBalanceUnit((result[0]['settlement_sent_cashed']) ),
+            chequeExpense: switchBalanceUnit(result[0]['totalSent']),
+            uncashed: switchBalanceUnit((result[0]['totalSent'] - result[0]['settlement_sent_cashed'])),
+            cashed: switchBalanceUnit((result[0]['settlement_sent_cashed'])),
             cashedPercent: result[0]['totalSent'] ? new BigNumber((result[0]['settlement_sent_cashed'])).dividedBy(result[0]['totalSent']).multipliedBy(100).toFixed(0) : 0,
         }
     })
+};
+
+export const getChequeEarningStats = async () => {
+    let data = await Client10.getChequeStats();
+    return {
+        chequeReceivedCount: data['total_received_count'],
+        uncashedCount: data['total_received_count'] - data['total_received_cashed_count'],
+        cashedCount: data['total_received_cashed_count'],
+        chequeReceivedValue: switchBalanceUnit(data['total_received']),
+        uncashedValue: switchBalanceUnit(data['total_received_uncashed']),
+        cashedValue: switchBalanceUnit(data['total_received'] - data['total_received_uncashed']),
+        cashedCountPercent:  data['total_received_count'] ? new BigNumber(data['total_received_cashed_count']).dividedBy(data['total_received_count']).multipliedBy(100).toFixed(0) : 100,
+        cashedValuePercent: data['total_received'] ? new BigNumber((data['total_received'] - data['total_received_uncashed'])).dividedBy(data['total_received']).multipliedBy(100).toFixed(0): 100
+    }
+};
+
+export const getChequeExpenseStats = async () => {
+    let data = await Client10.getChequeStats();
+    return {
+        chequeSentCount: data['total_issued_count'],
+        chequeSentValue: switchBalanceUnit(data['total_issued']),
+        uncashedValue: switchBalanceUnit(data['total_issued'] - data['total_issued_cashed']),
+        cashedValue: switchBalanceUnit(data['total_issued_cashed']),
+        cashedValuePercent: data['total_issued'] ? new BigNumber(data['total_issued_cashed']).dividedBy(data['total_issued']).multipliedBy(100).toFixed(0) : 100
+    }
 };
 
 export const getChequeCashingList = async (offset, limit) => {
@@ -49,8 +74,8 @@ export const getChequeCashingHistoryList = async (offset, limit) => {
 export const getChequeReceivedDetailList = async (offset, limit) => {
     let data = await Client10.getChequeReceivedDetailList(offset, limit);
     return {
-        cheques: data['Records'] ? data['Records'] : [],
-        total: data['Total']
+        cheques: data['records'] ? data['records'] : [],
+        total: data['total']
     }
 };
 
@@ -62,11 +87,11 @@ export const getChequeExpenseList = async () => {
     }
 };
 
-export const getChequeSentDetailList = async () => {
-    let data = await Client10.getChequeSentDetailList();
+export const getChequeSentDetailList = async (offset, limit) => {
+    let data = await Client10.getChequeSentDetailList(offset, limit);
     return {
-        cheques: data['Records'] ? data['Records'] : [],
-        total: data['Total']
+        cheques: data['records'] ? data['records'] : [],
+        total: data['total']
     }
 };
 
@@ -116,6 +141,7 @@ export const getChequeEarningHistory = async (flag) => {
         let x = [];
         let y1 = [];
         let y2 = [];
+        data.sort(compareInt('date'));
         data.forEach((item) => {
             let date = new Date(item['date'] * 1000);
             x.push((date.getMonth() + 1) + '/' + date.getDate());
@@ -141,6 +167,7 @@ export const getChequeExpenseHistory = async (flag) => {
         let x = [];
         let y1 = [];
         let y2 = [];
+        data.sort(compareInt('date'));
         data.forEach((item) => {
             let date = new Date(item['date'] * 1000);
             x.push((date.getMonth() + 1) + '/' + date.getDate());

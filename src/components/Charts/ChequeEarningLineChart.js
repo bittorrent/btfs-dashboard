@@ -4,20 +4,20 @@ import {getChequeEarningHistory} from "services/chequeService.js";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
 
-function ChequeIncomeLineChart({color}) {
+function ChequeEarningLineChart({color}) {
 
     useEffect(() => {
 
         var config = {
             type: 'line',
             data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                labels: [],
                 datasets: [
                     {
                         label: 'Received',
                         borderColor: 'red',
                         backgroundColor: 'rgb(255, 99, 132, 0.3)',
-                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        data: [],
                         fill: false,
                         tension: 0,
                     },
@@ -26,7 +26,7 @@ function ChequeIncomeLineChart({color}) {
                         fill: false,
                         borderColor: 'blue',
                         backgroundColor: 'rgb(54, 162, 235, 0.3)',
-                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        data: [],
                         tension: 0,
                     },
                 ]
@@ -83,26 +83,24 @@ function ChequeIncomeLineChart({color}) {
                         ticks: {
                             color: color === 'light' ? 'black' : 'white'
                         },
-                        suggestedMin: -100,
-                        suggestedMax: 100
                     }
                 }
             },
         };
 
-        var content = document.getElementById('cheque-income-line-chart-content');
+        var content = document.getElementById('cheque-earning-line-chart-content');
         content.innerHTML = '&nbsp;';
-        content.innerHTML = "<canvas id='cheque-income-line-chart' style='height: 300px; width: 100%'></canvas>";
+        content.innerHTML = "<canvas id='cheque-earning-line-chart' style='height: 300px; width: 100%'></canvas>";
 
-        var ctx = document.getElementById("cheque-income-line-chart").getContext("2d");
-        window.chequeIncomeLineChart = new Chart(ctx, config);
+        var ctx = document.getElementById("cheque-earning-line-chart").getContext("2d");
+        window.ChequeEarningLineChart = new Chart(ctx, config);
 
         update();
 
         return () => {
-            if (window.chequeIncomeLineChart) {
-                window.chequeIncomeLineChart.destroy();
-                window.chequeIncomeLineChart = null;
+            if (window.ChequeEarningLineChart) {
+                window.ChequeEarningLineChart.destroy();
+                window.ChequeEarningLineChart = null;
             }
         }
 
@@ -110,12 +108,12 @@ function ChequeIncomeLineChart({color}) {
 
     const update = async () => {
         let data = await getChequeEarningHistory();
-        if (window.chequeIncomeLineChart) {
-            window.chequeIncomeLineChart.data.labels = data.labels;
+        if (window.ChequeEarningLineChart) {
+            window.ChequeEarningLineChart.data.labels = data.labels;
             console.log(data.labels, data.data[0]);
-            window.chequeIncomeLineChart.data.datasets[0].data = data.data[0];
-            window.chequeIncomeLineChart.data.datasets[1].data = data.data[1];
-            window.chequeIncomeLineChart.update();
+            window.ChequeEarningLineChart.data.datasets[0].data = data.data[1];
+            window.ChequeEarningLineChart.data.datasets[1].data = data.data[0];
+            window.ChequeEarningLineChart.update();
         }
     };
 
@@ -133,8 +131,8 @@ function ChequeIncomeLineChart({color}) {
                 </div>
                 <div className="p-4 flex-auto">
                     {/* Chart */}
-                    <div id="cheque-income-line-chart-content" className="relative h-300-px">
-                        <canvas id="cheque-income-line-chart" style={{height: '300px', width: '100%'}}></canvas>
+                    <div id="cheque-earning-line-chart-content" className="relative h-300-px">
+                        <canvas id="cheque-earning-line-chart" style={{height: '300px', width: '100%'}}></canvas>
                     </div>
                 </div>
             </div>
@@ -142,4 +140,4 @@ function ChequeIncomeLineChart({color}) {
     );
 }
 
-export default memo(ChequeIncomeLineChart)
+export default memo(ChequeEarningLineChart)

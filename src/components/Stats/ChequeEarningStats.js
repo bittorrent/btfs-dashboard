@@ -1,7 +1,7 @@
 /*eslint-disable*/
 import React, {useEffect, useState} from "react";
 import {Progress} from 'antd';
-import {getChequeExpenseStats} from "services/chequeService.js";
+import {getChequeEarningStats} from "services/chequeService.js";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
 
@@ -10,20 +10,23 @@ let strokeColor = {
     '100%': '#87d068',
 };
 
-export default function ChequeExpenseStats({color}) {
+export default function ChequeEarningStats({color}) {
 
     const [chequesStats, setChequesStats] = useState({
-        chequeSentCount: 0,
-        chequeSentValue: 0,
+        chequeReceivedCount: 0,
+        uncashedCount: 0,
+        cashedCount: 0,
+        chequeReceivedValue: 0,
         uncashedValue: 0,
         cashedValue: 0,
-        cashedValuePercent: 0
-    })
+        cashedCountPercent: 0,
+        cashedValuePercent: 0,
+    });
 
     useEffect(() => {
         let didCancel = false;
         const fetchData = async () => {
-            let data = await getChequeExpenseStats();
+            let data = await getChequeEarningStats();
             if (!didCancel) {
                 setChequesStats(data);
             }
@@ -42,14 +45,35 @@ export default function ChequeExpenseStats({color}) {
                         <div className="w-full xl:w-6/12 xl:pr-2">
                             <div
                                 className={"relative break-words rounded mb-2 xl:mb-0  " + themeStyle.bg[color] + themeStyle.text[color]}>
-                                <div className="p-4 h-180-px">
+                                <div className="flex flex-col justify-between p-4 h-180-px">
                                     <div>
-                                        <h5 className={" uppercase font-bold " + themeStyle.title[color]}>
-                                            {t('sent_cheques')}
+                                        <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
+                                            {t('received_cheques')}
                                         </h5>
                                     </div>
-                                    <div className='p-4'>
-                                        <span className='font-semibold text-3xl'>{chequesStats.chequeSentCount}</span>
+                                    <div className='flex justify-between'>
+                                        <div>
+                                            <span className='font-semibold text-xl'>{chequesStats.chequeReceivedCount} </span>
+                                        </div>
+                                        <div>
+                                            {chequesStats.cashedCountPercent} %
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <Progress className={color} percent={chequesStats.cashedCountPercent} showInfo={false}
+                                                  strokeWidth={30} strokeColor={strokeColor}/>
+                                    </div>
+                                    <div className='flex justify-between'>
+                                        <div>
+                                            {t('cashed')}
+                                            <br/>
+                                            {chequesStats.cashedCount}
+                                        </div>
+                                        <div>
+                                            {t('uncashed')}
+                                            <br/>
+                                            {chequesStats.uncashedCount}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -60,13 +84,13 @@ export default function ChequeExpenseStats({color}) {
                                 className={"relative break-words rounded " + themeStyle.bg[color] + themeStyle.text[color]}>
                                 <div className="flex flex-col justify-between p-4 h-180-px">
                                     <div>
-                                        <h5 className={" uppercase font-bold " + themeStyle.title[color]}>
-                                            {t('sent_cheques_amount')}
+                                        <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
+                                            {t('received_cheques_amount')}
                                         </h5>
                                     </div>
                                     <div className='flex justify-between'>
                                         <div>
-                                            <span className='font-semibold text-xl'>{chequesStats.chequeSentValue} </span>
+                                            <span className='font-semibold text-xl'>{chequesStats.chequeReceivedValue} </span>
                                             <span className='text-xs'>WBTT</span>
                                         </div>
                                         <div>
@@ -75,8 +99,7 @@ export default function ChequeExpenseStats({color}) {
                                     </div>
                                     <div>
                                         <Progress className={color} percent={chequesStats.cashedValuePercent} showInfo={false}
-                                                  strokeWidth={30}
-                                                  strokeColor={strokeColor}/>
+                                                  strokeWidth={30} strokeColor={strokeColor}/>
                                     </div>
                                     <div className='flex justify-between'>
                                         <div>
