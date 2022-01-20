@@ -85,6 +85,7 @@ const en_US = {
     'date':'Date',
     'expense_list':'Expense List',
     'recipient': 'Recipient',
+    'cheques_number': 'Cheques Number',
 
 // files
 
@@ -148,7 +149,7 @@ const en_US = {
     'coming_soon':'Coming Soon',
     'cashing_list_tip': 'Cashable amount will be accumulated by Vault, please select the Vault to cash.',
     'cashing_history_tip': 'Cashing History Tip',
-    'expense_list_tip':'Expense List Tip',
+    'expense_list_tip':'Sent amount will be accumulated by Vaults.',
     'copied':'Copied',
     'no_data': 'No Data',
     'setting_error':'Setting failed, please check if you are using a valid API URL!',

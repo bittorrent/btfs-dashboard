@@ -37,7 +37,7 @@ function RevenueHistoryLineChart({color}) {
                             callbacks: {
                                 label: function (context) {
                                     var label = '';
-                                    label += ' : ' + context.parsed.y + ' WBTT ';
+                                    label += ' ' + context.parsed.y + ' WBTT ';
                                     return label;
                                 }
                             }

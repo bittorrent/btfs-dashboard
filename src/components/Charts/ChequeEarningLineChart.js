@@ -1,10 +1,13 @@
 import React, {memo, useEffect} from "react";
+import {useIntl} from "react-intl";
 import {Chart} from "chart.js";
 import {getChequeEarningHistory} from "services/chequeService.js";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
 
 function ChequeEarningLineChart({color}) {
+
+    const intl = useIntl();
 
     useEffect(() => {
 
@@ -20,6 +23,7 @@ function ChequeEarningLineChart({color}) {
                         data: [],
                         fill: false,
                         tension: 0,
+                        yAxisID: 'y',
                     },
                     {
                         label: 'Received Amount',
@@ -28,6 +32,7 @@ function ChequeEarningLineChart({color}) {
                         backgroundColor: 'rgb(54, 162, 235, 0.3)',
                         data: [],
                         tension: 0,
+                        yAxisID: 'y1',
                     },
                 ]
             },
@@ -75,14 +80,32 @@ function ChequeEarningLineChart({color}) {
                     },
                     y: {
                         display: true,
+                        position: 'left',
                         title: {
                             display: true,
-                            text: 'Value',
+                            text: intl.formatMessage({id: 'cheques_number'}),
                             color: color === 'light' ? 'black' : 'white'
                         },
                         ticks: {
                             color: color === 'light' ? 'black' : 'white'
                         },
+                        min: 0,
+                    },
+                    y1: {
+                        display: true,
+                        position: 'right',
+                        grid: {
+                            drawOnChartArea: false,
+                        },
+                        title: {
+                            display: true,
+                            text: 'WBTT',
+                            color: color === 'light' ? 'black' : 'white'
+                        },
+                        ticks: {
+                            color: color === 'light' ? 'black' : 'white'
+                        },
+                        min: 0,
                     }
                 }
             },
@@ -104,7 +127,7 @@ function ChequeEarningLineChart({color}) {
             }
         }
 
-    }, [color]);
+    }, [color, intl]);
 
     const update = async () => {
         let data = await getChequeEarningHistory();

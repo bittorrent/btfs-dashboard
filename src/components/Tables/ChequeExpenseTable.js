@@ -3,6 +3,7 @@ import React, {useEffect, useState, useCallback} from "react";
 import PropTypes from "prop-types";
 import {Pagination} from 'antd';
 import {getChequeExpenseList} from "services/chequeService.js";
+import ClipboardCopy from "../Utils/ClipboardCopy";
 import {Truncate, t} from "utils/text.js"
 import themeStyle from "utils/themeStyle.js";
 import {switchBalanceUnit} from "utils/BTFSUtil.js";
@@ -45,7 +46,8 @@ export default function ChequeExpenseTable({color}) {
 
     return (
         <>
-            <div className={"relative flex flex-col min-w-0 break-words w-full shadow-lg rounded " + themeStyle.bg[color]}>
+            <div
+                className={"relative flex flex-col min-w-0 break-words w-full shadow-lg rounded " + themeStyle.bg[color]}>
                 <div className="block w-full overflow-x-auto">
                     <table className="items-center w-full bg-transparent border-collapse">
                         <thead>
@@ -70,13 +72,25 @@ export default function ChequeExpenseTable({color}) {
                                 return (
                                     <tr key={index}>
                                         <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            <Truncate>{item['PeerID']}</Truncate>
+                                            <div className='flex'>
+                                                <a href={'https://scan-test.btfs.io/#/node/' + item['PeerID']}
+                                                   target='_blank'>
+                                                    <Truncate>{item['PeerID']}</Truncate>
+                                                </a>
+                                                <ClipboardCopy value={item['PeerID']}/>
+                                            </div>
                                         </td>
                                         <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             BTTC
                                         </td>
                                         <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            <Truncate>{item['Vault']}</Truncate>
+                                            <div className='flex'>
+                                                <a href={'https://testscan.bt.io/#/address/' + item['Vault']}
+                                                   target='_blank'>
+                                                    <Truncate>{item['Vault']}</Truncate>
+                                                </a>
+                                                <ClipboardCopy value={item['Vault']}/>
+                                            </div>
                                         </td>
                                         <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             {switchBalanceUnit(item['Payout'])}

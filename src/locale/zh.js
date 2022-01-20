@@ -85,6 +85,7 @@ const zh_CN = {
     'date':'日期',
     'expense_list':'支出列表',
     'recipient': '接收者',
+    'cheques_number': '支票数量',
 
 // files
 
@@ -148,7 +149,7 @@ const zh_CN = {
     'coming_soon':'开发中',
     'cashing_list_tip': '可兑现金额将按金库累计，请选择要兑现的金库。',
     'cashing_history_tip': 'Cashing History Tip',
-    'expense_list_tip':'Expense List Tip',
+    'expense_list_tip':'发送的金额将按金库累积',
     'copied':'已复制',
     'no_data': '无数据',
     'setting_error':'设置失败，请确认API地址的有效性',

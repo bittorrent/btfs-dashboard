@@ -43,7 +43,7 @@ export default function CardChequeExpenseList({color}) {
                         current === 'expenseList' && <div className='pt-4 pl-4 flex items-center h-50-px'>
                             <div className='flex-grow flex-1'>
                                 <h3 className={"font-semibold " + themeStyle.text[color]}>
-                                    Sent amount will be accumulated by Vaults.
+                                    {t('expense_list_tip')}
                                 </h3>
                             </div>
                         </div>

@@ -59,10 +59,6 @@ export default function ChequeCashingHistoryTable({color}) {
                     <table className="items-center w-full bg-transparent border-collapse">
                         <thead>
                         <tr className="text-xs uppercase whitespace-nowrap">
-                            <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}
-                                style={{width: '50px'}}>
-                                #
-                            </th>
                             <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 {t('tx_hash')}
                             </th>
@@ -101,12 +97,9 @@ export default function ChequeCashingHistoryTable({color}) {
                         {cheques && cheques.map((item, index) => {
                             return (
                                 <tr key={index}>
-                                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-
-                                    </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         <div className='flex'>
-                                            <a href={'https://scan-test.btfs.io/#/node/' + item['tx_hash']}
+                                            <a href={'https://testscan.bt.io/#/transaction/' + item['tx_hash']}
                                                target='_blank'>
                                                 <Truncate>{item['tx_hash']}</Truncate>
                                             </a>
@@ -138,7 +131,7 @@ export default function ChequeCashingHistoryTable({color}) {
                                         {switchBalanceUnit(item['amount'])}
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        {new Date(item['cash_time']).toLocaleString()}
+                                        {new Date(item['cash_time']*1000).toLocaleString()}
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         {item['status']}
