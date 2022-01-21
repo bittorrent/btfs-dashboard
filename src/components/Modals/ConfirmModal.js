@@ -113,7 +113,7 @@ export default function ConfirmModal({color}) {
                                     </div>
                                     {/*body*/}
                                     <div className="relative p-4 flex-auto">
-                                        <p className="pb-4">
+                                        <p className="pb-2">
                                             {t('cashing')} {t('from')} {cashList.current.list.length} {t('vault')}
                                             <br/>
                                         </p>
@@ -126,14 +126,14 @@ export default function ConfirmModal({color}) {
                                             </div>
                                             <div className='flex justify-between p-3'>
                                                 <div>{t('est_fee')}</div>
-                                                <div
-                                                    className='text-xl font-semibold'>{parseFloat(25.2801 * cashList.current.list.length).toFixed(2)} BTT
+                                                <div className='text-xl font-semibold'>
+                                                    {parseFloat(25.2801 * cashList.current.list.length).toFixed(2)} BTT
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     {/*footer*/}
-                                    <div className="flex items-center justify-end p-4">
+                                    <div className="flex items-center justify-end p-4 rounded-b">
                                         <button
                                             className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                             type="button"
@@ -142,7 +142,7 @@ export default function ConfirmModal({color}) {
                                             {t('cancel')}
                                         </button>
                                         <button
-                                            className=" bg-indigo-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                                            className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                             type="button"
                                             onClick={submit}
                                         >

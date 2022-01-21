@@ -116,6 +116,8 @@ export const getNodeWalletStats = async () => {
             chequeBookBalance: switchBalanceUnit(result[0]['balance']),
             BTTCAddressBTT: switchBalanceUnit(result[1]['balance']),
             BTTCAddressWBTT: switchBalanceUnit(result[2]['balance']),
+            _chequeBookBalance: new BigNumber(result[0]['balance']).dividedBy(precision).toNumber(),
+            _BTTCAddressWBTT: new BigNumber(result[2]['balance']).dividedBy(precision).toNumber(),
         }
     })
 };
@@ -162,14 +164,14 @@ export const getFilesStorage = async () => {
 };
 
 export const withdraw = async (amount) => {
-    let temp = new Number(new BigNumber(amount).multipliedBy(precision).toString()).toLocaleString()
+    let temp = new Number(new BigNumber(amount).multipliedBy(precision).toString()).toLocaleString();
     let amount_str = temp.replace(/,/g, "");
     let data = await Client10.withdraw(amount_str);
     return data
 };
 
 export const deposit = async (amount) => {
-    let temp = new Number(new BigNumber(amount).multipliedBy(precision).toString()).toLocaleString()
+    let temp = new Number(new BigNumber(amount).multipliedBy(precision).toString()).toLocaleString();
     let amount_str = temp.replace(/,/g, "");
     let data = await Client10.deposit(amount_str);
     return data

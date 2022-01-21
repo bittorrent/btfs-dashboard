@@ -43,7 +43,7 @@ export default function NodeRevenueStats({color}) {
                                                 </h5>
                                                 <div>
                                                     <span className="text-lg font-semibold">{chequeEarning}</span>
-                                                    <span className='text-xs'>BTT</span>
+                                                    <span className='text-xs'>BTT (WBTT)</span>
                                                 </div>
                                                 <div className='flex justify-between text-xs'>
                                                     <div>

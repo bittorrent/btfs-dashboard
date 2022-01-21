@@ -13,17 +13,21 @@ export default function NodeWalletStats({color}) {
     const [chequeBookBalance, setChequeBookBalance] = useState(0);
     const [BTTCAddressBTT, setBTTCAddressBTT] = useState(0);
     const [BTTCAddressWBTT, setBTTCAddressWBTT] = useState(0);
+    const [_chequeBookBalance, set_ChequeBookBalance] = useState(0);
+    const [_BTTCAddressWBTT, set_BTTCAddressWBTT] = useState(0);
 
     useEffect(() => {
         let didCancel = false;
         const fetchData = async () => {
-            let {BTTCAddress, chequeAddress, chequeBookBalance, BTTCAddressBTT, BTTCAddressWBTT} = await getNodeWalletStats();
+            let {BTTCAddress, chequeAddress, chequeBookBalance, BTTCAddressBTT, BTTCAddressWBTT, _chequeBookBalance, _BTTCAddressWBTT} = await getNodeWalletStats();
             if (!didCancel) {
                 setBTTCAddress(BTTCAddress);
                 setChequeAddress(chequeAddress);
                 setChequeBookBalance(chequeBookBalance);
                 setBTTCAddressBTT(BTTCAddressBTT);
                 setBTTCAddressWBTT(BTTCAddressWBTT);
+                set_ChequeBookBalance(_chequeBookBalance);
+                set_BTTCAddressWBTT(_BTTCAddressWBTT);
             }
         };
         fetchData();
@@ -34,12 +38,12 @@ export default function NodeWalletStats({color}) {
 
     const onDeposit = (e) => {
         e.preventDefault();
-        Emitter.emit('openWithdrawDepositModal', {type: 'deposit', max: BTTCAddressWBTT});
+        Emitter.emit('openWithdrawDepositModal', {type: 'deposit', max: _BTTCAddressWBTT});
     };
 
     const onWithdraw = (e) => {
         e.preventDefault();
-        Emitter.emit('openWithdrawDepositModal', {type: 'withdraw', max: chequeBookBalance});
+        Emitter.emit('openWithdrawDepositModal', {type: 'withdraw', max: _chequeBookBalance});
     };
 
     const showQR = (e, type) => {

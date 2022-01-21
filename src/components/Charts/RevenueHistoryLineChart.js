@@ -37,7 +37,7 @@ function RevenueHistoryLineChart({color}) {
                             callbacks: {
                                 label: function (context) {
                                     var label = '';
-                                    label += ' ' + context.parsed.y + ' WBTT ';
+                                    label += ' ' + context.parsed.y + ' BTT ';
                                     return label;
                                 }
                             }
@@ -62,7 +62,7 @@ function RevenueHistoryLineChart({color}) {
                             display: true,
                             title: {
                                 display: true,
-                                text: 'WBTT',
+                                text: 'BTT',
                                 color: color === 'light' ? 'black' : 'white'
                             },
                             ticks: {
