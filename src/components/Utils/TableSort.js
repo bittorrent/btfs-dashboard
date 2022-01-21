@@ -1,19 +1,19 @@
 /*eslint-disable*/
 import React, {useState} from "react";
 
-export function TableSort() {
+export default function TableSort() {
 
     const [order, setOrder] = useState('default');
 
-    const sorting = (tag, order) => {
-        setOrder(order);
+    const sorting = (order) => {
+        setOrder(order === 'ascending' ? 'descending' : 'ascending');
     };
 
     return (
         <>
             <div className='flex flex-col ml-4'
                  onClick={() => {
-                     sorting('uncashed', order === 'ascending' ? 'descending' : 'ascending')
+                     sorting()
                  }}
             >
                 <i className={"fas fa-sort-up line-height-7px " + ((order === 'ascending') ? 'text-blue' : '')}></i>
