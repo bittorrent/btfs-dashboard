@@ -127,7 +127,7 @@ export default function ConfirmModal({color}) {
                                             <div className='flex justify-between p-3'>
                                                 <div>{t('est_fee')}</div>
                                                 <div className='text-xl font-semibold'>
-                                                    {parseFloat(25.2801 * cashList.current.list.length).toFixed(2)} BTT
+                                                    {(25.2801 * cashList.current.list.length).toFixed(2)} BTT
                                                 </div>
                                             </div>
                                         </div>

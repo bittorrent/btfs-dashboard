@@ -2,8 +2,8 @@
 import React, {useState, useEffect, useCallback} from "react";
 import PropTypes from "prop-types";
 import {Pagination} from 'antd';
+import ClipboardCopy from "components/Utils/ClipboardCopy";
 import {getChequeCashingList} from "services/chequeService.js";
-import ClipboardCopy from "../Utils/ClipboardCopy";
 import {Truncate, t} from "utils/text.js"
 import themeStyle from "utils/themeStyle.js";
 import Emitter from "utils/eventBus";

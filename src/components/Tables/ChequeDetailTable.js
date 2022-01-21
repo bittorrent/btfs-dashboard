@@ -1,8 +1,9 @@
+/*eslint-disable*/
 import React, {useState, useEffect, useCallback} from "react";
 import PropTypes from "prop-types";
 import {Pagination} from 'antd';
+import ClipboardCopy from "components/Utils/ClipboardCopy";
 import {getChequeReceivedDetailList, getChequeSentDetailList} from "services/chequeService.js";
-import ClipboardCopy from "../Utils/ClipboardCopy";
 import themeStyle from "utils/themeStyle.js";
 import {Truncate, t} from "utils/text.js"
 import {switchBalanceUnit} from "utils/BTFSUtil.js";
@@ -104,7 +105,7 @@ export default function ChequeDetailTable({color, type}) {
                                 <tr key={index}>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         <div className='flex'>
-                                            <a href={'https://scan-test.btfs.io/#/node/' + item['PeerId']} target='_blank'>
+                                            <a href={'https://scan-test.btfs.io/#/node/' + item['PeerId']} target='_blank' rel="noreferrer">
                                                 <Truncate>{item['PeerId']}</Truncate>
                                             </a>
                                             <ClipboardCopy value={item['PeerId']}/>
@@ -115,7 +116,7 @@ export default function ChequeDetailTable({color, type}) {
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         <div className='flex'>
-                                            <a href={'https://testscan.bt.io/#/address/' + item['Vault']} target='_blank'>
+                                            <a href={'https://testscan.bt.io/#/address/' + item['Vault']} target='_blank' rel="noreferrer">
                                                 <Truncate>{item['Vault']}</Truncate>
                                             </a>
                                             <ClipboardCopy value={item['Vault']}/>

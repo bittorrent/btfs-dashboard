@@ -11,7 +11,7 @@ export const getNodeBasicStats = async () => {
     return Promise.all([data1, data2, data3]).then((result) => {
         return {
             ID: result[0]['ID'] ? result[0]['ID'] : '--',
-            uptime: result[1]['host_stats'] ? parseFloat(result[1]['host_stats']['uptime'] * 100).toFixed(0) : '--',
+            uptime: result[1]['host_stats'] ? (result[1]['host_stats']['uptime'] * 100).toFixed(0) : '--',
             peers: result[2]['Peers'] ? result[2]['Peers'].length : '--'
         }
     })
@@ -134,7 +134,7 @@ export const getNodeStorageStats = async () => {
                 capacity: switchStorageUnit2(result[1]['StorageMax']),
                 storageUsed: switchStorageUnit2(result[1]['RepoSize']),
                 percentage: new BigNumber(result[1]['RepoSize']).dividedBy(result[1]['StorageMax']).multipliedBy(100).toFixed(2),
-                hostPrice: parseFloat(result[0]['price'] * 30 / precision).toFixed(2),
+                hostPrice: (result[0]['price'] * 30 / precision).toFixed(2),
                 contracts: result[2]['count'],
                 uncashed: switchBalanceUnit(result[3]['total_received_uncashed']),
                 uncashedChange: switchBalanceUnit(result[3]['total_received_daily_uncashed']),
@@ -149,8 +149,8 @@ export const getNodeStorageStats = async () => {
 export const getNetworkFlow = async () => {
     let data = await Client10.getNetworkFlow();
     return {
-        receive: parseFloat(data['RateIn'] / (8 * 1024)).toFixed(2),
-        send: parseFloat(data['RateOut'] / (8 * 1024)).toFixed(2),
+        receive: (data['RateIn'] / (8 * 1024)).toFixed(2),
+        send: (data['RateOut'] / (8 * 1024)).toFixed(2),
     }
 };
 

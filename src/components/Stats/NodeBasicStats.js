@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import ClipboardCopy from "components/Utils/ClipboardCopy";
-import {getNodeBasicStats} from "services/dashboardService";
+import {getNodeBasicStats} from "services/dashboardService.js";
 import themeStyle from "utils/themeStyle.js";
 import {t, Truncate} from "utils/text.js";
 

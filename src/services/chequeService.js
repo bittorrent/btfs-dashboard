@@ -2,34 +2,6 @@ import BigNumber from 'bignumber.js';
 import Client10 from "APIClient/APIClient10.js";
 import {switchBalanceUnit, compareInt, precision} from "utils/BTFSUtil.js";
 
-export const getChequeIncomeInfo = async () => {
-    let data1 = Client10.getChequeValue();
-    let data2 = Client10.getChequeTotalIncomeNumbers();
-    return Promise.all([data1, data2]).then((result) => {
-        return {
-            chequeReceived: result[1]['count'],
-            chequeEarning: switchBalanceUnit(result[0]['totalReceived']),
-            uncashed: switchBalanceUnit((result[0]['totalReceived'] - result[0]['settlement_received_cashed'])),
-            cashed: switchBalanceUnit((result[0]['settlement_received_cashed'])),
-            cashedPercent: result[0]['totalReceived'] ? new BigNumber((result[0]['settlement_received_cashed'])).dividedBy(result[0]['totalReceived']).multipliedBy(100).toFixed(0) : 0,
-        }
-    })
-};
-
-export const getChequeExpenseInfo = async () => {
-    let data1 = Client10.getChequeValue();
-    let data2 = Client10.getChequeTotalExpenseNumbers();
-    return Promise.all([data1, data2]).then((result) => {
-        return {
-            chequeSent: result[1]['count'],
-            chequeExpense: switchBalanceUnit(result[0]['totalSent']),
-            uncashed: switchBalanceUnit((result[0]['totalSent'] - result[0]['settlement_sent_cashed'])),
-            cashed: switchBalanceUnit((result[0]['settlement_sent_cashed'])),
-            cashedPercent: result[0]['totalSent'] ? new BigNumber((result[0]['settlement_sent_cashed'])).dividedBy(result[0]['totalSent']).multipliedBy(100).toFixed(0) : 0,
-        }
-    })
-};
-
 export const getChequeEarningStats = async () => {
     let data = await Client10.getChequeStats();
     return {
@@ -135,7 +107,7 @@ export const cash = async (cashList, onCashProgress, setErr, setMessage) => {
     }
 };
 
-export const getChequeEarningHistory = async (flag) => {
+export const getChequeEarningHistory = async () => {
     try {
         let data = await Client10.getChequeEarningHistory();
         let x = [];
@@ -161,7 +133,7 @@ export const getChequeEarningHistory = async (flag) => {
     }
 };
 
-export const getChequeExpenseHistory = async (flag) => {
+export const getChequeExpenseHistory = async () => {
     try {
         let data = await Client10.getChequeExpenseHistory();
         let x = [];
