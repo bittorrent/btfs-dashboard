@@ -22,15 +22,17 @@ function ChequeEarningLineChart({color}) {
                         backgroundColor: 'rgb(255, 99, 132, 0.3)',
                         data: [],
                         fill: false,
+                        cubicInterpolationMode: 'monotone',
                         tension: 0,
                         yAxisID: 'y',
                     },
                     {
                         label: 'Received Amount',
-                        fill: false,
                         borderColor: 'blue',
                         backgroundColor: 'rgb(54, 162, 235, 0.3)',
                         data: [],
+                        fill: false,
+                        cubicInterpolationMode: 'monotone',
                         tension: 0,
                         yAxisID: 'y1',
                     },
@@ -40,7 +42,7 @@ function ChequeEarningLineChart({color}) {
             options: {
                 plugins: {
                     legend: {
-                        display: false
+                        display: false,
                     },
                     tooltip: {
                         mode: "index",

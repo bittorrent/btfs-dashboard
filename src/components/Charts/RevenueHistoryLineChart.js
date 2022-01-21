@@ -62,7 +62,7 @@ function RevenueHistoryLineChart({color}) {
                             display: true,
                             title: {
                                 display: true,
-                                text: 'Value',
+                                text: 'WBTT',
                                 color: color === 'light' ? 'black' : 'white'
                             },
                             ticks: {
