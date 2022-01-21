@@ -68,6 +68,7 @@ function RevenueHistoryLineChart({color}) {
                             ticks: {
                                 color: color === 'light' ? 'black' : 'white'
                             },
+                            min: 0
                         }
                     }
                 },
