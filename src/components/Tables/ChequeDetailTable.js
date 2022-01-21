@@ -12,22 +12,9 @@ let didCancel = false;
 
 export default function ChequeDetailTable({color, type}) {
 
-    const [uncashedOrder, setUncashedOrder] = useState('default');
-    const [cashedOrder, setCashedOrder] = useState('default');
     const [cheques, setCheques] = useState(null);
     const [total, setTotal] = useState(0);
     const [current, setCurrent] = useState(1);
-
-    const sorting = async (tag, order) => {
-        if (tag === 'uncashed') {
-            setCashedOrder('default');
-            setUncashedOrder(order);
-        }
-        if (tag === 'cashed') {
-            setUncashedOrder('default');
-            setCashedOrder(order);
-        }
-    };
 
     const pageChange = useCallback((page) => {
         updateTable(page);
@@ -78,17 +65,9 @@ export default function ChequeDetailTable({color, type}) {
                                 {type === 'earning' && t('chequebook')}
                                 {type === 'expense' && t('recipient')}
                             </th>
-                            <th className={"cursor-pointer px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}
-                                onClick={() => {
-                                    sorting('uncashed', uncashedOrder === 'ascending' ? 'descending' : 'ascending')
-                                }}
-                            >
+                            <th className={"cursor-pointer px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 <div className='flex items-center'>
                                     <div>{t('amount')} (WBTT)</div>
-                                    <div className='flex flex-col ml-4'>
-                                        <i className={"fas fa-sort-up line-height-7px " + ((uncashedOrder === 'ascending') ? 'text-blue' : '')}></i>
-                                        <i className={"fas fa-sort-down line-height-7px " + ((uncashedOrder === 'descending') ? 'text-blue' : '')}></i>
-                                    </div>
                                 </div>
                             </th>
                             <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>

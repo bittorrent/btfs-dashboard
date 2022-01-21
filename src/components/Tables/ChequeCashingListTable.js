@@ -13,22 +13,9 @@ let didCancel = false;
 
 export default function ChequeCashingListTable({color, enableCash}) {
 
-    const [uncashedOrder, setUncashedOrder] = useState('default');
-    const [cashedOrder, setCashedOrder] = useState('default');
     const [cheques, setCheques] = useState(null);
     const [total, setTotal] = useState(0);
     const [current, setCurrent] = useState(1);
-
-    const sorting = async (tag, order) => {
-        if (tag === 'uncashed') {
-            setCashedOrder('default');
-            setUncashedOrder(order);
-        }
-        if (tag === 'cashed') {
-            setUncashedOrder('default');
-            setCashedOrder(order);
-        }
-    };
 
     const select = (e, id, amount) => {
         enableCash(e.target.checked, id, amount);
@@ -96,30 +83,14 @@ export default function ChequeCashingListTable({color, enableCash}) {
                             <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 {t('chequebook')}
                             </th>
-                            <th className={"cursor-pointer px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}
-                                onClick={() => {
-                                    sorting('uncashed', uncashedOrder === 'ascending' ? 'descending' : 'ascending')
-                                }}
-                            >
+                            <th className={"cursor-pointer px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 <div className='flex items-center'>
                                     <div>{t('uncashed')} (WBTT)</div>
-                                    <div className='flex flex-col ml-4'>
-                                        <i className={"fas fa-sort-up line-height-7px " + ((uncashedOrder === 'ascending') ? 'text-blue' : '')}></i>
-                                        <i className={"fas fa-sort-down line-height-7px " + ((uncashedOrder === 'descending') ? 'text-blue' : '')}></i>
-                                    </div>
                                 </div>
                             </th>
-                            <th className={"cursor-pointer px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " + themeStyle.th[color]}
-                                onClick={() => {
-                                    sorting('cashed', cashedOrder === 'ascending' ? 'descending' : 'ascending')
-                                }}
-                            >
+                            <th className={"cursor-pointer px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 <div className='flex items-center'>
                                     <div>{t('cashed')} (WBTT)</div>
-                                    <div className='flex flex-col ml-4'>
-                                        <i className={"fas fa-sort-up line-height-7px " + ((cashedOrder === 'ascending') ? 'text-blue' : '')}></i>
-                                        <i className={"fas fa-sort-down line-height-7px " + ((cashedOrder === 'descending') ? 'text-blue' : '')}></i>
-                                    </div>
                                 </div>
                             </th>
                         </tr>
