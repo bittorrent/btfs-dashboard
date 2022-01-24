@@ -106,11 +106,11 @@ export default function ChequeDetailTable({color, type}) {
                                         }
                                         {
                                             type === 'expense' && <div className='flex'>
-                                                <a href={'https://testscan.bt.io/#/address/' + item['Benificiary']}
+                                                <a href={'https://testscan.bt.io/#/address/' + item['Beneficiary']}
                                                    target='_blank' rel="noreferrer">
-                                                    <Truncate>{item['Benificiary']}</Truncate>
+                                                    <Truncate>{item['Beneficiary']}</Truncate>
                                                 </a>
-                                                <ClipboardCopy value={item['Benificiary']}/>
+                                                <ClipboardCopy value={item['Beneficiary']}/>
                                             </div>
                                         }
                                     </td>
