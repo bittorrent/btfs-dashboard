@@ -147,7 +147,7 @@ function ChequeEarningLineChart({color}) {
                 <div className="rounded-t mb-0 py-3 bg-transparent">
                     <div className="flex flex-wrap items-center">
                         <div className="relative w-full max-w-full flex-grow flex-1">
-                            <h5 className={" uppercase font-bold " + themeStyle.title[color]}>
+                            <h5 className={" uppercase mb-1 text-xs font-semibold " + themeStyle.title[color]}>
                                 {t('cheque_earnings_history')}
                             </h5>
                         </div>
