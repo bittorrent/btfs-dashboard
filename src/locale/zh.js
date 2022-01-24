@@ -16,7 +16,7 @@ const zh_CN = {
 
     'host_id': '节点ID',
     'status': '状态',
-    'online': '现在',
+    'online': '在线',
     'connected': '已连接',
     'uptime': '在线时长',
     'online_duration':'在线时长',
@@ -83,6 +83,7 @@ const zh_CN = {
     'est_fee':'预估手续费',
     'tx_hash': '交易哈希',
     'date':'日期',
+    'time':'时间',
     'expense_list':'支出列表',
     'recipient': '接收者',
     'cheques_number': '支票数量',
