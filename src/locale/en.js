@@ -147,7 +147,7 @@ const en_US = {
     'node_connecting':'Node connecting',
     'still_not_working':' Still not working? Drop us a message on the BTFS Discord',
     'coming_soon':'Coming Soon',
-    'cashing_list_tip': 'Cashable amount will be accumulated by Vaults, please select the Vaults to cash.',
+    'cashing_list_tip': 'Cashable amount will be accumulated by vaults, please select the vaults to cash.',
     'cashing_history_tip': 'Cashing History Tip',
     'expense_list_tip':'Sent amount will be accumulated by Vaults.',
     'copied':'Copied',
