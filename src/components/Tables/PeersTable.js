@@ -118,7 +118,7 @@ export default function PeersTable({color}) {
                     }
                 </div>
                 <div>
-                    <Pagination className='float-right p-4' simple current={current} total={total}
+                    <Pagination className={'float-right p-4 ' + color} simple current={current} total={total}
                                 hideOnSinglePage={true}
                                 onChange={pageChange}/>
                 </div>

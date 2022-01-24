@@ -11,6 +11,18 @@
   .ant-select-selector {
     background-color: lightblue !important;
   }
+  .ant-pagination-simple-pager, .anticon {
+    color: white;
+  }
+  .ant-pagination-simple-pager input {
+    color: black;
+  }
+  .anticon:hover {
+    color: #1890ff !important;
+  }
+  .ant-pagination-disabled .anticon{
+    color: gray !important;
+  }
 }
 
 .copied_light .ant-message-notice-content {

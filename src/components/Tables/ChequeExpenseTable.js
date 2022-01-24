@@ -116,7 +116,7 @@ export default function ChequeExpenseTable({color}) {
                 <div className='flex justify-between items-center'>
                     <div className='p-4'>Total: {total}</div>
                     <div>
-                        <Pagination className='float-right p-4' simple showTotal={true} current={current} total={total}
+                        <Pagination className={'float-right p-4 ' + color} simple showTotal={true} current={current} total={total}
                                     hideOnSinglePage={true}
                                     onChange={pageChange}/>
                     </div>

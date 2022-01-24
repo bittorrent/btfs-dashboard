@@ -340,7 +340,7 @@ export default function LocalFilesTable({color}) {
                 </div>
                 <div className='flex justify-between items-center'>
                     <div className='p-4'>Total: {total}</div>
-                    <Pagination className='float-right p-4' simple current={current} total={total}
+                    <Pagination className={'float-right p-4 ' + color} simple current={current} total={total}
                                 hideOnSinglePage={true}
                                 onChange={pageChange}/>
                 </div>
