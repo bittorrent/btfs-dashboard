@@ -73,7 +73,7 @@ export default function ChequeDetailTable({color, type}) {
                             <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 {type === 'earning' && t('receive')}
                                 {type === 'expense' && t('send')}
-                                &nbsp;{t('date')}
+                                &nbsp;{t('time')}
                             </th>
                         </tr>
                         </thead>
@@ -84,7 +84,8 @@ export default function ChequeDetailTable({color, type}) {
                                 <tr key={index}>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         <div className='flex'>
-                                            <a href={'https://scan-test.btfs.io/#/node/' + item['PeerId']} target='_blank' rel="noreferrer">
+                                            <a href={'https://scan-test.btfs.io/#/node/' + item['PeerId']}
+                                               target='_blank' rel="noreferrer">
                                                 <Truncate>{item['PeerId']}</Truncate>
                                             </a>
                                             <ClipboardCopy value={item['PeerId']}/>
@@ -94,18 +95,30 @@ export default function ChequeDetailTable({color, type}) {
                                         BTTC
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        <div className='flex'>
-                                            <a href={'https://testscan.bt.io/#/address/' + item['Vault']} target='_blank' rel="noreferrer">
-                                                <Truncate>{item['Vault']}</Truncate>
-                                            </a>
-                                            <ClipboardCopy value={item['Vault']}/>
-                                        </div>
+                                        {
+                                            type === 'earning' && <div className='flex'>
+                                                <a href={'https://testscan.bt.io/#/address/' + item['Vault']}
+                                                   target='_blank' rel="noreferrer">
+                                                    <Truncate>{item['Vault']}</Truncate>
+                                                </a>
+                                                <ClipboardCopy value={item['Vault']}/>
+                                            </div>
+                                        }
+                                        {
+                                            type === 'expense' && <div className='flex'>
+                                                <a href={'https://testscan.bt.io/#/address/' + item['Benificiary']}
+                                                   target='_blank' rel="noreferrer">
+                                                    <Truncate>{item['Benificiary']}</Truncate>
+                                                </a>
+                                                <ClipboardCopy value={item['Benificiary']}/>
+                                            </div>
+                                        }
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         {switchBalanceUnit(item['Amount'])}
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        {new Date(item['Time']*1000).toLocaleString()}
+                                        {new Date(item['Time'] * 1000).toLocaleString()}
                                     </td>
                                 </tr>
                             )
@@ -128,7 +141,7 @@ export default function ChequeDetailTable({color, type}) {
                 <div className='flex justify-between items-center'>
                     <div className='p-4'>Total: {total}</div>
                     <div>
-                        <Pagination className='float-right p-4' simple current={current} total={total}
+                        <Pagination className={'float-right p-4 ' + color} simple current={current} total={total}
                                     hideOnSinglePage={true}
                                     onChange={pageChange}/>
                     </div>
