@@ -58,6 +58,8 @@ const zh_CN = {
     'days':'天',
     'receive':'接收',
     'send':'发送',
+    'in':'下行',
+    'out':'上行',
 
 // cheques
 

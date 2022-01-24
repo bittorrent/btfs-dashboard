@@ -58,6 +58,8 @@ const en_US = {
     'days':'Days',
     'receive':'Receive',
     'send':'Send',
+    'in':'In',
+    'out':'Out',
 
 // cheques
 

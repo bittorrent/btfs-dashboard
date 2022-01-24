@@ -48,11 +48,11 @@ export default function CardNetworkFlow({color}) {
                     <div className='flex flex-col relative h-300-px'>
                         <div className='w-full'>
                             <NetworkDoughnutChart data={receive} id={'network-flow-doughnut-chart-upper'}
-                                                  color={color} text={'receive'}/>
+                                                  color={color} text={'in'}/>
                         </div>
                         <div className='w-full mt-2'>
                             <NetworkDoughnutChart data={send} id={'network-flow-doughnut-chart-lower'}
-                                                  color={color} text={'send'}/>
+                                                  color={color} text={'out'}/>
                         </div>
                     </div>
                 </div>

@@ -25,7 +25,7 @@ function NetworkLineChart({color}) {
                 labels: [],
                 datasets: [
                     {
-                        label: intl.formatMessage({id: 'receive'}),
+                        label: intl.formatMessage({id: 'in'}),
                         borderColor: "#4c51bf",
                         backgroundColor: "#4c51bf",
                         data: [],
@@ -33,7 +33,7 @@ function NetworkLineChart({color}) {
                         tension: 0,
                     },
                     {
-                        label: intl.formatMessage({id: 'send'}),
+                        label: intl.formatMessage({id: 'out'}),
                         fill: false,
                         borderColor: "#ed64a6",
                         backgroundColor: "#ed64a6",
