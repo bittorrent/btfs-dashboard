@@ -54,7 +54,7 @@ export default function NodeStorageStats({color}) {
                                                         <span className='text-xs'>WBTT</span>
                                                     </div>
                                                     <div className='text-red-500'>
-                                                        + {uncashedChange} 24H
+                                                        + {uncashedChange} 24h
                                                     </div>
                                                 </div>
                                                 <div className={themeStyle.link[color]}>
