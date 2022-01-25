@@ -12,7 +12,7 @@ export const precision = 1000000000000000000;
 export function switchStorageUnit2(storage) {
     if (storage === null)
         return '--';
-    let num = 0
+    let num = 0;
     if (storage / PiB > 1) {
         num = (storage / PiB).toFixed(2);
         return num + ' PiB'
@@ -49,6 +49,14 @@ export function compareStr(prop) {
         var val1 = obj1[prop];
         var val2 = obj2[prop];
         return val1.localeCompare(val2)
+    }
+}
+
+export function compareInt(prop) {
+    return function (obj1, obj2) {
+        var val1 = obj1[prop];
+        var val2 = obj2[prop];
+        return val1 - val2;
     }
 }
 

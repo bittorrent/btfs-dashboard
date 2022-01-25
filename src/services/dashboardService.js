@@ -11,7 +11,7 @@ export const getNodeBasicStats = async () => {
     return Promise.all([data1, data2, data3]).then((result) => {
         return {
             ID: result[0]['ID'] ? result[0]['ID'] : '--',
-            uptime: result[1]['host_stats'] ? parseFloat(result[1]['host_stats']['uptime'] * 100).toFixed(0) : '--',
+            uptime: result[1]['host_stats'] ? (result[1]['host_stats']['uptime'] * 100).toFixed(0) : '--',
             peers: result[2]['Peers'] ? result[2]['Peers'].length : '--'
         }
     })
@@ -116,6 +116,8 @@ export const getNodeWalletStats = async () => {
             chequeBookBalance: switchBalanceUnit(result[0]['balance']),
             BTTCAddressBTT: switchBalanceUnit(result[1]['balance']),
             BTTCAddressWBTT: switchBalanceUnit(result[2]['balance']),
+            _chequeBookBalance: new BigNumber(result[0]['balance']).dividedBy(precision).toNumber(),
+            _BTTCAddressWBTT: new BigNumber(result[2]['balance']).dividedBy(precision).toNumber(),
         }
     })
 };
@@ -126,15 +128,16 @@ export const getNodeStorageStats = async () => {
         let data1 = Client10.getHostPrice();
         let data2 = Client10.getFilesStorage();
         let data3 = Client10.getChequeTotalIncomeNumbers();
-        let data4 = Client10.getChequeValue();
+        let data4 = Client10.getChequeStats();
         return Promise.all([data1, data2, data3, data4]).then((result) => {
             return {
                 capacity: switchStorageUnit2(result[1]['StorageMax']),
                 storageUsed: switchStorageUnit2(result[1]['RepoSize']),
                 percentage: new BigNumber(result[1]['RepoSize']).dividedBy(result[1]['StorageMax']).multipliedBy(100).toFixed(2),
-                hostPrice: parseFloat(result[0]['price'] * 30 / precision).toFixed(2),
+                hostPrice: (result[0]['price'] * 30 / precision).toFixed(2),
                 contracts: result[2]['count'],
-                uncashed: switchBalanceUnit((result[3]['totalReceived'] - result[3]['settlement_received_cashed'])),
+                uncashed: switchBalanceUnit(result[3]['total_received_uncashed']),
+                uncashedChange: switchBalanceUnit(result[3]['total_received_daily_uncashed']),
             }
         })
     } catch (e) {
@@ -146,8 +149,8 @@ export const getNodeStorageStats = async () => {
 export const getNetworkFlow = async () => {
     let data = await Client10.getNetworkFlow();
     return {
-        receive: parseFloat(data['RateIn'] / (8 * 1024)).toFixed(2),
-        send: parseFloat(data['RateOut'] / (8 * 1024)).toFixed(2),
+        receive: (data['RateIn'] / (8 * 1024)).toFixed(2),
+        send: (data['RateOut'] / (8 * 1024)).toFixed(2),
     }
 };
 
@@ -161,14 +164,14 @@ export const getFilesStorage = async () => {
 };
 
 export const withdraw = async (amount) => {
-    let temp = new Number(new BigNumber(amount).multipliedBy(precision).toString()).toLocaleString()
+    let temp = new Number(new BigNumber(amount).multipliedBy(precision).toString()).toLocaleString();
     let amount_str = temp.replace(/,/g, "");
     let data = await Client10.withdraw(amount_str);
     return data
 };
 
 export const deposit = async (amount) => {
-    let temp = new Number(new BigNumber(amount).multipliedBy(precision).toString()).toLocaleString()
+    let temp = new Number(new BigNumber(amount).multipliedBy(precision).toString()).toLocaleString();
     let amount_str = temp.replace(/,/g, "");
     let data = await Client10.deposit(amount_str);
     return data

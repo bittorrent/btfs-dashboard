@@ -18,13 +18,14 @@ function NetworkLineChart({color}) {
     const intl = useIntl();
 
     useEffect(() => {
+
         var config = {
             type: "line",
             data: {
                 labels: [],
                 datasets: [
                     {
-                        label: intl.formatMessage({id: 'receive'}),
+                        label: intl.formatMessage({id: 'in'}),
                         borderColor: "#4c51bf",
                         backgroundColor: "#4c51bf",
                         data: [],
@@ -32,7 +33,7 @@ function NetworkLineChart({color}) {
                         tension: 0,
                     },
                     {
-                        label: intl.formatMessage({id: 'send'}),
+                        label: intl.formatMessage({id: 'out'}),
                         fill: false,
                         borderColor: "#ed64a6",
                         backgroundColor: "#ed64a6",
@@ -41,6 +42,7 @@ function NetworkLineChart({color}) {
                     },
                 ],
             },
+
             options: {
                 plugins: {
                     legend: {
@@ -123,9 +125,7 @@ function NetworkLineChart({color}) {
     }, [color, intl]);
 
     const update = async () => {
-
         fetchData();
-
         interval = setInterval(async () => {
             fetchData();
         }, 60000);
@@ -146,7 +146,6 @@ function NetworkLineChart({color}) {
             window.networkLineChart.update();
         }
     };
-
 
     return (
         <>
@@ -170,6 +169,5 @@ function NetworkLineChart({color}) {
         </>
     );
 }
-
 
 export default memo(NetworkLineChart)

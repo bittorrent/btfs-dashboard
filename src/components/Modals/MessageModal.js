@@ -32,8 +32,7 @@ export default function MessageModal({color}) {
         <>
             {showModal ? (
                 <>
-                    <div
-                        className={"fixed flex z-50 md:w-1/2 modal_center md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
+                    <div className={"fixed flex z-50 md:w-1/2 modal_center md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
                         style={{height: '300px'}}>
                         <button
                             className="absolute right-0 bg-transparent text-2xl mr-2 font-semibold outline-none focus:outline-none text-blueGray-400"
@@ -43,22 +42,17 @@ export default function MessageModal({color}) {
                         </button>
                         <div className="w-full ">
                             {/*content*/}
-                            <div
-                                className={"h-full flex flex-col justify-center items-center border-0 rounded-lg shadow-lg " + themeStyle.bg[color] + themeStyle.text[color]}>
-
+                            <div className={"h-full flex flex-col justify-center items-center border-0 rounded-lg shadow-lg " + themeStyle.bg[color] + themeStyle.text[color]}>
                                 <div className="p-4">
                                     <img alt="" src={require('../../assets/img/key.png').default} width='50px' height='50px'/>
                                 </div>
-
                                 <div className="p-4">
                                     {message.current} <ClipboardCopy value={message.current}/>
                                 </div>
-
                                 <div className="p-4 font-semibold text-red-500 text-center">
                                     {t('key_warning_1')} <br/>
                                     {t('key_warning_2')}
                                 </div>
-
                             </div>
                         </div>
                     </div>

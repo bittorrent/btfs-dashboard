@@ -1,24 +1,22 @@
-import React, {useContext, useEffect, useRef} from "react";
+import React, {useContext} from "react";
 import {mainContext} from 'reducer'
+import {Dropdown, Menu} from 'antd';
 import themeStyle from "utils/themeStyle.js";
 import {connect, disConnect} from "utils/connect.js";
 import {Truncate} from "utils/text.js";
 
-import {Dropdown, Menu} from 'antd';
-
 const Login = ({color}) => {
-
 
     const {dispatch, state} = useContext(mainContext);
     const {account} = state;
 
     const link = (e, wallet) => {
         connect(wallet, dispatch);
-    }
+    };
 
     const disLink = () => {
         disConnect(dispatch);
-    }
+    };
 
     const connectMenu = (<Menu>
         <Menu.Item key='english'>
@@ -39,7 +37,7 @@ const Login = ({color}) => {
                 MetaMask
             </a>
         </Menu.Item>
-    </Menu>)
+    </Menu>);
 
     const logoutMenu = (<Menu>
         <Menu.Item key='logout'>
@@ -51,17 +49,11 @@ const Login = ({color}) => {
                 Log out
             </a>
         </Menu.Item>
-    </Menu>)
-
-
-    useEffect(() => {
-
-
-    }, []);
+    </Menu>);
 
     return (
         <>
-            <div  className={"mr-3 " + (themeStyle.bg[color])}>
+            <div className={"mr-3 " + themeStyle.bg[color]}>
                 {!account &&
                 <Dropdown overlay={connectMenu} placement="bottomCenter" overlayClassName="connect">
                     <button
@@ -70,9 +62,7 @@ const Login = ({color}) => {
                     >
                         Connect
                     </button>
-                </Dropdown>
-
-                }
+                </Dropdown>}
                 {account &&
                 <Dropdown overlay={logoutMenu} placement="bottomCenter" overlayClassName="logout">
                     <button
@@ -81,9 +71,7 @@ const Login = ({color}) => {
                     >
                         <Truncate>{account.address}</Truncate>
                     </button>
-                </Dropdown>
-
-                }
+                </Dropdown>}
             </div>
         </>
     );

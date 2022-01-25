@@ -32,23 +32,19 @@ export default function QRModal({color}) {
         <>
             {showModal ? (
                 <>
-                    <div
-                        className={"fixed flex z-50 md:w-1/2 modal_center md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
+                    <div className={"fixed flex z-50 md:w-1/2 modal_center md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
                         style={{height: '300px'}}>
-                        <button
-                            className=" absolute right-0 bg-transparent text-2xl mr-2 font-semibold outline-none focus:outline-none text-blueGray-400"
+                        <button className=" absolute right-0 bg-transparent text-2xl mr-2 font-semibold outline-none focus:outline-none text-blueGray-400"
                             onClick={close}
                         >
                             <span>×</span>
                         </button>
                         <div className="w-full">
                             {/*content*/}
-                            <div
-                                className={"h-full flex flex-col justify-center items-center border-0 rounded-lg shadow-lg " + themeStyle.bg[color] + themeStyle.text[color]}>
+                            <div className={"h-full flex flex-col justify-center items-center border-0 rounded-lg shadow-lg " + themeStyle.bg[color] + themeStyle.text[color]}>
                                 <div className="w-1/2 h-1/2">
                                     <QRCode style={{margin: 'auto'}} value={address.current}/><br/>
                                 </div>
-
                                 <div className="input-group mt-3">
                                     <div className="input-group-append">
                                         {address.current}

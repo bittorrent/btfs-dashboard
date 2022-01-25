@@ -214,7 +214,7 @@ export default function LocalFilesTable({color}) {
                 <input
                     type="text"
                     placeholder={intl.formatMessage({id: 'search_here'}) + '...'}
-                    className={"search border-0 px-3 py-2 placeholder-blueGray-300 relative rounded text-sm border outline-none focus:outline-none focus:ring w-full pl-10 " + (color === "light" ? "bg-white" : "bg-lightBlue-900 text-white")}
+                    className={"search px-3 py-2 placeholder-blueGray-300 relative rounded text-sm border outline-none focus:outline-none focus:ring w-full pl-10 " + (color === "light" ? "bg-white" : "bg-lightBlue-900 text-white")}
                     ref={inputRef}
                 />
                 <button
@@ -225,7 +225,6 @@ export default function LocalFilesTable({color}) {
                     {t('browse')}
                 </button>
             </div>
-
             <div className={"relative flex flex-col min-w-0 break-words w-full shadow-lg rounded " + themeStyle.bg[color] + themeStyle.text[color]}>
                 <div className="rounded-t mb-0 px-4 py-3 border-0">
                     <div className="flex flex-wrap items-center">
@@ -262,16 +261,13 @@ export default function LocalFilesTable({color}) {
                                     onClick={selectAll}
                                 />
                             </th>
-
                             <th className={"px-6 border border-solid border-l-0 border-r-0 py-3 text-left font-semibold " + themeStyle.th[color]}
                                 style={{width: '70%'}}>
                                 {t('file_name')}
                             </th>
-
                             <th className={"px-6 border border-solid border-l-0 border-r-0 py-3 text-left font-semibold " + themeStyle.th[color]}>
                                 {t('size')}
                             </th>
-
                             <th className={"px-6 border border-solid border-l-0 border-r-0 py-3 text-left font-semibold " + themeStyle.th[color]}>
                             </th>
                         </tr>
@@ -316,11 +312,9 @@ export default function LocalFilesTable({color}) {
                                                 </a>
                                             </div>
                                         </td>
-
                                         <td className="px-6 text-xs whitespace-nowrap p-4">
                                             {switchStorageUnit2(item['Size'])}
                                         </td>
-
                                         <td className="px-6 text-xs whitespace-nowrap p-4 text-right">
                                             <FileTableDropdown color={color} hash={item['Hash']} name={item['Name']}
                                                                size={item['Size']}
@@ -346,7 +340,7 @@ export default function LocalFilesTable({color}) {
                 </div>
                 <div className='flex justify-between items-center'>
                     <div className='p-4'>Total: {total}</div>
-                    <Pagination className='float-right p-4' simple current={current} total={total}
+                    <Pagination className={'float-right p-4 ' + color} simple current={current} total={total}
                                 hideOnSinglePage={true}
                                 onChange={pageChange}/>
                 </div>

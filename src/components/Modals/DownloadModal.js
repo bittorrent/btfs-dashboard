@@ -55,25 +55,20 @@ export default function DownloadModal({color}) {
         <>
             {showModal ? (
                 <>
-                    <div
-                        className={"fixed flex z-50 modal_center md:w-1/2 md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
+                    <div className={"fixed flex z-50 modal_center md:w-1/2 md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
                         style={{height: '300px'}}>
-                        <button
-                            className="absolute right-0 bg-transparent text-2xl mr-2 font-semibold outline-none focus:outline-none text-blueGray-400"
+                        <button className="absolute right-0 bg-transparent text-2xl mr-2 font-semibold outline-none focus:outline-none text-blueGray-400"
                             onClick={close}
                         >
                             <span>×</span>
                         </button>
 
                         <div className="w-full ">
-                            <div
-                                className={" h-full border-0 rounded-lg shadow-lg flex flex-col justify-center items-center" + themeStyle.bg[color] + ' ' + themeStyle.text[color]}>
+                            <div className={" h-full border-0 rounded-lg shadow-lg flex flex-col justify-center items-center " + themeStyle.bg[color] + ' ' + themeStyle.text[color]}>
                                 <div className="font-semibold mb-4"> {t('download_status')}  </div>
                                 {(!err && percentage < 100) && <Progress type="circle" percent={percentage}/>}
-                                {err && percentage < 100 &&
-                                <Progress type="circle" percent={percentage} status="exception"/>}
+                                {err && percentage < 100 && <Progress type="circle" percent={percentage} status="exception"/>}
                                 {percentage >= 100 && <Progress type="circle" percent={percentage}/>}
-
                                 <div className="font-semibold mt-4 w-full overflow-auto text-center">
                                     {t('downloading')}  &nbsp;
                                     <span className={themeStyle.title[color]}>

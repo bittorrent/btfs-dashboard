@@ -11,10 +11,8 @@ let strokeColor = {
 export default function HostScoreProgressChart({color, data}) {
 
     return (
-
         <>
             <div className='h-full'>
-
                 <div className='title'>
                     <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
                         <div className="flex flex-wrap items-center">
@@ -26,35 +24,23 @@ export default function HostScoreProgressChart({color, data}) {
                         </div>
                     </div>
                 </div>
-
                 <div className="pl-4 flex-auto">
-
                     <div className="flex flex-col justify-between px-2 h-300-px">
-
-
                         <div className='whitespace-nowrap'>{t('online_duration')} ({data.uptimeWeight * 100} %)</div>
                         <Progress className={color} strokeColor={strokeColor} percent={data.uptimeScore * 10}
                                   format={() => (data.uptimeScore)}/>
-
-
                         <div className='whitespace-nowrap'>{t('host_age')} ({data.ageWeight * 100} %)</div>
                         <Progress className={color} strokeColor={strokeColor} percent={data.ageScore * 10}
                                   format={() => (data.ageScore)}/>
-
-
                         <div className='whitespace-nowrap'>{t('version')} ({data.versionWeight * 100} %)</div>
                         <Progress className={color} strokeColor={strokeColor} percent={data.versionScore * 10}
                                   format={() => (data.versionScore)}/>
-
-
                         <div className='whitespace-nowrap'>{t('download')} ({data.downloadWeight * 100} %)</div>
                         <Progress className={color} strokeColor={strokeColor} percent={data.downloadScore * 10}
                                   format={() => (data.downloadScore)}/>
-
                         <div className='whitespace-nowrap'>{t('upload')} ({data.uploadWeight * 100} %)</div>
                         <Progress className={color} strokeColor={strokeColor} percent={data.uploadScore * 10}
                                   format={() => (data.uploadScore)}/>
-
                     </div>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 import React, {memo, useEffect} from "react";
 import {Chart} from "chart.js";
+import {getChequeEarningHistory} from "services/chequeService.js";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
 
@@ -7,10 +8,10 @@ function RevenueHistoryLineChart({color}) {
     useEffect(() => {
 
         const data = {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            labels: [],
             datasets: [
                 {
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    data: [],
                     borderColor: 'red',
                     backgroundColor: 'rgb(255, 99, 132, 0.3)',
                     fill: true,
@@ -29,7 +30,19 @@ function RevenueHistoryLineChart({color}) {
                     plugins: {
                         legend: {
                             display: false
-                        }
+                        },
+                        tooltip: {
+                            mode: "index",
+                            intersect: false,
+                            callbacks: {
+                                label: function (context) {
+                                    var label = '';
+                                    label += ' ' + context.parsed.y + ' BTT ';
+                                    return label;
+                                }
+                            }
+
+                        },
                     },
                     responsive: false,
                     interaction: {
@@ -49,14 +62,13 @@ function RevenueHistoryLineChart({color}) {
                             display: true,
                             title: {
                                 display: true,
-                                text: 'Value',
+                                text: 'BTT',
                                 color: color === 'light' ? 'black' : 'white'
                             },
                             ticks: {
                                 color: color === 'light' ? 'black' : 'white'
                             },
-                            suggestedMin: -100,
-                            suggestedMax: 100
+                            min: 0
                         }
                     }
                 },
@@ -65,11 +77,12 @@ function RevenueHistoryLineChart({color}) {
 
         var content = document.getElementById('revenue-history-line-chart-content');
         content.innerHTML = '&nbsp;';
-        content.innerHTML =  "<canvas id='revenue-history-line-chart' style='height: 300px; width: 100%'></canvas>";
-
+        content.innerHTML = "<canvas id='revenue-history-line-chart' style='height: 300px; width: 100%'></canvas>";
 
         var ctx = document.getElementById("revenue-history-line-chart").getContext("2d");
         window.revenueHistoryLineChart = new Chart(ctx, config);
+
+        update();
 
         return () => {
             if (window.revenueHistoryLineChart) {
@@ -79,6 +92,15 @@ function RevenueHistoryLineChart({color}) {
         }
 
     }, [color]);
+
+    const update = async () => {
+        let data = await getChequeEarningHistory();
+        if (window.revenueHistoryLineChart) {
+            window.revenueHistoryLineChart.data.labels = data.labels;
+            window.revenueHistoryLineChart.data.datasets[0].data = data.data[0];
+            window.revenueHistoryLineChart.update();
+        }
+    };
 
     return (
         <>
@@ -102,6 +124,5 @@ function RevenueHistoryLineChart({color}) {
         </>
     );
 }
-
 
 export default memo(RevenueHistoryLineChart)
