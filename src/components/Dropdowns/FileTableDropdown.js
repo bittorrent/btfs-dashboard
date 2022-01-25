@@ -24,7 +24,7 @@ const FileTableDropdown = ({color, hash, name, size, path, type}) => {
     useEffect(() => {
         const t = function () {
             closeDropdownPopover();
-        }
+        };
         document.addEventListener("click", t);
         return () => {
             document.removeEventListener("click", t);

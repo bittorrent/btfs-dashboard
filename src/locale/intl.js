@@ -32,6 +32,6 @@ const Inter = (props) => {
             {children}
         </IntlProvider>
     )
-}
+};
 
 export default Inter

@@ -13,6 +13,7 @@ import UploadToBTFSModal from "components/Modals/UploadToBTFSModal.js";
 import UploadManagerModal from "components/Modals/UploadManagerModal.js";
 import themeStyle from "utils/themeStyle.js";
 
+
 export default function Files() {
 
     const [current, setCurrent] = useState('localFilesTable');
@@ -33,9 +34,7 @@ export default function Files() {
                         </div>
                     </div>
                 </div>
-
                 <ImportModal color={theme}/>
-
                 <div className="w-full">
                     <div className='mb-4'>
                         <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal"
@@ -59,6 +58,7 @@ export default function Files() {
 
                 </div>
             </div>
+            <LocalFilesTable color={theme}/>
             <UploadModal color={theme}/>
             <DownloadModal color={theme}/>
             <PreviewModal color={theme}/>

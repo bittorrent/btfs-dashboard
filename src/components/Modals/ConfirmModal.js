@@ -73,8 +73,7 @@ export default function ConfirmModal({color}) {
             {
                 showResult ? (
                     <>
-                        <div
-                            className={"fixed flex z-50 modal_center md:w-1/2 md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
+                        <div className={"fixed flex z-50 modal_center md:w-1/2 md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
                             style={{height: '300px'}}>
                             <button
                                 className="absolute right-0 bg-transparent text-2xl mr-2 font-semibold outline-none focus:outline-none text-blueGray-400"
@@ -100,12 +99,10 @@ export default function ConfirmModal({color}) {
             {
                 showModal ? (
                     <>
-                        <div
-                            className={"fixed flex z-50 modal_center md:w-1/2 md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
+                        <div className={"fixed flex z-50 modal_center md:w-1/2 md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
                             style={{height: '300px'}}>
                             <div className="w-full">
                                 {/*content*/}
-
                                 <div
                                     className={"flex flex-col justify-between h-full border-0 rounded-lg shadow-lg " + themeStyle.bg[color] + themeStyle.text[color]}>
                                     {/*header*/}
@@ -116,8 +113,8 @@ export default function ConfirmModal({color}) {
                                     </div>
                                     {/*body*/}
                                     <div className="relative p-4 flex-auto">
-                                        <p className="pb-4">
-                                            {t('cashing')} {t('from')} {cashList.current.list.length} {t('cheques')}
+                                        <p className="pb-2">
+                                            {t('cashing')} {t('from')} {cashList.current.list.length} {t('vault')}
                                             <br/>
                                         </p>
                                         <div
@@ -129,14 +126,14 @@ export default function ConfirmModal({color}) {
                                             </div>
                                             <div className='flex justify-between p-3'>
                                                 <div>{t('est_fee')}</div>
-                                                <div
-                                                    className='text-xl font-semibold'>{parseFloat(25.2801 * cashList.current.list.length).toFixed(2)} BTT
+                                                <div className='text-xl font-semibold'>
+                                                    {(25.2801 * cashList.current.list.length).toFixed(2)} BTT
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     {/*footer*/}
-                                    <div className="flex items-center justify-end p-4">
+                                    <div className="flex items-center justify-end p-4 rounded-b">
                                         <button
                                             className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                             type="button"
@@ -145,7 +142,7 @@ export default function ConfirmModal({color}) {
                                             {t('cancel')}
                                         </button>
                                         <button
-                                            className=" bg-indigo-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                                            className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                             type="button"
                                             onClick={submit}
                                         >

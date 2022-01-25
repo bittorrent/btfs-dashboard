@@ -118,7 +118,6 @@ const ImportFilesDropdown = ({color, path}) => {
                 </a>
             </div>
 
-
             <input
                 id='file-input'
                 type='file'

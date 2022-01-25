@@ -45,7 +45,6 @@ const ThemeToggle = () => {
             </div>}
           </div>
         </div>
-
       </>
   );
 };

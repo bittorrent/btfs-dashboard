@@ -56,11 +56,9 @@ function NetworkDoughnutChart({color, id, text, data}) {
                 }
             };
 
-
         var content = document.getElementById(id + '-content');
         content.innerHTML = '&nbsp;';
         content.innerHTML = "<canvas id='" + id + "' style='height: 125px; width: 100%'></canvas>";
-
 
         var ctx = document.getElementById(id).getContext("2d");
 
@@ -83,7 +81,6 @@ function NetworkDoughnutChart({color, id, text, data}) {
         }
     }, [data, color]);
 
-
     return (
         <>
             <div className={"relative flex justify-center" + themeStyle.bg[color]}>
@@ -98,7 +95,6 @@ function NetworkDoughnutChart({color, id, text, data}) {
                         </h6>
                     </div>
                 </div>
-
             </div>
         </>
     );

@@ -43,8 +43,7 @@ export default function AddConnectionModal({color}) {
         <>
             {showModal ? (
                 <>
-                    <div
-                        className={"fixed flex z-50 md:w-1/2 modal_center md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
+                    <div className={"fixed flex z-50 md:w-1/2 modal_center md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
                         style={{height: '300px'}}>
                         <div className="flex-1">
                             {/*content*/}
@@ -57,7 +56,6 @@ export default function AddConnectionModal({color}) {
                                 </div>
                                 {/*body*/}
                                 <div className="relative p-4">
-
                                     <p className="pb-4">
                                         {t('address_to_connect')}
                                         <br/>

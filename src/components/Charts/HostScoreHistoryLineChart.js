@@ -24,7 +24,6 @@ function HostScoreHistoryLineChart({color}) {
                         {
                             data: [],
                             borderColor: 'blue',
-                            fontColor: 'white',
                             backgroundColor: 'rgb(54, 162, 235, 0.3)',
                             fill: true,
                             cubicInterpolationMode: 'monotone',
@@ -104,18 +103,16 @@ function HostScoreHistoryLineChart({color}) {
 
     const handleChange = useCallback((value) => {
         update(value);
-    }, [])
+    }, []);
 
     const update = async (flag) => {
-
         let data = await getHostHistory(flag);
-
         if (window.hostScoreHistoryLineChart) {
             window.hostScoreHistoryLineChart.data.labels = data.labels;
             window.hostScoreHistoryLineChart.data.datasets[0].data = data.data;
             window.hostScoreHistoryLineChart.update();
         }
-    }
+    };
 
     return (
         <>

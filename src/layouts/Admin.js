@@ -113,7 +113,7 @@ export default function Admin() {
                 className={"relative " + (theme === "light" ? "bg-blueGray-100 " : "bg-blueGray-600 ") + (sidebarShow ? "md:ml-64" : "md:ml-0")}
                 style={{minHeight: '100vh'}}>
                 <AdminNavbar color={theme}/>
-                <div className="p-4 pb-6 md:px-8 mx-auto w-full" style={{minHeight: '80vh'}}>
+                <div className="p-4 pb-6 md:px-8 mx-auto w-full">
                     <Switch>
                         <Route path="/admin/dashboard" exact component={asyncDashboard}/>
                         <Route path="/admin/peers" exact component={asyncPeers}/>

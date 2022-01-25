@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 
-
 export default function LastUpdate({date}) {
     const [duration, setDuration] = useState('never');
 

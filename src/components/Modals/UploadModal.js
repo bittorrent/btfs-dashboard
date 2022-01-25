@@ -63,19 +63,15 @@ export default function UploadModal({color}) {
         <>
             {showModal ? (
                 <>
-                    <div
-                        className={"fixed flex z-50 modal_center md:w-1/2 md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
+                    <div className={"fixed flex z-50 modal_center md:w-1/2 md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
                         style={{height: '300px'}}>
-                        <button
-                            className="absolute right-0 bg-transparent text-2xl mr-2 font-semibold outline-none focus:outline-none text-blueGray-400"
+                        <button className="absolute right-0 bg-transparent text-2xl mr-2 font-semibold outline-none focus:outline-none text-blueGray-400"
                             onClick={close}
                         >
                             <span>×</span>
                         </button>
-
-                        <div className="w-full ">
-                            <div
-                                className={"px-4 h-full border-0 rounded-lg shadow-lg flex flex-col justify-center items-center" + themeStyle.bg[color] + ' ' + themeStyle.text[color]}>
+                        <div className="w-full">
+                            <div className={"px-4 h-full border-0 rounded-lg shadow-lg flex flex-col justify-center items-center" + themeStyle.bg[color] + ' ' + themeStyle.text[color]}>
                                 <div className="font-semibold mb-4"> {t('upload_status')} </div>
                                 {!err && <Progress type="circle" percent={percentage}/>}
                                 {err && <Progress type="circle" percent={percentage} status="exception"/>}
@@ -85,8 +81,7 @@ export default function UploadModal({color}) {
                                         {name.current}
                                     </span>
                                 </div>
-                                {message &&
-                                <div className="font-semibold mt-4 w-full overflow-auto text-center"> {message} </div>}
+                                {message && <div className="font-semibold mt-4 w-full overflow-auto text-center"> {message} </div>}
                                 <div style={{height: '25px'}}>
                                     {(!err && percentage === 0) && <img alt="" style={{height: '25px'}} src={require('../../assets/img/bar-loading.svg').default}/>}
                                 </div>

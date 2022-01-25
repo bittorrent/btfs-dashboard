@@ -71,23 +71,18 @@ export default function PeersTable({color}) {
                             <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 {t('location')}
                             </th>
-
                             <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 {t('latency')}
                             </th>
-
                             <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 {t('peer')} ID
                             </th>
-
                             <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 {t('connection')}
                             </th>
-
                         </tr>
                         </thead>
                         <tbody>
-
                         {peers && peers.map((items, index) => {
                             return (
                                 <tr key={index}>
@@ -97,26 +92,22 @@ export default function PeersTable({color}) {
                                              className="inline mr-2 mb-1" width="35"/>}
                                         <span>{items['CountryShort'] !== '-' ? items['CountryShort'] : '--'}</span>
                                     </td>
-
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         {ceilLatency(items['Latency'])}
                                     </td>
-
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         <div className='flex'>
-                                            <a href={'https://scan-test.btfs.io/#/search/' + items['Peer']} target='_blank'>
+                                            <a href={'https://scan-test.btfs.io/#/node/' + items['Peer']} target='_blank'>
                                                 {items['Peer']}
                                             </a>
                                         </div>
                                     </td>
-
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         {items['Addr']}
                                     </td>
                                 </tr>
                             )
                         })}
-
                         </tbody>
                     </table>
                     {
@@ -127,7 +118,7 @@ export default function PeersTable({color}) {
                     }
                 </div>
                 <div>
-                    <Pagination className='float-right p-4' simple current={current} total={total}
+                    <Pagination className={'float-right p-4 ' + color} simple current={current} total={total}
                                 hideOnSinglePage={true}
                                 onChange={pageChange}/>
                 </div>

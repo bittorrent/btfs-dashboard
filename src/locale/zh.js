@@ -16,7 +16,7 @@ const zh_CN = {
 
     'host_id': '节点ID',
     'status': '状态',
-    'online': '现在',
+    'online': '在线',
     'connected': '已连接',
     'uptime': '在线时长',
     'online_duration':'在线时长',
@@ -35,6 +35,7 @@ const zh_CN = {
     'cheque_expense': '支票支出',
     'airdrop': '空投',
     'chequebook': '金库',
+    'vault':'金库',
     'contracts':'合约',
     'cashed': '已兑现',
     'uncashed': '未兑现',
@@ -57,7 +58,8 @@ const zh_CN = {
     'days':'天',
     'receive':'接收',
     'send':'发送',
-
+    'in':'下行',
+    'out':'上行',
 
 // cheques
 
@@ -65,22 +67,28 @@ const zh_CN = {
     'expense': '支出',
     'received_cheques': '收到支票',
     'received_cheques_amount': '收到支票数额',
-    'cheque_earnings_history': '支票收益历史',
+    'cheque_earnings_history': '支票收益',
     'cheque_cashing': '支票兑现',
     'cashing_history': '兑现历史',
     'cashing_status':'兑现状态',
     'blockchain': '区块链',
-    'expended_cheques': '支出支票',
-    'expended_cheques_amount': '支出支票数额',
-    'cheque_expense_history': '支票支出历史',
+    'sent_cheques': '支出支票',
+    'sent_cheques_amount': '支出支票数额',
+    'cheque_expense_history': '支票支出',
     'total_sent': '总支出',
     'cash_list':'兑现列表',
     'cash_history': '兑现历史',
     'cheque_cashing_list': '兑现列表',
     'cheque_cashing_history': '兑现历史',
-    'expense_cheque_list':'支出列表',
+    'cheque_detail': '支票详情',
     'cashing':'兑现',
     'est_fee':'预估手续费',
+    'tx_hash': '交易哈希',
+    'date':'日期',
+    'time':'时间',
+    'expense_list':'支出列表',
+    'recipient': '接收者',
+    'cheques_number': '支票数量',
 
 // files
 
@@ -144,7 +152,7 @@ const zh_CN = {
     'coming_soon':'开发中',
     'cashing_list_tip': '可兑现金额将按金库累计，请选择要兑现的金库。',
     'cashing_history_tip': 'Cashing History Tip',
-    'expense_list_tip':'Expense List Tip',
+    'expense_list_tip':'发送的金额将按金库累积',
     'copied':'已复制',
     'no_data': '无数据',
     'setting_error':'设置失败，请确认API地址的有效性',
@@ -162,6 +170,6 @@ const zh_CN = {
     'delete_fail':'删除失败！',
     'add_connection_failed': '添加链接失败',
 
+};
 
-}
 export default zh_CN

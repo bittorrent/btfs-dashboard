@@ -58,11 +58,9 @@ function LocalStorageGaugeChart({color, data}) {
                 <div className="relative">
                     <canvas id="local-storage-gauge-chart" style={{height: '90px', width: '100%'}}></canvas>
                 </div>
-
             </div>
         </>
     );
 }
-
 
 export default memo(LocalStorageGaugeChart)

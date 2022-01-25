@@ -16,13 +16,12 @@ const LangDropdown = () => {
 
     return (
         <>
-            <a className="text-blueGray-500 block "
+            <a className="text-blueGray-500 block"
                onClick={(e) => {
                    changeLang(e, (locale === "zh" ? "en" : "zh"));
                }}>
                 <div className={"items-center flex " + (locale === "en" ? "en" : "zh")}></div>
             </a>
-
         </>
     );
 };

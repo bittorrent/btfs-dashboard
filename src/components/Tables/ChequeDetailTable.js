@@ -3,14 +3,14 @@ import React, {useState, useEffect, useCallback} from "react";
 import PropTypes from "prop-types";
 import {Pagination} from 'antd';
 import ClipboardCopy from "components/Utils/ClipboardCopy";
-import {getChequeCashingHistoryList} from "services/chequeService.js";
-import {Truncate, t} from "utils/text.js"
+import {getChequeReceivedDetailList, getChequeSentDetailList} from "services/chequeService.js";
 import themeStyle from "utils/themeStyle.js";
+import {Truncate, t} from "utils/text.js"
 import {switchBalanceUnit} from "utils/BTFSUtil.js";
 
 let didCancel = false;
 
-export default function ChequeCashingHistoryTable({color}) {
+export default function ChequeDetailTable({color, type}) {
 
     const [cheques, setCheques] = useState(null);
     const [total, setTotal] = useState(0);
@@ -22,7 +22,16 @@ export default function ChequeCashingHistoryTable({color}) {
 
     const updateTable = async (page) => {
         didCancel = false;
-        let {cheques, total} = await getChequeCashingHistoryList((page - 1) * 10, 10);
+        let data;
+        if (type === 'earning') {
+            data = await getChequeReceivedDetailList((page - 1) * 10, 10);
+        }
+        if (type === 'expense') {
+            data = await getChequeSentDetailList((page - 1) * 10, 10);
+        }
+
+        let {cheques, total} = data;
+
         if (!didCancel) {
             setCheques(cheques);
             setTotal(total);
@@ -41,14 +50,11 @@ export default function ChequeCashingHistoryTable({color}) {
 
         <>
             <div
-                className={"relative flex flex-col min-w-0 break-words w-full shadow-lg rounded " + themeStyle.bg[color] + ' ' + themeStyle.text[color]}>
+                className={"relative flex flex-col min-w-0 break-words w-full shadow-lg rounded " + themeStyle.bg[color]}>
                 <div className="block w-full overflow-x-auto">
                     <table className="items-center w-full bg-transparent border-collapse">
                         <thead>
                         <tr className="text-xs uppercase whitespace-nowrap">
-                            <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
-                                {t('tx_hash')}
-                            </th>
                             <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 {t('host_id')}
                             </th>
@@ -56,7 +62,8 @@ export default function ChequeCashingHistoryTable({color}) {
                                 {t('blockchain')}
                             </th>
                             <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
-                                {t('chequebook')}
+                                {type === 'earning' && t('chequebook')}
+                                {type === 'expense' && t('recipient')}
                             </th>
                             <th className={"cursor-pointer px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 <div className='flex items-center'>
@@ -64,10 +71,9 @@ export default function ChequeCashingHistoryTable({color}) {
                                 </div>
                             </th>
                             <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
-                                {t('date')}
-                            </th>
-                            <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
-                                {t('status')}
+                                {type === 'earning' && t('receive')}
+                                {type === 'expense' && t('send')}
+                                &nbsp;{t('time')}
                             </th>
                         </tr>
                         </thead>
@@ -78,42 +84,41 @@ export default function ChequeCashingHistoryTable({color}) {
                                 <tr key={index}>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         <div className='flex'>
-                                            <a href={'https://testscan.bt.io/#/transaction/' + item['tx_hash']}
-                                               target='_blank'>
-                                                <Truncate>{item['tx_hash']}</Truncate>
+                                            <a href={'https://scan-test.btfs.io/#/node/' + item['PeerId']}
+                                               target='_blank' rel="noreferrer">
+                                                <Truncate>{item['PeerId']}</Truncate>
                                             </a>
-                                            <ClipboardCopy value={item['tx_hash']}/>
-                                        </div>
-                                    </td>
-                                    <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        <div className='flex'>
-                                            <a href={'https://scan-test.btfs.io/#/node/' + item['peer_id']}
-                                               target='_blank'>
-                                                <Truncate>{item['peer_id']}</Truncate>
-                                            </a>
-                                            <ClipboardCopy value={item['peer_id']}/>
+                                            <ClipboardCopy value={item['PeerId']}/>
                                         </div>
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         BTTC
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        <div className='flex'>
-                                            <a href={'https://testscan.bt.io/#/address/' + item['vault']}
-                                               target='_blank'>
-                                                <Truncate>{item['vault']}</Truncate>
-                                            </a>
-                                            <ClipboardCopy value={item['vault']}/>
-                                        </div>
+                                        {
+                                            type === 'earning' && <div className='flex'>
+                                                <a href={'https://testscan.bt.io/#/address/' + item['Vault']}
+                                                   target='_blank' rel="noreferrer">
+                                                    <Truncate>{item['Vault']}</Truncate>
+                                                </a>
+                                                <ClipboardCopy value={item['Vault']}/>
+                                            </div>
+                                        }
+                                        {
+                                            type === 'expense' && <div className='flex'>
+                                                <a href={'https://testscan.bt.io/#/address/' + item['Beneficiary']}
+                                                   target='_blank' rel="noreferrer">
+                                                    <Truncate>{item['Beneficiary']}</Truncate>
+                                                </a>
+                                                <ClipboardCopy value={item['Beneficiary']}/>
+                                            </div>
+                                        }
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        {switchBalanceUnit(item['amount'])}
+                                        {switchBalanceUnit(item['Amount'])}
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        {new Date(item['cash_time']*1000).toLocaleString()}
-                                    </td>
-                                    <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        {item['status']}
+                                        {new Date(item['Time'] * 1000).toLocaleString()}
                                     </td>
                                 </tr>
                             )
@@ -141,16 +146,15 @@ export default function ChequeCashingHistoryTable({color}) {
                                     onChange={pageChange}/>
                     </div>
                 </div>
-
             </div>
         </>
     );
 }
 
-ChequeCashingHistoryTable.defaultProps = {
+ChequeDetailTable.defaultProps = {
     color: "light",
 };
 
-ChequeCashingHistoryTable.propTypes = {
+ChequeDetailTable.propTypes = {
     color: PropTypes.oneOf(["light", "dark"]),
 };

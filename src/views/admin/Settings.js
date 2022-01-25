@@ -9,10 +9,8 @@ export default function Settings() {
 
     return (
         <>
-            <div className="flex flex-wrap">
-                <div className="w-full">
-                    <CardSettings color={theme}/>
-                </div>
+            <div className="mt-18">
+                <CardSettings color={theme}/>
             </div>
         </>
     );
