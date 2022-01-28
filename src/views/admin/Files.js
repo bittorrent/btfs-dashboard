@@ -58,7 +58,6 @@ export default function Files() {
 
                 </div>
             </div>
-            <LocalFilesTable color={theme}/>
             <UploadModal color={theme}/>
             <DownloadModal color={theme}/>
             <PreviewModal color={theme}/>

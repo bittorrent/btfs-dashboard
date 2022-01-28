@@ -144,7 +144,7 @@ export default function Sidebar() {
                             <ul className="md:flex-col md:min-w-full flex flex-col list-none mb-4">
                                 <li className="items-center">
                                     <a className={"text-xs py-3 block" + (themeStyle.link[theme])}>
-                                        {t('version')} 2.0.2
+                                        {t('version')} 2.0.3
                                     </a>
                                 </li>
 
