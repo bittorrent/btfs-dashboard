@@ -18,7 +18,7 @@ class TronLink {
             console.log('Tronlink is installed!');
             this.isInstalled = true;
             this.init();
-            if (tronWeb.defaultAddress.base58) {
+            if (window.tronWeb.defaultAddress.base58) {
                 this.isLogin = true;
                 console.log('Tronlink is login!');
             } else {
@@ -34,33 +34,37 @@ class TronLink {
     }
 
     on(event, callback) {
-        window.tronWeb.on(event, (res) => {
-            console.log(res);
-            callback(res);
-        });
+        window.addEventListener('message', function (e) {
+            if (e.data.message && e.data.message.action == event) {
+                console.log(e.data.message);
+                callback();
+            }
+        })
+    }
 
-        /*
-            window.addEventListener('message', (data) => {
-                if (data.data.message) {
-                    if (data.data.message.action == 'setAccount' || data.data.message.action == 'accountsChanged') {
-                        login(localStorage.getItem('wallet'), this.props);
-                    }
-                }
-            })
-        */
+    request(method, params, successCallback, errorCallback) {
+        window.tronWeb.request({
+            method: method,
+            params: params,
+        }).then((res) => {
+            console.log(res);
+            successCallback()
+        }).catch((error) => {
+            console.log(error);
+            errorCallback();
+        })
     }
 
     connect() {
-      
+        window.tronWeb.request({method: 'tron_requestAccounts'});
     }
 
-    getContract() {
-
+    getMintContract() {
+        let contractAddress = "TFAngi1UtqKmMC34ZfiVHeivxg9rjTk5tz";
+        let myContract = window.tronWeb.contract().at(contractAddress);
+        return myContract;
     }
 
-    signMessage() {
-
-    }
 }
 
 const TronLinkClient = new TronLink();
