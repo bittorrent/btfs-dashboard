@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import HostScoreRingChart from "components/Charts/HostScoreRingChart.js";
 import HostScoreProgressChart from "components/Charts/HostScoreProgressChart.js";
+import HostWarning from "components/Warning/HostWarning.js";
 import {getHostScore} from "services/dashboardService.js";
 import themeStyle from "utils/themeStyle.js";
 
@@ -47,10 +48,15 @@ export default function CardHostScore({color}) {
             <div className={"relative flex flex-col h-400-px justify-center p-4 " + themeStyle.bg[color] + themeStyle.text[color]}>
                 <div className='flex'>
                     <div className='w-1/2 border-r pr-2'>
-                        <HostScoreRingChart data={ringChartData} color={color}/>
+                       <HostScoreRingChart data={ringChartData} color={color}/>
                     </div>
                     <div className='w-1/2 pl-2'>
-                        <HostScoreProgressChart data={progressChartData} color={color}/>
+                      {
+                        ringChartData.score !== undefined && <HostScoreProgressChart data={progressChartData} color={color}/>
+                      }
+                      {
+                        ringChartData.score === undefined && <HostWarning />
+                      }
                     </div>
                 </div>
 

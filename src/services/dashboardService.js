@@ -7,12 +7,14 @@ export const getNodeBasicStats = async () => {
     let data1 = Client10.getHostInfo();
     let data2 = Client10.getHostScore();
     let data3 = Client10.getPeers();
+    let data4 = Client10.getHostVersion();
 
-    return Promise.all([data1, data2, data3]).then((result) => {
+    return Promise.all([data1, data2, data3, data4]).then((result) => {
         return {
             ID: result[0]['ID'] ? result[0]['ID'] : '--',
             uptime: result[1]['host_stats'] ? (result[1]['host_stats']['uptime'] * 100).toFixed(0) : '--',
-            peers: result[2]['Peers'] ? result[2]['Peers'].length : '--'
+            peers: result[2]['Peers'] ? result[2]['Peers'].length : '--',
+            version: result[3]['Version'] ? result[3]['Version'] : '--',
         }
     })
 };

@@ -97,7 +97,7 @@ export default function ChequeDetailTable({color, type}) {
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         {
                                             type === 'earning' && <div className='flex'>
-                                                <a href={'https://testscan.bt.io/#/address/' + item['Vault']}
+                                                <a href={'https://testnet.bttcscan.com/#/address/' + item['Vault']}
                                                    target='_blank' rel="noreferrer">
                                                     <Truncate>{item['Vault']}</Truncate>
                                                 </a>
@@ -106,7 +106,7 @@ export default function ChequeDetailTable({color, type}) {
                                         }
                                         {
                                             type === 'expense' && <div className='flex'>
-                                                <a href={'https://testscan.bt.io/#/address/' + item['Beneficiary']}
+                                                <a href={'https://testnet.bttcscan.com/#/address/' + item['Beneficiary']}
                                                    target='_blank' rel="noreferrer">
                                                     <Truncate>{item['Beneficiary']}</Truncate>
                                                 </a>
