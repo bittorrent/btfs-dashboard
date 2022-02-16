@@ -1,9 +1,7 @@
 import React from "react";
-import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
 
-export default function HostWarning({color}) {
-
+export default function HostWarning() {
   return (
       <>
         <div className='h-full flex text-center items-center'>

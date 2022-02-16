@@ -27,6 +27,8 @@ export default function CardHostScore({color}) {
         uploadWeight: 0
     });
 
+    const [scoreInit, setScoreInit] = useState(true);
+
     useEffect(() => {
         fetchData();
         return () => {
@@ -38,8 +40,13 @@ export default function CardHostScore({color}) {
         didCancel = false;
         let {leftData, rightData} = await getHostScore();
         if (!didCancel) {
-            setRingChartData(leftData);
-            setProgressChartData(rightData);
+            if(leftData.score !== undefined) {
+                setRingChartData(leftData);
+                setProgressChartData(rightData);
+                setScoreInit(false);
+            } else {
+                setScoreInit(true);
+            }
         }
     };
 
@@ -52,10 +59,10 @@ export default function CardHostScore({color}) {
                     </div>
                     <div className='w-1/2 pl-2'>
                       {
-                        ringChartData.score !== undefined && <HostScoreProgressChart data={progressChartData} color={color}/>
+                          !scoreInit && <HostScoreProgressChart data={progressChartData} color={color}/>
                       }
                       {
-                        ringChartData.score === undefined && <HostWarning />
+                          scoreInit && <HostWarning />
                       }
                     </div>
                 </div>

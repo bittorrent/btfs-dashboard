@@ -32,7 +32,7 @@ export default function NodeBasicStats({color}) {
         <div className="relative pb-4">
           <div className="mx-auto w-full">
             <div className="flex flex-wrap">
-              <div className="w-full md:w-6/12 xl:w-3/12 md:pr-2">
+              <div className="w-full md:w-6/12 xl:w-3/12 md:pr-2 md:mb-2 xl:mb-0">
                 <div className={"relative break-words rounded  " + themeStyle.bg[color] + themeStyle.text[color]}>
                   <div className="flex items-center p-4 h-125-px">
                     <div className="relative w-3/4 h-75-px flex flex-col justify-between">
@@ -57,7 +57,7 @@ export default function NodeBasicStats({color}) {
                   </div>
                 </div>
               </div>
-              <div className="w-full md:w-6/12 xl:w-3/12 md:pl-2 md:pr-2">
+              <div className="w-full md:w-6/12 xl:w-3/12 md:pl-2 xl:pr-2 md:mb-2 xl:mb-0">
                 <div className={"relative break-words rounded " + themeStyle.bg[color] + themeStyle.text[color]}>
                   <div className="flex items-center p-4 h-125-px">
                     <div className="relative w-3/4 h-75-px flex flex-col justify-between">
@@ -77,7 +77,7 @@ export default function NodeBasicStats({color}) {
                   </div>
                 </div>
               </div>
-              <div className="w-full md:w-6/12 xl:w-3/12 md:pl-2 md:pr-2">
+              <div className="w-full md:w-6/12 xl:w-3/12 xl:pl-2 md:pr-2">
                 <div className={"relative break-words rounded " + themeStyle.bg[color] + themeStyle.text[color]}>
                   <div className="flex items-center p-4 h-125-px">
                     <div className="relative w-3/4 h-75-px flex flex-col justify-between">
@@ -97,7 +97,7 @@ export default function NodeBasicStats({color}) {
                   </div>
                 </div>
               </div>
-              <div className="w-full md:w-6/12 xl:w-3/12 md:pl-2">
+              <div className="w-full md:w-6/12 xl:w-3/12 xl:pl-2 md:pl-2">
                 <div className={"relative break-words rounded " + themeStyle.bg[color] + themeStyle.text[color]}>
                   <div className="flex items-center p-4 h-125-px">
                     <div className="relative w-3/4 h-75-px flex flex-col justify-between">
