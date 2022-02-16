@@ -78,7 +78,7 @@ export default function ChequeCashingHistoryTable({color}) {
                                 <tr key={index}>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         <div className='flex'>
-                                            <a href={'https://testnet.bttcscan.com/#/tx/' + item['tx_hash']}
+                                            <a href={'https://testnet.bttcscan.com/tx/' + item['tx_hash']}
                                                target='_blank'>
                                                 <Truncate>{item['tx_hash']}</Truncate>
                                             </a>
@@ -99,7 +99,7 @@ export default function ChequeCashingHistoryTable({color}) {
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         <div className='flex'>
-                                            <a href={'https://testnet.bttcscan.com/#/address/' + item['vault']}
+                                            <a href={'https://testnet.bttcscan.com/address/' + item['vault']}
                                                target='_blank'>
                                                 <Truncate>{item['vault']}</Truncate>
                                             </a>
