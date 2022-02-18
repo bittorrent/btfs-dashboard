@@ -6,8 +6,12 @@ btfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
 btfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT","GET","POST"]'
 ```
 
+## Mainnet 
+Browse https://dashboard.btfs.io 
+
 ## Testnet 
 Browse https://dashboard-test.btfs.io 
+Dashboard testnet please look for 2.1.0-testnet branch
 
 ## Docker
 Run docker image and browse http://localhost
