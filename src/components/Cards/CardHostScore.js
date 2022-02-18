@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import HostScoreRingChart from "components/Charts/HostScoreRingChart.js";
 import HostScoreProgressChart from "components/Charts/HostScoreProgressChart.js";
+import HostWarning from "components/Warning/HostWarning.js";
 import {getHostScore} from "services/dashboardService.js";
 import themeStyle from "utils/themeStyle.js";
 
@@ -26,6 +27,8 @@ export default function CardHostScore({color}) {
         uploadWeight: 0
     });
 
+    const [scoreInit, setScoreInit] = useState(true);
+
     useEffect(() => {
         fetchData();
         return () => {
@@ -37,8 +40,13 @@ export default function CardHostScore({color}) {
         didCancel = false;
         let {leftData, rightData} = await getHostScore();
         if (!didCancel) {
-            setRingChartData(leftData);
-            setProgressChartData(rightData);
+            if(leftData.score !== undefined) {
+                setRingChartData(leftData);
+                setProgressChartData(rightData);
+                setScoreInit(false);
+            } else {
+                setScoreInit(true);
+            }
         }
     };
 
@@ -47,10 +55,15 @@ export default function CardHostScore({color}) {
             <div className={"relative flex flex-col h-400-px justify-center p-4 " + themeStyle.bg[color] + themeStyle.text[color]}>
                 <div className='flex'>
                     <div className='w-1/2 border-r pr-2'>
-                        <HostScoreRingChart data={ringChartData} color={color}/>
+                       <HostScoreRingChart data={ringChartData} color={color}/>
                     </div>
                     <div className='w-1/2 pl-2'>
-                        <HostScoreProgressChart data={progressChartData} color={color}/>
+                      {
+                          !scoreInit && <HostScoreProgressChart data={progressChartData} color={color}/>
+                      }
+                      {
+                          scoreInit && <HostWarning />
+                      }
                     </div>
                 </div>
 

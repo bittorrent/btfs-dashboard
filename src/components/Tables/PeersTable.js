@@ -97,7 +97,7 @@ export default function PeersTable({color}) {
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         <div className='flex'>
-                                            <a href={'https://scan-test.btfs.io/#/node/' + items['Peer']} target='_blank'>
+                                            <a href={'https://scan.btfs.io/#/node/' + items['Peer']} target='_blank'>
                                                 {items['Peer']}
                                             </a>
                                         </div>

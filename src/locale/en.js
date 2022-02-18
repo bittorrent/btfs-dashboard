@@ -15,6 +15,7 @@ const en_US = {
 // dashboard
 
     'host_id': 'Host ID',
+    'host_version': 'Host Version',
     'status': 'Status',
     'online': 'Online',
     'connected': 'Connected',
@@ -169,6 +170,7 @@ const en_US = {
     'create_folder_fail':'Create Folder Failed !',
     'delete_fail':'Delete Failed !',
     'add_connection_failed': 'Add Connection Failed !',
+    'host_warning': 'Host score valuing. This process takes up to 24 hours. Please stay online.',
 
 };
 

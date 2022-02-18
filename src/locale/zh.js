@@ -15,6 +15,7 @@ const zh_CN = {
 // dashboard
 
     'host_id': '节点ID',
+    'host_version': '节点版本',
     'status': '状态',
     'online': '在线',
     'connected': '已连接',
@@ -169,6 +170,7 @@ const zh_CN = {
     'create_folder_fail':'创建文件夹失败！',
     'delete_fail':'删除失败！',
     'add_connection_failed': '添加链接失败',
+    'host_warning': '节点分数评估中，评估预计需要24小时，请保持节点正常在线。',
 
 };
 

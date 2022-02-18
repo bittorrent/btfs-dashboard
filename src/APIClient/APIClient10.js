@@ -39,6 +39,10 @@ class APIClient10 {
         this.apiUrl = url;
     }
 
+    getHostVersion() {
+      return this.request('/api/v1/version');
+    }
+
     getHostInfo() {
         return this.request('/api/v1/id');
     }
