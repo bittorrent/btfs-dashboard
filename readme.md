@@ -9,8 +9,7 @@ btfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT","GET","P
 ## Mainnet 
 Browse https://dashboard.btfs.io 
 
-## Testnet 
-Browse https://dashboard-test.btfs.io 
+## Testnet
 Dashboard testnet please look for 2.1.0-testnet branch
 
 ## Docker
