@@ -135,7 +135,7 @@
       "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
     ],
     "testEnvironment": "jsdom",
-    "testRunner": "/Users/tron/frameLibs/notus-react-main/node_modules/jest-circus/runner.js",
+    "testRunner": "",
     "transform": {
       "^.+\\.(js|jsx|mjs|cjs|ts|tsx)$": "<rootDir>/config/jest/babelTransform.js",
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
@@ -145,9 +145,7 @@
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$",
       "^.+\\.module\\.(css|sass|scss)$"
     ],
-    "modulePaths": [
-      "/Users/tron/frameLibs/notus-react-main/src"
-    ],
+    "modulePaths": [],
     "moduleNameMapper": {
       "^react-native$": "react-native-web",
       "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
