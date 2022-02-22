@@ -95,6 +95,10 @@ class APIClient10 {
         return this.request('/api/v1/cheque/receive-total-count');
     }
 
+    getContractsNumber() {
+        return this.request('/api/v1/storage/contracts/list/host');
+    }
+
     getChequeTotalExpenseNumbers() {
         return this.request('/api/v1/cheque/send-total-count');
     }
