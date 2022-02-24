@@ -14,12 +14,13 @@ export default function NodeWalletStats({color}) {
     const [BTTCAddressBTT, setBTTCAddressBTT] = useState(0);
     const [BTTCAddressWBTT, setBTTCAddressWBTT] = useState(0);
     const [_chequeBookBalance, set_ChequeBookBalance] = useState(0);
+    const [_BTTCAddressBTT, set_BTTCAddressBTT] = useState(0);
     const [_BTTCAddressWBTT, set_BTTCAddressWBTT] = useState(0);
 
     useEffect(() => {
         let didCancel = false;
         const fetchData = async () => {
-            let {BTTCAddress, chequeAddress, chequeBookBalance, BTTCAddressBTT, BTTCAddressWBTT, _chequeBookBalance, _BTTCAddressWBTT} = await getNodeWalletStats();
+            let {BTTCAddress, chequeAddress, chequeBookBalance, BTTCAddressBTT, BTTCAddressWBTT, _chequeBookBalance, _BTTCAddressBTT, _BTTCAddressWBTT} = await getNodeWalletStats();
             if (!didCancel) {
                 setBTTCAddress(BTTCAddress);
                 setChequeAddress(chequeAddress);
@@ -27,6 +28,7 @@ export default function NodeWalletStats({color}) {
                 setBTTCAddressBTT(BTTCAddressBTT);
                 setBTTCAddressWBTT(BTTCAddressWBTT);
                 set_ChequeBookBalance(_chequeBookBalance);
+                set_BTTCAddressBTT(_BTTCAddressBTT);
                 set_BTTCAddressWBTT(_BTTCAddressWBTT);
             }
         };
@@ -44,6 +46,16 @@ export default function NodeWalletStats({color}) {
     const onWithdraw = (e) => {
         e.preventDefault();
         Emitter.emit('openWithdrawDepositModal', {type: 'withdraw', max: _chequeBookBalance});
+    };
+
+    const onTransfer = (e) => {
+        e.preventDefault();
+        Emitter.emit('openTransferModal', {type: 'transfer'});
+    };
+
+    const onExchange = (e) => {
+        e.preventDefault();
+        Emitter.emit('openExchangeModal', {type: 'exchange', maxBTT: _BTTCAddressBTT, maxWBTT: _BTTCAddressWBTT});
     };
 
     const showQR = (e, type) => {
@@ -75,20 +87,27 @@ export default function NodeWalletStats({color}) {
                                                 <div className="font-semibold">
                                                     <a href={'https://bttcscan.com/address/' + BTTCAddress} target='_blank' rel='noreferrer'>{BTTCAddress}</a>
                                                 </div>
-
-                                                <div className="font-semibold">
-                                                    <span className=''>{t('balance')}: </span>
+                                                <div className=''>
+                                                    <span className='font-semibold'>{t('balance')}: &nbsp;</span>
+                                                    <span className='text-lg font-semibold'>{BTTCAddressBTT} </span>
+                                                    <span className='text-xs'>BTT</span>
+                                                    <span>&nbsp; / &nbsp;</span>
+                                                    <span className='text-lg font-semibold'> {BTTCAddressWBTT} </span>
+                                                    <span className='text-xs'>WBTT</span>
                                                 </div>
-
-                                                <div className='flex flex-col'>
-                                                    <div>
-                                                        <span className='text-lg font-semibold'>{BTTCAddressBTT} </span>
-                                                        <span className='text-xs'>BTT</span>
-                                                    </div>
-                                                    <div>
-                                                        <span className='text-lg font-semibold'> {BTTCAddressWBTT} </span>
-                                                        <span className='text-xs'>WBTT</span>
-                                                    </div>
+                                                <div className='transfer_exchange'>
+                                                    <button
+                                                        className={"border-1 px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 shadow hover:shadow-md inline-flex items-center font-bold " + themeStyle.bg[color]}
+                                                        type="button" onClick={onTransfer}>
+                                                        {t('transfer')}
+                                                    </button>
+                                                    <button
+                                                        className={"border-1 px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 shadow hover:shadow-md inline-flex items-center font-bold " + themeStyle.bg[color]}
+                                                        type="button" onClick={onExchange}>
+                                                        BTT
+                                                        <i className="fas fa-exchange-alt mx-4"></i>
+                                                        WBTT
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -109,7 +128,7 @@ export default function NodeWalletStats({color}) {
                                                     <a href={'https://bttcscan.com/address/' + chequeAddress} target='_blank' rel='noreferrer'>{chequeAddress}</a>
                                                 </div>
                                                 <div>
-                                                    <span className='font-semibold'>{t('balance')}: </span>
+                                                    <span className='font-semibold'>{t('balance')}: &nbsp;</span>
                                                     <span className='text-lg font-semibold'>{chequeBookBalance}</span>
                                                     <span className='text-xs'>WBTT</span>
                                                 </div>

@@ -32,7 +32,7 @@
 
 .inputTransition {
   position: relative;
-  width: auto;
+  width: 100%;
   cursor: pointer;
   border-top: 0;
   border-left: 0;
@@ -104,7 +104,7 @@
   background-color: blue;
 }
 
-.edit, .change, .cash, .withdraw_deposit {
+.edit, .change, .cash, .withdraw_deposit, .transfer_exchange {
   button {
     line-height: 15px;
   }

@@ -41,7 +41,7 @@ export default function NodeStorageStats({color}) {
             <div className="relative pb-4">
                 <div className="mx-auto w-full">
                         <div className="flex flex-wrap">
-                            <div className="w-full xl:w-4/12 lg:w-6/12 md:pr-2">
+                            <div className="w-full xl:w-4/12 lg:w-6/12 xl:pr-2">
                                     <div className={"relative break-words rounded mb-2 xl:mb-0  " + themeStyle.bg[color] + themeStyle.text[color]}>
                                         <div className="flex items-center p-4 h-125-px">
                                             <div className="w-3/4 h-90-px flex flex-col justify-between">
@@ -70,7 +70,7 @@ export default function NodeStorageStats({color}) {
                                     </div>
                             </div>
 
-                            <div className="w-full xl:w-4/12 lg:w-6/12 xl:pr-2 md:pl-2">
+                            <div className="w-full xl:w-4/12 lg:w-6/12 xl:pr-2 xl:pl-2">
                                     <div className={"relative break-words rounded mb-2 xl:mb-0  " + themeStyle.bg[color] + themeStyle.text[color]}>
                                         <div className="flex items-center p-4 h-125-px">
                                             <div className="w-3/4 h-90-px flex flex-col justify-between">

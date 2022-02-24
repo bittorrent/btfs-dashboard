@@ -119,6 +119,7 @@ export const getNodeWalletStats = async () => {
             BTTCAddressBTT: switchBalanceUnit(result[1]['balance']),
             BTTCAddressWBTT: switchBalanceUnit(result[2]['balance']),
             _chequeBookBalance: new BigNumber(result[0]['balance']).dividedBy(precision).toNumber(),
+            _BTTCAddressBTT: new BigNumber(result[1]['balance']).dividedBy(precision).toNumber(),
             _BTTCAddressWBTT: new BigNumber(result[2]['balance']).dividedBy(precision).toNumber(),
         }
     })
