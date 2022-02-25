@@ -177,7 +177,7 @@ export default function ExchangeModal({color}) {
                                 <div className="flex items-center justify-center lg:justify-between p-4 rounded-b">
                                     <div>
                                         {t('est_fee')}: &nbsp;
-                                        <span className='text-xl font-semibold'>15 BTT</span>
+                                        <span className='text-xl font-semibold'>{fee} BTT</span>
                                     </div>
                                     <div>
                                         <button

@@ -124,7 +124,7 @@ export default function TransferConfirmModal({color}) {
                                             </div>
                                             <div className="flex-1">
                                                 <p className='p-2'>Estimated transaction fee</p>
-                                                <p className='p-2 font-semibold'>15 BTT</p>
+                                                <p className='p-2 font-semibold'>{fee} BTT</p>
                                             </div>
                                         </div>
                                     </div>
@@ -133,7 +133,7 @@ export default function TransferConfirmModal({color}) {
                                         className="flex flex-wrap items-center justify-center lg:justify-between p-4 rounded-b">
                                         <div>
                                             {t('total')}: &nbsp;
-                                            <span className='text-xl font-semibold'>{inputAmountRef.current.value} BTT + 15 BTT</span>
+                                            <span className='text-xl font-semibold'>{inputAmountRef.current.value} BTT + {fee} BTT</span>
                                         </div>
                                         <div>
                                             <button
@@ -217,7 +217,7 @@ export default function TransferConfirmModal({color}) {
                                         className="flex flex-wrap items-center justify-center lg:justify-between p-4 rounded-b">
                                         <div>
                                             {t('est_fee')}: &nbsp;
-                                            <span className='text-xl font-semibold'>15 BTT</span>
+                                            <span className='text-xl font-semibold'>{fee} BTT</span>
                                         </div>
                                         <div>
                                             <button

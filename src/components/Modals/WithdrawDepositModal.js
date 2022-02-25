@@ -5,6 +5,7 @@ import {withdraw, deposit} from "services/dashboardService.js";
 import Emitter from "utils/eventBus";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
+import {fee} from "utils/BTFSUtil.js";
 
 export default function WithdrawDepositModal({color}) {
     const intl = useIntl();
@@ -117,7 +118,7 @@ export default function WithdrawDepositModal({color}) {
                                 <div className="flex items-center justify-between p-4 rounded-b">
                                     <div>
                                         {t('est_fee')}: &nbsp;
-                                        <span className='text-xl font-semibold'>15 BTT</span>
+                                        <span className='text-xl font-semibold'>{fee} BTT</span>
                                     </div>
                                     <div>
                                         <button
