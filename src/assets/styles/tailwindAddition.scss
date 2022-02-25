@@ -19,6 +19,10 @@
   flex-grow: 0;
 }
 
+.text-indigo-500 {
+  color: rgb(99 102 241);
+}
+
 .m-auto {
   margin: auto;
 }
@@ -33,6 +37,10 @@
 
 .line-height-7px {
   line-height: 7px;
+}
+
+.w-50-px {
+  width: 50px;
 }
 
 .h-180-px {
@@ -57,6 +65,10 @@
 
 .h-80-px {
   height: 80px;
+}
+
+.h-35-px {
+  height: 35px;
 }
 
 .h-90-px {
@@ -163,6 +175,14 @@
   background-color: lightgray;
 }
 
+.bg-gray-500 {
+  background-color: rgb(107 114 128);
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
 .transform-x-50 {
   transform: translateX(-50%);
 }
@@ -260,7 +280,9 @@
 }
 
 @media (min-width: 1024px) {
-
+  .lg\:justify-between {
+    justify-content: space-between;
+  }
 }
 
 @media (min-width: 1280px) {

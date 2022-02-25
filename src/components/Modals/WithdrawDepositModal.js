@@ -4,7 +4,6 @@ import {mainContext} from "reducer";
 import {withdraw, deposit} from "services/dashboardService.js";
 import Emitter from "utils/eventBus";
 import themeStyle from "utils/themeStyle.js";
-import {inputCheck} from "utils/checks.js";
 import {t} from "utils/text.js";
 
 export default function WithdrawDepositModal({color}) {
@@ -46,7 +45,6 @@ export default function WithdrawDepositModal({color}) {
 
     const _withdraw = async () => {
         let amount = inputRef.current.value;
-        inputCheck();
         setShowModal(false);
         let result = await withdraw(amount);
         if (result['Type'] === 'error') {
@@ -58,7 +56,6 @@ export default function WithdrawDepositModal({color}) {
 
     const _deposit = async () => {
         let amount = inputRef.current.value;
-        inputCheck();
         setShowModal(false);
         let result = await deposit(amount);
         if (result['Type'] === 'error') {

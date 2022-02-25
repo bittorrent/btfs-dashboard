@@ -9,6 +9,8 @@ export const B = 1000000000;
 
 export const precision = 1000000000000000000;
 
+export const fee = 15;  // BTT, not with precision
+
 export function switchStorageUnit2(storage) {
     if (storage === null)
         return '--';

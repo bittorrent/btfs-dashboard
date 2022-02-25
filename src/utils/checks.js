@@ -1,4 +1,5 @@
 import Emitter from "./eventBus";
+import web3 from "web3";
 
 export const tronLinkCheck = () => {
     const tronWeb = window.tronWeb;
@@ -40,14 +41,26 @@ export const metaMaskCheck = async () => {
     }
 };
 
-export const inputCheck = () => {
+export const inputAddressCheck = (value) => {
+    if (web3.utils.isAddress(value)) {
+        return true;
+    } else {
+        return false
+    }
+};
 
+export const inputNumberCheck = (value, max) => {
+    if (value > 0 && value <= max) {
+        return true;
+    } else {
+        return false
+    }
 };
 
 export const urlCheck = (url) => {
     try {
         if (url.indexOf('http://') < 0 || !url.split(":")[2]) {
-            Emitter.emit('showMessageAlert', {message: 'api_invalid', status: 'error', type:'frontEnd'});
+            Emitter.emit('showMessageAlert', {message: 'api_invalid', status: 'error', type: 'frontEnd'});
             return false;
         } else {
             return true;

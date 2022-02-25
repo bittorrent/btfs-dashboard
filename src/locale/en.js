@@ -130,7 +130,7 @@ const en_US = {
     'private_key': 'Private Key',
 
 // modal
-
+    'transfer': 'Transfer',
     'insert_cid':'Insert an BTFS path (CID) to import. Examples:',
     'chequebook_withdraw':'Vault Withdraw',
     'amount_to_withdraw':'Please enter the amount of WBTT you would like to withdraw.',
@@ -138,9 +138,11 @@ const en_US = {
     'amount_to_deposit':'Please enter the amount of WBTT you would like to deposit.',
     'cancel':'Cancel',
     'confirm':'Confirm',
+    'confirmation': 'Confirmation',
     'max_amount':'Max Amount',
     'address_to_connect':' Please enter the peer address you want to connect.',
     'cash_confirm': 'Cash Confirmation',
+    'next': 'Next',
     'key_warning_1':'Private key controls all your assets',
     'key_warning_2': 'Do Not show the private key to anybody',
 

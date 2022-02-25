@@ -6,6 +6,7 @@ import Emitter from "utils/eventBus";
 import themeStyle from "utils/themeStyle.js";
 import {inputCheck} from "utils/checks.js";
 import {t} from "utils/text.js";
+import {fee} from "utils/BTFSUtil.js";
 
 export default function ExchangeModal({color}) {
     const intl = useIntl();
@@ -22,7 +23,7 @@ export default function ExchangeModal({color}) {
     useEffect(() => {
         const set = function (params) {
             console.log("openExchangeModal event has occured");
-            setMaxBTT(params.maxBTT);
+            setMaxBTT((params.maxBTT - fee) > 0 ? (params.maxBTT - fee) : 0);
             setMaxWBTT(params.maxWBTT);
             setShowModal(true);
         };
@@ -90,6 +91,12 @@ export default function ExchangeModal({color}) {
                                             <div className="grow">
                                                 <div className='text-center font-semibold text-lg mb-4'>BTT</div>
                                                 <div className='flex'>
+                                                    <div>
+                                                        <button
+                                                            className="bg-indigo-500 text-white active:bg-indigo-600 h-full rounded focus:outline-none p-2 ease-linear transition-all duration-150"
+                                                            onClick={setMaxBTTNum}>MAX
+                                                        </button>
+                                                    </div>
                                                     <div className="inputTransition">
                                                         <input
                                                             className={"p4 mb-1 border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full " + themeStyle.bg[color]}
@@ -100,16 +107,13 @@ export default function ExchangeModal({color}) {
                                                             ref={inputRefBTT}
                                                         />
                                                     </div>
-                                                    <div>
-                                                        <button
-                                                            className="bg-indigo-500 text-white active:bg-indigo-600 h-full rounded focus:outline-none p-2 ease-linear transition-all duration-150"
-                                                            onClick={setMaxBTTNum}>MAX
-                                                        </button>
-                                                    </div>
                                                 </div>
                                             </div>
                                             <div className='grow-0 text-lg cursor-pointer text-xl' onClick={reverse}>
-                                                <i className="fas fa-arrow-alt-circle-right"></i>
+                                                <div className='text-center font-semibold text-lg mb-4'>&nbsp;</div>
+                                                <div className='flex items-center h-50-px'>
+                                                    <i className="fas fa-arrow-alt-circle-right text-indigo-500"></i>
+                                                </div>
                                             </div>
                                             <div className="grow">
                                                 <div className='text-center font-semibold text-lg mb-4'>WBTT</div>
@@ -130,6 +134,12 @@ export default function ExchangeModal({color}) {
                                             <div className="grow">
                                                 <div className='text-center font-semibold text-lg mb-4'>WBTT</div>
                                                 <div className='flex'>
+                                                    <div>
+                                                        <button
+                                                            className="bg-indigo-500 text-white active:bg-indigo-600 h-full rounded focus:outline-none p-2 ease-linear transition-all duration-150"
+                                                            onClick={setMaxWBTTNum}>MAX
+                                                        </button>
+                                                    </div>
                                                     <div className="inputTransition">
                                                         <input
                                                             className={"p4 mb-1 border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full " + themeStyle.bg[color]}
@@ -140,16 +150,13 @@ export default function ExchangeModal({color}) {
                                                             ref={inputRefWBTT}
                                                         />
                                                     </div>
-                                                    <div>
-                                                        <button
-                                                            className="bg-indigo-500 text-white active:bg-indigo-600 h-full rounded focus:outline-none p-2 ease-linear transition-all duration-150"
-                                                            onClick={setMaxWBTTNum}>MAX
-                                                        </button>
-                                                    </div>
                                                 </div>
                                             </div>
                                             <div className='grow-0 text-lg cursor-pointer text-xl' onClick={reverse}>
-                                                <i className="fas fa-arrow-alt-circle-right"></i>
+                                                <div className='text-center font-semibold text-lg mb-4'>&nbsp;</div>
+                                                <div className='flex items-center h-50-px'>
+                                                    <i className="fas fa-arrow-alt-circle-right text-indigo-500"></i>
+                                                </div>
                                             </div>
                                             <div className="grow">
                                                 <div className='text-center font-semibold text-lg mb-4'>BTT</div>
@@ -165,13 +172,13 @@ export default function ExchangeModal({color}) {
                                             </div>
                                         </div>
                                     }
-                                    <div className='mt-4'>
+                                </div>
+                                {/*footer*/}
+                                <div className="flex items-center justify-center lg:justify-between p-4 rounded-b">
+                                    <div>
                                         {t('est_fee')}: &nbsp;
                                         <span className='text-xl font-semibold'>15 BTT</span>
                                     </div>
-                                </div>
-                                {/*footer*/}
-                                <div className="flex items-center justify-end px-4 pb-4 rounded-b">
                                     <div>
                                         <button
                                             className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"

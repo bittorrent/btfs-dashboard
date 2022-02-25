@@ -131,6 +131,7 @@ const zh_CN = {
 
 // modal
 
+    'transfer': '转账',
     'insert_cid':'使用BTFS路径（CID）导入。 例如:',
     'chequebook_withdraw':'取款',
     'amount_to_withdraw':'请输入要提取的WBTT数量。',
@@ -138,9 +139,11 @@ const zh_CN = {
     'amount_to_deposit':'请输入要存入的WBTT数量。',
     'cancel':'取消',
     'confirm':'确认',
+    'confirmation': '确认',
     'max_amount':'最大值',
     'address_to_connect':'请输入要链接的节点地址。',
     'cash_confirm': '兑现确认',
+    'next': '下一步',
     'key_warning_1':'私钥可以控制资产',
     'key_warning_2': '不要把私钥暴露给任何人',
 

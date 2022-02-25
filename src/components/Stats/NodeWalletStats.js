@@ -50,7 +50,7 @@ export default function NodeWalletStats({color}) {
 
     const onTransfer = (e) => {
         e.preventDefault();
-        Emitter.emit('openTransferModal', {type: 'transfer'});
+        Emitter.emit('openTransferConfirmModal', {type: 'transfer', maxBTT: _BTTCAddressBTT, maxWBTT: _BTTCAddressWBTT});
     };
 
     const onExchange = (e) => {
