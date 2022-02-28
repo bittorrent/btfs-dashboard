@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js';
 import Client10 from "APIClient/APIClient10.js";
-import {switchBalanceUnit, compareInt, precision} from "utils/BTFSUtil.js";
+import {switchBalanceUnit, compareInt} from "utils/BTFSUtil.js";
+import {PRECISION} from "utils/constants";
 
 export const getChequeEarningStats = async () => {
     let data = await Client10.getChequeStats();
@@ -117,7 +118,7 @@ export const getChequeEarningHistory = async () => {
         data.forEach((item) => {
             let date = new Date(item['date'] * 1000);
             x.push((date.getMonth() + 1) + '/' + date.getDate());
-            y1.push((item['total_received']/precision).toFixed(4));
+            y1.push((item['total_received']/PRECISION).toFixed(4));
             y2.push(item['total_received_count']);
         });
         return {
@@ -143,7 +144,7 @@ export const getChequeExpenseHistory = async () => {
         data.forEach((item) => {
             let date = new Date(item['date'] * 1000);
             x.push((date.getMonth() + 1) + '/' + date.getDate());
-            y1.push((item['total_issued']/precision).toFixed(4));
+            y1.push((item['total_issued']/PRECISION).toFixed(4));
             y2.push(item['total_issued_count']);
         });
         return {

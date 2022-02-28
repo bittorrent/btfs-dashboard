@@ -1,12 +1,13 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import {useIntl} from 'react-intl';
 import {mainContext} from "reducer";
-import {withdraw, deposit} from "services/dashboardService.js";
+import ButtonCancel from "components/Buttons/ButtonCancel.js";
+import ButtonConfirm from "components/Buttons/ButtonConfirm.js";
 import Emitter from "utils/eventBus";
 import themeStyle from "utils/themeStyle.js";
-import {inputCheck} from "utils/checks.js";
 import {t} from "utils/text.js";
-import {fee} from "utils/BTFSUtil.js";
+import {FEE} from "utils/constants.js";
+import {inputNumberCheck} from "utils/checks.js";
 
 export default function ExchangeModal({color}) {
     const intl = useIntl();
@@ -17,14 +18,16 @@ export default function ExchangeModal({color}) {
     const [showModal, setShowModal] = useState(false);
     const [maxBTT, setMaxBTT] = useState(0);
     const [maxWBTT, setMaxWBTT] = useState(0);
-    const [value, setValue] = useState(null);
+    const [value, setValue] = useState('');
     const [target, setTarget] = useState('BTT');
+    const [valid, setValid] = useState(false);
 
     useEffect(() => {
         const set = function (params) {
             console.log("openExchangeModal event has occured");
-            setMaxBTT((params.maxBTT - fee) > 0 ? (params.maxBTT - fee) : 0);
+            setMaxBTT((params.maxBTT - FEE) > 0 ? (params.maxBTT - FEE) : 0);
             setMaxWBTT(params.maxWBTT);
+            setValue('');
             setShowModal(true);
         };
         Emitter.on("openExchangeModal", set);
@@ -38,11 +41,22 @@ export default function ExchangeModal({color}) {
         console.log(value, target);
         setShowModal(false);
         return;
+        /*
         let result = await deposit(0);
         if (result['Type'] === 'error') {
             Emitter.emit('showMessageAlert', {message: result['Message'], status: 'error'});
         } else {
             Emitter.emit('showMessageAlert', {message: 'deposit_success', status: 'success', type: 'frontEnd'});
+        } */
+    };
+
+    const check = () => {
+        if (inputNumberCheck(target==='BTT' ? inputRefBTT.current.value : inputRefWBTT.current.value, target==='BTT' ? maxBTT : maxWBTT)) {
+            setValid(true);
+            return true;
+        } else {
+            setValid(false);
+            return false;
         }
     };
 
@@ -59,6 +73,7 @@ export default function ExchangeModal({color}) {
     const inputChange = (e) => {
         console.log(e.target.value);
         setValue(e.target.value);
+        check();
     };
 
     const reverse = () => {
@@ -81,7 +96,7 @@ export default function ExchangeModal({color}) {
                                 {/*header*/}
                                 <div className="p-4">
                                     <p className="font-semibold">
-                                        BTT - WBTT {t('Exchange')}
+                                        BTT - WBTT {t('exchange')}
                                     </p>
                                 </div>
                                 {/*body*/}
@@ -177,23 +192,11 @@ export default function ExchangeModal({color}) {
                                 <div className="flex items-center justify-center lg:justify-between p-4 rounded-b">
                                     <div>
                                         {t('est_fee')}: &nbsp;
-                                        <span className='text-xl font-semibold'>{fee} BTT</span>
+                                        <span className='text-xl font-semibold'>{FEE} BTT</span>
                                     </div>
                                     <div>
-                                        <button
-                                            className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                            type="button"
-                                            onClick={() => setShowModal(false)}
-                                        >
-                                            {t('cancel')}
-                                        </button>
-                                        <button
-                                            className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                            type="button"
-                                            onClick={_exchange}
-                                        >
-                                            {t('confirm')}
-                                        </button>
+                                        <ButtonCancel event={setShowModal} text={t('cancel')}/>
+                                        <ButtonConfirm event={_exchange} valid={valid} text={t('confirm')}/>
                                     </div>
                                 </div>
                             </div>

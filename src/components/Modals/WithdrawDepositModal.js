@@ -1,11 +1,14 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import {useIntl} from 'react-intl';
 import {mainContext} from "reducer";
+import ButtonCancel from "components/Buttons/ButtonCancel.js";
+import ButtonConfirm from "components/Buttons/ButtonConfirm.js";
 import {withdraw, deposit} from "services/dashboardService.js";
 import Emitter from "utils/eventBus";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
-import {fee} from "utils/BTFSUtil.js";
+import {FEE} from "utils/constants.js";
+import {inputNumberCheck} from "utils/checks.js";
 
 export default function WithdrawDepositModal({color}) {
     const intl = useIntl();
@@ -17,6 +20,7 @@ export default function WithdrawDepositModal({color}) {
     const [description, setDescription] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [max, setMax] = useState(0);
+    const [valid, setValid] = useState(false);
 
     useEffect(() => {
         const set = function (params) {
@@ -66,6 +70,20 @@ export default function WithdrawDepositModal({color}) {
         }
     };
 
+    const check = () => {
+        if (inputNumberCheck(inputRef.current.value, max)) {
+            setValid(true);
+            return true;
+        } else {
+            setValid(false);
+            return false;
+        }
+    };
+
+    const inputChange = () => {
+        check();
+    };
+
     const manipulation = {
         withdraw: _withdraw,
         deposit: _deposit,
@@ -103,6 +121,7 @@ export default function WithdrawDepositModal({color}) {
                                             <input
                                                 className={"p4 mb-1 border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full " + themeStyle.bg[color]}
                                                 placeholder={intl.formatMessage({id: 'max_amount'}) + ' : ' + max}
+                                                onChange={inputChange}
                                                 type="number"
                                                 min="0"
                                                 ref={inputRef}
@@ -118,23 +137,11 @@ export default function WithdrawDepositModal({color}) {
                                 <div className="flex items-center justify-between p-4 rounded-b">
                                     <div>
                                         {t('est_fee')}: &nbsp;
-                                        <span className='text-xl font-semibold'>{fee} BTT</span>
+                                        <span className='text-xl font-semibold'>{FEE} BTT</span>
                                     </div>
                                     <div>
-                                        <button
-                                            className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                            type="button"
-                                            onClick={() => setShowModal(false)}
-                                        >
-                                            {t('cancel')}
-                                        </button>
-                                        <button
-                                            className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                            type="button"
-                                            onClick={manipulation[type]}
-                                        >
-                                            {t(type)}
-                                        </button>
+                                        <ButtonCancel event={setShowModal} text={t('cancel')}/>
+                                        <ButtonConfirm event={manipulation[type]} valid={valid} text={t(type)}/>
                                     </div>
                                 </div>
                             </div>

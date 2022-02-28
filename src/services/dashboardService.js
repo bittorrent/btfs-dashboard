@@ -1,7 +1,8 @@
 /*eslint-disable*/
 import Client10 from "APIClient/APIClient10.js";
 import BigNumber from 'bignumber.js';
-import {switchStorageUnit2, switchBalanceUnit, precision} from "utils/BTFSUtil.js";
+import {switchStorageUnit2, switchBalanceUnit} from "utils/BTFSUtil.js";
+import {PRECISION} from "utils/constants.js";
 
 export const getNodeBasicStats = async () => {
     let data1 = Client10.getHostInfo();
@@ -118,9 +119,9 @@ export const getNodeWalletStats = async () => {
             chequeBookBalance: switchBalanceUnit(result[0]['balance']),
             BTTCAddressBTT: switchBalanceUnit(result[1]['balance']),
             BTTCAddressWBTT: switchBalanceUnit(result[2]['balance']),
-            _chequeBookBalance: new BigNumber(result[0]['balance']).dividedBy(precision).toNumber(),
-            _BTTCAddressBTT: new BigNumber(result[1]['balance']).dividedBy(precision).toNumber(),
-            _BTTCAddressWBTT: new BigNumber(result[2]['balance']).dividedBy(precision).toNumber(),
+            _chequeBookBalance: new BigNumber(result[0]['balance']).dividedBy(PRECISION).toNumber(),
+            _BTTCAddressBTT: new BigNumber(result[1]['balance']).dividedBy(PRECISION).toNumber(),
+            _BTTCAddressWBTT: new BigNumber(result[2]['balance']).dividedBy(PRECISION).toNumber(),
         }
     })
 };
@@ -137,7 +138,7 @@ export const getNodeStorageStats = async () => {
                 capacity: switchStorageUnit2(result[1]['StorageMax']),
                 storageUsed: switchStorageUnit2(result[1]['RepoSize']),
                 percentage: new BigNumber(result[1]['RepoSize']).dividedBy(result[1]['StorageMax']).multipliedBy(100).toFixed(2),
-                hostPrice: (result[0]['price'] * 30 / precision).toFixed(2),
+                hostPrice: (result[0]['price'] * 30 / PRECISION).toFixed(2),
                 contracts: result[2]['contracts'].length,
                 uncashed: switchBalanceUnit(result[3]['total_received_uncashed']),
                 uncashedChange: switchBalanceUnit(result[3]['total_received_daily_uncashed']),
@@ -167,14 +168,14 @@ export const getFilesStorage = async () => {
 };
 
 export const withdraw = async (amount) => {
-    let temp = new Number(new BigNumber(amount).multipliedBy(precision).toString()).toLocaleString();
+    let temp = new Number(new BigNumber(amount).multipliedBy(PRECISION).toString()).toLocaleString();
     let amount_str = temp.replace(/,/g, "");
     let data = await Client10.withdraw(amount_str);
     return data
 };
 
 export const deposit = async (amount) => {
-    let temp = new Number(new BigNumber(amount).multipliedBy(precision).toString()).toLocaleString();
+    let temp = new Number(new BigNumber(amount).multipliedBy(PRECISION).toString()).toLocaleString();
     let amount_str = temp.replace(/,/g, "");
     let data = await Client10.deposit(amount_str);
     return data

@@ -45,7 +45,7 @@ export default function CardChequeEarningList({color}) {
 
     const _cash = () => {
         if (cashList.current.length > 0) {
-            Emitter.emit('openConfirmModal', {data: cashList.current});
+            Emitter.emit('openCashConfirmModal', {data: cashList.current});
         }
     };
 

@@ -1,13 +1,15 @@
 import React, {useEffect, useState, useContext, useRef} from "react";
 import {mainContext} from "reducer";
 import {Progress} from 'antd';
+import ButtonCancel from "components/Buttons/ButtonCancel.js";
+import ButtonConfirm from "components/Buttons/ButtonConfirm.js";
 import {cash} from "services/chequeService.js";
 import Emitter from "utils/eventBus";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
-import {precision} from "utils/BTFSUtil.js";
+import {PRECISION} from "utils/constants.js";
 
-export default function ConfirmModal({color}) {
+export default function CashConfirmModal({color}) {
 
     const {state} = useContext(mainContext);
     const {sidebarShow} = state;
@@ -20,7 +22,7 @@ export default function ConfirmModal({color}) {
 
     useEffect(() => {
         const set = async function (params) {
-            console.log("openConfirmModal event has occured");
+            console.log("openCashConfirmModal event has occured");
             cashList.current.list = params.data;
             cashList.current.total = 0;
 
@@ -28,13 +30,13 @@ export default function ConfirmModal({color}) {
                 cashList.current.total = (cashList.current.total + item.amount);
             });
 
-            cashList.current.total = cashList.current.total / precision;
+            cashList.current.total = cashList.current.total / PRECISION;
 
             setShowModal(true);
         };
-        Emitter.on("openConfirmModal", set);
+        Emitter.on("openCashConfirmModal", set);
         return () => {
-            Emitter.removeListener('openConfirmModal');
+            Emitter.removeListener('openCashConfirmModal');
         }
     }, []);
 
@@ -134,20 +136,8 @@ export default function ConfirmModal({color}) {
                                     </div>
                                     {/*footer*/}
                                     <div className="flex items-center justify-end p-4 rounded-b">
-                                        <button
-                                            className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                            type="button"
-                                            onClick={() => setShowModal(false)}
-                                        >
-                                            {t('cancel')}
-                                        </button>
-                                        <button
-                                            className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                            type="button"
-                                            onClick={submit}
-                                        >
-                                            {t('confirm')}
-                                        </button>
+                                        <ButtonCancel event={setShowModal} text={t('cancel')}/>
+                                        <ButtonConfirm event={submit} valid={true} text={t('confirm')}/>
                                     </div>
                                 </div>
                             </div>

@@ -98,6 +98,9 @@ const zh_CN = {
     'chunks':'文件块',
     'file_name':'文件名称',
     'folder':'文件夹',
+    'new_folder':'新建文件夹',
+    'folder_name': '文件夹名称',
+    'create': '创建',
     'import_from_btfs':'从BTFS导入',
     'from':'来自',
     'name': '名称',
@@ -132,7 +135,9 @@ const zh_CN = {
 // modal
 
     'transfer': '转账',
+    'exchange': '兑换',
     'insert_cid':'使用BTFS路径（CID）导入。 例如:',
+    'insert_name':'输入要创建的文件夹名称',
     'chequebook_withdraw':'取款',
     'amount_to_withdraw':'请输入要提取的WBTT数量。',
     'chequebook_deposit':'存款',

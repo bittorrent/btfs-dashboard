@@ -2,11 +2,12 @@ import React, {useEffect, useState, useContext, useCallback, useRef} from "react
 import {useIntl} from 'react-intl';
 import {mainContext} from "reducer";
 import {Select} from 'antd';
-import {cash} from "services/chequeService.js";
+import ButtonCancel from "components/Buttons/ButtonCancel.js";
+import ButtonConfirm from "components/Buttons/ButtonConfirm.js";
 import Emitter from "utils/eventBus";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
-import {fee} from "utils/BTFSUtil.js";
+import {FEE} from "utils/constants.js";
 import {inputAddressCheck, inputNumberCheck} from "utils/checks.js";
 
 const {Option} = Select;
@@ -28,7 +29,7 @@ export default function TransferConfirmModal({color}) {
         const set = async function (params) {
             console.log("openTransferConfirmModal event has occured");
             maxRef.current = {
-                BTT: (params.maxBTT - fee) > 0 ? params.maxBTT - fee : 0,
+                BTT: (params.maxBTT - FEE) > 0 ? params.maxBTT - FEE : 0,
                 WBTT: params.maxWBTT
             };
             setMax(maxRef.current.BTT);
@@ -124,7 +125,7 @@ export default function TransferConfirmModal({color}) {
                                             </div>
                                             <div className="flex-1">
                                                 <p className='p-2'>Estimated transaction fee</p>
-                                                <p className='p-2 font-semibold'>{fee} BTT</p>
+                                                <p className='p-2 font-semibold'>{FEE} BTT</p>
                                             </div>
                                         </div>
                                     </div>
@@ -133,16 +134,10 @@ export default function TransferConfirmModal({color}) {
                                         className="flex flex-wrap items-center justify-center lg:justify-between p-4 rounded-b">
                                         <div>
                                             {t('total')}: &nbsp;
-                                            <span className='text-xl font-semibold'>{inputAmountRef.current.value} BTT + {fee} BTT</span>
+                                            <span className='text-xl font-semibold'>{inputAmountRef.current.value} BTT + {FEE} BTT</span>
                                         </div>
                                         <div>
-                                            <button
-                                                className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 "
-                                                type="button"
-                                                onClick={submit}
-                                            >
-                                                {t('confirm')}
-                                            </button>
+                                            <ButtonConfirm event={submit} valid={true} text={t('confirm')}/>
                                         </div>
                                     </div>
                                 </div>
@@ -211,30 +206,18 @@ export default function TransferConfirmModal({color}) {
                                                 </button>
                                             </div>
                                         </div>
+                                        <p className='pt-4'>The available maximum amount = Maximum Amount - Estimated Transaction Fee </p>
                                     </div>
                                     {/*footer*/}
                                     <div
                                         className="flex flex-wrap items-center justify-center lg:justify-between p-4 rounded-b">
                                         <div>
                                             {t('est_fee')}: &nbsp;
-                                            <span className='text-xl font-semibold'>{fee} BTT</span>
+                                            <span className='text-xl font-semibold'>{FEE} BTT</span>
                                         </div>
                                         <div>
-                                            <button
-                                                className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                                type="button"
-                                                onClick={() => setShowModal(false)}
-                                            >
-                                                {t('cancel')}
-                                            </button>
-                                            <button
-                                                className={"text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 " + (valid ? " bg-emerald-500" : " bg-gray-500 cursor-not-allowed")}
-                                                type="button"
-                                                disabled={!valid}
-                                                onClick={next}
-                                            >
-                                                {t('next')}
-                                            </button>
+                                            <ButtonCancel event={setShowModal} text={t('cancel')}/>
+                                            <ButtonConfirm event={next} valid={valid} text={t('next')}/>
                                         </div>
                                     </div>
                                 </div>
