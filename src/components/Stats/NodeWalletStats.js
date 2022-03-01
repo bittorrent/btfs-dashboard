@@ -41,12 +41,12 @@ export default function NodeWalletStats({color}) {
 
     const onDeposit = (e) => {
         e.preventDefault();
-        Emitter.emit('openWithdrawDepositModal', {type: 'deposit', max: _BTTCAddressWBTT});
+        Emitter.emit('openWithdrawDepositModal', {type: 'deposit', maxWBTT: _BTTCAddressWBTT, maxBTT: _BTTCAddressBTT});
     };
 
     const onWithdraw = (e) => {
         e.preventDefault();
-        Emitter.emit('openWithdrawDepositModal', {type: 'withdraw', max: _chequeBookBalance});
+        Emitter.emit('openWithdrawDepositModal', {type: 'withdraw', maxWBTT: _chequeBookBalance, maxBTT: _BTTCAddressBTT});
     };
 
     const onTransfer = (e) => {

@@ -147,6 +147,7 @@ const en_US = {
     'confirm': 'Confirm',
     'confirmation': 'Confirmation',
     'max_amount': 'Max Amount',
+    'max_available_amount': 'Max Available Amount',
     'address_to_connect': ' Please enter the peer address you want to connect.',
     'cash_confirm': 'Cash Confirmation',
     'next': 'Next',
@@ -183,6 +184,10 @@ const en_US = {
     'network_unstable_bttc': 'Can not connect to BTTC RPC.',
     'network_unstable_btfs': 'Can not connect to BTFS Network.',
     'check_network_request': 'Please check your network connection.',
+    'amount_available_check_1': 'The max available BTT = Max BTT - 15 BTT',
+    'amount_available_check_2': 'The max available WBTT = Max WBTT (if BTT balance more than 15 BTT)',
+    'amount_available_check_3': 'The max available WBTT = 0 (if BTT balance is less than 15 BTT)',
+
 
 };
 

@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useContext, useCallback, useRef} from "react";
 import {useIntl} from 'react-intl';
 import {mainContext} from "reducer";
-import {Select} from 'antd';
+import {Select, Tooltip} from 'antd';
 import ButtonCancel from "components/Buttons/ButtonCancel.js";
 import ButtonConfirm from "components/Buttons/ButtonConfirm.js";
 import Emitter from "utils/eventBus";
@@ -30,10 +30,10 @@ export default function TransferConfirmModal({color}) {
             console.log("openTransferConfirmModal event has occured");
             maxRef.current = {
                 BTT: (params.maxBTT - FEE) > 0 ? params.maxBTT - FEE : 0,
-                WBTT: params.maxWBTT
+                WBTT: (params.maxBTT - FEE) > 0 ? params.maxWBTT : 0
             };
             setMax(maxRef.current.BTT);
-            setShowModal(true);
+            openModal();
         };
         Emitter.on("openTransferConfirmModal", set);
         return () => {
@@ -47,7 +47,7 @@ export default function TransferConfirmModal({color}) {
     };
 
     const submit = async () => {
-        setShowModal(false);
+        closeModal();
         setShowConfirm(false);
         console.log(inputAddressRef.current.value, inputAmountRef.current.value, tokenRef.current);
     };
@@ -86,6 +86,17 @@ export default function TransferConfirmModal({color}) {
         }
     }, []);
 
+    const openModal = () => {
+        setShowModal(true);
+        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+        document.getElementsByTagName('body')[0].style.overflow = '';
+    };
+
+
     return (
         <>
             {
@@ -107,7 +118,7 @@ export default function TransferConfirmModal({color}) {
                                     {/*header*/}
                                     <div className="p-4">
                                         <p className=" font-semibold">
-                                            {t('transfer')}  {t('confirmation')}
+                                            {t('transfer')} {t('confirmation')}
                                         </p>
                                     </div>
                                     {/*body*/}
@@ -134,7 +145,8 @@ export default function TransferConfirmModal({color}) {
                                         className="flex flex-wrap items-center justify-center lg:justify-between p-4 rounded-b">
                                         <div>
                                             {t('total')}: &nbsp;
-                                            <span className='text-xl font-semibold'>{inputAmountRef.current.value} BTT + {FEE} BTT</span>
+                                            <span
+                                                className='text-xl font-semibold'>{inputAmountRef.current.value} BTT + {FEE} BTT</span>
                                         </div>
                                         <div>
                                             <ButtonConfirm event={submit} valid={true} text={t('confirm')}/>
@@ -192,7 +204,7 @@ export default function TransferConfirmModal({color}) {
                                             <div className="inputTransition flex-1">
                                                 <input
                                                     className={"p4 mb-1 border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full h-35-px " + themeStyle.bg[color]}
-                                                    placeholder={intl.formatMessage({id: 'max_amount'}) + ' : ' + max}
+                                                    placeholder={intl.formatMessage({id: 'max_available_amount'}) + ' : ' + max}
                                                     onChange={inputChange}
                                                     type="number"
                                                     min="0"
@@ -206,7 +218,6 @@ export default function TransferConfirmModal({color}) {
                                                 </button>
                                             </div>
                                         </div>
-                                        <p className='pt-4'>The available maximum amount = Maximum Amount - Estimated Transaction Fee </p>
                                     </div>
                                     {/*footer*/}
                                     <div
@@ -214,9 +225,19 @@ export default function TransferConfirmModal({color}) {
                                         <div>
                                             {t('est_fee')}: &nbsp;
                                             <span className='text-xl font-semibold'>{FEE} BTT</span>
+                                            <Tooltip placement="bottom"
+                                                     title={
+                                                         <>
+                                                             <p>{t('amount_available_check_1')}</p>
+                                                             <p>{t('amount_available_check_2')}</p>
+                                                             <p>{t('amount_available_check_3')}</p>
+                                                         </>
+                                                     }>
+                                                <i className="fas fa-exclamation-triangle text-red-500 ml-2"></i>
+                                            </Tooltip>
                                         </div>
                                         <div>
-                                            <ButtonCancel event={setShowModal} text={t('cancel')}/>
+                                            <ButtonCancel event={closeModal} text={t('cancel')}/>
                                             <ButtonConfirm event={next} valid={valid} text={t('next')}/>
                                         </div>
                                     </div>

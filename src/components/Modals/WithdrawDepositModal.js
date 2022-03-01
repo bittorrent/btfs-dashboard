@@ -29,12 +29,12 @@ export default function WithdrawDepositModal({color}) {
             if (params.type === 'withdraw') {
                 setTitle('chequebook_withdraw');
                 setDescription("amount_to_withdraw");
-                setMax(params.max);
+                setMax((params.maxBTT - FEE) > 0 ? params.maxWBTT : 0);
             }
             if (params.type === 'deposit') {
                 setTitle('chequebook_deposit');
                 setDescription("amount_to_deposit");
-                setMax(params.max);
+                setMax((params.maxBTT - FEE) > 0 ? params.maxWBTT : 0);
             }
             if (params.type === 'change') {
                 setTitle('Change Recipient Address');

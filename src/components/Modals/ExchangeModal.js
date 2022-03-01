@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import {useIntl} from 'react-intl';
 import {mainContext} from "reducer";
+import {Tooltip} from 'antd';
 import ButtonCancel from "components/Buttons/ButtonCancel.js";
 import ButtonConfirm from "components/Buttons/ButtonConfirm.js";
 import Emitter from "utils/eventBus";
@@ -26,9 +27,9 @@ export default function ExchangeModal({color}) {
         const set = function (params) {
             console.log("openExchangeModal event has occured");
             setMaxBTT((params.maxBTT - FEE) > 0 ? (params.maxBTT - FEE) : 0);
-            setMaxWBTT(params.maxWBTT);
+            setMaxWBTT((params.maxBTT - FEE) > 0 ? params.maxWBTT : 0);
             setValue('');
-            setShowModal(true);
+            openModal();
         };
         Emitter.on("openExchangeModal", set);
         return () => {
@@ -77,8 +78,18 @@ export default function ExchangeModal({color}) {
     };
 
     const reverse = () => {
-        setValue(null);
+        setValue('');
         setTarget(target === 'BTT' ? 'WBTT' : 'BTT');
+    };
+
+    const openModal = () => {
+        setShowModal(true);
+        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+        document.getElementsByTagName('body')[0].style.overflow = '';
     };
 
     return (
@@ -115,7 +126,7 @@ export default function ExchangeModal({color}) {
                                                     <div className="inputTransition">
                                                         <input
                                                             className={"p4 mb-1 border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full " + themeStyle.bg[color]}
-                                                            placeholder={intl.formatMessage({id: 'max_amount'}) + ' : ' + maxBTT}
+                                                            placeholder={intl.formatMessage({id: 'max_available_amount'}) + ' : ' + maxBTT}
                                                             onChange={inputChange}
                                                             type="number"
                                                             min="0"
@@ -193,9 +204,19 @@ export default function ExchangeModal({color}) {
                                     <div>
                                         {t('est_fee')}: &nbsp;
                                         <span className='text-xl font-semibold'>{FEE} BTT</span>
+                                        <Tooltip placement="bottom"
+                                                 title={
+                                                     <>
+                                                         <p>{t('amount_available_check_1')}</p>
+                                                         <p>{t('amount_available_check_2')}</p>
+                                                         <p>{t('amount_available_check_3')}</p>
+                                                     </>
+                                                 }>
+                                            <i className="fas fa-exclamation-triangle text-red-500 ml-2"></i>
+                                        </Tooltip>
                                     </div>
                                     <div>
-                                        <ButtonCancel event={setShowModal} text={t('cancel')}/>
+                                        <ButtonCancel event={closeModal} text={t('cancel')}/>
                                         <ButtonConfirm event={_exchange} valid={valid} text={t('confirm')}/>
                                     </div>
                                 </div>

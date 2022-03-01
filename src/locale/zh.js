@@ -148,6 +148,7 @@ const zh_CN = {
     'confirm':'确认',
     'confirmation': '确认',
     'max_amount':'最大值',
+    'max_available_amount': '最大可用值',
     'address_to_connect':'请输入要链接的节点地址。',
     'cash_confirm': '兑现确认',
     'next': '下一步',
@@ -184,6 +185,9 @@ const zh_CN = {
     'network_unstable_bttc': '无法连接到 BTTC RPC',
     'network_unstable_btfs': '无法连接到 BTFS 网络',
     'check_network_request': '请检查你的网络连接',
+    'amount_available_check_1': '最大可用BTT = 最大BTT - 15 BTT',
+    'amount_available_check_2': '最大可用WBTT = 最大WBTT (如果BTT余额大于15 BTT)',
+    'amount_available_check_3': '最大可用WBTT = 0 (如果BTT余额小于15 BTT)',
 
 };
 
