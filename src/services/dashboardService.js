@@ -9,13 +9,36 @@ export const getNodeBasicStats = async () => {
     let data2 = Client10.getHostScore();
     let data3 = Client10.getPeers();
     let data4 = Client10.getHostVersion();
+    let data5 = Client10.getNetworkStatus();
 
-    return Promise.all([data1, data2, data3, data4]).then((result) => {
+    return Promise.all([data1, data2, data3, data4, data5]).then((result) => {
+
+        let status = null;
+        let message = null;
+        if (result[4]['CodeBttc'] === 2 && result[4]['CodeStatus'] === 2) {
+            status = 1;
+            message = 'online';
+        }
+        if (result[4]['CodeBttc'] === 3) {
+            status = 2;
+            message = ['network_unstable_bttc', 'check_network_request'];
+        }
+        if (result[4]['CodeStatus'] === 3) {
+            status = 2;
+            message = ['network_unstable_btfs', 'check_network_request'];
+        }
+        if (result[4]['CodeBttc'] === 3 && result[4]['CodeStatus'] === 3) {
+            status = 3;
+            message = ['network_unstable_bttc', 'network_unstable_btfs', 'check_network_request'];
+        }
+
         return {
             ID: result[0]['ID'] ? result[0]['ID'] : '--',
             uptime: result[1]['host_stats'] ? (result[1]['host_stats']['uptime'] * 100).toFixed(0) : '--',
             peers: result[2]['Peers'] ? result[2]['Peers'].length : '--',
             version: result[3]['Version'] ? result[3]['Version'] : '--',
+            status: status,
+            message: message,
         }
     })
 };

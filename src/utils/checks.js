@@ -1,5 +1,6 @@
 import Emitter from "./eventBus";
 import web3 from "web3";
+import {BTFSSCAN_MAIN, BTFSSCAN_TEST, BTTCSCAN_MAIN, BTTCSCAN_TEST} from "utils/constants.js";
 
 export const tronLinkCheck = () => {
     const tronWeb = window.tronWeb;
@@ -68,4 +69,26 @@ export const urlCheck = (url) => {
     } catch (e) {
         console.log(e)
     }
+};
+
+export const btfsScanLinkCheck = () => {
+    let chain_id = localStorage.getItem('CHAIN_ID');
+    if (chain_id === 1029) {
+        return BTFSSCAN_TEST
+    }
+    if (chain_id === 199) {
+        return BTFSSCAN_MAIN
+    }
+
+};
+
+export const bttcScanLinkCheck = () => {
+    let chain_id = localStorage.getItem('CHAIN_ID');
+    if (chain_id === 1029) {
+        return BTTCSCAN_TEST
+    }
+    if (chain_id === 199) {
+        return BTTCSCAN_MAIN
+    }
+
 };

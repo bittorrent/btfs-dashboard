@@ -89,7 +89,6 @@ export default function Admin() {
             let result = await nodeStatusCheck(NODE_URL);
             if (result) {
                 window.loading = false;
-
                 window.nodeStatus = true;
                 dispatch({
                     type: 'SET_NODE_STATUS',

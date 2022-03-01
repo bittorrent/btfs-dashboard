@@ -63,6 +63,10 @@ class APIClient10 {
         return this.request('/api/v1/config/show');
     }
 
+    getNetworkStatus() {
+        return this.request('/api/v1/network');
+    }
+
     getChainInfo() {
         return this.request('/api/v1/cheque/chaininfo');
     }
@@ -197,6 +201,10 @@ class APIClient10 {
 
     remove(hash) {
         return this.request('/api/v1/rm?arg=' + hash);
+    }
+
+    syncContracts() {
+        return this.request('/api/v1/storage/contracts/sync/host');
     }
 
 }

@@ -5,6 +5,7 @@ import {getNodeWalletStats} from "services/dashboardService.js";
 import Emitter from "utils/eventBus";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
+import {bttcScanLinkCheck} from "utils/checks.js";
 
 export default function NodeWalletStats({color}) {
 
@@ -85,7 +86,7 @@ export default function NodeWalletStats({color}) {
                                                     <ClipboardCopy value={BTTCAddress}/>
                                                 </h5>
                                                 <div className="font-semibold">
-                                                    <a href={'https://bttcscan.com/address/' + BTTCAddress} target='_blank' rel='noreferrer'>{BTTCAddress}</a>
+                                                    <a href={bttcScanLinkCheck() + '/address/' + BTTCAddress} target='_blank' rel='noreferrer'>{BTTCAddress}</a>
                                                 </div>
                                                 <div className=''>
                                                     <span className='font-semibold'>{t('balance')}: &nbsp;</span>
@@ -125,7 +126,7 @@ export default function NodeWalletStats({color}) {
                                                     <ClipboardCopy value={chequeAddress}/>
                                                 </h5>
                                                 <div className='font-semibold'>
-                                                    <a href={'https://bttcscan.com/address/' + chequeAddress} target='_blank' rel='noreferrer'>{chequeAddress}</a>
+                                                    <a href={bttcScanLinkCheck() + '/address/' + chequeAddress} target='_blank' rel='noreferrer'>{chequeAddress}</a>
                                                 </div>
                                                 <div>
                                                     <span className='font-semibold'>{t('balance')}: &nbsp;</span>

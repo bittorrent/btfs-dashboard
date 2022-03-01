@@ -18,6 +18,8 @@ const en_US = {
     'host_version': 'Host Version',
     'status': 'Status',
     'online': 'Online',
+    'offline': 'Offline',
+    'network_unstable':'Network Unstable',
     'connected': 'Connected',
     'uptime': 'Uptime',
     'online_duration': 'Online Duration',
@@ -178,6 +180,9 @@ const en_US = {
     'delete_fail': 'Delete Failed !',
     'add_connection_failed': 'Add Connection Failed !',
     'host_warning': 'Host score valuing. This process takes up to 24 hours. Please stay online.',
+    'network_unstable_bttc': 'Can not connect to BTTC RPC.',
+    'network_unstable_btfs': 'Can not connect to BTFS Network.',
+    'check_network_request': 'Please check your network connection.',
 
 };
 

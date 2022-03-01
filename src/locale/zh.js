@@ -18,6 +18,8 @@ const zh_CN = {
     'host_version': '节点版本',
     'status': '状态',
     'online': '在线',
+    'offline': '离线',
+    'network_unstable':'网络不稳定',
     'connected': '已连接',
     'uptime': '在线时长',
     'online_duration':'在线时长',
@@ -179,6 +181,9 @@ const zh_CN = {
     'delete_fail':'删除失败！',
     'add_connection_failed': '添加链接失败',
     'host_warning': '节点分数评估中，评估预计需要24小时，请保持节点正常在线。',
+    'network_unstable_bttc': '无法连接到 BTTC RPC',
+    'network_unstable_btfs': '无法连接到 BTFS 网络',
+    'check_network_request': '请检查你的网络连接',
 
 };
 

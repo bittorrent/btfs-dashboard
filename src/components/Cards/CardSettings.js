@@ -2,8 +2,7 @@
 import React, {useRef, useEffect, useContext} from "react";
 import {mainContext} from 'reducer';
 import Emitter from "utils/eventBus";
-import {setClient} from "services/filesService.js";
-import {nodeStatusCheck, setApiUrl, getPrivateKey} from "services/otherService.js";
+import {nodeStatusCheck, getPrivateKey} from "services/otherService.js";
 import {t} from "utils/text.js";
 import themeStyle from "utils/themeStyle.js";
 import {urlCheck} from "utils/checks.js";
@@ -37,14 +36,11 @@ export default function CardSettings({color}) {
         }
         let result = await nodeStatusCheck(node_url);
         if (result) {
-            setApiUrl(node_url);
-            setClient(node_url);
             window.nodeStatus = true;
             dispatch({
                 type: 'SET_NODE_STATUS',
                 nodeStatus: true
             });
-            localStorage.setItem('NODE_URL', node_url);
             Emitter.emit('showMessageAlert', {message: 'setting_success', status: 'success', type: 'frontEnd'});
         } else {
             Emitter.emit('showMessageAlert', {message: 'setting_error', status: 'error', type: 'frontEnd'});
