@@ -10,15 +10,6 @@ export const setApiUrl = (url) => {
     }
 };
 
-export const syncContracts = () => {
-    try {
-        Client10.syncContracts();
-    } catch (e) {
-        console.log(e);
-    }
-};
-
-
 export const getPeers = async () => {
     let data = await Client10.getPeers();
     return {
@@ -45,6 +36,7 @@ export const getPrivateKey = async () => {
 export const nodeStatusCheck = async (url) => {
     try {
         if (url) {
+            Client10.syncContracts();
             let {data} = await xhr.post(url + '/api/v1/id');
             if (data['ID']) {
                 setApiUrl(url);
@@ -66,9 +58,6 @@ export const nodeStatusCheck = async (url) => {
                 return false
             }
         }
-
-        syncContracts();
-
     } catch (e) {
         console.log(e);
         return false
