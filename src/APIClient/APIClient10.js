@@ -40,7 +40,7 @@ class APIClient10 {
     }
 
     getHostVersion() {
-      return this.request('/api/v1/version');
+        return this.request('/api/v1/version');
     }
 
     getHostInfo() {
@@ -185,6 +185,22 @@ class APIClient10 {
 
     deposit(amount) {
         return this.request('/api/v1/vault/deposit?arg=' + amount);
+    }
+
+    BTTTransfer(to, amount) {
+        return this.request('/api/v1/bttc/send-btt-to?arg=' + to + '&arg=' + amount);
+    }
+
+    WBTTTransfer(to, amount) {
+        return this.request('/api/v1/bttc/send-wbtt-to?arg=' + to + '&arg=' + amount);
+    }
+
+    BTT2WBTT(amount) {
+        return this.request('/api/v1/bttc/btt2wbtt?arg=' + amount);
+    }
+
+    WBTT2BTT(amount) {
+        return this.request('/api/v1/bttc/wbtt2btt?arg=' + amount);
     }
 
     cash(id) {

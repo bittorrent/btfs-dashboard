@@ -100,6 +100,7 @@ export default function WithdrawDepositModal({color}) {
     };
 
     const closeModal = () => {
+        setValid(false);
         setShowModal(false);
         document.getElementsByTagName('body')[0].style.overflow = '';
     };

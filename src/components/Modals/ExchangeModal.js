@@ -88,6 +88,7 @@ export default function ExchangeModal({color}) {
     };
 
     const closeModal = () => {
+        setValid(false);
         setShowModal(false);
         document.getElementsByTagName('body')[0].style.overflow = '';
     };

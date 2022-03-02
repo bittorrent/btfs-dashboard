@@ -190,17 +190,45 @@ export const getFilesStorage = async () => {
     }
 };
 
-export const withdraw = async (amount) => {
+const formAmount = (amount) => {
     let temp = new Number(new BigNumber(amount).multipliedBy(PRECISION).toString()).toLocaleString();
     let amount_str = temp.replace(/,/g, "");
+    return amount_str;
+}
+
+export const withdraw = async (amount) => {
+    let amount_str = formAmount(amount);
     let data = await Client10.withdraw(amount_str);
     return data
 };
 
 export const deposit = async (amount) => {
-    let temp = new Number(new BigNumber(amount).multipliedBy(PRECISION).toString()).toLocaleString();
-    let amount_str = temp.replace(/,/g, "");
+    let amount_str = formAmount(amount);
     let data = await Client10.deposit(amount_str);
+    return data
+};
+
+export const BTTTransfer = async (to, amount) => {
+    let amount_str = formAmount(amount);
+    let data = await Client10.BTTTransfer(to, amount_str);
+    return data
+};
+
+export const WBTTTransfer = async (to, amount) => {
+    let amount_str = formAmount(amount);
+    let data = await Client10.WBTTTransfer(to, amount_str);
+    return data
+};
+
+export const BTTT2WBTT = async (amount) => {
+    let amount_str = formAmount(amount);
+    let data = await Client10.BTT2WBTT(amount_str);
+    return data
+};
+
+export const WBTTT2BTT = async (amount) => {
+    let amount_str = formAmount(amount);
+    let data = await Client10.WBTT2BTT(amount_str);
     return data
 };
 

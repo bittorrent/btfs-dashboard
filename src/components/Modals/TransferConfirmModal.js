@@ -92,6 +92,7 @@ export default function TransferConfirmModal({color}) {
     };
 
     const closeModal = () => {
+        setValid(false);
         setShowModal(false);
         document.getElementsByTagName('body')[0].style.overflow = '';
     };

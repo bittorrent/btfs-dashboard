@@ -73,22 +73,26 @@ export const urlCheck = (url) => {
 
 export const btfsScanLinkCheck = () => {
     let chain_id = localStorage.getItem('CHAIN_ID');
-    if (chain_id === 1029) {
+    if (chain_id === '1029') {
         return BTFSSCAN_TEST
     }
-    if (chain_id === 199) {
+    if (chain_id === '199') {
         return BTFSSCAN_MAIN
     }
+
+    return BTFSSCAN_MAIN
 
 };
 
 export const bttcScanLinkCheck = () => {
     let chain_id = localStorage.getItem('CHAIN_ID');
-    if (chain_id === 1029) {
+    if (chain_id === '1029') {
         return BTTCSCAN_TEST
     }
-    if (chain_id === 199) {
+    if (chain_id === '199') {
         return BTTCSCAN_MAIN
     }
+
+    return BTTCSCAN_MAIN
 
 };
