@@ -220,13 +220,13 @@ export const WBTTTransfer = async (to, amount) => {
     return data
 };
 
-export const BTTT2WBTT = async (amount) => {
+export const BTT2WBTT = async (amount) => {
     let amount_str = formAmount(amount);
     let data = await Client10.BTT2WBTT(amount_str);
     return data
 };
 
-export const WBTTT2BTT = async (amount) => {
+export const WBTT2BTT = async (amount) => {
     let amount_str = formAmount(amount);
     let data = await Client10.WBTT2BTT(amount_str);
     return data

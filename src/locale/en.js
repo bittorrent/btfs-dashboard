@@ -176,6 +176,8 @@ const en_US = {
     'api_not_set': 'API ENDPOINT not set !',
     'withdraw_success': 'Withdraw Successful !',
     'deposit_success': 'Deposit Successful !',
+    'transfer_success': 'Transfer Successful !',
+    'exchange_success': 'Exchange Successful !',
     'import_success': 'Import Successful !',
     'create_folder_success': 'Create Folder Successful !',
     'delete_success': 'Delete Successful !',

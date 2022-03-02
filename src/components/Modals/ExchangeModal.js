@@ -4,6 +4,7 @@ import {mainContext} from "reducer";
 import {Tooltip} from 'antd';
 import ButtonCancel from "components/Buttons/ButtonCancel.js";
 import ButtonConfirm from "components/Buttons/ButtonConfirm.js";
+import {BTT2WBTT, WBTT2BTT} from "services/dashboardService.js";
 import Emitter from "utils/eventBus";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
@@ -40,15 +41,21 @@ export default function ExchangeModal({color}) {
 
     const _exchange = async () => {
         console.log(value, target);
-        setShowModal(false);
-        return;
-        /*
-        let result = await deposit(0);
+        closeModal();
+        let result;
+        if (target === 'BTT') {
+            result = await BTT2WBTT(value);
+        }
+        if (target === 'WBTT') {
+            result = await WBTT2BTT(value);
+        }
+
         if (result['Type'] === 'error') {
             Emitter.emit('showMessageAlert', {message: result['Message'], status: 'error'});
         } else {
-            Emitter.emit('showMessageAlert', {message: 'deposit_success', status: 'success', type: 'frontEnd'});
-        } */
+            Emitter.emit('showMessageAlert', {message: 'exchange_success', status: 'success', type: 'frontEnd'});
+            Emitter.emit("updateWallet");
+        }
     };
 
     const check = () => {

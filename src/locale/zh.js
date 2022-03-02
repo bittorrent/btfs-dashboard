@@ -177,6 +177,8 @@ const zh_CN = {
     'api_not_set': '未设置API地址！',
     'withdraw_success': '提取成功！',
     'deposit_success': '存入成功！',
+    'transfer_success': '转账成功！',
+    'exchange_success': '兑换成功！',
     'import_success': '导入成功！',
     'create_folder_success': '创建文件夹成功！',
     'delete_success': '删除成功！',

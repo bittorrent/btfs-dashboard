@@ -57,6 +57,7 @@ export default function WithdrawDepositModal({color}) {
             Emitter.emit('showMessageAlert', {message: result['Message'], status: 'error'});
         } else {
             Emitter.emit('showMessageAlert', {message: 'withdraw_success', status: 'success', type: 'frontEnd'});
+            Emitter.emit("updateWallet");
         }
     };
 
@@ -68,6 +69,7 @@ export default function WithdrawDepositModal({color}) {
             Emitter.emit('showMessageAlert', {message: result['Message'], status: 'error'});
         } else {
             Emitter.emit('showMessageAlert', {message: 'deposit_success', status: 'success', type: 'frontEnd'});
+            Emitter.emit("updateWallet");
         }
     };
 

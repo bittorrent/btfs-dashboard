@@ -8,6 +8,8 @@ import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
 import {bttcScanLinkCheck} from "utils/checks.js";
 
+let didCancel = false;
+
 export default function NodeWalletStats({color}) {
 
     const [BTTCAddress, setBTTCAddress] = useState('--');
@@ -20,27 +22,39 @@ export default function NodeWalletStats({color}) {
     const [_BTTCAddressWBTT, set_BTTCAddressWBTT] = useState(0);
 
     useEffect(() => {
-        let didCancel = false;
-        const fetchData = async () => {
-            let {BTTCAddress, chequeAddress, chequeBookBalance, BTTCAddressBTT, BTTCAddressWBTT, _chequeBookBalance, _BTTCAddressBTT, _BTTCAddressWBTT} = await getNodeWalletStats();
-            if (!didCancel) {
-                unstable_batchedUpdates(() => {
-                    setBTTCAddress(BTTCAddress);
-                    setChequeAddress(chequeAddress);
-                    setChequeBookBalance(chequeBookBalance);
-                    setBTTCAddressBTT(BTTCAddressBTT);
-                    setBTTCAddressWBTT(BTTCAddressWBTT);
-                    set_ChequeBookBalance(_chequeBookBalance);
-                    set_BTTCAddressBTT(_BTTCAddressBTT);
-                    set_BTTCAddressWBTT(_BTTCAddressWBTT);
-                })
-            }
-        };
         fetchData();
         return () => {
             didCancel = true;
         };
     }, []);
+
+    useEffect(() => {
+        const set = async function () {
+            setTimeout(() => {
+                fetchData();
+            }, 6000);
+        };
+        Emitter.on("updateWallet", set);
+        return () => {
+            Emitter.removeListener('updateWallet');
+        }
+    }, []);
+
+    const fetchData = async () => {
+        let {BTTCAddress, chequeAddress, chequeBookBalance, BTTCAddressBTT, BTTCAddressWBTT, _chequeBookBalance, _BTTCAddressBTT, _BTTCAddressWBTT} = await getNodeWalletStats();
+        if (!didCancel) {
+            unstable_batchedUpdates(() => {
+                setBTTCAddress(BTTCAddress);
+                setChequeAddress(chequeAddress);
+                setChequeBookBalance(chequeBookBalance);
+                setBTTCAddressBTT(BTTCAddressBTT);
+                setBTTCAddressWBTT(BTTCAddressWBTT);
+                set_ChequeBookBalance(_chequeBookBalance);
+                set_BTTCAddressBTT(_BTTCAddressBTT);
+                set_BTTCAddressWBTT(_BTTCAddressWBTT);
+            })
+        }
+    };
 
     const onDeposit = (e) => {
         e.preventDefault();
