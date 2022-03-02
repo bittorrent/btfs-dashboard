@@ -28,7 +28,7 @@ export default function ImportModal({color}) {
         Emitter.on("openImportModal", set);
         return () => {
             Emitter.removeListener('openImportModal');
-            document.getElementsByTagName('body')[0].style.overflow = '';
+            window.body.style.overflow = '';
         }
     }, []);
 
@@ -60,12 +60,12 @@ export default function ImportModal({color}) {
 
     const openModal = () => {
         setShowModal(true);
-        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+        window.body.style.overflow = 'hidden';
     };
 
     const closeModal = () => {
         setShowModal(false);
-        document.getElementsByTagName('body')[0].style.overflow = '';
+        window.body.style.overflow = '';
     };
 
     return (

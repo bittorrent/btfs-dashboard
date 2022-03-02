@@ -23,7 +23,7 @@ export default function AddConnectionModal({color}) {
         Emitter.on("openAddConnectionModal", set);
         return () => {
             Emitter.removeListener('openAddConnectionModal');
-            document.getElementsByTagName('body')[0].style.overflow = '';
+            window.body.style.overflow = '';
         }
     }, []);
 
@@ -43,12 +43,12 @@ export default function AddConnectionModal({color}) {
 
     const openModal = () => {
         setShowModal(true);
-        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+        window.body.style.overflow = 'hidden';
     };
 
     const closeModal = () => {
         setShowModal(false);
-        document.getElementsByTagName('body')[0].style.overflow = '';
+        window.body.style.overflow = '';
     };
 
 

@@ -103,6 +103,7 @@ export default function Admin() {
                 });
             }
         }
+        window.body = document.getElementsByTagName('body')[0];
     }, []);
 
     return (

@@ -46,7 +46,7 @@ export default function WithdrawDepositModal({color}) {
         Emitter.on("openWithdrawDepositModal", set);
         return () => {
             Emitter.removeListener('openWithdrawDepositModal');
-            document.getElementsByTagName('body')[0].style.overflow = '';
+            window.body.style.overflow = '';
         }
     }, []);
 
@@ -99,13 +99,13 @@ export default function WithdrawDepositModal({color}) {
 
     const openModal = () => {
         setShowModal(true);
-        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+        window.body.style.overflow = 'hidden';
     };
 
     const closeModal = () => {
         setValid(false);
         setShowModal(false);
-        document.getElementsByTagName('body')[0].style.overflow = '';
+        window.body.style.overflow = '';
     };
 
     return (

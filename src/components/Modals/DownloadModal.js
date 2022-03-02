@@ -26,7 +26,7 @@ export default function DownloadModal({color}) {
         Emitter.on("openDownloadModal", set);
         return () => {
             Emitter.removeListener('openDownloadModal');
-            document.getElementsByTagName('body')[0].style.overflow = '';
+            window.body.style.overflow = '';
         }
     }, []);
 
@@ -53,13 +53,13 @@ export default function DownloadModal({color}) {
 
     const openModal = () => {
         setShowModal(true);
-        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+        window.body.style.overflow = 'hidden';
     };
 
     const closeModal = () => {
         reset();
         setShowModal(false);
-        document.getElementsByTagName('body')[0].style.overflow = '';
+        window.body.style.overflow = '';
     };
 
     return (

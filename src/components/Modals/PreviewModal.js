@@ -26,7 +26,7 @@ export default function PreviewModal({color}) {
         Emitter.on("openPreviewModal", set);
         return () => {
             Emitter.removeListener('openPreviewModal');
-            document.getElementsByTagName('body')[0].style.overflow = '';
+            window.body.style.overflow = '';
         }
     }, []);
 
@@ -72,13 +72,13 @@ export default function PreviewModal({color}) {
 
     const openModal = () => {
         setShowModal(true);
-        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+        window.body.style.overflow = 'hidden';
     };
 
     const closeModal = () => {
         setShowModal(false);
         setFile(null);
-        document.getElementsByTagName('body')[0].style.overflow = '';
+        window.body.style.overflow = '';
     };
 
 

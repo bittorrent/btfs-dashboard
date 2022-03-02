@@ -40,7 +40,7 @@ export default function TransferConfirmModal({color}) {
         Emitter.on("openTransferConfirmModal", set);
         return () => {
             Emitter.removeListener('openTransferConfirmModal');
-            document.getElementsByTagName('body')[0].style.overflow = '';
+            window.body.style.overflow = '';
         }
     }, []);
 
@@ -105,13 +105,13 @@ export default function TransferConfirmModal({color}) {
 
     const openModal = () => {
         setShowModal(true);
-        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+        window.body.style.overflow = 'hidden';
     };
 
     const closeModal = () => {
         setValid(false);
         setShowModal(false);
-        document.getElementsByTagName('body')[0].style.overflow = '';
+        window.body.style.overflow = '';
     };
 
 

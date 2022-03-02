@@ -28,7 +28,7 @@ export default function UploadModal({color}) {
         Emitter.on("openUploadModal", set);
         return () => {
             Emitter.removeListener('openUploadModal');
-            document.getElementsByTagName('body')[0].style.overflow = '';
+            window.body.style.overflow = '';
         }
     }, []);
 
@@ -57,13 +57,13 @@ export default function UploadModal({color}) {
 
     const openModal = () => {
         setShowModal(true);
-        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+        window.body.style.overflow = 'hidden';
     };
 
     const closeModal = () => {
         reset();
         setShowModal(false);
-        document.getElementsByTagName('body')[0].style.overflow = '';
+        window.body.style.overflow = '';
     };
 
     return (
