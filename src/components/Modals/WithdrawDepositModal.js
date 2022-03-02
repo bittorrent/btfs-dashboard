@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import {useIntl} from 'react-intl';
+import {Tooltip} from 'antd';
 import {mainContext} from "reducer";
 import ButtonCancel from "components/Buttons/ButtonCancel.js";
 import ButtonConfirm from "components/Buttons/ButtonConfirm.js";
@@ -25,6 +26,7 @@ export default function WithdrawDepositModal({color}) {
     useEffect(() => {
         const set = function (params) {
             console.log("openWithdrawDepositModal event has occured");
+            openModal();
             setType(params.type);
             if (params.type === 'withdraw') {
                 setTitle('chequebook_withdraw');
@@ -40,7 +42,6 @@ export default function WithdrawDepositModal({color}) {
                 setTitle('Change Recipient Address');
                 setDescription("Please enter new recipient address below.");
             }
-            setShowModal(true);
         };
         Emitter.on("openWithdrawDepositModal", set);
         return () => {
@@ -50,7 +51,7 @@ export default function WithdrawDepositModal({color}) {
 
     const _withdraw = async () => {
         let amount = inputRef.current.value;
-        setShowModal(false);
+        closeModal();
         let result = await withdraw(amount);
         if (result['Type'] === 'error') {
             Emitter.emit('showMessageAlert', {message: result['Message'], status: 'error'});
@@ -61,7 +62,7 @@ export default function WithdrawDepositModal({color}) {
 
     const _deposit = async () => {
         let amount = inputRef.current.value;
-        setShowModal(false);
+        closeModal();
         let result = await deposit(amount);
         if (result['Type'] === 'error') {
             Emitter.emit('showMessageAlert', {message: result['Message'], status: 'error'});
@@ -91,6 +92,16 @@ export default function WithdrawDepositModal({color}) {
 
     const setMaxNum = () => {
         inputRef.current.value = max;
+    };
+
+    const openModal = () => {
+        setShowModal(true);
+        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+        document.getElementsByTagName('body')[0].style.overflow = '';
     };
 
     return (
@@ -138,9 +149,18 @@ export default function WithdrawDepositModal({color}) {
                                     <div>
                                         {t('est_fee')}: &nbsp;
                                         <span className='text-xl font-semibold'>{FEE} BTT</span>
+                                        <Tooltip placement="bottom"
+                                                 title={
+                                                     <>
+                                                         <p>{t('amount_available_check_2')}</p>
+                                                         <p>{t('amount_available_check_3')}</p>
+                                                     </>
+                                                 }>
+                                            <i className="fas fa-question-circle text-lg ml-2"></i>
+                                        </Tooltip>
                                     </div>
                                     <div>
-                                        <ButtonCancel event={setShowModal} text={t('cancel')}/>
+                                        <ButtonCancel event={closeModal} text={t('cancel')}/>
                                         <ButtonConfirm event={manipulation[type]} valid={valid} text={t(type)}/>
                                     </div>
                                 </div>

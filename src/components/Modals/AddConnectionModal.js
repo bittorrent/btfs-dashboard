@@ -16,9 +16,9 @@ export default function AddConnectionModal({color}) {
     const [showModal, setShowModal] = React.useState(false);
 
     useEffect(() => {
-        const set = function (params) {
+        const set = function () {
             console.log("openAddConnectionModal event has occured");
-            setShowModal(true);
+            openModal();
         };
         Emitter.on("openAddConnectionModal", set);
         return () => {
@@ -27,7 +27,7 @@ export default function AddConnectionModal({color}) {
     }, []);
 
     const add = async () => {
-        setShowModal(false);
+        closeModal();
         let {Strings, Type, Message} = await addPeer(inputRef.value);
         if(Strings && Strings.length){
             Emitter.emit('showMessageAlert', {message: 'add_connection_success', status: 'success', type:'frontEnd'});
@@ -38,6 +38,16 @@ export default function AddConnectionModal({color}) {
                 Emitter.emit('showMessageAlert', {message: 'add_connection_failed', status: 'error', type:'frontEnd'});
             }
         }
+    };
+
+    const openModal = () => {
+        setShowModal(true);
+        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+        document.getElementsByTagName('body')[0].style.overflow = '';
     };
 
 
@@ -73,7 +83,7 @@ export default function AddConnectionModal({color}) {
                                 </div>
                                 {/*footer*/}
                                 <div className="flex items-center justify-end p-4 rounded-b">
-                                    <ButtonCancel event={setShowModal} text={t('cancel')}/>
+                                    <ButtonCancel event={closeModal} text={t('cancel')}/>
                                     <ButtonConfirm event={add} valid={true} text={t('confirm')}/>
                                 </div>
                             </div>

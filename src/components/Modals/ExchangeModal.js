@@ -26,10 +26,10 @@ export default function ExchangeModal({color}) {
     useEffect(() => {
         const set = function (params) {
             console.log("openExchangeModal event has occured");
+            openModal();
             setMaxBTT((params.maxBTT - FEE) > 0 ? (params.maxBTT - FEE) : 0);
             setMaxWBTT((params.maxBTT - FEE) > 0 ? params.maxWBTT : 0);
             setValue('');
-            openModal();
         };
         Emitter.on("openExchangeModal", set);
         return () => {
@@ -212,7 +212,7 @@ export default function ExchangeModal({color}) {
                                                          <p>{t('amount_available_check_3')}</p>
                                                      </>
                                                  }>
-                                            <i className="fas fa-exclamation-triangle text-red-500 ml-2"></i>
+                                            <i className="fas fa-question-circle text-lg ml-2"></i>
                                         </Tooltip>
                                     </div>
                                     <div>

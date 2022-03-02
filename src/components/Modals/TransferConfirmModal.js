@@ -28,12 +28,12 @@ export default function TransferConfirmModal({color}) {
     useEffect(() => {
         const set = async function (params) {
             console.log("openTransferConfirmModal event has occured");
+            openModal();
             maxRef.current = {
                 BTT: (params.maxBTT - FEE) > 0 ? params.maxBTT - FEE : 0,
                 WBTT: (params.maxBTT - FEE) > 0 ? params.maxWBTT : 0
             };
             setMax(maxRef.current.BTT);
-            openModal();
         };
         Emitter.on("openTransferConfirmModal", set);
         return () => {
@@ -43,7 +43,7 @@ export default function TransferConfirmModal({color}) {
 
     const next = async () => {
         setShowConfirm(true);
-        console.log(inputAddressRef.current.value, inputAmountRef.current.value, tokenRef.current);
+        console.log(inputAddressRef.current.value.trim(), inputAmountRef.current.value, tokenRef.current);
     };
 
     const submit = async () => {
@@ -53,7 +53,7 @@ export default function TransferConfirmModal({color}) {
     };
 
     const check = () => {
-        if (inputAddressCheck(inputAddressRef.current.value) && inputNumberCheck(inputAmountRef.current.value, max)) {
+        if (inputAddressCheck(inputAddressRef.current.value.trim()) && inputNumberCheck(inputAmountRef.current.value, max)) {
             setValid(true);
             return true;
         } else {
@@ -125,17 +125,17 @@ export default function TransferConfirmModal({color}) {
                                     <div className="relative px-4 flex flex-col">
 
                                         <div>
-                                            <p className='p-2'>Send to</p>
+                                            <p className='p-2'>{t('receive_account')}</p>
                                             <p className='p-2 font-semibold'>{inputAddressRef.current.value}</p>
                                         </div>
 
                                         <div className="flex">
                                             <div className="flex-1">
-                                                <p className='p-2'>Transfer Amount</p>
+                                                <p className='p-2'>{t('send_amount')}</p>
                                                 <p className='p-2 font-semibold'>{inputAmountRef.current.value} &nbsp; {tokenRef.current}</p>
                                             </div>
                                             <div className="flex-1">
-                                                <p className='p-2'>Estimated transaction fee</p>
+                                                <p className='p-2'>{t('est_fee')}</p>
                                                 <p className='p-2 font-semibold'>{FEE} BTT</p>
                                             </div>
                                         </div>
@@ -149,6 +149,7 @@ export default function TransferConfirmModal({color}) {
                                                 className='text-xl font-semibold'>{inputAmountRef.current.value} BTT + {FEE} BTT</span>
                                         </div>
                                         <div>
+                                            <ButtonCancel event={close} text={t('return')}/>
                                             <ButtonConfirm event={submit} valid={true} text={t('confirm')}/>
                                         </div>
                                     </div>
@@ -179,12 +180,12 @@ export default function TransferConfirmModal({color}) {
                                     <div className="relative p-4 flex flex-col">
 
                                         <div className="flex pb-2">
-                                            <div className='mr-4 font-semibold w-50-px flex items-center'>To</div>
+                                            <div className='mr-4 font-semibold w-120-px flex justify-center items-center'>{t('receive_account')}</div>
                                             <div className="inputTransition flex-1">
                                                 <input
                                                     className={"p4 mb-1 border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full h-35-px " + themeStyle.bg[color]}
                                                     type="text"
-                                                    placeholder='please enter BTTC address'
+                                                    placeholder={intl.formatMessage({id: 'enter_bttc_address'})}
                                                     onChange={inputChange}
                                                     ref={inputAddressRef}
                                                 />
@@ -192,7 +193,7 @@ export default function TransferConfirmModal({color}) {
                                         </div>
 
                                         <div className="flex pt-2">
-                                            <div className='mr-4 font-semibold w-50-px flex items-center'>Amount</div>
+                                            <div className='mr-4 font-semibold w-120-px flex justify-center items-center'>{t('send_amount')}</div>
                                             <div>
                                                 <Select className={color} defaultValue="BTT" style={{width: 90}}
                                                         onChange={handleChange}
@@ -233,7 +234,7 @@ export default function TransferConfirmModal({color}) {
                                                              <p>{t('amount_available_check_3')}</p>
                                                          </>
                                                      }>
-                                                <i className="fas fa-exclamation-triangle text-red-500 ml-2"></i>
+                                                <i className="fas fa-question-circle text-lg ml-2"></i>
                                             </Tooltip>
                                         </div>
                                         <div>

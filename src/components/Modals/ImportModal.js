@@ -21,9 +21,9 @@ export default function ImportModal({color}) {
     useEffect(() => {
         const set = function (params) {
             console.log("openImportModal event has occured");
+            openModal();
             setType(params.type);
             setPath(params.path);
-            setShowModal(true);
         };
         Emitter.on("openImportModal", set);
         return () => {
@@ -32,7 +32,7 @@ export default function ImportModal({color}) {
     }, []);
 
     const fromBTFS = async () => {
-        setShowModal(false);
+        closeModal();
         let {result} = await importFromBTFS(inputRef.value, path);
         if (result === true) {
             Emitter.emit("updateFiles");
@@ -47,7 +47,7 @@ export default function ImportModal({color}) {
     };
 
     const newFolder = async () => {
-        setShowModal(false);
+        closeModal();
         let result = await createNewFolder(inputRef.value, path);
         if (result) {
             Emitter.emit("updateFiles");
@@ -55,6 +55,16 @@ export default function ImportModal({color}) {
         } else {
             Emitter.emit('showMessageAlert', {message: 'create_folder_fail', status: 'error', type: 'frontEnd'});
         }
+    };
+
+    const openModal = () => {
+        setShowModal(true);
+        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+        document.getElementsByTagName('body')[0].style.overflow = '';
     };
 
     return (
@@ -97,7 +107,7 @@ export default function ImportModal({color}) {
                                 </div>
                                 {/*footer*/}
                                 <div className="flex items-center justify-end p-4 rounded-b">
-                                    <ButtonCancel event={setShowModal} text={t('cancel')}/>
+                                    <ButtonCancel event={closeModal} text={t('cancel')}/>
                                     <ButtonConfirm event={type === 'byPath' ? fromBTFS : newFolder} valid={true}
                                                    text={type === 'byPath' ? t('import') : t('create')}/>
                                 </div>

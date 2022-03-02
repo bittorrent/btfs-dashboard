@@ -16,7 +16,7 @@ export default function PreviewModal({color}) {
     useEffect(() => {
         const set = async function (params) {
             console.log("openPreviewModal event has occured");
-            setShowModal(true);
+            openModal();
             let file = await viewFile(params.hash, params.name, params.size);
             setFile(file);
             setTimeout(() => {
@@ -28,11 +28,6 @@ export default function PreviewModal({color}) {
             Emitter.removeListener('openPreviewModal');
         }
     }, []);
-
-    const close = () => {
-        setShowModal(false);
-        setFile(null);
-    };
 
     const preview = (file, cancel) => {
         try {
@@ -74,6 +69,17 @@ export default function PreviewModal({color}) {
         oLogo && (oLogo.src = '');
     };
 
+    const openModal = () => {
+        setShowModal(true);
+        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+        setFile(null);
+        document.getElementsByTagName('body')[0].style.overflow = '';
+    };
+
 
     return (
         <>
@@ -83,7 +89,7 @@ export default function PreviewModal({color}) {
                         style={{height: '500px'}}>
                         <button className="z-100 absolute bg-transparent text-2xl mr-2 font-semibold outline-none focus:outline-none"
                             style={{right: '-25px', top: '-25px'}}
-                            onClick={close}
+                            onClick={closeModal}
                         >
                             <i className="far fa-times-circle text-white"></i>
                         </button>
