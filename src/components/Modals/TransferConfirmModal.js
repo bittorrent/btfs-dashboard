@@ -40,6 +40,7 @@ export default function TransferConfirmModal({color}) {
         Emitter.on("openTransferConfirmModal", set);
         return () => {
             Emitter.removeListener('openTransferConfirmModal');
+            document.getElementsByTagName('body')[0].style.overflow = '';
         }
     }, []);
 
@@ -98,7 +99,6 @@ export default function TransferConfirmModal({color}) {
             setMax(maxRef.current.BTT);
         }
         if (value === 'WBTT') {
-            console.log(maxRef.current.WBTT);
             setMax(maxRef.current.WBTT);
         }
     }, []);

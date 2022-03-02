@@ -23,6 +23,7 @@ export default function AddConnectionModal({color}) {
         Emitter.on("openAddConnectionModal", set);
         return () => {
             Emitter.removeListener('openAddConnectionModal');
+            document.getElementsByTagName('body')[0].style.overflow = '';
         }
     }, []);
 

@@ -26,6 +26,7 @@ export default function DownloadModal({color}) {
         Emitter.on("openDownloadModal", set);
         return () => {
             Emitter.removeListener('openDownloadModal');
+            document.getElementsByTagName('body')[0].style.overflow = '';
         }
     }, []);
 

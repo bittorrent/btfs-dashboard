@@ -21,6 +21,7 @@ export default function MessageModal({color}) {
         Emitter.on("openMessageModal", set);
         return () => {
             Emitter.removeListener('openMessageModal');
+            document.getElementsByTagName('body')[0].style.overflow = '';
         }
     }, []);
 

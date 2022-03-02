@@ -26,6 +26,7 @@ export default function PreviewModal({color}) {
         Emitter.on("openPreviewModal", set);
         return () => {
             Emitter.removeListener('openPreviewModal');
+            document.getElementsByTagName('body')[0].style.overflow = '';
         }
     }, []);
 

@@ -35,6 +35,7 @@ export default function ExchangeModal({color}) {
         Emitter.on("openExchangeModal", set);
         return () => {
             Emitter.removeListener('openExchangeModal');
+            document.getElementsByTagName('body')[0].style.overflow = '';
         }
     }, []);
 
@@ -79,7 +80,6 @@ export default function ExchangeModal({color}) {
     };
 
     const inputChange = (e) => {
-        console.log(e.target.value);
         setValue(e.target.value);
         check();
     };

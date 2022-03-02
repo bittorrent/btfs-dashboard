@@ -46,6 +46,7 @@ export default function WithdrawDepositModal({color}) {
         Emitter.on("openWithdrawDepositModal", set);
         return () => {
             Emitter.removeListener('openWithdrawDepositModal');
+            document.getElementsByTagName('body')[0].style.overflow = '';
         }
     }, []);
 

@@ -21,6 +21,7 @@ export default function QRModal({color}) {
         Emitter.on("openQRModal", set);
         return () => {
             Emitter.removeListener('openQRModal');
+            document.getElementsByTagName('body')[0].style.overflow = '';
         }
     }, []);
 

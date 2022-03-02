@@ -28,6 +28,7 @@ export default function ImportModal({color}) {
         Emitter.on("openImportModal", set);
         return () => {
             Emitter.removeListener('openImportModal');
+            document.getElementsByTagName('body')[0].style.overflow = '';
         }
     }, []);
 

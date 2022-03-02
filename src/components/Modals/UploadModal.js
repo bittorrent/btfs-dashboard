@@ -28,6 +28,7 @@ export default function UploadModal({color}) {
         Emitter.on("openUploadModal", set);
         return () => {
             Emitter.removeListener('openUploadModal');
+            document.getElementsByTagName('body')[0].style.overflow = '';
         }
     }, []);
 
