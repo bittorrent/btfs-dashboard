@@ -15,19 +15,19 @@ export const getNodeBasicStats = async () => {
 
         let status = null;
         let message = null;
-        if (result[4]['CodeBttc'] === 2 && result[4]['CodeStatus'] === 2) {
+        if (result[4]['code_bttc'] === 2 && result[4]['code_status'] === 2) {
             status = 1;
             message = 'online';
         }
-        if (result[4]['CodeBttc'] === 3) {
+        if (result[4]['code_bttc'] === 3) {
             status = 2;
             message = ['network_unstable_bttc', 'check_network_request'];
         }
-        if (result[4]['CodeStatus'] === 3) {
+        if (result[4]['code_status'] === 3) {
             status = 2;
             message = ['network_unstable_btfs', 'check_network_request'];
         }
-        if (result[4]['CodeBttc'] === 3 && result[4]['CodeStatus'] === 3) {
+        if (result[4]['code_bttc'] === 3 && result[4]['code_status'] === 3) {
             status = 3;
             message = ['network_unstable_bttc', 'network_unstable_btfs', 'check_network_request'];
         }

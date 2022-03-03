@@ -26,7 +26,7 @@ class APIClient10 {
                     }
                     resolve({
                         Type: 'error',
-                        Message: message
+                        Message: message ? message : 'network error or host version not up to date'
                     });
                 }
             }).catch(err => {
