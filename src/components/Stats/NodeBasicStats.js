@@ -115,8 +115,8 @@ export default function NodeBasicStats({color}) {
                                             <div className="font-semibold text-orange-500 cursor-default">
                                                 <Tooltip placement="bottom" title={<span>{intl.formatMessage({id: message[0]})} <br/> {intl.formatMessage({id: message[1]})}</span>}>
                                                     <i className="fas fa-circle mr-2"></i>
+                                                    <span>{t('network_unstable')}</span>
                                                 </Tooltip>
-                                                <span>{t('network_unstable')}</span>
                                             </div>
                                         }
                                         {
@@ -125,8 +125,8 @@ export default function NodeBasicStats({color}) {
                                                 <Tooltip placement="bottom"
                                                          title={<span>{intl.formatMessage({id: message[0]})}  <br/>  {intl.formatMessage({id: message[1]})}  <br/>  {intl.formatMessage({id: message[2]})}</span>}>
                                                     <i className="fas fa-circle mr-2"></i>
+                                                    <span>{t('network_unstable')}</span>
                                                 </Tooltip>
-                                                <span>{t('network_unstable')}</span>
                                             </div>
                                         }
                                     </div>
