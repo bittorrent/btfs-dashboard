@@ -10,21 +10,24 @@ import 'assets/styles/main.scss';
 import 'assets/styles/overwrite.scss';
 import 'assets/styles/theme.scss';
 
-import Admin from "layouts/Admin.js";
-
 import {ContextProvider} from './reducer'
 import Inter from './locale/intl';
+
+import Index from "views/Index.js";
 
 ReactDOM.render(
     <ContextProvider>
         <Inter>
             <HashRouter>
                 <Switch>
-                    <Route path="/admin" component={Admin}/>
-                    <Redirect from="*" to="/admin"/>
+                  <Route path="/" exact component={Index} />
+                  <Redirect from="*" to="/" />
                 </Switch>
             </HashRouter>
         </Inter>
     </ContextProvider>,
     document.getElementById("root")
 );
+
+
+

@@ -302,12 +302,6 @@ module.exports = function (webpackEnv) {
         chunks: 'all',
         name: true,
         cacheGroups: {
-          chart: { //
-            test: /[\\/]node_modules[\\/](chart.js|chartjs-chart-geo|chartjs-gauge)/,
-            priority: 100,
-            name: 'chart',
-            chunks: 'all'
-          },
           /*
           'async-commons': {
             chunks: 'async',

@@ -6,13 +6,8 @@ const ThemeToggle = () => {
   const {dispatch, state} = useContext(mainContext);
   const {theme} = state;
 
-  const changeTheme = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
+  const changeTheme = () => {
     let _theme = theme === 'light' ? 'dark' : 'light';
-    window.theme = _theme;
-    localStorage.setItem('theme', _theme);
     dispatch({
       type: 'CHANGE_THEME',
       theme: _theme
