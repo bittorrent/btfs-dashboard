@@ -46,7 +46,6 @@ export default function TransferConfirmModal({color}) {
 
     const next = async () => {
         setShowConfirm(true);
-        console.log(inputAddressRef.current.value.trim(), inputAmountRef.current.value, tokenRef.current);
     };
 
     const submit = async () => {

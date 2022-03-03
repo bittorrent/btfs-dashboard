@@ -41,7 +41,6 @@ export default function ExchangeModal({color}) {
 
 
     const _exchange = async () => {
-        console.log(value, target);
         closeModal();
         let result;
         if (target === 'BTT') {
