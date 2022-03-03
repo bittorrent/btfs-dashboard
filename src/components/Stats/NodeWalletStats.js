@@ -41,6 +41,7 @@ export default function NodeWalletStats({color}) {
     }, []);
 
     const fetchData = async () => {
+        didCancel = false;
         let {BTTCAddress, chequeAddress, chequeBookBalance, BTTCAddressBTT, BTTCAddressWBTT, _chequeBookBalance, _BTTCAddressBTT, _BTTCAddressWBTT} = await getNodeWalletStats();
         if (!didCancel) {
             unstable_batchedUpdates(() => {
