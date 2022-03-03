@@ -71,6 +71,7 @@ export default function TransferConfirmModal({color}) {
     };
 
     const check = () => {
+        inputAddressRef.current.style.color='';
         if (inputAddressCheck(inputAddressRef.current.value.trim()) && inputNumberCheck(inputAmountRef.current.value, max)) {
             setValid(true);
             return true;
@@ -90,6 +91,12 @@ export default function TransferConfirmModal({color}) {
 
     const inputChange = () => {
         check();
+    };
+
+    const onBlur = () => {
+        if(!inputAddressCheck(inputAddressRef.current.value.trim())){
+            inputAddressRef.current.style.color='red';
+        }
     };
 
     const handleChange = useCallback((value) => {
@@ -206,6 +213,7 @@ export default function TransferConfirmModal({color}) {
                                                     type="text"
                                                     placeholder={intl.formatMessage({id: 'enter_bttc_address'})}
                                                     onChange={inputChange}
+                                                    onBlur={onBlur}
                                                     ref={inputAddressRef}
                                                 />
                                             </div>
