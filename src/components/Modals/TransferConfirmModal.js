@@ -32,8 +32,8 @@ export default function TransferConfirmModal({color}) {
             openModal();
             tokenRef.current = 'BTT';
             maxRef.current = {
-                BTT: (params.maxBTT - FEE) > 0 ? params.maxBTT - FEE : 0,
-                WBTT: (params.maxBTT - FEE) > 0 ? params.maxWBTT : 0
+                BTT: params.maxBTT,
+                WBTT: params.maxWBTT
             };
             setMax(maxRef.current.BTT);
         };
@@ -52,7 +52,6 @@ export default function TransferConfirmModal({color}) {
     const submit = async () => {
         closeModal();
         setShowConfirm(false);
-        console.log(inputAddressRef.current.value, inputAmountRef.current.value, tokenRef.current);
 
         let result;
         if (tokenRef.current === 'BTT') {
@@ -71,7 +70,7 @@ export default function TransferConfirmModal({color}) {
     };
 
     const check = () => {
-        inputAddressRef.current.style.color='';
+        inputAddressRef.current.style.color = '';
         if (inputAddressCheck(inputAddressRef.current.value.trim()) && inputNumberCheck(inputAmountRef.current.value, max)) {
             setValid(true);
             return true;
@@ -87,6 +86,7 @@ export default function TransferConfirmModal({color}) {
 
     const setMaxNum = () => {
         inputAmountRef.current.value = max;
+        check();
     };
 
     const inputChange = () => {
@@ -94,8 +94,8 @@ export default function TransferConfirmModal({color}) {
     };
 
     const onBlur = () => {
-        if(!inputAddressCheck(inputAddressRef.current.value.trim())){
-            inputAddressRef.current.style.color='red';
+        if (!inputAddressCheck(inputAddressRef.current.value.trim())) {
+            inputAddressRef.current.style.color = 'red';
         }
     };
 

@@ -28,8 +28,8 @@ export default function ExchangeModal({color}) {
         const set = function (params) {
             console.log("openExchangeModal event has occured");
             openModal();
-            setMaxBTT((params.maxBTT - FEE) > 0 ? (params.maxBTT - FEE) : 0);
-            setMaxWBTT((params.maxBTT - FEE) > 0 ? params.maxWBTT : 0);
+            setMaxBTT(params.maxBTT);
+            setMaxWBTT(params.maxWBTT);
             setValue('');
         };
         Emitter.on("openExchangeModal", set);
@@ -72,11 +72,13 @@ export default function ExchangeModal({color}) {
     const setMaxBTTNum = () => {
         inputRefBTT.current.value = maxBTT;
         setValue(maxBTT);
+        check();
     };
 
     const setMaxWBTTNum = () => {
         inputRefWBTT.current.value = maxWBTT;
         setValue(maxWBTT);
+        check();
     };
 
     const inputChange = (e) => {

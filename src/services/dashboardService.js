@@ -2,7 +2,7 @@
 import Client10 from "APIClient/APIClient10.js";
 import BigNumber from 'bignumber.js';
 import {switchStorageUnit2, switchBalanceUnit} from "utils/BTFSUtil.js";
-import {PRECISION} from "utils/constants.js";
+import {PRECISION, FEE} from "utils/constants.js";
 
 export const getNodeBasicStats = async () => {
     let data1 = Client10.getHostInfo();
@@ -136,15 +136,20 @@ export const getNodeWalletStats = async () => {
     let BTTCAddressWBTT = Client10.getChequeWBTTBalance(BTTCAddress);
 
     return Promise.all([chequeBookBalance, BTTCAddressBTT, BTTCAddressWBTT]).then((result) => {
+        let maxBTT = new BigNumber(result[1]['balance']).dividedBy(PRECISION).toNumber();
+        let maxWBTT = new BigNumber(result[2]['balance']).dividedBy(PRECISION).toNumber();
+        let maxChequeBookWBTT = new BigNumber(result[0]['balance']).dividedBy(PRECISION).toNumber();
+        let base=  new BigNumber(maxBTT).minus(FEE).toNumber();
+
         return {
             BTTCAddress: BTTCAddress,
             chequeAddress: chequeAddress,
             chequeBookBalance: switchBalanceUnit(result[0]['balance']),
             BTTCAddressBTT: switchBalanceUnit(result[1]['balance']),
             BTTCAddressWBTT: switchBalanceUnit(result[2]['balance']),
-            _chequeBookBalance: new BigNumber(result[0]['balance']).dividedBy(PRECISION).toNumber(),
-            _BTTCAddressBTT: new BigNumber(result[1]['balance']).dividedBy(PRECISION).toNumber(),
-            _BTTCAddressWBTT: new BigNumber(result[2]['balance']).dividedBy(PRECISION).toNumber(),
+            maxAvailableBTT: base > 0 ? base : 0,
+            maxAvailableWBTT: base > 0 ? maxWBTT : 0,
+            maxAvailableChequeBookWBTT: base > 0 ? maxChequeBookWBTT : 0
         }
     })
 };
