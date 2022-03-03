@@ -105,7 +105,7 @@ export default function NodeBasicStats({color}) {
                                             {t('status')}
                                         </h5>
                                         {
-                                            status === 1 && <div className="font-semibold text-red-500 cursor-default">
+                                            status === 1 && <div className="font-semibold text-green-500 cursor-default">
                                                 <i className="fas fa-circle mr-2"></i>
                                                 <span>{t('online')} - {peers} {t('connected')}</span>
                                             </div>

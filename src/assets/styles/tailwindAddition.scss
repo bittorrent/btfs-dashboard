@@ -12,7 +12,7 @@
 }
 
 .grow {
- flex-grow: 1;
+  flex-grow: 1;
 }
 
 .grow-0 {
@@ -33,6 +33,10 @@
 
 .text-blue {
   color: blue;
+}
+
+.text-green-500 {
+  color: rgb(34 197 94);
 }
 
 .line-height-7px {
@@ -312,5 +316,6 @@
     padding-left: 0.5rem;
   }
 }
+
 
 
