@@ -144,7 +144,7 @@ export default function TransferConfirmModal({color}) {
                                     <div className="relative px-4 flex flex-col">
 
                                         <div>
-                                            <p className='p-2'>{t('receive_account')}</p>
+                                            <p className='p-2'>{t('send_to')}</p>
                                             <p className='p-2 font-semibold'>{inputAddressRef.current.value}</p>
                                         </div>
 

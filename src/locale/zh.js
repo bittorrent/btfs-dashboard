@@ -154,6 +154,7 @@ const zh_CN = {
     'next': '下一步',
     'return': '返回',
     'receive_account': '接收账户',
+    'send_to':'接收账户',
     'send_amount': '发送数额',
     'enter_bttc_address': '请输入有效BTTC地址',
     'key_warning_1': '私钥可以控制资产',

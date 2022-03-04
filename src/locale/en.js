@@ -153,6 +153,7 @@ const en_US = {
     'next': 'Next',
     'return': 'Return',
     'receive_account': 'Receive Account',
+    'send_to':'Send To',
     'send_amount': 'Send Amount',
     'enter_bttc_address': 'Please enter a valid BTTC address',
     'key_warning_1': 'Private key controls all your assets',
