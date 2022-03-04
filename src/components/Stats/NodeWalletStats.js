@@ -32,7 +32,7 @@ export default function NodeWalletStats({color}) {
         const set = async function () {
             setTimeout(() => {
                 fetchData();
-            }, 6000);
+            }, 3000);
         };
         Emitter.on("updateWallet", set);
         return () => {
