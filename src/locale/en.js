@@ -143,6 +143,7 @@ const en_US = {
     'amount_to_withdraw': 'Please enter the amount of WBTT you would like to withdraw.',
     'chequebook_deposit': 'Vault Deposit',
     'amount_to_deposit': 'Please enter the amount of WBTT you would like to deposit.',
+    'transfer_confirmation': 'Transfer Confirmation',
     'cancel': 'Cancel',
     'confirm': 'Confirm',
     'confirmation': 'Confirmation',

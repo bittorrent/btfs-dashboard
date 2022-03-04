@@ -137,7 +137,7 @@ export default function TransferConfirmModal({color}) {
                                     {/*header*/}
                                     <div className="p-4">
                                         <p className=" font-semibold">
-                                            {t('transfer')} {t('confirmation')}
+                                            {t('transfer_confirmation')}
                                         </p>
                                     </div>
                                     {/*body*/}
