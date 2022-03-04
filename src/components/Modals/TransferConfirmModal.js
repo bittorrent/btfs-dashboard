@@ -200,7 +200,7 @@ export default function TransferConfirmModal({color}) {
 
                                         <div className="flex pb-2">
                                             <div
-                                                className='mr-4 font-semibold w-120-px flex justify-center items-center'>{t('receive_account')}</div>
+                                                className='mr-4 font-semibold w-120-px flex justify-center items-center'>{t('send_to')}</div>
                                             <div className="inputTransition flex-1">
                                                 <input
                                                     className={"p4 mb-1 border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full h-35-px " + themeStyle.bg[color]}
