@@ -122,12 +122,6 @@ export const getNodeRevenueStats = async () => {
 
 
 export const getNodeWalletStats = async () => {
-    const web3Provider = window.ethereum;
-    if (web3Provider) {
-        // let web3js = new window.Web3(web3Provider);
-        //  let accounts = await web3js.eth.getAccounts();
-    }
-
     let data1 = await Client10.getChainInfo();
     let BTTCAddress = data1['node_addr'];
     let chequeAddress = data1['vault_addr'];
