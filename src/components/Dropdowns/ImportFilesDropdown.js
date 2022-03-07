@@ -73,7 +73,6 @@ const ImportFilesDropdown = ({color, path}) => {
 
     return (
         <>
-
             <button
                 className={"active:bg-indigo-600 bg-indigo-500 text-white px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 shadow hover:shadow-md inline-flex items-center font-bold"}
                 type="button"
@@ -88,7 +87,6 @@ const ImportFilesDropdown = ({color, path}) => {
                 <i className="fas fa-plus mr-2"></i>
                 {t('import')}
             </button>
-
 
             <div ref={popoverDropdownRef} className={(dropdownPopoverShow ? "block " : "hidden ") +
             "_box-shadow text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48 mt-important " + (themeStyle.bg[color]) }>
@@ -114,7 +112,7 @@ const ImportFilesDropdown = ({color, path}) => {
                    className={"text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent"}
                    onClick={addNewFolder}>
                     <i className="fas fa-folder-plus mr-2"></i>
-                    New Folder
+                    {t('new_folder')}
                 </a>
             </div>
 

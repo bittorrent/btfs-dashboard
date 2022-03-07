@@ -15,17 +15,24 @@ export default function QRModal({color}) {
     useEffect(() => {
         const set = function (params) {
             console.log("openQRModal event has occured");
+            openModal();
             address.current = params.address;
-            setShowModal(true);
         };
         Emitter.on("openQRModal", set);
         return () => {
             Emitter.removeListener('openQRModal');
+            window.body.style.overflow = '';
         }
     }, []);
 
-    const close = () => {
+    const openModal = () => {
+        setShowModal(true);
+        window.body.style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
         setShowModal(false);
+        window.body.style.overflow = '';
     };
 
     return (
@@ -35,7 +42,7 @@ export default function QRModal({color}) {
                     <div className={"fixed flex z-50 md:w-1/2 modal_center md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
                         style={{height: '300px'}}>
                         <button className=" absolute right-0 bg-transparent text-2xl mr-2 font-semibold outline-none focus:outline-none text-blueGray-400"
-                            onClick={close}
+                            onClick={closeModal}
                         >
                             <span>×</span>
                         </button>

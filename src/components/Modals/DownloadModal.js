@@ -18,7 +18,7 @@ export default function DownloadModal({color}) {
     useEffect(() => {
         const set = async function (params) {
             console.log("openDownloadModal event has occured");
-            setShowModal(true);
+            openModal();
             name.current = params.name;
             let result = await download(params.hash, params.name, params.size, params.type);
             console.log(result);
@@ -26,6 +26,7 @@ export default function DownloadModal({color}) {
         Emitter.on("openDownloadModal", set);
         return () => {
             Emitter.removeListener('openDownloadModal');
+            window.body.style.overflow = '';
         }
     }, []);
 
@@ -45,10 +46,20 @@ export default function DownloadModal({color}) {
         return result;
     };
 
-    const close = () => {
+    const reset = () => {
         setErr(false);
         setPercentage(0);
+    };
+
+    const openModal = () => {
+        setShowModal(true);
+        window.body.style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+        reset();
         setShowModal(false);
+        window.body.style.overflow = '';
     };
 
     return (
@@ -58,7 +69,7 @@ export default function DownloadModal({color}) {
                     <div className={"fixed flex z-50 modal_center md:w-1/2 md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
                         style={{height: '300px'}}>
                         <button className="absolute right-0 bg-transparent text-2xl mr-2 font-semibold outline-none focus:outline-none text-blueGray-400"
-                            onClick={close}
+                            onClick={closeModal}
                         >
                             <span>×</span>
                         </button>

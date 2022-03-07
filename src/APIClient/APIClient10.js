@@ -26,7 +26,7 @@ class APIClient10 {
                     }
                     resolve({
                         Type: 'error',
-                        Message: message
+                        Message: message ? message : 'network error or host version not up to date'
                     });
                 }
             }).catch(err => {
@@ -40,7 +40,7 @@ class APIClient10 {
     }
 
     getHostVersion() {
-      return this.request('/api/v1/version');
+        return this.request('/api/v1/version');
     }
 
     getHostInfo() {
@@ -61,6 +61,10 @@ class APIClient10 {
 
     getHostConfig() {
         return this.request('/api/v1/config/show');
+    }
+
+    getNetworkStatus() {
+        return this.request('/api/v1/network');
     }
 
     getChainInfo() {
@@ -93,6 +97,10 @@ class APIClient10 {
 
     getChequeTotalIncomeNumbers() {
         return this.request('/api/v1/cheque/receive-total-count');
+    }
+
+    getContractsNumber() {
+        return this.request('/api/v1/storage/contracts/list/host');
     }
 
     getChequeTotalExpenseNumbers() {
@@ -179,6 +187,22 @@ class APIClient10 {
         return this.request('/api/v1/vault/deposit?arg=' + amount);
     }
 
+    BTTTransfer(to, amount) {
+        return this.request('/api/v1/bttc/send-btt-to?arg=' + to + '&arg=' + amount);
+    }
+
+    WBTTTransfer(to, amount) {
+        return this.request('/api/v1/bttc/send-wbtt-to?arg=' + to + '&arg=' + amount);
+    }
+
+    BTT2WBTT(amount) {
+        return this.request('/api/v1/bttc/btt2wbtt?arg=' + amount);
+    }
+
+    WBTT2BTT(amount) {
+        return this.request('/api/v1/bttc/wbtt2btt?arg=' + amount);
+    }
+
     cash(id) {
         return this.request('/api/v1/cheque/cash?arg=' + id);
     }
@@ -193,6 +217,10 @@ class APIClient10 {
 
     remove(hash) {
         return this.request('/api/v1/rm?arg=' + hash);
+    }
+
+    syncContracts() {
+        return this.request('/api/v1/storage/contracts/sync/host');
     }
 
 }

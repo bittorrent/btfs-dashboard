@@ -1,20 +1,44 @@
 /*eslint-disable*/
 import Client10 from "APIClient/APIClient10.js";
 import BigNumber from 'bignumber.js';
-import {switchStorageUnit2, switchBalanceUnit, precision} from "utils/BTFSUtil.js";
+import {switchStorageUnit2, switchBalanceUnit} from "utils/BTFSUtil.js";
+import {PRECISION, FEE} from "utils/constants.js";
 
 export const getNodeBasicStats = async () => {
     let data1 = Client10.getHostInfo();
     let data2 = Client10.getHostScore();
     let data3 = Client10.getPeers();
     let data4 = Client10.getHostVersion();
+    let data5 = Client10.getNetworkStatus();
 
-    return Promise.all([data1, data2, data3, data4]).then((result) => {
+    return Promise.all([data1, data2, data3, data4, data5]).then((result) => {
+
+        let status = null;
+        let message = null;
+        if (result[4]['code_bttc'] === 2 && result[4]['code_status'] === 2) {
+            status = 1;
+            message = 'online';
+        }
+        if (result[4]['code_bttc'] === 3) {
+            status = 2;
+            message = ['network_unstable_bttc', 'check_network_request'];
+        }
+        if (result[4]['code_status'] === 3) {
+            status = 2;
+            message = ['network_unstable_btfs', 'check_network_request'];
+        }
+        if (result[4]['code_bttc'] === 3 && result[4]['code_status'] === 3) {
+            status = 3;
+            message = ['network_unstable_bttc', 'network_unstable_btfs', 'check_network_request'];
+        }
+
         return {
             ID: result[0]['ID'] ? result[0]['ID'] : '--',
             uptime: result[1]['host_stats'] ? (result[1]['host_stats']['uptime'] * 100).toFixed(0) : '--',
             peers: result[2]['Peers'] ? result[2]['Peers'].length : '--',
             version: result[3]['Version'] ? result[3]['Version'] : '--',
+            status: status,
+            message: message,
         }
     })
 };
@@ -112,14 +136,21 @@ export const getNodeWalletStats = async () => {
     let BTTCAddressWBTT = Client10.getChequeWBTTBalance(BTTCAddress);
 
     return Promise.all([chequeBookBalance, BTTCAddressBTT, BTTCAddressWBTT]).then((result) => {
+
+        let maxBTT = new BigNumber(result[1]['balance']).dividedBy(PRECISION).toNumber();
+        let maxWBTT = new BigNumber(result[2]['balance']).dividedBy(PRECISION).toNumber();
+        let maxChequeBookWBTT = new BigNumber(result[0]['balance']).dividedBy(PRECISION).toNumber();
+        let base=  new BigNumber(maxBTT).minus(FEE).toNumber();
+
         return {
             BTTCAddress: BTTCAddress,
             chequeAddress: chequeAddress,
             chequeBookBalance: switchBalanceUnit(result[0]['balance']),
             BTTCAddressBTT: switchBalanceUnit(result[1]['balance']),
             BTTCAddressWBTT: switchBalanceUnit(result[2]['balance']),
-            _chequeBookBalance: new BigNumber(result[0]['balance']).dividedBy(precision).toNumber(),
-            _BTTCAddressWBTT: new BigNumber(result[2]['balance']).dividedBy(precision).toNumber(),
+            maxAvailableBTT: base > 0 ? base : 0,
+            maxAvailableWBTT: base > 0 ? maxWBTT : 0,
+            maxAvailableChequeBookWBTT: base > 0 ? maxChequeBookWBTT : 0
         }
     })
 };
@@ -129,15 +160,15 @@ export const getNodeStorageStats = async () => {
     try {
         let data1 = Client10.getHostPrice();
         let data2 = Client10.getFilesStorage();
-        let data3 = Client10.getChequeTotalIncomeNumbers();
+        let data3 = Client10.getContractsNumber();
         let data4 = Client10.getChequeStats();
         return Promise.all([data1, data2, data3, data4]).then((result) => {
             return {
                 capacity: switchStorageUnit2(result[1]['StorageMax']),
                 storageUsed: switchStorageUnit2(result[1]['RepoSize']),
                 percentage: new BigNumber(result[1]['RepoSize']).dividedBy(result[1]['StorageMax']).multipliedBy(100).toFixed(2),
-                hostPrice: (result[0]['price'] * 30 / precision).toFixed(2),
-                contracts: result[2]['count'],
+                hostPrice: (result[0]['price'] * 30 / PRECISION).toFixed(2),
+                contracts: result[2]['contracts'].length,
                 uncashed: switchBalanceUnit(result[3]['total_received_uncashed']),
                 uncashedChange: switchBalanceUnit(result[3]['total_received_daily_uncashed']),
             }
@@ -165,17 +196,45 @@ export const getFilesStorage = async () => {
     }
 };
 
-export const withdraw = async (amount) => {
-    let temp = new Number(new BigNumber(amount).multipliedBy(precision).toString()).toLocaleString();
+const formAmount = (amount) => {
+    let temp = new Number(new BigNumber(amount).multipliedBy(PRECISION).toString()).toLocaleString();
     let amount_str = temp.replace(/,/g, "");
+    return amount_str;
+}
+
+export const withdraw = async (amount) => {
+    let amount_str = formAmount(amount);
     let data = await Client10.withdraw(amount_str);
     return data
 };
 
 export const deposit = async (amount) => {
-    let temp = new Number(new BigNumber(amount).multipliedBy(precision).toString()).toLocaleString();
-    let amount_str = temp.replace(/,/g, "");
+    let amount_str = formAmount(amount);
     let data = await Client10.deposit(amount_str);
+    return data
+};
+
+export const BTTTransfer = async (to, amount) => {
+    let amount_str = formAmount(amount);
+    let data = await Client10.BTTTransfer(to, amount_str);
+    return data
+};
+
+export const WBTTTransfer = async (to, amount) => {
+    let amount_str = formAmount(amount);
+    let data = await Client10.WBTTTransfer(to, amount_str);
+    return data
+};
+
+export const BTT2WBTT = async (amount) => {
+    let amount_str = formAmount(amount);
+    let data = await Client10.BTT2WBTT(amount_str);
+    return data
+};
+
+export const WBTT2BTT = async (amount) => {
+    let amount_str = formAmount(amount);
+    let data = await Client10.WBTT2BTT(amount_str);
     return data
 };
 

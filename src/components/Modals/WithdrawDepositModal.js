@@ -1,11 +1,15 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import {useIntl} from 'react-intl';
+import {Tooltip} from 'antd';
 import {mainContext} from "reducer";
+import ButtonCancel from "components/Buttons/ButtonCancel.js";
+import ButtonConfirm from "components/Buttons/ButtonConfirm.js";
 import {withdraw, deposit} from "services/dashboardService.js";
 import Emitter from "utils/eventBus";
 import themeStyle from "utils/themeStyle.js";
-import {inputCheck} from "utils/checks.js";
 import {t} from "utils/text.js";
+import {FEE} from "utils/constants.js";
+import {inputNumberCheck} from "utils/checks.js";
 
 export default function WithdrawDepositModal({color}) {
     const intl = useIntl();
@@ -17,55 +21,71 @@ export default function WithdrawDepositModal({color}) {
     const [description, setDescription] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [max, setMax] = useState(0);
+    const [valid, setValid] = useState(false);
 
     useEffect(() => {
         const set = function (params) {
             console.log("openWithdrawDepositModal event has occured");
+            openModal();
             setType(params.type);
             if (params.type === 'withdraw') {
                 setTitle('chequebook_withdraw');
                 setDescription("amount_to_withdraw");
-                setMax(params.max);
+                setMax(params.maxWBTT);
             }
             if (params.type === 'deposit') {
                 setTitle('chequebook_deposit');
                 setDescription("amount_to_deposit");
-                setMax(params.max);
+                setMax(params.maxWBTT);
             }
             if (params.type === 'change') {
                 setTitle('Change Recipient Address');
                 setDescription("Please enter new recipient address below.");
             }
-            setShowModal(true);
         };
         Emitter.on("openWithdrawDepositModal", set);
         return () => {
             Emitter.removeListener('openWithdrawDepositModal');
+            window.body.style.overflow = '';
         }
     }, []);
 
     const _withdraw = async () => {
         let amount = inputRef.current.value;
-        inputCheck();
-        setShowModal(false);
+        closeModal();
         let result = await withdraw(amount);
         if (result['Type'] === 'error') {
             Emitter.emit('showMessageAlert', {message: result['Message'], status: 'error'});
         } else {
             Emitter.emit('showMessageAlert', {message: 'withdraw_success', status: 'success', type: 'frontEnd'});
+            Emitter.emit("updateWallet");
         }
     };
 
     const _deposit = async () => {
         let amount = inputRef.current.value;
-        inputCheck();
-        setShowModal(false);
+        closeModal();
         let result = await deposit(amount);
         if (result['Type'] === 'error') {
             Emitter.emit('showMessageAlert', {message: result['Message'], status: 'error'});
         } else {
             Emitter.emit('showMessageAlert', {message: 'deposit_success', status: 'success', type: 'frontEnd'});
+            Emitter.emit("updateWallet");
         }
+    };
+
+    const check = () => {
+        if (inputNumberCheck(inputRef.current.value, max)) {
+            setValid(true);
+            return true;
+        } else {
+            setValid(false);
+            return false;
+        }
+    };
+
+    const inputChange = () => {
+        check();
     };
 
     const manipulation = {
@@ -75,6 +95,18 @@ export default function WithdrawDepositModal({color}) {
 
     const setMaxNum = () => {
         inputRef.current.value = max;
+        check();
+    };
+
+    const openModal = () => {
+        setShowModal(true);
+        window.body.style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+        setValid(false);
+        setShowModal(false);
+        window.body.style.overflow = '';
     };
 
     return (
@@ -105,6 +137,7 @@ export default function WithdrawDepositModal({color}) {
                                             <input
                                                 className={"p4 mb-1 border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full " + themeStyle.bg[color]}
                                                 placeholder={intl.formatMessage({id: 'max_amount'}) + ' : ' + max}
+                                                onChange={inputChange}
                                                 type="number"
                                                 min="0"
                                                 ref={inputRef}
@@ -120,23 +153,20 @@ export default function WithdrawDepositModal({color}) {
                                 <div className="flex items-center justify-between p-4 rounded-b">
                                     <div>
                                         {t('est_fee')}: &nbsp;
-                                        <span className='text-xl font-semibold'>15 BTT</span>
+                                        <span className='text-xl font-semibold'>{FEE} BTT</span>
+                                        <Tooltip placement="bottom"
+                                                 title={
+                                                     <>
+                                                         <p>{t('amount_available_check_2')}</p>
+                                                         <p>{t('amount_available_check_3')}</p>
+                                                     </>
+                                                 }>
+                                            <i className="fas fa-question-circle text-lg ml-2"></i>
+                                        </Tooltip>
                                     </div>
                                     <div>
-                                        <button
-                                            className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                            type="button"
-                                            onClick={() => setShowModal(false)}
-                                        >
-                                            {t('cancel')}
-                                        </button>
-                                        <button
-                                            className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                            type="button"
-                                            onClick={manipulation[type]}
-                                        >
-                                            {t(type)}
-                                        </button>
+                                        <ButtonCancel event={closeModal} text={t('cancel')}/>
+                                        <ButtonConfirm event={manipulation[type]} valid={valid} text={t(type)}/>
                                     </div>
                                 </div>
                             </div>

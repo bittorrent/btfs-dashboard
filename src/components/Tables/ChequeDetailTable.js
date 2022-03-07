@@ -7,6 +7,7 @@ import {getChequeReceivedDetailList, getChequeSentDetailList} from "services/che
 import themeStyle from "utils/themeStyle.js";
 import {Truncate, t} from "utils/text.js"
 import {switchBalanceUnit} from "utils/BTFSUtil.js";
+import {btfsScanLinkCheck, bttcScanLinkCheck} from "utils/checks.js";
 
 let didCancel = false;
 
@@ -84,7 +85,7 @@ export default function ChequeDetailTable({color, type}) {
                                 <tr key={index}>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         <div className='flex'>
-                                            <a href={'https://scan.btfs.io/#/node/' + item['PeerId']}
+                                            <a href={btfsScanLinkCheck() + '/#/node/' + item['PeerId']}
                                                target='_blank' rel="noreferrer">
                                                 <Truncate>{item['PeerId']}</Truncate>
                                             </a>
@@ -97,7 +98,7 @@ export default function ChequeDetailTable({color, type}) {
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         {
                                             type === 'earning' && <div className='flex'>
-                                                <a href={'https://bttcscan.com/address/' + item['Vault']}
+                                                <a href={bttcScanLinkCheck() + '/address/' + item['Vault']}
                                                    target='_blank' rel="noreferrer">
                                                     <Truncate>{item['Vault']}</Truncate>
                                                 </a>
@@ -106,7 +107,7 @@ export default function ChequeDetailTable({color, type}) {
                                         }
                                         {
                                             type === 'expense' && <div className='flex'>
-                                                <a href={'https://bttcscan.com/address/' + item['Beneficiary']}
+                                                <a href={bttcScanLinkCheck() + '/address/' + item['Beneficiary']}
                                                    target='_blank' rel="noreferrer">
                                                     <Truncate>{item['Beneficiary']}</Truncate>
                                                 </a>

@@ -9,7 +9,7 @@ export const AsyncComponent = loadComponent => (
                 Component: null,
             }
         }
-        componentWillMount() {
+        componentDidMount() {
             if (this.hasLoadedComponent()) {
                 return;
             }

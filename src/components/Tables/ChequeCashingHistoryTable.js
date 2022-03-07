@@ -7,6 +7,7 @@ import {getChequeCashingHistoryList} from "services/chequeService.js";
 import {Truncate, t} from "utils/text.js"
 import themeStyle from "utils/themeStyle.js";
 import {switchBalanceUnit} from "utils/BTFSUtil.js";
+import {btfsScanLinkCheck, bttcScanLinkCheck} from "utils/checks.js";
 
 let didCancel = false;
 
@@ -78,7 +79,7 @@ export default function ChequeCashingHistoryTable({color}) {
                                 <tr key={index}>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         <div className='flex'>
-                                            <a href={'https://bttcscan.com/tx/' + item['tx_hash']}
+                                            <a href={bttcScanLinkCheck() + '/tx/' + item['tx_hash']}
                                                target='_blank'>
                                                 <Truncate>{item['tx_hash']}</Truncate>
                                             </a>
@@ -87,7 +88,7 @@ export default function ChequeCashingHistoryTable({color}) {
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         <div className='flex'>
-                                            <a href={'https://scan.btfs.io/#/node/' + item['peer_id']}
+                                            <a href={btfsScanLinkCheck() + '/#/node/' + item['peer_id']}
                                                target='_blank'>
                                                 <Truncate>{item['peer_id']}</Truncate>
                                             </a>
@@ -99,7 +100,7 @@ export default function ChequeCashingHistoryTable({color}) {
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         <div className='flex'>
-                                            <a href={'https://bttcscan.com/address/' + item['vault']}
+                                            <a href={bttcScanLinkCheck() + '/address/' + item['vault']}
                                                target='_blank'>
                                                 <Truncate>{item['vault']}</Truncate>
                                             </a>

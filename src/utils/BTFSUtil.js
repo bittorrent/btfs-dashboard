@@ -1,3 +1,5 @@
+import {PRECISION} from 'utils/constants.js';
+
 export const PiB = 1024.0 * 1024.0 * 1024.0 * 1024.0 * 1024.0;
 export const TiB = 1024.0 * 1024.0 * 1024.0 * 1024.0;
 export const GiB = 1024.0 * 1024.0 * 1024.0;
@@ -6,8 +8,6 @@ export const KiB = 1024.0;
 
 export const M = 1000000;
 export const B = 1000000000;
-
-export const precision = 1000000000000000000;
 
 export function switchStorageUnit2(storage) {
     if (storage === null)
@@ -80,7 +80,7 @@ export async function fileArrayBuffer(file) {
 
 export function switchBalanceUnit(balance) {
     let num = 0;
-    balance = balance / precision;
+    balance = balance / PRECISION;
     if (balance / B > 1) {
         num = (balance / B).toFixed(4);
         return num + ' B '

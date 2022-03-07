@@ -1,5 +1,7 @@
 import React, {useEffect, useContext} from "react";
 import {mainContext} from "reducer";
+import ButtonCancel from "components/Buttons/ButtonCancel.js";
+import ButtonConfirm from "components/Buttons/ButtonConfirm.js";
 import {addPeer} from "services/otherService.js";
 import Emitter from "utils/eventBus";
 import themeStyle from "utils/themeStyle.js";
@@ -14,18 +16,19 @@ export default function AddConnectionModal({color}) {
     const [showModal, setShowModal] = React.useState(false);
 
     useEffect(() => {
-        const set = function (params) {
+        const set = function () {
             console.log("openAddConnectionModal event has occured");
-            setShowModal(true);
+            openModal();
         };
         Emitter.on("openAddConnectionModal", set);
         return () => {
             Emitter.removeListener('openAddConnectionModal');
+            window.body.style.overflow = '';
         }
     }, []);
 
     const add = async () => {
-        setShowModal(false);
+        closeModal();
         let {Strings, Type, Message} = await addPeer(inputRef.value);
         if(Strings && Strings.length){
             Emitter.emit('showMessageAlert', {message: 'add_connection_success', status: 'success', type:'frontEnd'});
@@ -36,6 +39,16 @@ export default function AddConnectionModal({color}) {
                 Emitter.emit('showMessageAlert', {message: 'add_connection_failed', status: 'error', type:'frontEnd'});
             }
         }
+    };
+
+    const openModal = () => {
+        setShowModal(true);
+        window.body.style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+        window.body.style.overflow = '';
     };
 
 
@@ -71,20 +84,8 @@ export default function AddConnectionModal({color}) {
                                 </div>
                                 {/*footer*/}
                                 <div className="flex items-center justify-end p-4 rounded-b">
-                                    <button
-                                        className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                        type="button"
-                                        onClick={() => setShowModal(false)}
-                                    >
-                                        {t('cancel')}
-                                    </button>
-                                    <button
-                                        className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                        type="button"
-                                        onClick={add}
-                                    >
-                                        {t('confirm')}
-                                    </button>
+                                    <ButtonCancel event={closeModal} text={t('cancel')}/>
+                                    <ButtonConfirm event={add} valid={true} text={t('confirm')}/>
                                 </div>
                             </div>
                         </div>
