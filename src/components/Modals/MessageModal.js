@@ -1,12 +1,10 @@
-import React, {useEffect, useContext, useRef} from "react";
+import React, {useEffect, useRef} from "react";
 import ClipboardCopy from "components/Utils/ClipboardCopy";
 import Emitter from "utils/eventBus";
 import {t} from "utils/text.js";
 
-export default function MessageModal({color}) {
+export default function MessageModal() {
 
-    const {state} = useContext(mainContext);
-    const {sidebarShow} = state;
     const [showModal, setShowModal] = React.useState(false);
     const message = useRef(null);
 
@@ -42,7 +40,7 @@ export default function MessageModal({color}) {
                         <div className="w-full ">
                             {/*content*/}
                             <div
-                                className={"h-full flex flex-col justify-center items-center border-0 rounded-lg shadow-lg " + themeStyle.bg[color] + themeStyle.text[color]}>
+                                className="h-full flex flex-col justify-center items-center border-0 rounded-lg shadow-lg">
 
                                 <div className="p-4">
                                     <img alt="" src={require('../../assets/img/key.png').default} width='50px' height='50px'/>

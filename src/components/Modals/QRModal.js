@@ -3,7 +3,7 @@ import QRCode from "qrcode.react";
 import ClipboardCopy from "components/Utils/ClipboardCopy";
 import Emitter from "utils/eventBus";
 
-export default function QRModal({color}) {
+export default function QRModal() {
 
     const [showModal, setShowModal] = React.useState(false);
     const address = useRef(null);
@@ -17,18 +17,15 @@ export default function QRModal({color}) {
         Emitter.on("openQRModal", set);
         return () => {
             Emitter.removeListener('openQRModal');
-            window.body.style.overflow = '';
         }
     }, []);
 
     const openModal = () => {
         setShowModal(true);
-        window.body.style.overflow = 'hidden';
     };
 
     const closeModal = () => {
         setShowModal(false);
-        window.body.style.overflow = '';
     };
 
     return (
@@ -44,7 +41,7 @@ export default function QRModal({color}) {
                         </button>
                         <div className="w-full">
                             {/*content*/}
-                            <div className={"h-full flex flex-col justify-center items-center border-0 rounded-lg shadow-lg " + themeStyle.bg[color] + themeStyle.text[color]}>
+                            <div className="h-full flex flex-col justify-center items-center border-0 rounded-lg shadow-lg">
                                 <div className="w-1/2 h-1/2">
                                     <QRCode style={{margin: 'auto'}} value={address.current}/><br/>
                                 </div>
