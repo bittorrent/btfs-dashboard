@@ -1,8 +1,6 @@
 import React, {useEffect, useContext, useRef} from "react";
-import {mainContext} from "reducer";
 import ClipboardCopy from "components/Utils/ClipboardCopy";
 import Emitter from "utils/eventBus";
-import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
 
 export default function MessageModal({color}) {
@@ -33,7 +31,7 @@ export default function MessageModal({color}) {
             {showModal ? (
                 <>
                     <div
-                        className={"fixed flex z-50 md:w-1/2 modal_center md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
+                        className="fixed flex z-50 md:w-1/2 modal_center md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0"
                         style={{height: '300px'}}>
                         <button
                             className="absolute right-0 bg-transparent text-2xl mr-2 font-semibold outline-none focus:outline-none text-blueGray-400"

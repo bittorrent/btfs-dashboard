@@ -4,8 +4,20 @@ import ClipboardCopy from "components/Utils/ClipboardCopy";
 import IndexNavbar from "components/Navbars/IndexNavbar.js";
 import Footer from "components/Footers/Footer.js";
 import {t} from "utils/text.js";
+import Emitter from "utils/eventBus";
 
 export default function Index() {
+
+    const showQR = (e, type) => {
+        e.preventDefault();
+        if (type === 'Cheque') {
+            Emitter.emit('openQRModal', {address: chequeAddress});
+        }
+        if (type === 'BTTC') {
+            Emitter.emit('openQRModal', {address: BTTCAddress});
+        }
+    };
+
     return (
         <>
             <IndexNavbar fixed/>
