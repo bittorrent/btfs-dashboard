@@ -41,7 +41,7 @@ export default function QRModal() {
                         </button>
                         <div className="w-full">
                             {/*content*/}
-                            <div className="h-full flex flex-col justify-center items-center border-0 rounded-lg shadow-lg">
+                            <div className="h-full flex flex-col justify-center items-center border-0 rounded-lg shadow-lg bg-white">
                                 <div className="w-1/2 h-1/2">
                                     <QRCode style={{margin: 'auto'}} value={address.current}/><br/>
                                 </div>

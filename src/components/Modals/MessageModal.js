@@ -39,8 +39,7 @@ export default function MessageModal() {
                         </button>
                         <div className="w-full ">
                             {/*content*/}
-                            <div
-                                className="h-full flex flex-col justify-center items-center border-0 rounded-lg shadow-lg">
+                            <div className="h-full flex flex-col justify-center items-center border-0 rounded-lg shadow-lg bg-white">
 
                                 <div className="p-4">
                                     <img alt="" src={require('../../assets/img/key.png').default} width='50px' height='50px'/>
