@@ -13,6 +13,7 @@ const en_US = {
     'section_3_slogan_3': 'What is BTFS 2.0 ?',
     'address': 'Address',
     'reveal_private_key': 'Reveal Private Key',
+    'encounter_problem':'Encounter problems?',
     'key_warning_1': 'Private key controls all your assets',
     'key_warning_2': 'Do Not show the private key to anybody',
 

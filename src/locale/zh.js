@@ -13,6 +13,7 @@ const zh_CN = {
     'section_3_slogan_3':'什么是BTFS 2.0？',
     'address':'地址',
     'reveal_private_key':'展示私钥',
+    'encounter_problem':'遇到问题？',
     'key_warning_1': '私钥可以控制资产',
     'key_warning_2': '不要把私钥暴露给任何人',
 
