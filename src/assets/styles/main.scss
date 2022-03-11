@@ -2,6 +2,10 @@
   width: 0px !important;
 }
 
+.container {
+  max-width: 1280px;
+}
+
 .en {
   width: 30px;
   height: 30px;
@@ -15,5 +19,18 @@
   background: url(../img/china.png) 50% no-repeat;
   background-size: contain;
 }
+
+.avenir-heavy {
+  font-family: Avenir Heavy;
+}
+
+.avenir-book {
+  font-family: Avenir Book
+}
+
+.avenir-black {
+  font-family: Avenir Black
+}
+
 
 
