@@ -131,18 +131,21 @@ export default function Index() {
                                 <button
                                     className="bg-white text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none "
                                     style={{marginLeft: '35px'}}
+                                    onClick={()=>{window.open('https://twitter.com/BitTorrent')}}
                                 >
                                     <i className="fab fa-twitter"></i>
                                 </button>
                                 <button
                                     className="bg-white text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none"
                                     style={{marginLeft: '35px'}}
+                                    onClick={()=>{window.open('https://t.me/BTTBitTorrent')}}
                                 >
                                     <i className="fab fa-telegram"></i>
                                 </button>
                                 <button
                                     className="bg-white text-pink-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none"
                                     style={{marginLeft: '35px'}}
+                                    onClick={()=>{window.open('https://discord.com/invite/pMSDKhG4m7')}}
                                 >
                                     <i className="fab fa-discord"></i>
                                 </button>
