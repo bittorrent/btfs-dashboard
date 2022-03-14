@@ -130,6 +130,8 @@ const zh_CN = {
     'system_config': '系统配置',
     'submit': '提交',
     'endpoint': '端口',
+    'storage_path':'存储路径',
+    'change': '更改',
     'security': '安全',
     'reveal_key': '导出私钥',
     'private_key': '私钥',

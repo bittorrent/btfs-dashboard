@@ -130,6 +130,8 @@ const en_US = {
     'system_config': 'System Config',
     'submit': 'Submit',
     'endpoint': 'Endpoint',
+    'storage_path':'Storage Path',
+    'change': 'Change',
     'security': 'Security',
     'reveal_key': 'Reveal Private Key',
     'private_key': 'Private Key',

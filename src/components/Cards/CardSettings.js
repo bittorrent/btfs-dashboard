@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React, {useRef, useEffect, useContext} from "react";
+import React, {useState, useRef, useEffect, useContext} from "react";
 import {mainContext} from 'reducer';
 import Emitter from "utils/eventBus";
 import {nodeStatusCheck, getPrivateKey} from "services/otherService.js";
@@ -7,11 +7,14 @@ import {t} from "utils/text.js";
 import themeStyle from "utils/themeStyle.js";
 import {urlCheck} from "utils/checks.js";
 
+let folderInput = null;
+
 export default function CardSettings({color}) {
 
     const NODE_URL = localStorage.getItem('NODE_URL') ? localStorage.getItem('NODE_URL') : 'http://localhost:5001';
     const inputRef = useRef(null);
     const {dispatch} = useContext(mainContext);
+    const [path, setPath] = useState(null);
 
     useEffect(() => {
         inputRef.current.value = NODE_URL;
@@ -47,6 +50,18 @@ export default function CardSettings({color}) {
         }
     };
 
+    const changePath = (e) => {
+       // e.preventDefault();
+        console.log(7777);
+        folderInput.click();
+    };
+
+    const onInputChange = async (e) => {
+        let input = e.target.files;
+        console.log(888888);
+        console.log(input);
+    };
+
     return (
         <>
             <div>
@@ -79,6 +94,26 @@ export default function CardSettings({color}) {
                     </div>
                 </div>
 
+                <div className={"mb-4 shadow-lg rounded-lg border-0 " + themeStyle.bg[color] + themeStyle.text[color]}>
+                    <div className="rounded-t mb-0 px-6 py-6">
+                        <h5 className={"font-bold uppercase " + themeStyle.title[color]}>
+                            {t('storage_path')}
+                        </h5>
+                    </div>
+                    <div className="px-8 pb-6 flex justify-between">
+                        <div>
+                            /Users/btfs
+                        </div>
+                        <button
+                            className="bg-indigo-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1"
+                            type="button"
+                            onClick={changePath}
+                        >
+                            {t('change')}
+                        </button>
+                    </div>
+                </div>
+
                 <div className={"shadow-lg rounded-lg border-0 " + themeStyle.bg[color] + themeStyle.text[color]}>
                     <div className="rounded-t mb-0 px-6 py-6">
                         <h5 className={"font-bold uppercase " + themeStyle.title[color]}>
@@ -96,6 +131,19 @@ export default function CardSettings({color}) {
                     </div>
                 </div>
             </div>
+
+
+            <input
+                id='directory-input'
+                type='file'
+                className='hidden'
+                webkitdirectory='true'
+                ref={el => {
+                    folderInput = el
+                }}
+                onChange={onInputChange}/>
+
+
         </>
     );
 }
