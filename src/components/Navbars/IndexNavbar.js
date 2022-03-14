@@ -6,9 +6,8 @@ export default function Navbar(props) {
 
     return (
         <>
-            <nav
-                className="top-0 z-50 w-full flex flex-wrap items-center justify-between navbar-expand-lg bg-white" style={{paddingTop:'60px'}}>
-                <div className="container mx-auto flex flex-wrap items-center justify-between">
+            <nav className="top-0 z-50 w-full flex flex-wrap items-center justify-between navbar-expand-lg bg-white" style={{paddingTop:'60px'}}>
+                <div className="container mx-auto flex items-center justify-between">
                     <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
 
                         <img src={require('../../assets/img/logo.png').default} style={{height:'26px'}}/>
