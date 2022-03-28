@@ -180,7 +180,11 @@ class APIClient10 {
     }
 
     withdraw(amount) {
-        return this.request('/api/v1/vault/withdraw?arg=' + amount);
+        return this.request('/api/v1/vault/withdraw?arg=' + amount, {}, {
+            headers: {
+                'Content-Type': 'text/plain'
+            }
+        });
     }
 
     deposit(amount) {
