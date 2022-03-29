@@ -16,13 +16,19 @@ export default function Index() {
     const [privateKey, setPrivateKey] = useState(null);
 
     useEffect(() => {
-        let interval = setInterval(async () => {
+        let interval = setTimeout(async () => {
             let data = await Client.getHostID();
-            console.log(data);
-        }, 10000);
+console.log(data);
+            if(!data.Type){
+                console.log('Reload');
+              //  window.location.reload();
+            }else{
+                console.log(data);
+            }
+        }, 1000);
 
         return () => {
-            clearInterval(interval);
+           // clearInterval(interval);
         }
     }, []);
 
@@ -30,7 +36,6 @@ export default function Index() {
         let didCancel = false;
         const fetchData = async () => {
             let data = await Client.getHostInfo();
-            console.log(data);
             let info = data.info ? data.info : {
                 'btfs_version': "",
                 'bttc_address': "",

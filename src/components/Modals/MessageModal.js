@@ -57,7 +57,7 @@ export default function MessageModal() {
                             </div>
                         </div>
                     </div>
-                    <div className="bg-opacity-50 bg-black absolute top-0 left-0 w-full h-full inset-0 z-40"></div>
+                    <div className="bg-opacity-50 bg-black fixed top-0 left-0 w-full h-full inset-0 z-40"></div>
                 </>
             ) : null}
         </>
