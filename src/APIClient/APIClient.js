@@ -2,7 +2,7 @@ import xhr from "axios/index";
 
 class APIClient {
     constructor() {
-        this.apiUrl = 'http://localhost:8080';
+        this.apiUrl = '';
         this.request = async (url, body, config) => {
             return new Promise(async (resolve, reject) => {
                 try {

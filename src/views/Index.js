@@ -16,19 +16,19 @@ export default function Index() {
     const [privateKey, setPrivateKey] = useState(null);
 
     useEffect(() => {
-        let interval = setTimeout(async () => {
+        let interval = setInterval(async () => {
             let data = await Client.getHostID();
-console.log(data);
-            if(data.ID){
+            console.log(data);
+            if (data.ID) {
                 console.log('Reload');
-              //  window.location.reload();
-            }else{
+                window.location.reload();
+            } else {
                 console.log(data);
             }
         }, 1000);
 
         return () => {
-           // clearInterval(interval);
+             clearInterval(interval);
         }
     }, []);
 
