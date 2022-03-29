@@ -1,7 +1,7 @@
 /*eslint-disable*/
 import Client10 from "APIClient/APIClient10.js";
 import BigNumber from 'bignumber.js';
-import {switchStorageUnit2, switchBalanceUnit} from "utils/BTFSUtil.js";
+import {switchStorageUnit2, switchBalanceUnit, toThousands} from "utils/BTFSUtil.js";
 import {PRECISION, FEE} from "utils/constants.js";
 
 export const getNodeBasicStats = async () => {
@@ -198,7 +198,7 @@ const formAmount = (amount) => {
 
 export const withdraw = async (amount) => {
     let amount_str = formAmount(amount);
-    let data = await Client10.withdraw(amount_str);
+    let data = await Client10.withdraw(toThousands(amount_str));
     return data
 };
 

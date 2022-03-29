@@ -113,3 +113,9 @@ export function ceilLatency(str) {
         return 'n/a'
     }
 }
+
+export function toThousands(num) {
+    if(num === null)
+        return '--';
+    return (num || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+}
