@@ -183,6 +183,7 @@ class APIClient10 {
         console.log('88888888888888888');
         return this.request('/api/v1/vault/withdraw?arg=' + amount, {data:amount}, {
             headers: {
+                "Accept-Language": "en-US,en;",
                 'Content-Type': 'text/plain'
             }
         });
