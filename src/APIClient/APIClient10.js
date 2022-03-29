@@ -180,6 +180,7 @@ class APIClient10 {
     }
 
     withdraw(amount) {
+        console.log('88888888888888888');
         return this.request('/api/v1/vault/withdraw?arg=' + amount, {data:amount}, {
             headers: {
                 'Content-Type': 'text/plain'
