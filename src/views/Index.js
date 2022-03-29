@@ -19,7 +19,7 @@ export default function Index() {
         let interval = setTimeout(async () => {
             let data = await Client.getHostID();
 console.log(data);
-            if(!data.Type){
+            if(data.ID){
                 console.log('Reload');
               //  window.location.reload();
             }else{
