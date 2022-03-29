@@ -2,7 +2,7 @@ import xhr from "axios/index";
 
 class APIClient {
     constructor() {
-        this.apiUrl = '';
+        this.apiUrl = 'http://3.101.47.175:5001';
         this.request = async (url, body, config) => {
             return new Promise(async (resolve, reject) => {
                 try {
@@ -33,11 +33,15 @@ class APIClient {
     }
 
     getHostInfo() {
-        return this.request('');
+        return this.request('/api/v1/guide-info/');
+    }
+
+    getHostID() {
+        return this.request('/api/v1/id');
     }
 
 }
 
-const Client10 = new APIClient();
+const Client = new APIClient();
 
 export default Client;

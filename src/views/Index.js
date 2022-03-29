@@ -4,6 +4,7 @@ import ClipboardCopy from "components/Utils/ClipboardCopy";
 import IndexNavbar from "components/Navbars/IndexNavbar.js";
 import QRModal from "components/Modals/QRModal.js";
 import MessageModal from "components/Modals/MessageModal.js";
+import Client from "APIClient/APIClient.js";
 import {t} from "utils/text.js";
 import Emitter from "utils/eventBus";
 
@@ -12,17 +13,35 @@ export default function Index() {
     const [address, setAddress] = useState(null);
     const [ID, setID] = useState(null);
     const [version, setVersion] = useState(null);
-    const [privateKey, setprivateKey] = useState(null);
+    const [privateKey, setPrivateKey] = useState(null);
+
+    useEffect(() => {
+        let interval = setInterval(async () => {
+            let data = await Client.getHostID();
+            console.log(data);
+        }, 10000);
+
+        return () => {
+            clearInterval(interval);
+        }
+    }, []);
 
     useEffect(() => {
         let didCancel = false;
         const fetchData = async () => {
-            //     let {BTTCAddress} = await getChequeExpenseInfo();
+            let data = await Client.getHostInfo();
+            console.log(data);
+            let info = data.info ? data.info : {
+                'btfs_version': "",
+                'bttc_address': "",
+                'host_id': "",
+                'private_key': ""
+            };
             if (!didCancel) {
-                setAddress('0x379bb51db728d92e23cb23230639160aa9100ff0');
-                setID('16Uiu2HAmCZPKQfnswhepBYeGdZFgFNyQe8ceVfaZi1pMd5wCuP6Y');
-                setVersion('2.1.1');
-                setprivateKey('1234567890');
+                setAddress(info['bttc_address']);
+                setID(info['host_id']);
+                setVersion(info['btfs_version']);
+                setPrivateKey(info['private_key']);
             }
         };
         fetchData();
@@ -62,7 +81,7 @@ export default function Index() {
                         <div style={{marginTop: '55px', fontSize: '14px'}}>
                             <p className='avenir-heavy'>
                                 <i className="fas fa-code-branch" style={{marginRight: '10px'}}></i>
-                                BTFS 2.1.2 - BTTC
+                                BTFS {version} - BTTC
                             </p>
                             <p className='avenir-heavy' style={{marginTop: '20px'}}>
                                 <i className="fas fa-fingerprint" style={{marginRight: '10px'}}></i>
@@ -98,7 +117,8 @@ export default function Index() {
                 <div className="container mx-auto items-center flex flex-wrap" style={{paddingTop: '90px'}}>
                     <div className="w-full text-xl">
 
-                        <div className='avenir-black bg-white' style={{fontSize: '20px', color: '#3257F6', lineHeight: '60px', width: '700px'}}>
+                        <div className='avenir-black bg-white'
+                             style={{fontSize: '20px', color: '#3257F6', lineHeight: '60px', width: '700px'}}>
                             <i className="fas fa-exclamation-triangle" style={{marginLeft: '20px'}}></i>
                             <span style={{marginLeft: '10px'}}>{t('section_2_title')}</span>
                             <img className='float-right relative' src={require('../assets/img/coin.png').default}
@@ -131,21 +151,27 @@ export default function Index() {
                                 <button
                                     className="bg-white text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none "
                                     style={{marginLeft: '35px'}}
-                                    onClick={()=>{window.open('https://twitter.com/BitTorrent')}}
+                                    onClick={() => {
+                                        window.open('https://twitter.com/BitTorrent')
+                                    }}
                                 >
                                     <i className="fab fa-twitter"></i>
                                 </button>
                                 <button
                                     className="bg-white text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none"
                                     style={{marginLeft: '35px'}}
-                                    onClick={()=>{window.open('https://t.me/BTTBitTorrent')}}
+                                    onClick={() => {
+                                        window.open('https://t.me/BTTBitTorrent')
+                                    }}
                                 >
                                     <i className="fab fa-telegram"></i>
                                 </button>
                                 <button
                                     className="bg-white text-pink-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none"
                                     style={{marginLeft: '35px'}}
-                                    onClick={()=>{window.open('https://discord.com/invite/pMSDKhG4m7')}}
+                                    onClick={() => {
+                                        window.open('https://discord.com/invite/pMSDKhG4m7')
+                                    }}
                                 >
                                     <i className="fab fa-discord"></i>
                                 </button>
@@ -157,14 +183,16 @@ export default function Index() {
                         </div>
                         <div className='flex font-semibold' style={{marginTop: '60px', fontSize: '20px'}}>
                             <div className='w-4/12 p-2'>
-                                 <a className='flex items-center' href='https://docs.btfs.io/docs/btfs-20-airdrop-account-management' target='_blank'>
+                                <a className='flex items-center'
+                                   href='https://docs.btfs.io/docs/btfs-20-airdrop-account-management' target='_blank'>
                                     <img style={{width: '110px', height: '110px'}}
                                          src={require('../assets/img/img_left.png').default}/>
                                     <p style={{marginLeft: '15px'}}>{t('section_3_slogan_1')}</p>
-                                 </a>
+                                </a>
                             </div>
                             <div className='w-4/12 p-2'>
-                                <a className='flex items-center' href='https://docs.btfs.io/docs/how-to-get-bttwbtt' target='_blank'>
+                                <a className='flex items-center' href='https://docs.btfs.io/docs/how-to-get-bttwbtt'
+                                   target='_blank'>
                                     <img style={{width: '110px', height: '110px'}}
                                          src={require('../assets/img/img_middle.png').default}/>
                                     <p style={{marginLeft: '15px'}}>{t('section_3_slogan_2')}</p>
