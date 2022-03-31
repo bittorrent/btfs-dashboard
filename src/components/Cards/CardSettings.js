@@ -14,7 +14,7 @@ export default function CardSettings({color}) {
     const NODE_URL = localStorage.getItem('NODE_URL') ? localStorage.getItem('NODE_URL') : 'http://localhost:5001';
     const inputRef = useRef(null);
     const {dispatch} = useContext(mainContext);
-    const [path, setPath] = useState(null);
+    const pathRef = useRef(null);;
 
     useEffect(() => {
         inputRef.current.value = NODE_URL;
@@ -53,13 +53,7 @@ export default function CardSettings({color}) {
     const changePath = (e) => {
        // e.preventDefault();
         console.log(7777);
-        folderInput.click();
-    };
 
-    const onInputChange = async (e) => {
-        let input = e.target.files;
-        console.log(888888);
-        console.log(input);
     };
 
     return (
@@ -101,11 +95,14 @@ export default function CardSettings({color}) {
                         </h5>
                     </div>
                     <div className="px-8 pb-6 flex justify-between">
-                        <div>
-                            /Users/btfs
-                        </div>
+                        <input
+                            type="text"
+                            className={"border px-3 py-3 placeholder-blueGray-300 rounded text-sm shadow focus:outline-none focus:ring w-full " + themeStyle.bg[color]}
+                            defaultValue="/Users/btfs"
+                            ref={pathRef}
+                        />
                         <button
-                            className="bg-indigo-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1"
+                            className="bg-indigo-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ml-2"
                             type="button"
                             onClick={changePath}
                         >
@@ -131,18 +128,6 @@ export default function CardSettings({color}) {
                     </div>
                 </div>
             </div>
-
-
-            <input
-                id='directory-input'
-                type='file'
-                className='hidden'
-                webkitdirectory='true'
-                ref={el => {
-                    folderInput = el
-                }}
-                onChange={onInputChange}/>
-
 
         </>
     );
