@@ -1,4 +1,5 @@
 import xhr from "axios/index";
+import qs from 'qs';
 
 class APIClient10 {
     constructor() {
@@ -100,7 +101,7 @@ class APIClient10 {
     }
 
     getContractsNumber() {
-        return this.request('/api/v1/storage/contracts/list/host');
+        return this.request('/api/v1/storage/contracts/stat?arg=host');
     }
 
     getChequeTotalExpenseNumbers() {
@@ -180,12 +181,9 @@ class APIClient10 {
     }
 
     withdraw(amount) {
-        console.log('88888888888888888');
+        console.log('99999');
         return this.request('/api/v1/vault/withdraw?arg=' + amount, {data:amount}, {
-            headers: {
-                "Accept-Language": "en-GB",
-                'Content-Type': 'text/plain'
-            }
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
         });
     }
 
