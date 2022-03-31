@@ -176,6 +176,7 @@ const en_US = {
     'no_data': 'No Data',
     'setting_error': 'Setting failed, please check if you are using a valid API URL!',
     'setting_success': 'Setting Successful !',
+    'change_success':'Change Path Successful !',
     'api_invalid': 'Invalid API URL Format !',
     'api_not_set': 'API ENDPOINT not set !',
     'withdraw_success': 'Withdraw Successful !',

@@ -160,6 +160,14 @@ class APIClient10 {
         return this.request('/api/v1/files/stat?arg=' + path);
     }
 
+    getRepo() {
+        return this.request('/api/v1/repo/stat');
+    }
+
+    changeRepo(path, volume) {
+        return this.request('/api/v1/storage/path?arg=' + path + '&arg=' + volume);
+    }
+
     getFiles(hash) {
         return this.request('/api/v1/ls?arg=' + hash);
     }

@@ -2,22 +2,25 @@
 import React, {useState, useRef, useEffect, useContext} from "react";
 import {mainContext} from 'reducer';
 import Emitter from "utils/eventBus";
-import {nodeStatusCheck, getPrivateKey} from "services/otherService.js";
+import {nodeStatusCheck, getPrivateKey, getRepo, changeRepo} from "services/otherService.js";
 import {t} from "utils/text.js";
 import themeStyle from "utils/themeStyle.js";
 import {urlCheck} from "utils/checks.js";
-
-let folderInput = null;
 
 export default function CardSettings({color}) {
 
     const NODE_URL = localStorage.getItem('NODE_URL') ? localStorage.getItem('NODE_URL') : 'http://localhost:5001';
     const inputRef = useRef(null);
     const {dispatch} = useContext(mainContext);
-    const pathRef = useRef(null);;
+    const pathRef = useRef(null);
+    const [path, setPath] = useState('');
+    const [volume, setVolume] = useState(0);
 
-    useEffect(() => {
+    useEffect(async () => {
         inputRef.current.value = NODE_URL;
+        let {path, size} = await getRepo();
+        setPath(path);
+        setVolume(size);
     }, []);
 
     const reveal = async () => {
@@ -50,10 +53,13 @@ export default function CardSettings({color}) {
         }
     };
 
-    const changePath = (e) => {
-       // e.preventDefault();
-        console.log(7777);
-
+    const changePath = async (e) => {
+        let {Type, Message} = await changeRepo(pathRef.current.value.replace(/\s*/g, ""), volume);
+        if (Type === 'error') {
+            Emitter.emit('showMessageAlert', {message: Message, status: 'error'});
+        } else {
+            Emitter.emit('showMessageAlert', {message: 'change_success', status: 'success'});
+        }
     };
 
     return (
@@ -98,7 +104,7 @@ export default function CardSettings({color}) {
                         <input
                             type="text"
                             className={"border px-3 py-3 placeholder-blueGray-300 rounded text-sm shadow focus:outline-none focus:ring w-full " + themeStyle.bg[color]}
-                            defaultValue="/Users/btfs"
+                            defaultValue={path}
                             ref={pathRef}
                         />
                         <button

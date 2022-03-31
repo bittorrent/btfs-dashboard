@@ -10,6 +10,19 @@ export const setApiUrl = (url) => {
     }
 };
 
+export const getRepo = async () => {
+    let data = await Client10.getRepo();
+    return {
+        path: data['RepoPath'],
+        size: data['RepoSize']
+    };
+};
+
+export const changeRepo = async (path, volume) => {
+    let data = await Client10.changeRepo(path, volume);
+    return data;
+};
+
 export const getPeers = async () => {
     let data = await Client10.getPeers();
     return {
