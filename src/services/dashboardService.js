@@ -198,7 +198,7 @@ const formAmount = (amount) => {
 
 export const withdraw = async (amount) => {
     let amount_str = formAmount(amount);
-    let data = await Client10.withdraw(toThousands(amount_str));
+    let data = await Client10.withdraw(amount_str);
     return data
 };
 
