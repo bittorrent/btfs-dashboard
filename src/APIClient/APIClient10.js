@@ -181,10 +181,7 @@ class APIClient10 {
     }
 
     withdraw(amount) {
-        console.log('99999');
-        return this.request('/api/v1/vault/withdraw?arg=' + amount, {data:amount}, {
-            headers: { 'content-type': 'application/x-www-form-urlencoded' },
-        });
+        return this.request('/api/v1/vault/withdraw?arg=' + amount);
     }
 
     deposit(amount) {

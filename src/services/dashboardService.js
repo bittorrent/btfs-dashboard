@@ -191,7 +191,7 @@ export const getFilesStorage = async () => {
 };
 
 const formAmount = (amount) => {
-    let temp = new Number(new BigNumber(amount).multipliedBy(PRECISION).toString()).toLocaleString();
+    let temp = new Number(new BigNumber(amount).multipliedBy(PRECISION).toString()).toString();
     let amount_str = temp.replace(/,/g, "");
     return amount_str;
 }
