@@ -1,5 +1,4 @@
 import xhr from "axios/index";
-import qs from 'qs';
 
 class APIClient10 {
     constructor() {

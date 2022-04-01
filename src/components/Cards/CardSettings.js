@@ -18,7 +18,7 @@ export default function CardSettings({color}) {
 
     useEffect(() => {
         inputRef.current.value = NODE_URL;
-        getPath();
+      //  getPath();
     }, []);
 
     const reveal = async () => {
@@ -51,7 +51,7 @@ export default function CardSettings({color}) {
                 type: 'SET_NODE_STATUS',
                 nodeStatus: true
             });
-            getPath();
+       //     getPath();
             Emitter.emit('showMessageAlert', {message: 'setting_success', status: 'success', type: 'frontEnd'});
         } else {
             Emitter.emit('showMessageAlert', {message: 'setting_error', status: 'error', type: 'frontEnd'});
@@ -99,28 +99,31 @@ export default function CardSettings({color}) {
                     </div>
                 </div>
 
-                <div className={"mb-4 shadow-lg rounded-lg border-0 " + themeStyle.bg[color] + themeStyle.text[color]}>
-                    <div className="rounded-t mb-0 px-6 py-6">
-                        <h5 className={"font-bold uppercase " + themeStyle.title[color]}>
-                            {t('storage_path')}
-                        </h5>
+                {/*
+                    <div
+                        className={"mb-4 shadow-lg rounded-lg border-0 " + themeStyle.bg[color] + themeStyle.text[color]}>
+                        <div className="rounded-t mb-0 px-6 py-6">
+                            <h5 className={"font-bold uppercase " + themeStyle.title[color]}>
+                                {t('storage_path')}
+                            </h5>
+                        </div>
+                        <div className="px-8 pb-6 flex justify-between">
+                            <input
+                                type="text"
+                                className={"border px-3 py-3 placeholder-blueGray-300 rounded text-sm shadow focus:outline-none focus:ring w-full " + themeStyle.bg[color]}
+                                defaultValue={path}
+                                ref={pathRef}
+                            />
+                            <button
+                                className="bg-indigo-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ml-2"
+                                type="button"
+                                onClick={changePath}
+                            >
+                                {t('change')}
+                            </button>
+                        </div>
                     </div>
-                    <div className="px-8 pb-6 flex justify-between">
-                        <input
-                            type="text"
-                            className={"border px-3 py-3 placeholder-blueGray-300 rounded text-sm shadow focus:outline-none focus:ring w-full " + themeStyle.bg[color]}
-                            defaultValue={path}
-                            ref={pathRef}
-                        />
-                        <button
-                            className="bg-indigo-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ml-2"
-                            type="button"
-                            onClick={changePath}
-                        >
-                            {t('change')}
-                        </button>
-                    </div>
-                </div>
+                */}
 
                 <div className={"shadow-lg rounded-lg border-0 " + themeStyle.bg[color] + themeStyle.text[color]}>
                     <div className="rounded-t mb-0 px-6 py-6">
