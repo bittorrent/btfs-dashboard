@@ -16,11 +16,9 @@ export default function CardSettings({color}) {
     const [path, setPath] = useState('');
     const [volume, setVolume] = useState(0);
 
-    useEffect(async () => {
+    useEffect(() => {
         inputRef.current.value = NODE_URL;
-        let {path, size} = await getRepo();
-        setPath(path);
-        setVolume(size);
+        getPath();
     }, []);
 
     const reveal = async () => {
@@ -30,6 +28,12 @@ export default function CardSettings({color}) {
         } else {
             Emitter.emit('showMessageAlert', {message: 'api_not_set', status: 'error', type: 'frontEnd'});
         }
+    };
+
+    const getPath = async () => {
+        let {path, size} = await getRepo();
+        setPath(path);
+        setVolume(size);
     };
 
     const save = async () => {
@@ -47,6 +51,7 @@ export default function CardSettings({color}) {
                 type: 'SET_NODE_STATUS',
                 nodeStatus: true
             });
+            getPath();
             Emitter.emit('showMessageAlert', {message: 'setting_success', status: 'success', type: 'frontEnd'});
         } else {
             Emitter.emit('showMessageAlert', {message: 'setting_error', status: 'error', type: 'frontEnd'});
