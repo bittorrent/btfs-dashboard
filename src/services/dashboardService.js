@@ -1,7 +1,7 @@
 /*eslint-disable*/
 import Client10 from "APIClient/APIClient10.js";
 import BigNumber from 'bignumber.js';
-import {switchStorageUnit2, switchBalanceUnit} from "utils/BTFSUtil.js";
+import {switchStorageUnit2, switchBalanceUnit, toThousands} from "utils/BTFSUtil.js";
 import {PRECISION, FEE} from "utils/constants.js";
 
 export const getNodeBasicStats = async () => {
@@ -122,12 +122,6 @@ export const getNodeRevenueStats = async () => {
 
 
 export const getNodeWalletStats = async () => {
-    const web3Provider = window.ethereum;
-    if (web3Provider) {
-        // let web3js = new window.Web3(web3Provider);
-        //  let accounts = await web3js.eth.getAccounts();
-    }
-
     let data1 = await Client10.getChainInfo();
     let BTTCAddress = data1['node_addr'];
     let chequeAddress = data1['vault_addr'];
@@ -168,7 +162,7 @@ export const getNodeStorageStats = async () => {
                 storageUsed: switchStorageUnit2(result[1]['RepoSize']),
                 percentage: new BigNumber(result[1]['RepoSize']).dividedBy(result[1]['StorageMax']).multipliedBy(100).toFixed(2),
                 hostPrice: (result[0]['price'] * 30 / PRECISION).toFixed(2),
-                contracts: result[2]['contracts'].length,
+                contracts: result[2]['active_contract_num'],
                 uncashed: switchBalanceUnit(result[3]['total_received_uncashed']),
                 uncashedChange: switchBalanceUnit(result[3]['total_received_daily_uncashed']),
             }
@@ -197,7 +191,7 @@ export const getFilesStorage = async () => {
 };
 
 const formAmount = (amount) => {
-    let temp = new Number(new BigNumber(amount).multipliedBy(PRECISION).toString()).toLocaleString();
+    let temp = new Number(new BigNumber(amount).multipliedBy(PRECISION).toString()).toString();
     let amount_str = temp.replace(/,/g, "");
     return amount_str;
 }

@@ -1,8 +1,8 @@
 /*eslint-disable*/
-import React, {useRef, useEffect, useContext} from "react";
+import React, {useState, useRef, useEffect, useContext} from "react";
 import {mainContext} from 'reducer';
 import Emitter from "utils/eventBus";
-import {nodeStatusCheck, getPrivateKey} from "services/otherService.js";
+import {nodeStatusCheck, getPrivateKey, getRepo, changeRepo} from "services/otherService.js";
 import {t} from "utils/text.js";
 import themeStyle from "utils/themeStyle.js";
 import {urlCheck} from "utils/checks.js";
@@ -12,9 +12,13 @@ export default function CardSettings({color}) {
     const NODE_URL = localStorage.getItem('NODE_URL') ? localStorage.getItem('NODE_URL') : 'http://localhost:5001';
     const inputRef = useRef(null);
     const {dispatch} = useContext(mainContext);
+    const pathRef = useRef(null);
+    const [path, setPath] = useState('');
+    const [volume, setVolume] = useState(0);
 
     useEffect(() => {
         inputRef.current.value = NODE_URL;
+      //  getPath();
     }, []);
 
     const reveal = async () => {
@@ -24,6 +28,12 @@ export default function CardSettings({color}) {
         } else {
             Emitter.emit('showMessageAlert', {message: 'api_not_set', status: 'error', type: 'frontEnd'});
         }
+    };
+
+    const getPath = async () => {
+        let {path, size} = await getRepo();
+        setPath(path);
+        setVolume(size);
     };
 
     const save = async () => {
@@ -41,9 +51,19 @@ export default function CardSettings({color}) {
                 type: 'SET_NODE_STATUS',
                 nodeStatus: true
             });
+       //     getPath();
             Emitter.emit('showMessageAlert', {message: 'setting_success', status: 'success', type: 'frontEnd'});
         } else {
             Emitter.emit('showMessageAlert', {message: 'setting_error', status: 'error', type: 'frontEnd'});
+        }
+    };
+
+    const changePath = async (e) => {
+        let {Type, Message} = await changeRepo(pathRef.current.value.replace(/\s*/g, ""), volume);
+        if (Type === 'error') {
+            Emitter.emit('showMessageAlert', {message: Message, status: 'error'});
+        } else {
+            Emitter.emit('showMessageAlert', {message: 'change_success', status: 'success'});
         }
     };
 
@@ -79,6 +99,32 @@ export default function CardSettings({color}) {
                     </div>
                 </div>
 
+                {/*
+                    <div
+                        className={"mb-4 shadow-lg rounded-lg border-0 " + themeStyle.bg[color] + themeStyle.text[color]}>
+                        <div className="rounded-t mb-0 px-6 py-6">
+                            <h5 className={"font-bold uppercase " + themeStyle.title[color]}>
+                                {t('storage_path')}
+                            </h5>
+                        </div>
+                        <div className="px-8 pb-6 flex justify-between">
+                            <input
+                                type="text"
+                                className={"border px-3 py-3 placeholder-blueGray-300 rounded text-sm shadow focus:outline-none focus:ring w-full " + themeStyle.bg[color]}
+                                defaultValue={path}
+                                ref={pathRef}
+                            />
+                            <button
+                                className="bg-indigo-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ml-2"
+                                type="button"
+                                onClick={changePath}
+                            >
+                                {t('change')}
+                            </button>
+                        </div>
+                    </div>
+                */}
+
                 <div className={"shadow-lg rounded-lg border-0 " + themeStyle.bg[color] + themeStyle.text[color]}>
                     <div className="rounded-t mb-0 px-6 py-6">
                         <h5 className={"font-bold uppercase " + themeStyle.title[color]}>
@@ -96,6 +142,7 @@ export default function CardSettings({color}) {
                     </div>
                 </div>
             </div>
+
         </>
     );
 }

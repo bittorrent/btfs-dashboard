@@ -100,7 +100,7 @@ class APIClient10 {
     }
 
     getContractsNumber() {
-        return this.request('/api/v1/storage/contracts/list/host');
+        return this.request('/api/v1/storage/contracts/stat?arg=host');
     }
 
     getChequeTotalExpenseNumbers() {
@@ -157,6 +157,14 @@ class APIClient10 {
 
     getHashByPath(path) {
         return this.request('/api/v1/files/stat?arg=' + path);
+    }
+
+    getRepo() {
+        return this.request('/api/v1/repo/stat');
+    }
+
+    changeRepo(path, volume) {
+        return this.request('/api/v1/storage/path?arg=' + path + '&arg=' + volume);
     }
 
     getFiles(hash) {
