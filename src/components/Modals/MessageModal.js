@@ -15,8 +15,8 @@ export default function MessageModal({color}) {
     useEffect(() => {
         const set = function (params) {
             console.log("openMessageModal event has occured");
-            openModal();
             message.current = params.message;
+            openModal();
         };
         Emitter.on("openMessageModal", set);
         return () => {
