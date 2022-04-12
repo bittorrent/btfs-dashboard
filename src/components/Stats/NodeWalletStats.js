@@ -67,6 +67,11 @@ export default function NodeWalletStats({color}) {
         Emitter.emit('openWithdrawDepositModal', {type: 'withdraw', maxWBTT: _chequeBookWBTT});
     };
 
+    const onWithdraw10 = (e) => {
+        e.preventDefault();
+        Emitter.emit('openWithdrawDepositModal', {type: 'withdraw10', maxBTT: 100});
+    };
+
     const onTransfer = (e) => {
         e.preventDefault();
         Emitter.emit('openTransferConfirmModal', {type: 'transfer', maxBTT: _BTTCAddressBTT, maxWBTT: _BTTCAddressWBTT});
@@ -128,6 +133,11 @@ export default function NodeWalletStats({color}) {
                                                 BTT
                                                 <i className="fas fa-exchange-alt mx-4"></i>
                                                 WBTT
+                                            </button>
+                                            <button
+                                                className={"border-1 px-4 py-2 rounded outline-none focus:outline-none mx-2 mb-1 shadow hover:shadow-md inline-flex items-center font-bold " + themeStyle.bg[color]}
+                                                type="button" onClick={onWithdraw10}>
+                                                BTFS 1.0 Withdraw
                                             </button>
                                         </div>
                                     </div>

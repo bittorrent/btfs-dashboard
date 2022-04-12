@@ -139,6 +139,9 @@ const en_US = {
 // modal
     'transfer': 'Transfer',
     'exchange': 'Exchange',
+    'BTFS_10_withdraw': 'BTFS 1.0 Withdraw',
+    'withdraw10':'Withdraw',
+    '10_withdraw_description': 'The available amount will be withdrawed to Node’s corresponding TRON address',
     'insert_cid': 'Insert an BTFS path (CID) to import. Examples:',
     'insert_name': 'Insert the name of the folder you want to create.',
     'chequebook_withdraw': 'Vault Withdraw',

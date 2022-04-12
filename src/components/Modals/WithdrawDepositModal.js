@@ -38,9 +38,10 @@ export default function WithdrawDepositModal({color}) {
                 setDescription("amount_to_deposit");
                 setMax(params.maxWBTT);
             }
-            if (params.type === 'change') {
-                setTitle('Change Recipient Address');
-                setDescription("Please enter new recipient address below.");
+            if (params.type === 'withdraw10') {
+                setTitle('BTFS_10_withdraw');
+                setDescription('10_withdraw_description');
+                setMax(params.maxBTT);
             }
         };
         Emitter.on("openWithdrawDepositModal", set);
@@ -49,6 +50,15 @@ export default function WithdrawDepositModal({color}) {
             window.body.style.overflow = '';
         }
     }, []);
+
+    const _withdraw10 = async () => {
+        console.log('withdraw10');
+        needPWD()
+    };
+
+    const needPWD = () => {
+        Emitter.emit('openPWDModal', {type:'init'});
+    };
 
     const _withdraw = async () => {
         let amount = inputRef.current.value;
@@ -91,6 +101,7 @@ export default function WithdrawDepositModal({color}) {
     const manipulation = {
         withdraw: _withdraw,
         deposit: _deposit,
+        withdraw10: _withdraw10
     };
 
     const setMaxNum = () => {
@@ -128,6 +139,10 @@ export default function WithdrawDepositModal({color}) {
                                 </div>
                                 {/*body*/}
                                 <div className="relative p-4">
+                                    {type === 'withdraw10' && <p className="pb-4">
+                                        TRON Address: xxxxxxx
+                                    </p>
+                                    }
                                     <p className="pb-4">
                                         {t(description)}
                                         <br/>
@@ -144,8 +159,10 @@ export default function WithdrawDepositModal({color}) {
                                             />
                                         </div>
                                         <div>
-                                            <button className="bg-indigo-500 text-white active:bg-indigo-600 h-full rounded focus:outline-none p-2 ease-linear transition-all duration-150"
-                                                    onClick={setMaxNum}>MAX</button>
+                                            <button
+                                                className="bg-indigo-500 text-white active:bg-indigo-600 h-full rounded focus:outline-none p-2 ease-linear transition-all duration-150"
+                                                onClick={setMaxNum}>MAX
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

@@ -231,6 +231,18 @@ class APIClient10 {
         return this.request('/api/v1/storage/contracts/sync/host');
     }
 
+    getBTFS10Balance() {
+        return this.request('/api/v1/wallet/balance');
+    }
+
+    withdraw10(amount, password) {
+        return this.request('/api/v1/wallet/withdraw?arg=' + amount + '&password=' + password);
+    }
+
+    getAirDrop() {
+        return this.request('');
+    }
+
 }
 
 const Client10 = new APIClient10();

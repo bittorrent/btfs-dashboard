@@ -140,6 +140,9 @@ const zh_CN = {
 
     'transfer': '转账',
     'exchange': '兑换',
+    'BTFS_10_withdraw': 'BTFS 1.0 取款',
+    'withdraw10':'取款',
+    '10_withdraw_description': '可用数额将会被提取到对应的TRON账户',
     'insert_cid': '使用BTFS路径（CID）导入。 例如:',
     'insert_name': '输入要创建的文件夹名称',
     'chequebook_withdraw': '取款',
