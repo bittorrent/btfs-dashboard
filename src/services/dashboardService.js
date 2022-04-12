@@ -128,8 +128,9 @@ export const getNodeWalletStats = async () => {
     let chequeBookBalance = Client10.getChequeBookBalance();
     let BTTCAddressBTT = Client10.getChequeBTTBalance(BTTCAddress);
     let BTTCAddressWBTT = Client10.getChequeWBTTBalance(BTTCAddress);
+    let BTFS10Balance = Client10.getBTFS10Balance();
 
-    return Promise.all([chequeBookBalance, BTTCAddressBTT, BTTCAddressWBTT]).then((result) => {
+    return Promise.all([chequeBookBalance, BTTCAddressBTT, BTTCAddressWBTT, BTFS10Balance]).then((result) => {
 
         let maxBTT = new BigNumber(result[1]['balance']).dividedBy(PRECISION).toNumber();
         let maxWBTT = new BigNumber(result[2]['balance']).dividedBy(PRECISION).toNumber();
@@ -231,4 +232,5 @@ export const WBTT2BTT = async (amount) => {
     let data = await Client10.WBTT2BTT(amount_str);
     return data
 };
+
 

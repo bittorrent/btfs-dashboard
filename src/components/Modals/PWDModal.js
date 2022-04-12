@@ -81,7 +81,7 @@ export default function PWDModal({color}) {
                                 </div>
                                 <div className="inputTransition">
                                     <input
-                                        className={"p4 mb-1 border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full " + themeStyle.bg[color]}
+                                        className={"mb-1 border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full " + themeStyle.bg[color]}
                                         placeholder={'your password'}
                                         onChange={inputChange}
                                         type='text'
