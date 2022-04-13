@@ -12,17 +12,19 @@ export default function NodeRevenueStats({color}) {
     const [chequeExpense, setChequeExpense] = useState(0);
     const [uncashedPercent, setUncashedPercent] = useState(0);
     const [cashedPercent, setCashedPercent] = useState(0);
+    const [airdrop, setAirdrop] = useState(0);
 
     useEffect(() => {
         let didCancel = false;
         const fetchData = async () => {
-            let {chequeEarning, chequeExpense, uncashedPercent, cashedPercent} = await getNodeRevenueStats();
+            let {chequeEarning, chequeExpense, uncashedPercent, cashedPercent, airdrop} = await getNodeRevenueStats();
             if (!didCancel) {
                 unstable_batchedUpdates(() => {
                     setChequeEarning(chequeEarning);
                     setChequeExpense(chequeExpense);
                     setCashedPercent(cashedPercent);
                     setUncashedPercent(uncashedPercent);
+                    setAirdrop(airdrop);
                 })
             }
         };
@@ -133,7 +135,7 @@ export default function NodeRevenueStats({color}) {
                                             {t('airdrop')}
                                         </h5>
                                         <div className="font-semibold text-lg">
-                                            {t('coming_soon')}
+                                            {airdrop}
                                         </div>
                                         <div className='flex'>
                                             <div>

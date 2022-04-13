@@ -239,8 +239,13 @@ class APIClient10 {
         return this.request('/api/v1/wallet/withdraw?arg=' + amount + '&password=' + password);
     }
 
-    getAirDrop() {
-        return this.request('');
+    async getAirDrop(address) {
+        try {
+            let {data} = await xhr.get('https://scan-backend-dev.btfs.io/api/v1/airdrop/node_id/history_total?bttc_addr=' + address);
+            return data;
+        } catch (e) {
+            return {data: {}}
+        }
     }
 
 }

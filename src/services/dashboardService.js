@@ -109,13 +109,17 @@ export const getHostHistory = async (flag) => {
 };
 
 export const getNodeRevenueStats = async () => {
+    let data = await Client10.getChainInfo();
+    let BTTCAddress = data['node_addr'];
     let data1 = Client10.getChequeValue();
-    return Promise.all([data1]).then((result) => {
+    let data2 = Client10.getAirDrop(BTTCAddress);
+    return Promise.all([data1, data2]).then((result) => {
         return {
             chequeEarning: switchBalanceUnit(result[0]['totalReceived']),
             uncashedPercent: result[0]['totalReceived'] ? new BigNumber((result[0]['totalReceived'] - result[0]['settlement_received_cashed'])).dividedBy(result[0]['totalReceived']).multipliedBy(100).toFixed(0) : 0,
             cashedPercent: result[0]['totalReceived'] ? new BigNumber((result[0]['settlement_received_cashed'])).dividedBy(result[0]['totalReceived']).multipliedBy(100).toFixed(0) : 0,
             chequeExpense: switchBalanceUnit(result[0]['totalSent']),
+            airdrop: switchBalanceUnit(result[1].data['total_amount'])
         }
     })
 };
@@ -135,7 +139,10 @@ export const getNodeWalletStats = async () => {
         let maxBTT = new BigNumber(result[1]['balance']).dividedBy(PRECISION).toNumber();
         let maxWBTT = new BigNumber(result[2]['balance']).dividedBy(PRECISION).toNumber();
         let maxChequeBookWBTT = new BigNumber(result[0]['balance']).dividedBy(PRECISION).toNumber();
-        let base=  new BigNumber(maxBTT).minus(FEE).toNumber();
+        let base = new BigNumber(maxBTT).minus(FEE).toNumber();
+        let balance10 = new BigNumber(result[3]['BtfsWalletBalance']).dividedBy(1000000).toNumber();
+
+        console.log(balance10);
 
         return {
             BTTCAddress: BTTCAddress,
@@ -145,7 +152,8 @@ export const getNodeWalletStats = async () => {
             BTTCAddressWBTT: switchBalanceUnit(result[2]['balance']),
             maxAvailableBTT: base > 0 ? base : 0,
             maxAvailableWBTT: base > 0 ? maxWBTT : 0,
-            maxAvailableChequeBookWBTT: base > 0 ? maxChequeBookWBTT : 0
+            maxAvailableChequeBookWBTT: base > 0 ? maxChequeBookWBTT : 0,
+            balance10: balance10
         }
     })
 };
