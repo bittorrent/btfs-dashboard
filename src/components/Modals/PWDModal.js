@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext, useRef} from "react";
 import {mainContext} from "reducer";
 import ButtonCancel from "components/Buttons/ButtonCancel.js";
 import ButtonConfirm from "components/Buttons/ButtonConfirm.js";
+import {withdraw10} from "services/dashboardService.js";
 import Emitter from "utils/eventBus";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
@@ -14,12 +15,14 @@ export default function PWDModal({color}) {
     const [type, setType] = useState(null);
     const [valid, setValid] = useState(false);
     const inputRef = useRef(null);
+    const amountRef = useRef(0);
 
     useEffect(() => {
         const set = function (params) {
             console.log("openPWDModal event has occured");
             openModal();
             setType(params.type);
+            amountRef.current = params.amount;
         };
         Emitter.on("openPWDModal", set);
         return () => {
@@ -38,12 +41,20 @@ export default function PWDModal({color}) {
         window.body.style.overflow = '';
     };
 
-    const setPWD = () => {
-
+    const setPWD = async () => {
+        let pwd = inputRef.current.value;
+        closeModal();
+        let result = await withdraw10(amountRef.current, pwd);
+        if (result['Type'] === 'error') {
+            Emitter.emit('showMessageAlert', {message: result['Message'], status: 'error'});
+        } else {
+            Emitter.emit('showMessageAlert', {message: 'withdraw_success', status: 'success', type: 'frontEnd'});
+            Emitter.emit("updateWallet");
+        }
     };
 
     const check = () => {
-        if (true) {
+        if (inputRef.current.value) {
             setValid(true);
             return true;
         } else {
@@ -76,12 +87,12 @@ export default function PWDModal({color}) {
                                 className={"h-full flex flex-col justify-between items-center border-0 rounded-lg shadow-lg " + themeStyle.bg[color] + themeStyle.text[color]}>
                                 <div className="p-4">
                                     <p className=" font-semibold">
-                                        Need to int your password
+                                        Need to input your password
                                     </p>
                                 </div>
                                 <div className="inputTransition">
                                     <input
-                                        className={"mb-1 border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full " + themeStyle.bg[color]}
+                                        className={"mb-1 border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full text-center " + themeStyle.bg[color]}
                                         placeholder={'your password'}
                                         onChange={inputChange}
                                         type='text'

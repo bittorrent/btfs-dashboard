@@ -241,4 +241,11 @@ export const WBTT2BTT = async (amount) => {
     return data
 };
 
+export const withdraw10 = async (amount, pwd) => {
+    let temp = new Number(new BigNumber(amount).multipliedBy(1000000).toString()).toString();
+    let amount_str = temp.replace(/,/g, "");
+    let data = await Client10.withdraw10(amount_str, pwd);
+    return data
+};
+
 

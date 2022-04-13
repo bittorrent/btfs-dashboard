@@ -57,7 +57,8 @@ export default function WithdrawDepositModal({color}) {
     };
 
     const needPWD = () => {
-        Emitter.emit('openPWDModal', {type:'init'});
+        Emitter.emit('openPWDModal', {type: 'init', amount: inputRef.current.value});
+        closeModal();
     };
 
     const _withdraw = async () => {
@@ -168,7 +169,7 @@ export default function WithdrawDepositModal({color}) {
                                 </div>
                                 {/*footer*/}
                                 <div className="flex items-center justify-between p-4 rounded-b">
-                                    <div>
+                                    <div className={type !== 'withdraw10' ? 'visible' : 'invisible'}>
                                         {t('est_fee')}: &nbsp;
                                         <span className='text-xl font-semibold'>{FEE} BTT</span>
                                         <Tooltip placement="bottom"
