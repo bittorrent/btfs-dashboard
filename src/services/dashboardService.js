@@ -200,6 +200,7 @@ export const getFilesStorage = async () => {
 };
 
 const formAmount = (amount) => {
+    console.log(new BigNumber(amount).multipliedBy(PRECISION));
     let temp = new Number(new BigNumber(amount).multipliedBy(PRECISION).toString()).toString();
     let amount_str = temp.replace(/,/g, "");
     return amount_str;
@@ -219,6 +220,7 @@ export const deposit = async (amount) => {
 
 export const BTTTransfer = async (to, amount) => {
     let amount_str = formAmount(amount);
+    console.log(amount_str);
     let data = await Client10.BTTTransfer(to, amount_str);
     return data
 };

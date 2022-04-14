@@ -4,7 +4,7 @@ import {Tooltip} from 'antd';
 import {mainContext} from "reducer";
 import ButtonCancel from "components/Buttons/ButtonCancel.js";
 import ButtonConfirm from "components/Buttons/ButtonConfirm.js";
-import {withdraw, deposit} from "services/dashboardService.js";
+import {withdraw, deposit, withdraw10} from "services/dashboardService.js";
 import Emitter from "utils/eventBus";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
@@ -53,7 +53,14 @@ export default function WithdrawDepositModal({color}) {
 
     const _withdraw10 = async () => {
         console.log('withdraw10');
-        needPWD()
+        let result = await withdraw10(inputRef.current.value);
+        if (result['Type'] === 'error') {
+            Emitter.emit('showMessageAlert', {message: result['Message'], status: 'error'});
+        } else {
+            Emitter.emit('showMessageAlert', {message: 'withdraw_success', status: 'success', type: 'frontEnd'});
+            Emitter.emit("updateWallet");
+        }
+        // needPWD()
     };
 
     const needPWD = () => {

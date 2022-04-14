@@ -196,6 +196,7 @@ class APIClient10 {
     }
 
     BTTTransfer(to, amount) {
+        console.log(amount);
         return this.request('/api/v1/bttc/send-btt-to?arg=' + to + '&arg=' + amount);
     }
 
@@ -235,8 +236,8 @@ class APIClient10 {
         return this.request('/api/v1/wallet/balance');
     }
 
-    withdraw10(amount, password) {
-        return this.request('/api/v1/wallet/withdraw?arg=' + amount + '&password=' + password);
+    withdraw10(amount) {
+        return this.request('/api/v1/wallet/withdraw?arg=' + amount);
     }
 
     async getAirDrop(address) {
