@@ -200,11 +200,9 @@ export const getFilesStorage = async () => {
 };
 
 const formAmount = (amount) => {
-    console.log(new BigNumber(amount).multipliedBy(PRECISION));
-    let temp = new Number(new BigNumber(amount).multipliedBy(PRECISION).toString()).toString();
-    let amount_str = temp.replace(/,/g, "");
+    let amount_str = new BigNumber(amount).multipliedBy(PRECISION).toFixed();
     return amount_str;
-}
+};
 
 export const withdraw = async (amount) => {
     let amount_str = formAmount(amount);
