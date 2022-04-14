@@ -133,16 +133,16 @@ export const getNodeWalletStats = async () => {
     let BTTCAddressBTT = Client10.getChequeBTTBalance(BTTCAddress);
     let BTTCAddressWBTT = Client10.getChequeWBTTBalance(BTTCAddress);
     let BTFS10Balance = Client10.getBTFS10Balance();
+    let host = Client10.getHostInfo();
 
-    return Promise.all([chequeBookBalance, BTTCAddressBTT, BTTCAddressWBTT, BTFS10Balance]).then((result) => {
+    return Promise.all([chequeBookBalance, BTTCAddressBTT, BTTCAddressWBTT, BTFS10Balance, host]).then((result) => {
 
         let maxBTT = new BigNumber(result[1]['balance']).dividedBy(PRECISION).toNumber();
         let maxWBTT = new BigNumber(result[2]['balance']).dividedBy(PRECISION).toNumber();
         let maxChequeBookWBTT = new BigNumber(result[0]['balance']).dividedBy(PRECISION).toNumber();
         let base = new BigNumber(maxBTT).minus(FEE).toNumber();
         let balance10 = new BigNumber(result[3]['BtfsWalletBalance']).dividedBy(1000000).toNumber();
-
-        console.log(balance10);
+        let tronAddress = result[4]['TronAddress'];
 
         return {
             BTTCAddress: BTTCAddress,
@@ -153,7 +153,8 @@ export const getNodeWalletStats = async () => {
             maxAvailableBTT: base > 0 ? base : 0,
             maxAvailableWBTT: base > 0 ? maxWBTT : 0,
             maxAvailableChequeBookWBTT: base > 0 ? maxChequeBookWBTT : 0,
-            balance10: balance10
+            balance10: balance10,
+            tronAddress: tronAddress
         }
     })
 };

@@ -21,6 +21,7 @@ export default function WithdrawDepositModal({color}) {
     const [description, setDescription] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [max, setMax] = useState(0);
+    const [account, setAccount] = useState(null);
     const [valid, setValid] = useState(false);
 
     useEffect(() => {
@@ -41,6 +42,7 @@ export default function WithdrawDepositModal({color}) {
             if (params.type === 'withdraw10') {
                 setTitle('BTFS_10_withdraw');
                 setDescription('10_withdraw_description');
+                setAccount(params.account);
                 setMax(params.maxBTT);
             }
         };
@@ -148,7 +150,7 @@ export default function WithdrawDepositModal({color}) {
                                 {/*body*/}
                                 <div className="relative p-4">
                                     {type === 'withdraw10' && <p className="pb-4">
-                                        TRON Address: xxxxxxx
+                                        TRON {t('address')} : <span className='font-semibold'> {account} </span>
                                     </p>
                                     }
                                     <p className="pb-4">
