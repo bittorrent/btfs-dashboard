@@ -137,7 +137,7 @@ export default function WithdrawDepositModal({color}) {
                 <>
                     <div
                         className={"fixed flex z-50 modal_center md:w-1/2 md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
-                        style={{height: '300px'}}>
+                        style={{height: '350px'}}>
                         <div className="w-full">
                             {/*content*/}
                             <div
@@ -178,8 +178,8 @@ export default function WithdrawDepositModal({color}) {
                                     </div>
                                 </div>
                                 {/*footer*/}
-                                <div className="flex items-center justify-between p-4 rounded-b">
-                                    <div className={type !== 'withdraw10' ? 'visible' : 'invisible'}>
+                                <div className={"flex items-center p-4 rounded-b " + (type !== 'withdraw10' ?  'justify-between' : 'justify-end')}>
+                                    <div className={type !== 'withdraw10' ? 'block' : 'hidden'}>
                                         {t('est_fee')}: &nbsp;
                                         <span className='text-xl font-semibold'>{FEE} BTT</span>
                                         <Tooltip placement="bottom"
