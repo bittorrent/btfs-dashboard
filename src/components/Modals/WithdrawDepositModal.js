@@ -54,8 +54,8 @@ export default function WithdrawDepositModal({color}) {
     }, []);
 
     const _withdraw10 = async () => {
-        console.log('withdraw10');
         let result = await withdraw10(inputRef.current.value);
+        closeModal();
         if (result['Type'] === 'error') {
             Emitter.emit('showMessageAlert', {message: result['Message'], status: 'error'});
         } else {
