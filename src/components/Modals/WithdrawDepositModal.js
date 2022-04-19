@@ -44,6 +44,12 @@ export default function WithdrawDepositModal({color}) {
                 setDescription('10_withdraw_description');
                 setAccount(params.account);
                 setMax(params.maxBTT);
+                if(params.maxBTT) {
+                    setValid(true);
+                    setTimeout(()=>{
+                        inputRef.current.value = params.maxBTT;
+                    }, 100);
+                }
             }
         };
         Emitter.on("openWithdrawDepositModal", set);
@@ -54,8 +60,9 @@ export default function WithdrawDepositModal({color}) {
     }, []);
 
     const _withdraw10 = async () => {
-        let result = await withdraw10(inputRef.current.value);
+        let amount = inputRef.current.value;
         closeModal();
+        let result = await withdraw10(amount);
         if (result['Type'] === 'error') {
             Emitter.emit('showMessageAlert', {message: result['Message'], status: 'error'});
         } else {
@@ -166,19 +173,21 @@ export default function WithdrawDepositModal({color}) {
                                                 onChange={inputChange}
                                                 type="number"
                                                 min="0"
+                                                disabled={type !== 'withdraw10' ? false : true}
                                                 ref={inputRef}
                                             />
                                         </div>
-                                        <div>
+                                        {type !== 'withdraw10' && <div>
                                             <button
                                                 className="bg-indigo-500 text-white active:bg-indigo-600 h-full rounded focus:outline-none p-2 ease-linear transition-all duration-150"
                                                 onClick={setMaxNum}>MAX
                                             </button>
-                                        </div>
+                                        </div>}
                                     </div>
                                 </div>
                                 {/*footer*/}
-                                <div className={"flex items-center p-4 rounded-b " + (type !== 'withdraw10' ?  'justify-between' : 'justify-end')}>
+                                <div
+                                    className={"flex items-center p-4 rounded-b " + (type !== 'withdraw10' ? 'justify-between' : 'justify-end')}>
                                     <div className={type !== 'withdraw10' ? 'block' : 'hidden'}>
                                         {t('est_fee')}: &nbsp;
                                         <span className='text-xl font-semibold'>{FEE} BTT</span>
