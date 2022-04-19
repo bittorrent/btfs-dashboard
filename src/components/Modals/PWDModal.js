@@ -87,7 +87,7 @@ export default function PWDModal({color}) {
                                 className={"h-full flex flex-col justify-between items-center border-0 rounded-lg shadow-lg " + themeStyle.bg[color] + themeStyle.text[color]}>
                                 <div className="p-4">
                                     <p className=" font-semibold">
-                                        Need to input your password
+                                        Need to input your password {type}
                                     </p>
                                 </div>
                                 <div className="inputTransition">

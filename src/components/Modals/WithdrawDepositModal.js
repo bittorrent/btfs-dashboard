@@ -65,10 +65,11 @@ export default function WithdrawDepositModal({color}) {
         // needPWD()
     };
 
+    /*
     const needPWD = () => {
         Emitter.emit('openPWDModal', {type: 'init', amount: inputRef.current.value});
         closeModal();
-    };
+    };*/
 
     const _withdraw = async () => {
         let amount = inputRef.current.value;
