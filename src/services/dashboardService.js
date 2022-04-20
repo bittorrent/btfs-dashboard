@@ -114,18 +114,17 @@ export const getNodeRevenueStats = async () => {
     let data1 = Client10.getChequeValue();
     let data2 = Client10.getAirDrop(BTTCAddress);
     return Promise.all([data1, data2]).then((result) => {
-        const chequeEarning = +result[0]['totalReceived']
-        const airDropEarning = +result[1].data['total_amount']
-        const totalEarnings = chequeEarning + airDropEarning
+        const hasTotalEarnings = +result[0]['totalReceived'] || +result[1].data['total_amount']
+
         return {
-            chequeEarning: switchBalanceUnit(chequeEarning),
+            chequeEarning: switchBalanceUnit(result[0]['totalReceived']),
             uncashedPercent: result[0]['totalReceived'] ? new BigNumber((result[0]['totalReceived'] - result[0]['settlement_received_cashed'])).dividedBy(result[0]['totalReceived']).multipliedBy(100).toFixed(0) : 0,
             cashedPercent: result[0]['totalReceived'] ? new BigNumber((result[0]['settlement_received_cashed'])).dividedBy(result[0]['totalReceived']).multipliedBy(100).toFixed(0) : 0,
             chequeExpense: switchBalanceUnit(result[0]['totalSent']),
-            airdrop: switchBalanceUnit(airDropEarning),
-            totalEarnings: switchBalanceUnit(totalEarnings),
-            chequePercent: totalEarnings ? ((chequeEarning / totalEarnings) * 100).toFixed(0) : 0,
-            airDropPercent: totalEarnings ? ((airDropEarning / totalEarnings) * 100).toFixed(0) : 0
+            airdrop: switchBalanceUnit(result[1].data['total_amount']),
+            totalEarnings: switchBalanceUnit(result[0]['totalReceived'] + result[1].data['total_amount']),
+            chequePercent: hasTotalEarnings ? new BigNumber(result[0]['totalReceived']).dividedBy((result[0]['totalReceived'] + result[1].data['total_amount'])).multipliedBy(100).toFixed(0) : 0,
+            airDropPercent: hasTotalEarnings ? new BigNumber(result[1].data['total_amount']).dividedBy((result[0]['totalReceived'] + result[1].data['total_amount'])).multipliedBy(100).toFixed(0) : 0
         }
     })
 };
