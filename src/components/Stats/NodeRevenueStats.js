@@ -140,8 +140,9 @@ export default function NodeRevenueStats({color}) {
                                         <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
                                             {t('airdrop')}
                                         </h5>
-                                        <div className="font-semibold text-lg">
-                                            {airdrop}
+                                        <div>
+                                            <span className='text-lg font-semibold'>{airdrop}</span>
+                                            <span className='text-xs'>BTT</span>
                                         </div>
                                         <div className='flex'>
                                             <div>
