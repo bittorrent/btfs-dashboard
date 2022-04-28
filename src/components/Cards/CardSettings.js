@@ -6,6 +6,7 @@ import {nodeStatusCheck, getPrivateKey, getRepo, changeRepo} from "services/othe
 import {t} from "utils/text.js";
 import themeStyle from "utils/themeStyle.js";
 import {urlCheck} from "utils/checks.js";
+import PathConfirmModal from "components/Modals/PathConfirmModal.js";
 
 export default function CardSettings({color}) {
 
@@ -59,12 +60,14 @@ export default function CardSettings({color}) {
     };
 
     const changePath = async (e) => {
-        let {Type, Message} = await changeRepo(pathRef.current.value.replace(/\s*/g, ""), volume);
-        if (Type === 'error') {
-            Emitter.emit('showMessageAlert', {message: Message, status: 'error'});
-        } else {
-            Emitter.emit('showMessageAlert', {message: 'change_success', status: 'success'});
-        }
+        console.log('pathRef.current.value', pathRef.current.value)
+        Emitter.emit('openPathConfirmModal', {type: 'init', path: pathRef.current.value, volume: volume});
+        // let {Type, Message} = await changeRepo(pathRef.current.value.replace(/\s*/g, ""), volume);
+        // if (Type === 'error') {
+        //     Emitter.emit('showMessageAlert', {message: Message, status: 'error'});
+        // } else {
+        //     Emitter.emit('showMessageAlert', {message: 'change_success', status: 'success'});
+        // }
     };
 
     return (
@@ -141,6 +144,8 @@ export default function CardSettings({color}) {
                         </button>
                     </div>
                 </div>
+
+                <PathConfirmModal color={theme}/>
             </div>
 
         </>

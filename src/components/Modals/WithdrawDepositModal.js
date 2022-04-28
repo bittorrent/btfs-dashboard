@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext, useRef} from "react";
 import {useIntl} from 'react-intl';
 import {Tooltip} from 'antd';
 import {mainContext} from "reducer";
+import ClipboardCopy from "components/Utils/ClipboardCopy";
 import ButtonCancel from "components/Buttons/ButtonCancel.js";
 import ButtonConfirm from "components/Buttons/ButtonConfirm.js";
 import {withdraw, deposit, withdraw10} from "services/dashboardService.js";
@@ -44,12 +45,12 @@ export default function WithdrawDepositModal({color}) {
                 setDescription('10_withdraw_description');
                 setAccount(params.account);
                 setMax(params.maxBTT);
-                if(params.maxBTT) {
-                    setValid(true);
-                    setTimeout(()=>{
-                        inputRef.current.value = params.maxBTT;
-                    }, 100);
-                }
+                // if(params.maxBTT) {
+                //     setValid(true);
+                //     setTimeout(()=>{
+                //         inputRef.current.value = params.maxBTT;
+                //     }, 100);
+                // }
             }
         };
         Emitter.on("openWithdrawDepositModal", set);
@@ -123,6 +124,10 @@ export default function WithdrawDepositModal({color}) {
     };
 
     const setMaxNum = () => {
+        if (type === 'withdraw10' && max > 99999) {
+            inputRef.current.value = 99999
+            return
+        }
         inputRef.current.value = max;
         check();
     };
@@ -158,7 +163,7 @@ export default function WithdrawDepositModal({color}) {
                                 {/*body*/}
                                 <div className="relative p-4">
                                     {type === 'withdraw10' && <p className="pb-4">
-                                        TRON {t('address')} : <span className='font-semibold'> {account} </span>
+                                        {t('node_tron_addr')} : <span className='font-semibold'> {account} <ClipboardCopy value={account}/> </span>
                                     </p>
                                     }
                                     <p className="pb-4">
@@ -169,22 +174,34 @@ export default function WithdrawDepositModal({color}) {
                                         <div className="inputTransition flex-1">
                                             <input
                                                 className={"p4 mb-1 border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full " + themeStyle.bg[color]}
-                                                placeholder={intl.formatMessage({id: 'max_amount'}) + ' : ' + max}
+                                                placeholder={type === 'withdraw10' ? intl.formatMessage({id: 'available'}) + ' : ' + max  : intl.formatMessage({id: 'max_amount'}) + ' : ' + max}
                                                 onChange={inputChange}
                                                 type="number"
                                                 min="0"
-                                                disabled={type !== 'withdraw10' ? false : true}
+                                                // disabled={type !== 'withdraw10' ? false : true}
                                                 ref={inputRef}
                                             />
                                         </div>
-                                        {type !== 'withdraw10' && <div>
+                                        {/* {type !== 'withdraw10' && <div>
                                             <button
                                                 className="bg-indigo-500 text-white active:bg-indigo-600 h-full rounded focus:outline-none p-2 ease-linear transition-all duration-150"
                                                 onClick={setMaxNum}>MAX
                                             </button>
-                                        </div>}
+                                        </div>} */}
+                                        <div>
+                                            <button
+                                                className="bg-indigo-500 text-white active:bg-indigo-600 h-full rounded focus:outline-none p-2 ease-linear transition-all duration-150"
+                                                onClick={setMaxNum}>MAX
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
+
+                                        {type === 'withdraw10' && <p className="pb-4">
+                                            <br />
+                                            {t('BTFS_10_withdraw_limit')} : 1000-99999 BTT
+                                        </p>
+                                        }
+                                    </div>
                                 {/*footer*/}
                                 <div
                                     className={"flex items-center p-4 rounded-b " + (type !== 'withdraw10' ? 'justify-between' : 'justify-end')}>

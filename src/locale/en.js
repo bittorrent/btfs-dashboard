@@ -141,7 +141,10 @@ const en_US = {
     'exchange': 'Exchange',
     'BTFS_10_withdraw': 'BTFS 1.0 Withdraw',
     'withdraw10':'Withdraw',
-    '10_withdraw_description': 'The available amount will be withdrawed to Node’s corresponding TRON address',
+    '10_withdraw_description': 'The withdrawal will be sent to Node’s corresponding TRON address.',
+    'node_tron_addr': 'Node TRON address',
+    'available': 'Available',
+    'BTFS_10_withdraw_limit': 'Per withdrawal limit',
     'insert_cid': 'Insert an BTFS path (CID) to import. Examples:',
     'insert_name': 'Insert the name of the folder you want to create.',
     'chequebook_withdraw': 'Vault Withdraw',
@@ -164,6 +167,8 @@ const en_US = {
     'enter_bttc_address': 'Please enter a valid BTTC address',
     'key_warning_1': 'Private key controls all your assets',
     'key_warning_2': 'Do Not show the private key to anybody',
+    'storage_path_confirmation': "Storage Path Confirmation",
+    'storage_path_info': "Are you sure you want to change BTFS storage to this path ?",
 
 //  warning
 
