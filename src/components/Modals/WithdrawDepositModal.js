@@ -45,12 +45,12 @@ export default function WithdrawDepositModal({color}) {
                 setDescription('10_withdraw_description');
                 setAccount(params.account);
                 setMax(params.maxBTT);
-                // if(params.maxBTT) {
-                //     setValid(true);
-                //     setTimeout(()=>{
-                //         inputRef.current.value = params.maxBTT;
-                //     }, 100);
-                // }
+                if(params.maxBTT) {
+                    setValid(true);
+                    // setTimeout(()=>{
+                    //     inputRef.current.value = params.maxBTT;
+                    // }, 100);
+                }
             }
         };
         Emitter.on("openWithdrawDepositModal", set);
