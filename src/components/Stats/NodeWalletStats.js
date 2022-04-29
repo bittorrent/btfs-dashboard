@@ -128,19 +128,19 @@ export default function NodeWalletStats({color}) {
                                         </div>
                                         <div className='transfer_exchange'>
                                             <button
-                                                className={"border-1 px-4 py-2 rounded outline-none focus:outline-none mx-2 mb-1 shadow hover:shadow-md inline-flex items-center font-bold " + themeStyle.bg[color]}
+                                                className={"border-1 px-4 py-2 rounded outline-none focus:outline-none mx-2 mt-2 shadow hover:shadow-md inline-flex items-center font-bold " + themeStyle.bg[color]}
                                                 type="button" onClick={onTransfer}>
                                                 {t('transfer')}
                                             </button>
                                             <button
-                                                className={"border-1 px-4 py-2 rounded outline-none focus:outline-none mx-2 mb-1 shadow hover:shadow-md inline-flex items-center font-bold " + themeStyle.bg[color]}
+                                                className={"border-1 px-4 py-2 rounded outline-none focus:outline-none mx-2 mt-2 shadow hover:shadow-md inline-flex items-center font-bold " + themeStyle.bg[color]}
                                                 type="button" onClick={onExchange}>
                                                 BTT
                                                 <i className="fas fa-exchange-alt mx-4"></i>
                                                 WBTT
                                             </button>
                                             <button
-                                                className={"border-1 px-4 py-2 rounded outline-none focus:outline-none mx-2 mb-1 shadow hover:shadow-md inline-flex items-center font-bold " + themeStyle.bg[color]}
+                                                className={"border-1 px-4 py-2 rounded outline-none focus:outline-none mx-2 mt-2 shadow hover:shadow-md inline-flex items-center font-bold " + themeStyle.bg[color]}
                                                 type="button" onClick={onWithdraw10}>
                                                 BTFS 1.0 Withdraw
                                             </button>
