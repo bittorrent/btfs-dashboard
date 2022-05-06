@@ -109,27 +109,39 @@ export const getHostHistory = async (flag) => {
 };
 
 export const getNodeRevenueStats = async () => {
-    let data = await Client10.getChainInfo();
-    let BTTCAddress = data['node_addr'];
     let data1 = Client10.getChequeValue();
-    let data2 = Client10.getAirDrop(BTTCAddress);
-    return Promise.all([data1, data2]).then((result) => {
-        const airdrop = +result[1].data['total_amount']
-        const chequeEarning = +result[0]['totalReceived']
-        const hasTotalEarnings = airdrop || chequeEarning
-
+    return Promise.all([data1]).then((result) => {
         return {
             chequeEarning: switchBalanceUnit(result[0]['totalReceived']),
             uncashedPercent: result[0]['totalReceived'] ? new BigNumber((result[0]['totalReceived'] - result[0]['settlement_received_cashed'])).dividedBy(result[0]['totalReceived']).multipliedBy(100).toFixed(0) : 0,
             cashedPercent: result[0]['totalReceived'] ? new BigNumber((result[0]['settlement_received_cashed'])).dividedBy(result[0]['totalReceived']).multipliedBy(100).toFixed(0) : 0,
             chequeExpense: switchBalanceUnit(result[0]['totalSent']),
-            airdrop: switchBalanceUnit(airdrop),
-            totalEarnings: switchBalanceUnit(chequeEarning + airdrop),
-            chequePercent: hasTotalEarnings ? new BigNumber(chequeEarning).dividedBy((chequeEarning + airdrop)).multipliedBy(100).toFixed(0) : 0,
-            airDropPercent: hasTotalEarnings ? new BigNumber(airdrop).dividedBy((chequeEarning + airdrop)).multipliedBy(100).toFixed(0) : 0
         }
     })
 };
+
+// export const getNodeRevenueStats = async () => {
+//     let data = await Client10.getChainInfo();
+//     let BTTCAddress = data['node_addr'];
+//     let data1 = Client10.getChequeValue();
+//     let data2 = Client10.getAirDrop(BTTCAddress);
+//     return Promise.all([data1, data2]).then((result) => {
+//         const airdrop = +result[1].data['total_amount']
+//         const chequeEarning = +result[0]['totalReceived']
+//         const hasTotalEarnings = airdrop || chequeEarning
+
+//         return {
+//             chequeEarning: switchBalanceUnit(result[0]['totalReceived']),
+//             uncashedPercent: result[0]['totalReceived'] ? new BigNumber((result[0]['totalReceived'] - result[0]['settlement_received_cashed'])).dividedBy(result[0]['totalReceived']).multipliedBy(100).toFixed(0) : 0,
+//             cashedPercent: result[0]['totalReceived'] ? new BigNumber((result[0]['settlement_received_cashed'])).dividedBy(result[0]['totalReceived']).multipliedBy(100).toFixed(0) : 0,
+//             chequeExpense: switchBalanceUnit(result[0]['totalSent']),
+//             airdrop: switchBalanceUnit(airdrop),
+//             totalEarnings: switchBalanceUnit(chequeEarning + airdrop),
+//             chequePercent: hasTotalEarnings ? new BigNumber(chequeEarning).dividedBy((chequeEarning + airdrop)).multipliedBy(100).toFixed(0) : 0,
+//             airDropPercent: hasTotalEarnings ? new BigNumber(airdrop).dividedBy((chequeEarning + airdrop)).multipliedBy(100).toFixed(0) : 0
+//         }
+//     })
+// };
 
 
 export const getNodeWalletStats = async () => {

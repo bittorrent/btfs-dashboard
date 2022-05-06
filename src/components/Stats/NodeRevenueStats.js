@@ -12,25 +12,17 @@ export default function NodeRevenueStats({color}) {
     const [chequeExpense, setChequeExpense] = useState(0);
     const [uncashedPercent, setUncashedPercent] = useState(0);
     const [cashedPercent, setCashedPercent] = useState(0);
-    const [airdrop, setAirdrop] = useState(0);
-    const [totalEarnings, setTotalEarnings] = useState(0);
-    const [chequePercent, setChequePercent] = useState(0);
-    const [airDropPercent, setAirDropPercent] = useState(0);
 
     useEffect(() => {
         let didCancel = false;
         const fetchData = async () => {
-            let {chequeEarning, chequeExpense, uncashedPercent, cashedPercent, airdrop, totalEarnings, chequePercent, airDropPercent} = await getNodeRevenueStats();
+            let {chequeEarning, chequeExpense, uncashedPercent, cashedPercent} = await getNodeRevenueStats();
             if (!didCancel) {
                 unstable_batchedUpdates(() => {
                     setChequeEarning(chequeEarning);
                     setChequeExpense(chequeExpense);
                     setCashedPercent(cashedPercent);
                     setUncashedPercent(uncashedPercent);
-                    setAirdrop(airdrop);
-                    setTotalEarnings(totalEarnings);
-                    setChequePercent(chequePercent);
-                    setAirDropPercent(airDropPercent);
                 })
             }
         };
@@ -54,17 +46,17 @@ export default function NodeRevenueStats({color}) {
                                             {t('total_earnings')}
                                         </h5>
                                         <div>
-                                            <span className="text-lg font-semibold">{totalEarnings}</span>
+                                            <span className="text-lg font-semibold">{chequeEarning}</span>
                                             <span className='text-xs'>BTT (WBTT)</span>
                                         </div>
                                         <div className='flex justify-between text-xs'>
                                             <div>
                                                 <i className='dot dot_red mr-1'></i>
-                                                {t('cheques')} {chequePercent}%
+                                                {t('cheques')} 100%
                                             </div>
                                             <div className='ml-2'>
                                                 <i className='dot dot_orange mr-1'></i>
-                                                {t('airdrop')} {airDropPercent}%
+                                                {t('airdrop')} 0%
                                             </div>
                                         </div>
                                     </div>
@@ -140,9 +132,8 @@ export default function NodeRevenueStats({color}) {
                                         <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
                                             {t('airdrop')}
                                         </h5>
-                                        <div>
-                                            <span className='text-lg font-semibold'>{airdrop}</span>
-                                            <span className='text-xs'>BTT</span>
+                                        <div className="font-semibold text-lg">
+                                            {t('coming_soon')}
                                         </div>
                                         <div className='flex'>
                                             <div>
