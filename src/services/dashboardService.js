@@ -143,12 +143,11 @@ export const getNodeWalletStats = async () => {
     let host = Client10.getHostInfo();
 
     return Promise.all([chequeBookBalance, BTTCAddressBTT, BTTCAddressWBTT, BTFS10Balance, host]).then((result) => {
-
         let maxBTT = new BigNumber(result[1]['balance']).dividedBy(PRECISION).toNumber();
         let maxWBTT = new BigNumber(result[2]['balance']).dividedBy(PRECISION).toNumber();
         let maxChequeBookWBTT = new BigNumber(result[0]['balance']).dividedBy(PRECISION).toNumber();
         let base = new BigNumber(maxBTT).minus(FEE).toNumber();
-        let balance10 = new BigNumber(result[3]['BtfsWalletBalance']).dividedBy(1000000).toNumber();
+        let balance10 = result[3]['BtfsWalletBalance'] ? new BigNumber(result[3]['BtfsWalletBalance']).dividedBy(1000000).toNumber() : 0;
         let tronAddress = result[4]['TronAddress'];
 
         return {
