@@ -140,6 +140,12 @@ const zh_CN = {
 
     'transfer': '转账',
     'exchange': '兑换',
+    'BTFS_10_withdraw': 'BTFS 1.0 取款',
+    'withdraw10':'取款',
+    '10_withdraw_description': '提现金额将会发送至节点对应的TRON地址',
+    'node_tron_addr': '节点TRON地址',
+    'available': '可提取',
+    'BTFS_10_withdraw_limit': '单次提现限制',
     'insert_cid': '使用BTFS路径（CID）导入。 例如:',
     'insert_name': '输入要创建的文件夹名称',
     'chequebook_withdraw': '取款',
@@ -162,6 +168,8 @@ const zh_CN = {
     'enter_bttc_address': '请输入有效BTTC地址',
     'key_warning_1': '私钥可以控制资产',
     'key_warning_2': '不要把私钥暴露给任何人',
+    'storage_path_confirmation': "存储路径确认",
+    'storage_path_info': "确定要将BTFS存储修改到此路径吗？",
 
 // warning
 

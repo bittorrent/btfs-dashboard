@@ -57,7 +57,7 @@ export default function AddConnectionModal({color}) {
             {showModal ? (
                 <>
                     <div className={"fixed flex z-50 md:w-1/2 modal_center md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
-                        style={{height: '300px'}}>
+                        style={{height: '350px'}}>
                         <div className="flex-1">
                             {/*content*/}
                             <div className={"h-full border-0 rounded-lg shadow-lg flex flex-col justify-between " + themeStyle.bg[color] + themeStyle.text[color]}>

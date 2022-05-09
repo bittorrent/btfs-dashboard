@@ -12,6 +12,7 @@ import WithdrawDepositModal from "components/Modals/WithdrawDepositModal.js";
 import ExchangeModal from "components/Modals/ExchangeModal.js";
 import TransferConfirmModal from "components/Modals/TransferConfirmModal.js";
 import QRModal from "components/Modals/QRModal.js";
+import PWDModal from "components/Modals/PWDModal.js";
 
 import {mainContext} from "reducer";
 
@@ -47,6 +48,7 @@ export default function Dashboard() {
             <ExchangeModal color={theme}/>
             <TransferConfirmModal color={theme}/>
             <QRModal color={theme}/>
+            <PWDModal color={theme}/>
         </>
     );
 }

@@ -107,7 +107,7 @@ export default function ExchangeModal({color}) {
                 <>
                     <div
                         className={"fixed flex z-50 modal_center md:w-1/2 md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
-                        style={{height: '300px'}}>
+                        style={{height: '350px'}}>
 
                         <div className="w-full">
                             {/*content*/}

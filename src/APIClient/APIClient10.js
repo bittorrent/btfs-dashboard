@@ -196,6 +196,7 @@ class APIClient10 {
     }
 
     BTTTransfer(to, amount) {
+        console.log(amount);
         return this.request('/api/v1/bttc/send-btt-to?arg=' + to + '&arg=' + amount);
     }
 
@@ -229,6 +230,23 @@ class APIClient10 {
 
     syncContracts() {
         return this.request('/api/v1/storage/contracts/sync/host');
+    }
+
+    getBTFS10Balance() {
+        return this.request('/api/v1/wallet/balance');
+    }
+
+    withdraw10(amount) {
+        return this.request('/api/v1/wallet/withdraw?arg=' + amount);
+    }
+
+    async getAirDrop(address) {
+        try {
+            let {data} = await xhr.get('https://scan-backend-dev.btfs.io/api/v1/airdrop/node_id/history_total?bttc_addr=' + address);
+            return data;
+        } catch (e) {
+            return {data: {}}
+        }
     }
 
 }
