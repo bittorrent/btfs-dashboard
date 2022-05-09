@@ -143,7 +143,6 @@ export const getNodeRevenueStats = async () => {
 //     })
 // };
 
-
 export const getNodeWalletStats = async () => {
     let data1 = await Client10.getChainInfo();
     let BTTCAddress = data1['node_addr'];

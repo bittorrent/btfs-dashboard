@@ -4,18 +4,10 @@ on:
   push:
     branches: 
       - 'master'
-      - 'release'
-  release:
-    types:
-      - published
 
 jobs:
-  staging:
+  staging-production:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref_name == 'master'
-    environment: 
-      name: staging
-      url: https://dashboard-test.btfs.io
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -28,25 +20,44 @@ jobs:
       - name: Build dashboard
         run: npm install && npm run build
 
-      - name: Upload dashboard build
+      - name: Upload dashboard build - staging
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.HOST }}
+          host: ${{ secrets.HOST_STAGING }}
           username: ${{ secrets.USER }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           source: "build"
           target: "~"
 
-      - name: Publish dashboard build
+      - name: Pin dashboard build - staging
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.HOST }}
+          host: ${{ secrets.HOST_STAGING }}
           username: ${{ secrets.USER }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            export BTFS_PATH=${{ secrets.BTFS_PATH }}
-            cd ${{ secrets.BTFS_BIN_PATH }}
-            ./btfs name publish /btfs/$(./btfs add -r ~/build | tail -1 | awk '{print $2}')
+            ./btfs/bin/btfs add -r build | tail -1 | awk '{print $2}'
+            rm -rf ~/build
+
+      - name: Upload dashboard build - production
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST_PRODUCTION }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          source: "build"
+          target: "~"
+
+      - name: Pin dashboard build - production
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_PRODUCTION }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            ./btfs/bin/btfs add -r build | tail -1 | awk '{print $2}'
             rm -rf ~/build
