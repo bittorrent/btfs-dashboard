@@ -3,6 +3,7 @@ import {IntlProvider} from 'react-intl'
 import {mainContext} from '../reducer'
 import en_US from "./en";
 import zh_CN from "./zh";
+import es_ES from './es';
 
 const Inter = (props) => {
 
@@ -15,6 +16,8 @@ const Inter = (props) => {
                 return en_US;
             case 'zh':
                 return zh_CN;
+            case 'es':
+                return es_ES;
             default:
                 return en_US;
         }
