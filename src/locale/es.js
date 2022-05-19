@@ -1,5 +1,7 @@
 const es_ES = {
+
     // sidebar
+
         'dashboard': 'Panel de Control',
         'cheques': 'Cheques',
         'files': 'Archivos',
@@ -9,7 +11,9 @@ const es_ES = {
         'view_code': 'Ver Código',
         'report_bugs': 'Reportar Error',
         'contact_us': 'Contacto',
+
     // dashboard
+
         'host_id': 'Host ID',
         'host_version': 'Versión del Host',
         'status': 'Estado',
@@ -59,7 +63,9 @@ const es_ES = {
         'send': 'Enviar',
         'in': 'Entrada',
         'out': 'Salida',
+
     // cheques
+
         'earning': 'Ganancia',
         'expense': 'Gasto',
         'received_cheques': 'Cheques Recibidos',
@@ -86,7 +92,9 @@ const es_ES = {
         'expense_list': 'Lista de Gastos',
         'recipient': 'Destinatario',
         'cheques_number': 'Número de Cheques',
+
     // files
+
         'import': 'Importar',
         'file': 'Archivo',
         'chunks': 'Partes',
@@ -108,22 +116,35 @@ const es_ES = {
         'browse': 'Buscar',
         'occupied': 'Ocupado',
         'search_here': 'Buscar aquí',
+
     // peers
+
         'location': 'Ubicación',
         'latency': 'Latencia',
         'peer': 'Peer',
         'connection': 'Conexión',
         'add_connection': 'Agragar Conexión',
+
     // setting
+
         'system_config': 'Configuración del Sistema',
         'submit': 'Enviar',
         'endpoint': 'EndPoint',
+        'storage_path':'Ruta de Almacenamiento',
+        'change': 'Cambiar',
         'security': 'Seguridad',
         'reveal_key': 'Mostrar Clave Privada',
         'private_key': 'Clave Privada',
+
     // modal
         'transfer': 'Transferir',
         'exchange': 'Intercambiar',
+        'BTFS_10_withdraw': 'Retirar de BTFS 1.0',
+        'withdraw10':'Retirar',
+        '10_withdraw_description': 'El retiro será enviado a la dirección TRON correspondiente al NODO.',
+        'node_tron_addr': 'Dirección TRON del Nodo',
+        'available': 'Disponible',
+        'BTFS_10_withdraw_limit': 'Límite por retiro',
         'insert_cid': 'Inserte una dirección BTFS (CID) para importar. Ejemplos:',
         'insert_name': 'Inserte el nombre de la carpeta que quiere crear.',
         'chequebook_withdraw': 'Retiro del Almacén',
@@ -146,7 +167,11 @@ const es_ES = {
         'enter_bttc_address': 'Por favor ingrese una dirección BTTC válida',
         'key_warning_1': 'La clave Privada controla todo lo que tiene',
         'key_warning_2': 'No le muestre su Clave Privada a nadie',
+        'storage_path_confirmation': 'Confirmaciin de la Ruta de Almacenamiento',
+        'storage_path_info': 'Estás seguro que querés cambiar el Almacenamiento BTFSa esta Ruta ?',
+
     //  warning
+
         'no_preview': 'Sin Previsualización',
         'node_not_connected': 'Parece que su nodo no está conectado',
         'node_connecting': 'Conectando Nodo',
@@ -159,6 +184,7 @@ const es_ES = {
         'no_data': 'Sin Datos',
         'setting_error': 'La configuración ha fallado, verifique si está utilizando una URL de API válida.',
         'setting_success': '¡Configurado!',
+        'change_success':'Cambio de ruta exitoso!',
         'api_invalid': 'Formato de la URL de la API inválida',
         'api_not_set': 'el ENDPOINT del API no se ha confidurado',
         'withdraw_success': 'Retirado',
@@ -180,5 +206,6 @@ const es_ES = {
         'amount_available_check_1': 'Máximo BTT disponible= Max BTT - 15 BTT',
         'amount_available_check_2': 'Máximo  WBTT disponible= Max WBTT (si el balance BTT es mayor a 15 BTT)',
         'amount_available_check_3': 'Máximo  WBTT disponible= 0 (si el balance BTT es menor a 15 BTT)',
+
     };
     export default es_ES
