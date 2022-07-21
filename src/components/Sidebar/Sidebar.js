@@ -105,6 +105,17 @@ export default function Sidebar() {
 
                                 <li className="items-center">
                                     <Link className={"py-3 block hover:text-lightBlue-600 " +
+                                    (window.location.href.indexOf("/admin/heartbeats") !== -1
+                                        ? "text-lightBlue-500 "
+                                        : (themeStyle.link[theme]))}
+                                          to="/admin/heartbeats">
+                                        <i className={"w-5 fas fa-file-invoice-dollar mr-2 text-sm " + (window.location.href.indexOf("/admin/heartbeats") !== -1 ? "" : "opacity-50")}></i>{" "}
+                                        {t('heartbeats')}
+                                    </Link>
+                                </li>
+
+                                <li className="items-center">
+                                    <Link className={"py-3 block hover:text-lightBlue-600 " +
                                     (window.location.href.indexOf("/admin/peers") !== -1
                                         ? "text-lightBlue-500 "
                                         : (themeStyle.link[theme]))}

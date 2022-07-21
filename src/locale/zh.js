@@ -208,6 +208,23 @@ const zh_CN = {
     'amount_available_check_2': '最大可用WBTT = 最大WBTT (如果BTT余额大于15 BTT)',
     'amount_available_check_3': '最大可用WBTT = 0 (如果BTT余额小于15 BTT)',
 
+
+    // heartBeats
+    'heart_contract': 'HEARTBEATS PROOF CONTRACT',
+    'heart_contract_des': 'heart_contract_des',
+    'heart_transaction': 'HEARTBEATS PROOF TRANSACTIONS',
+    'in_total': 'in total',
+    'gas_spend': 'Gas Spend',
+    'gas_spend_des': 'Gas Spend des',
+    'transaction_list': 'HEARTBEATS TRANSACTIONS LIST',
+    'list_des': '节点通过对心跳证明合约周期性发送交易来证明该节点的在线状态',
+    'heart_to_scan': '在scan上查看心跳图表 >',
+    'heart_th_time': '上报时间',
+    'heart_th_txhash': '交易哈希',
+    'heart_th_from': '发送者',
+    'heart_th_contract': '心跳证明合约',
+    'heart_th_nonce': '心跳 Nonce',
+
 };
 
 export default zh_CN
