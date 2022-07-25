@@ -49,7 +49,7 @@ export default function NodeRevenueStats({color}) {
                     <div className="flex flex-wrap">
                         <div className="w-full xl:w-6/12 md:pr-2 md:mb-2 xl:mb-0">
                             <div
-                                className={"relative break-words rounded flex flex-row items-center justify-between h-150-px p-4 " + themeStyle.bg[color] + themeStyle.text[color]}>
+                                className={"relative break-words rounded flex flex-row items-center justify-between p-4 h-full " + themeStyle.bg[color] + themeStyle.text[color]}>
                                 <div className="w-1/2 border-r h-full flex flex-col justify-center">
                                         <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
                                             {t('total_earnings')}
@@ -70,7 +70,7 @@ export default function NodeRevenueStats({color}) {
                                         </div>
                                     </div>
 
-                                    <div className="relative flex flex-col justify-between">
+                                    <div className="relative flex flex-col justify-between mt-2">
                                         <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
                                             {t('airdrop')}&nbsp;(0%)
                                         </h5>
@@ -84,7 +84,7 @@ export default function NodeRevenueStats({color}) {
 
                         <div className="w-full xl:w-6/12 md:pr-2 md:mb-2 xl:mb-0">
                             <div
-                                className={"relative break-words rounded flex flex-row items-center justify-between h-150-px p-4 " + themeStyle.bg[color] + themeStyle.text[color]}>
+                                className={"relative break-words rounded flex flex-row items-center justify-between p-4 h-full " + themeStyle.bg[color] + themeStyle.text[color]}>
                                 <div className="w-1/2 border-r h-full flex flex-col justify-center overflow-auto">
                                         <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
                                             {t('total_expense')}
@@ -105,7 +105,7 @@ export default function NodeRevenueStats({color}) {
                                         </div>
                                     </div>
 
-                                    <div className="relative flex flex-col justify-between">
+                                    <div className="relative flex flex-col justify-between mt-2">
                                         <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
                                             {t('gas_fee')}
                                             <Tooltip placement="bottom"
