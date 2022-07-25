@@ -119,3 +119,11 @@ export function toThousands(num) {
         return '--';
     return (num || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
 }
+
+export function getTimes(date) {
+    return appendZero(date.getUTCFullYear()) + '/' + appendZero((date.getUTCMonth() + 1)) + '/' + appendZero(date.getUTCDate()) + ' ' + appendZero(date.getUTCHours()) + ':' + appendZero(date.getUTCMinutes()) + ':' + appendZero(date.getUTCSeconds())
+}
+
+export function appendZero(num) {
+    return num < 10 ? '0' + num : num
+}

@@ -1,7 +1,7 @@
 /*eslint-disable*/
 import Client10 from "APIClient/APIClient10.js";
 import BigNumber from 'bignumber.js';
-import {switchStorageUnit2, switchBalanceUnit, toThousands} from "utils/BTFSUtil.js";
+import {switchStorageUnit2, switchBalanceUnit, toThousands, getTimes} from "utils/BTFSUtil.js";
 import {PRECISION, FEE} from "utils/constants.js";
 
 export const getNodeBasicStats = async () => {
@@ -264,6 +264,45 @@ export const withdraw10 = async (amount, pwd) => {
     let amount_str = temp.replace(/,/g, "");
     let data = await Client10.withdraw10(amount_str, pwd);
     return data
+};
+
+export const getHeartBeatsStats = async () => {
+    try {
+        let {status_contract, total_count, total_gas_spend} = await Client10.getHeartBeatsStats();
+
+        return {
+            status_contract,
+            total_count,
+            total_gas_spend: new BigNumber(total_gas_spend).dividedBy(PRECISION).toNumber()
+        }
+    } catch (e) {
+        console.log(e)
+        return {
+            status_contract: "--",
+            total_count: 0,
+            total_gas_spend: 0
+        }
+    }
+};
+
+export const getHeartBeatsReportlist = async (from) => {
+    try {
+        let {records, total, peer_id} = await Client10.getHeartBeatsReportlist(from);
+
+        records.forEach(item => {
+            let date = new Date(item.report_time)
+            item.gas_spend = new BigNumber(item.gas_spend).dividedBy(PRECISION).toNumber()
+            item.report_time = getTimes(date)
+        })
+
+        return {
+            records,
+            total,
+            peer_id
+        }
+    } catch (e) {
+        console.log(e)
+    }
 };
 
 

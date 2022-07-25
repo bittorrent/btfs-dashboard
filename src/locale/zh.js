@@ -11,6 +11,7 @@ const zh_CN = {
     'view_code': '查看源码',
     'report_bugs': '报告错误',
     'contact_us': '联系我们',
+    'heartbeats': 'Heartbeats',
 
 // dashboard
 
@@ -219,7 +220,7 @@ const zh_CN = {
     'transaction_list': 'HEARTBEATS TRANSACTIONS LIST',
     'list_des': '节点通过对心跳证明合约周期性发送交易来证明该节点的在线状态',
     'heart_to_scan': '在scan上查看心跳图表 >',
-    'heart_th_time': '上报时间',
+    'heart_th_time': '上报时间(UTC)',
     'heart_th_txhash': '交易哈希',
     'heart_th_from': '发送者',
     'heart_th_contract': '心跳证明合约',

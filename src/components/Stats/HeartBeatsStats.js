@@ -1,9 +1,8 @@
 /*eslint-disable*/
 import React, {useEffect, useState} from "react";
-import {unstable_batchedUpdates} from 'react-dom';
 import {Tooltip} from 'antd';
 import ClipboardCopy from "components/Utils/ClipboardCopy";
-import {getNodeWalletStats} from "services/dashboardService.js";
+import {getHeartBeatsStats} from "services/dashboardService.js";
 import Emitter from "utils/eventBus";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
@@ -12,11 +11,9 @@ let didCancel = false;
 
 export default function HeartBeatsStats({color}) {
 
-    const [BTTCAddress, setBTTCAddress] = useState('--');
-    const [chequeAddress, setChequeAddress] = useState('--');
-    const [_chequeBookWBTT, set_ChequeBookWBTT] = useState(0);
-    const [_BTTCAddressBTT, set_BTTCAddressBTT] = useState(0);
-    const [_BTTCAddressWBTT, set_BTTCAddressWBTT] = useState(0);
+    const [statusContarct, setStatusContarct] = useState('--');
+    const [total, setTotal] = useState(0);
+    const [gas, setGas] = useState(0);
 
     useEffect(() => {
         fetchData();
@@ -27,26 +24,18 @@ export default function HeartBeatsStats({color}) {
 
     const fetchData = async () => {
         didCancel = false;
-        let {BTTCAddress, chequeAddress, maxAvailableChequeBookWBTT, maxAvailableBTT, maxAvailableWBTT} = await getNodeWalletStats();
+        let {status_contract, total_count, total_gas_spend} = await getHeartBeatsStats();
+
         if (!didCancel) {
-            unstable_batchedUpdates(() => {
-                setBTTCAddress(BTTCAddress);
-                setChequeAddress(chequeAddress);
-                set_ChequeBookWBTT(maxAvailableChequeBookWBTT);
-                set_BTTCAddressBTT(maxAvailableBTT);
-                set_BTTCAddressWBTT(maxAvailableWBTT);
-            })
+            setStatusContarct(status_contract);
+            setTotal(total_count);
+            setGas(total_gas_spend);
         }
     };
 
-    const showQR = (e, type) => {
+    const showQR = (e) => {
         e.preventDefault();
-        if (type === 'Cheque') {
-            Emitter.emit('openQRModal', {address: chequeAddress});
-        }
-        if (type === 'BTTC') {
-            Emitter.emit('openQRModal', {address: BTTCAddress});
-        }
+        Emitter.emit('openQRModal', {address: statusContarct});
     };
 
     return (
@@ -71,11 +60,11 @@ export default function HeartBeatsStats({color}) {
                                             <a onClick={(e) => {
                                                 showQR(e, 'BTTC')
                                             }}><i className="fas fa-qrcode ml-2"></i></a>
-                                            <ClipboardCopy value={BTTCAddress}/>
+                                            <ClipboardCopy value={statusContarct}/>
                                         </div>
                                     </h5>
                                     <div className="font-semibold">
-                                        {BTTCAddress}
+                                        {statusContarct}
                                     </div>
                                 </div>
                             </div>
@@ -87,13 +76,13 @@ export default function HeartBeatsStats({color}) {
                                         <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
                                             {t('heart_transaction')}
                                         </h5>
-                                        <div className="flex items-center">
-                                            <p>
-                                                <span className="text-lg text-black font-bold">123</span>
+                                        <div className="flex items-center overflow-auto">
+                                            <p className="flex-shrink-0">
+                                                <span className="text-lg text-black font-bold">{total}</span>
                                                 <span> {t('in_total')}</span>
                                             </p>
-                                            <p className="ml-8">
-                                                <span className="text-lg text-black font-bold">456</span>
+                                            <p className="ml-8 flex-shrink-0">
+                                                <span className="text-lg text-black font-bold">{gas}</span>
                                                 <span> {t('gas_spend')}</span>
                                                 <Tooltip placement="bottom"
                                                         title={<p>{t('gas_spend_des')}</p>}>
