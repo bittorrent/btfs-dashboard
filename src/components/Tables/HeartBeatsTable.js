@@ -17,7 +17,7 @@ export default function HeartBeatsTable({color}) {
     const [total, setTotal] = useState(0);
     const [current, setCurrent] = useState(0);
     const [list, setList] = useState(null);
-    const [peerId, setPeerId] = useState(0)
+    const [peerId, setPeerId] = useState('')
 
     const pageChange = useCallback((page) => {
         updateTable(page);

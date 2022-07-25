@@ -12,8 +12,8 @@ let didCancel = false;
 export default function HeartBeatsStats({color}) {
 
     const [statusContarct, setStatusContarct] = useState('--');
-    const [total, setTotal] = useState(0);
-    const [gas, setGas] = useState(0);
+    const [total, setTotal] = useState('--');
+    const [gas, setGas] = useState('--');
 
     useEffect(() => {
         fetchData();

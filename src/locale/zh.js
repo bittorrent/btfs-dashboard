@@ -226,6 +226,10 @@ const zh_CN = {
     'heart_th_contract': '心跳证明合约',
     'heart_th_nonce': '心跳 Nonce',
 
+    'total_expense': 'TOTAL EXPENSE',
+    'cheque_expense_des': '仅统计在线证明GAs费',
+    'gas_fee': 'GAS FEE'
+
 };
 
 export default zh_CN

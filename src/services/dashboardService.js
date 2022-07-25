@@ -110,12 +110,22 @@ export const getHostHistory = async (flag) => {
 
 export const getNodeRevenueStats = async () => {
     let data1 = Client10.getChequeValue();
-    return Promise.all([data1]).then((result) => {
+    let data3 = Client10.getHeartBeatsStats();
+    return Promise.all([data1, data3]).then((result) => {
+        console.log('data3', result)
+        const gasFee = +result[1]['total_gas_spend'] ? +result[1]['total_gas_spend'] : 0
+        const chequeExpense = +result[0]['totalSent']
+        const hasTotalExpense = gasFee || chequeExpense
+
         return {
             chequeEarning: switchBalanceUnit(result[0]['totalReceived']),
             uncashedPercent: result[0]['totalReceived'] ? new BigNumber((result[0]['totalReceived'] - result[0]['settlement_received_cashed'])).dividedBy(result[0]['totalReceived']).multipliedBy(100).toFixed(0) : 0,
             cashedPercent: result[0]['totalReceived'] ? new BigNumber((result[0]['settlement_received_cashed'])).dividedBy(result[0]['totalReceived']).multipliedBy(100).toFixed(0) : 0,
-            chequeExpense: switchBalanceUnit(result[0]['totalSent']),
+            chequeExpense: switchBalanceUnit(chequeExpense),
+            totalExpense: switchBalanceUnit(gasFee + chequeExpense),
+            gasFee: switchBalanceUnit(gasFee),
+            gasFeePercent: hasTotalExpense ? new BigNumber(gasFee).dividedBy((gasFee + chequeExpense)).multipliedBy(100).toFixed(0) : 0,
+            chequeExpensePercent: hasTotalExpense ? new BigNumber(chequeExpense).dividedBy((gasFee + chequeExpense)).multipliedBy(100).toFixed(0) : 0,
         }
     })
 };
@@ -273,14 +283,14 @@ export const getHeartBeatsStats = async () => {
         return {
             status_contract,
             total_count,
-            total_gas_spend: new BigNumber(total_gas_spend).dividedBy(PRECISION).toNumber()
+            total_gas_spend: total_gas_spend ? new BigNumber(total_gas_spend).dividedBy(PRECISION).toNumber(): 0
         }
     } catch (e) {
         console.log(e)
         return {
             status_contract: "--",
-            total_count: 0,
-            total_gas_spend: 0
+            total_count: '--',
+            total_gas_spend: ''
         }
     }
 };
@@ -302,6 +312,11 @@ export const getHeartBeatsReportlist = async (from) => {
         }
     } catch (e) {
         console.log(e)
+        return {
+            records: [],
+            total: 0,
+            peer_id: ''
+        }
     }
 };
 
