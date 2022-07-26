@@ -2,22 +2,17 @@
 import React, {useState, useEffect, useCallback} from "react";
 import PropTypes from "prop-types";
 import {Pagination} from 'antd';
-import ClipboardCopy from "components/Utils/ClipboardCopy";
 import {getHeartBeatsReportlist} from "services/dashboardService.js";
 import {Truncate, t} from "utils/text.js"
 import themeStyle from "utils/themeStyle.js";
-import {ceilLatency} from "utils/BTFSUtil.js";
-import {btfsScanLinkCheck} from "utils/checks.js";
 
 let didCancel = false;
-// let peersAll = [];
-
 export default function HeartBeatsTable({color}) {
 
     const [total, setTotal] = useState(0);
     const [current, setCurrent] = useState(0);
     const [list, setList] = useState(null);
-    const [peerId, setPeerId] = useState('')
+    const [peerId, setPeerId] = useState('');
 
     const pageChange = useCallback((page) => {
         updateTable(page);
@@ -30,7 +25,7 @@ export default function HeartBeatsTable({color}) {
             setList(records);
             setTotal(total);
             setCurrent(page);
-            setPeerId(peer_id)
+            setPeerId(peer_id);
         }
     };
 
@@ -87,16 +82,6 @@ export default function HeartBeatsTable({color}) {
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                                         <span>{items['report_time']}</span>
                                     </td>
-                                    {/* <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        {ceilLatency(items['Latency'])}
-                                    </td> */}
-                                    {/* <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        <div className='flex'>
-                                            <a href={btfsScanLinkCheck() + '/#/node/' + items['Peer']} target='_blank'>
-                                                {items['Peer']}
-                                            </a>
-                                        </div>
-                                    </td> */}
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         <a href={'https://bttcscan.com/tx/' + items['tx_hash']} target='_blank'>
                                             <Truncate>{items['tx_hash']}</Truncate>

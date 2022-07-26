@@ -284,7 +284,7 @@ export const getHeartBeatsStats = async () => {
             status_contract,
             total_count,
             total_gas_spend: total_gas_spend ? new BigNumber(total_gas_spend).dividedBy(PRECISION).toNumber(): 0
-        }
+        };
     } catch (e) {
         console.log(e)
         return {
@@ -303,20 +303,20 @@ export const getHeartBeatsReportlist = async (from) => {
             let date = new Date(item.report_time)
             item.gas_spend = new BigNumber(item.gas_spend).dividedBy(PRECISION).toNumber()
             item.report_time = getTimes(date)
-        })
+        });
 
         return {
             records,
             total,
             peer_id
-        }
+        };
     } catch (e) {
         console.log(e)
         return {
             records: [],
             total: 0,
             peer_id: ''
-        }
+        };
     }
 };
 

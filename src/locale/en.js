@@ -208,24 +208,24 @@ const en_US = {
     'amount_available_check_2': 'The max available WBTT = Max WBTT (if BTT balance more than 15 BTT)',
     'amount_available_check_3': 'The max available WBTT = 0 (if BTT balance is less than 15 BTT)',
 
-    'heart_contract': 'HEARTBEATS PROOF CONTRACT',
-    'heart_contract_des': 'heart_contract_des',
+    'heart_contract': 'ONLINE PROOF CONTRACT',
+    'heart_contract_des': 'The node will get online proof from the online signature service, and report it to the online proof contract. This contract is designed to store the latest online proof data for each node.',
     'heart_transaction': 'HEARTBEATS PROOF TRANSACTIONS',
     'in_total': 'in total',
     'gas_spend': 'Gas Spend',
-    'gas_spend_des': 'Gas Spend des',
-    'transaction_list': 'HEARTBEATS TRANSACTIONS LIST',
-    'list_des': '节点通过对心跳证明合约周期性发送交易来证明该节点的在线状态',
-    'heart_to_scan': '在scan上查看心跳图表 >',
-    'heart_th_time': '上报时间(UTC)',
-    'heart_th_txhash': '交易哈希',
-    'heart_th_from': '发送者',
-    'heart_th_contract': '心跳证明合约',
-    'heart_th_nonce': '心跳 Nonce',
-
+    'gas_spend_des': 'The Gas fee consumed by online proof transactions',
+    'transaction_list': 'ONLINE PROOF TRANSACTIONS',
+    'list_des': 'The node proves its online status by periodically sending transactions to the online proof contract.',
+    'heart_to_scan': 'View the chart on BTFS scan >',
+    'heart_th_time': 'Time',
+    'heart_th_txhash': 'TX hash',
+    'heart_th_from': 'From',
+    'heart_th_contract': 'Online Proof Contract',
+    'heart_th_nonce': 'Heartbeats Nonce',
     'total_expense': 'TOTAL EXPENSE',
-    'cheque_expense_des': '仅统计在线证明GAs费',
+    'cheque_expense_des': 'Only gas expense of online proof transactions are counted.',
     'gas_fee': 'GAS FEE'
+
 };
 
 export default en_US

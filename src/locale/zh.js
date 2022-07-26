@@ -11,7 +11,7 @@ const zh_CN = {
     'view_code': '查看源码',
     'report_bugs': '报告错误',
     'contact_us': '联系我们',
-    'heartbeats': 'Heartbeats',
+    'heartbeats': '心跳',
 
 // dashboard
 
@@ -211,24 +211,24 @@ const zh_CN = {
 
 
     // heartBeats
-    'heart_contract': 'HEARTBEATS PROOF CONTRACT',
-    'heart_contract_des': 'heart_contract_des',
-    'heart_transaction': 'HEARTBEATS PROOF TRANSACTIONS',
-    'in_total': 'in total',
-    'gas_spend': 'Gas Spend',
-    'gas_spend_des': 'Gas Spend des',
-    'transaction_list': 'HEARTBEATS TRANSACTIONS LIST',
+    'heart_contract': '在线证明合约',
+    'heart_contract_des': '节点从在线签名服务中获得在线证明，并将其上报给在线证明合约。该合约用来存储每个节点的最新在线验证数据。',
+    'heart_transaction': '在线证明交易',
+    'in_total': '总计',
+    'gas_spend': 'Gas消耗',
+    'gas_spend_des': '在线证明交易所消耗的Gas费',
+    'transaction_list': '在线证明交易',
     'list_des': '节点通过对心跳证明合约周期性发送交易来证明该节点的在线状态',
-    'heart_to_scan': '在scan上查看心跳图表 >',
-    'heart_th_time': '上报时间(UTC)',
+    'heart_to_scan': '在BTFS scan上查看心跳图表 >',
+    'heart_th_time': '上报时间',
     'heart_th_txhash': '交易哈希',
     'heart_th_from': '发送者',
     'heart_th_contract': '心跳证明合约',
     'heart_th_nonce': '心跳 Nonce',
+    'total_expense': '总支出',
+    'cheque_expense_des': '仅统计在线证明Gas费',
+    'gas_fee': 'Gas支出'
 
-    'total_expense': 'TOTAL EXPENSE',
-    'cheque_expense_des': '仅统计在线证明GAs费',
-    'gas_fee': 'GAS FEE'
 
 };
 
