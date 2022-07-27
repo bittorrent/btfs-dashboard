@@ -109,7 +109,7 @@ export default function Sidebar() {
                                         ? "text-lightBlue-500 "
                                         : (themeStyle.link[theme]))}
                                           to="/admin/heartbeats">
-                                        <i className={"w-5 fas fa-file-invoice-dollar mr-2 text-sm " + (window.location.href.indexOf("/admin/heartbeats") !== -1 ? "" : "opacity-50")}></i>{" "}
+                                        <i className={"w-5 fas fa-heartbeat mr-2 text-sm " + (window.location.href.indexOf("/admin/heartbeats") !== -1 ? "" : "opacity-50")}></i>{" "}
                                         {t('heartbeats')}
                                     </Link>
                                 </li>
