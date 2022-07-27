@@ -38,6 +38,9 @@ const en_US = {
     'cheque_earnings': 'Cheque Earnings',
     'cheque_expense': 'Cheque Expense',
     'airdrop': 'Airdrop',
+    'total_expense': 'TOTAL EXPENSE',
+    'cheque_expense_des': 'Only gas expense of online proof transactions are counted.',
+    'gas_fee': 'GAS FEE',
     'chequebook': 'Vault',
     'vault': 'Vault(s)',
     'contracts': 'Contracts',
@@ -208,6 +211,8 @@ const en_US = {
     'amount_available_check_2': 'The max available WBTT = Max WBTT (if BTT balance more than 15 BTT)',
     'amount_available_check_3': 'The max available WBTT = 0 (if BTT balance is less than 15 BTT)',
 
+// heartBeats
+
     'heart_contract': 'ONLINE PROOF CONTRACT',
     'heart_contract_des': 'The node will get online proof from the online signature service, and report it to the online proof contract. This contract is designed to store the latest online proof data for each node.',
     'heart_transaction': 'HEARTBEATS PROOF TRANSACTIONS',
@@ -217,14 +222,12 @@ const en_US = {
     'transaction_list': 'ONLINE PROOF TRANSACTIONS',
     'list_des': 'The node proves its online status by periodically sending transactions to the online proof contract.',
     'heart_to_scan': 'View the chart on BTFS scan >',
-    'heart_th_time': 'Time',
+    'heart_th_time': 'Time(UTC)',
     'heart_th_txhash': 'TX hash',
     'heart_th_from': 'From',
     'heart_th_contract': 'Online Proof Contract',
     'heart_th_nonce': 'Heartbeats Nonce',
-    'total_expense': 'TOTAL EXPENSE',
-    'cheque_expense_des': 'Only gas expense of online proof transactions are counted.',
-    'gas_fee': 'GAS FEE'
+    'bttc_addr': 'Node’s BTTC Address'
 
 };
 

@@ -38,6 +38,9 @@ const zh_CN = {
     'cheque_earnings': '支票收益',
     'cheque_expense': '支票支出',
     'airdrop': '空投',
+    'total_expense': '总支出',
+    'cheque_expense_des': '仅统计在线证明Gas费',
+    'gas_fee': 'Gas支出',
     'chequebook': '金库',
     'vault': '金库',
     'contracts': '合约',
@@ -210,7 +213,8 @@ const zh_CN = {
     'amount_available_check_3': '最大可用WBTT = 0 (如果BTT余额小于15 BTT)',
 
 
-    // heartBeats
+// heartBeats
+
     'heart_contract': '在线证明合约',
     'heart_contract_des': '节点从在线签名服务中获得在线证明，并将其上报给在线证明合约。该合约用来存储每个节点的最新在线验证数据。',
     'heart_transaction': '在线证明交易',
@@ -220,14 +224,12 @@ const zh_CN = {
     'transaction_list': '在线证明交易',
     'list_des': '节点通过对心跳证明合约周期性发送交易来证明该节点的在线状态',
     'heart_to_scan': '在BTFS scan上查看心跳图表 >',
-    'heart_th_time': '上报时间',
+    'heart_th_time': '上报时间(UTC)',
     'heart_th_txhash': '交易哈希',
     'heart_th_from': '发送者',
     'heart_th_contract': '心跳证明合约',
     'heart_th_nonce': '心跳 Nonce',
-    'total_expense': '总支出',
-    'cheque_expense_des': '仅统计在线证明Gas费',
-    'gas_fee': 'Gas支出'
+    'bttc_addr': '节点BTTC地址'
 
 
 };

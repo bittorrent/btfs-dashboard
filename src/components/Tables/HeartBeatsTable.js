@@ -90,6 +90,7 @@ export default function HeartBeatsTable({color}) {
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         <a href={'https://bttcscan.com/address/' + items['bttc_addr']} target='_blank'>
                                             <Truncate>{items['bttc_addr']}</Truncate>
+                                            ({t("bttc_addr")})
                                         </a>
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
