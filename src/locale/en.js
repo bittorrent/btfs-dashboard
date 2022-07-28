@@ -11,7 +11,7 @@ const en_US = {
     'view_code': 'View the Code',
     'report_bugs': 'Report Bugs',
     'contact_us': 'Contact Us',
-    'heartbeats': 'Heartbeats',
+    'heartbeats': 'Online Proof',
 
 // dashboard
 
@@ -215,7 +215,7 @@ const en_US = {
 
     'heart_contract': 'ONLINE PROOF CONTRACT',
     'heart_contract_des': 'The node will get online proof from the online signature service, and report it to the online proof contract. This contract is designed to store the latest online proof data for each node.',
-    'heart_transaction': 'HEARTBEATS PROOF TRANSACTIONS',
+    'heart_transaction': 'ONLINE PROOF TRANSACTIONS',
     'in_total': 'in total',
     'gas_spend': 'Gas Spend',
     'gas_spend_des': 'The Gas fee consumed by online proof transactions',

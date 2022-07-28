@@ -1,8 +1,8 @@
 /*eslint-disable*/
 import React, {useContext} from "react";
 import QRModal from "components/Modals/QRModal.js";
-import HeartBeatsStats from "components/Stats/HeartBeatsStats.js"
-import HeartBeatsTable from "components/Tables/HeartBeatsTable.js"
+import OnlineProofStats from "components/Stats/OnlineProofStats.js"
+import OnlineProofTable from "components/Tables/OnlineProofTable.js"
 
 import {mainContext} from "reducer";
 
@@ -15,8 +15,8 @@ export default function HeartBeats() {
 
     return (
         <>
-            <HeartBeatsStats color={theme}/>
-            <HeartBeatsTable color={theme}/>
+            <OnlineProofStats color={theme}/>
+            <OnlineProofTable color={theme}/>
             <QRModal color={theme}/>
         </>
     );

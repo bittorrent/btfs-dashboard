@@ -62,6 +62,7 @@ export default function NodeRevenueStats({color}) {
                                 <div className="w-1/2 pl-2 flex flex-col justify-between h-full">
                                     <div className="relative flex flex-col">
                                         <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
+                                            <i className="fas fa-circle text-green-500 mr-2"></i>
                                             {t('cheque_earnings')}&nbsp;(100%)
                                         </h5>
                                         <div>
@@ -72,6 +73,7 @@ export default function NodeRevenueStats({color}) {
 
                                     <div className="relative flex flex-col justify-between mt-2">
                                         <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
+                                            <i className="fas fa-circle text-green-400 text- mr-2"></i>
                                             {t('airdrop')}&nbsp;(0%)
                                         </h5>
                                         <div className="font-semibold text-lg">
@@ -97,6 +99,7 @@ export default function NodeRevenueStats({color}) {
                                 <div className="w-1/2 pl-2 flex flex-col justify-between h-full">
                                     <div className="relative flex flex-col">
                                         <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
+                                            <i className="fas fa-circle text-red-500 text- mr-2"></i>
                                             {t('cheque_expense')}&nbsp;({chequeExpensePercent}%)
                                         </h5>
                                         <div>
@@ -107,6 +110,7 @@ export default function NodeRevenueStats({color}) {
 
                                     <div className="relative flex flex-col justify-between mt-2">
                                         <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
+                                            <i className="fas fa-circle text-red-400 text- mr-2"></i>
                                             {t('gas_fee')}
                                             <Tooltip placement="bottom"
                                                 title={<p>{t('cheque_expense_des')}</p>}>

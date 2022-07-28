@@ -82,7 +82,7 @@ export default function HeartBeatsStats({color}) {
                                                 <span> {t('in_total')}</span>
                                             </p>
                                             <p className="ml-8 flex-shrink-0">
-                                                <span className="text-lg text-black font-bold">{gas}</span>
+                                                <span className="text-lg text-black font-bold">{gas} BTT</span>
                                                 <span> {t('gas_spend')}</span>
                                                 <Tooltip placement="bottom"
                                                         title={<p>{t('gas_spend_des')}</p>}>

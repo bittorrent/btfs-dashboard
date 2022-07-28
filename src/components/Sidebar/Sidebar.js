@@ -105,11 +105,11 @@ export default function Sidebar() {
 
                                 <li className="items-center">
                                     <Link className={"py-3 block hover:text-lightBlue-600 " +
-                                    (window.location.href.indexOf("/admin/heartbeats") !== -1
+                                    (window.location.href.indexOf("/admin/onlineproof") !== -1
                                         ? "text-lightBlue-500 "
                                         : (themeStyle.link[theme]))}
-                                          to="/admin/heartbeats">
-                                        <i className={"w-5 fas fa-heartbeat mr-2 text-sm " + (window.location.href.indexOf("/admin/heartbeats") !== -1 ? "" : "opacity-50")}></i>{" "}
+                                          to="/admin/onlineproof">
+                                        <i className={"w-5 fab fa-chromecast mr-2 text-sm " + (window.location.href.indexOf("/admin/onlineproof") !== -1 ? "" : "opacity-50")}></i>{" "}
                                         {t('heartbeats')}
                                     </Link>
                                 </li>

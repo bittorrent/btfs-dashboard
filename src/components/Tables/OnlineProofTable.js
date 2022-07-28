@@ -7,7 +7,7 @@ import {Truncate, t} from "utils/text.js"
 import themeStyle from "utils/themeStyle.js";
 
 let didCancel = false;
-export default function HeartBeatsTable({color}) {
+export default function OnlineProofTable({color}) {
 
     const [total, setTotal] = useState(0);
     const [current, setCurrent] = useState(0);
@@ -46,7 +46,7 @@ export default function HeartBeatsTable({color}) {
                                 {t('transaction_list')}
                             </h3>
                             <span>
-                                {t('gas_spend_des')}
+                                {t('list_des')}
                             </span>
                         </div>
                         {peerId && <a href={`https://scan.btfs.io/#/node/${peerId}`} target="_blank">
@@ -123,10 +123,10 @@ export default function HeartBeatsTable({color}) {
     );
 }
 
-HeartBeatsTable.defaultProps = {
+OnlineProofTable.defaultProps = {
     color: "light",
 };
 
-HeartBeatsTable.propTypes = {
+OnlineProofTable.propTypes = {
     color: PropTypes.oneOf(["light", "dark"]),
 };

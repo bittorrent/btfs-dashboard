@@ -11,7 +11,7 @@ const zh_CN = {
     'view_code': '查看源码',
     'report_bugs': '报告错误',
     'contact_us': '联系我们',
-    'heartbeats': '心跳',
+    'heartbeats': '在线证明',
 
 // dashboard
 
@@ -222,7 +222,7 @@ const zh_CN = {
     'gas_spend': 'Gas消耗',
     'gas_spend_des': '在线证明交易所消耗的Gas费',
     'transaction_list': '在线证明交易',
-    'list_des': '节点通过对心跳证明合约周期性发送交易来证明该节点的在线状态',
+    'list_des': '节点通过对在线证明合约周期性发送交易来证明该节点的在线状态',
     'heart_to_scan': '在BTFS scan上查看心跳图表 >',
     'heart_th_time': '上报时间(UTC)',
     'heart_th_txhash': '交易哈希',
