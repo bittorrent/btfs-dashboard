@@ -72,6 +72,8 @@ const asyncFiles = AsyncComponent(
     () => import(/*  webpackChunkName: "files" */'views/admin/Files.js'));
 const asyncCheque = AsyncComponent(
     () => import(/*  webpackChunkName: "cheque" */'views/admin/Cheque.js'));
+const asyncHeartBeats = AsyncComponent(
+    () => import(/*  webpackChunkName: "cheque" */'views/admin/HeartBeats.js'));
 
 
 export default function Admin() {
@@ -120,6 +122,7 @@ export default function Admin() {
                         <Route path="/admin/settings" exact component={asyncSettings}/>
                         <Route path="/admin/files" exact component={asyncFiles}/>
                         <Route path="/admin/cheque" exact component={asyncCheque}/>
+                        <Route path="/admin/onlineproof" exact component={asyncHeartBeats}/>
                         <Redirect from="/admin" to="/admin/dashboard"/>
                     </Switch>
                 </div>

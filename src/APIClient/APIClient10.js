@@ -249,6 +249,14 @@ class APIClient10 {
         }
     }
 
+    getHeartBeatsStats() {
+        return this.request('/api/v1/statuscontract/total');
+    }
+
+    getHeartBeatsReportlist(from) {
+        return this.request('/api/v1/statuscontract/reportlist?arg=' + from + '&arg=10');
+    }
+
 }
 
 const Client10 = new APIClient10();
