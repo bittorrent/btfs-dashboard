@@ -139,6 +139,17 @@ const en_US = {
     'security': 'Security',
     'reveal_key': 'Reveal Private Key',
     'private_key': 'Private Key',
+    'advance_config':'Advance Config',
+    'advance_config_tips':'配置修改后需要重启服务才可生效',
+    'reset_default':'Reset default',
+    'view_config_file':'View Config File',
+    'enable_storage_host':'Enable Storage Host',
+    'enable_report_online':'Report Online',
+    'enable_report_status_contract':'Report Status Contract',
+    'enable_storage_client':'Enable Storage Client',
+    'reset_advance_config_title':'恢复默认配置',
+    'reset_advance_config_tips':'恢复默认配置后需在客户端重启服务才可生效',
+
 
 // modal
     'transfer': 'Transfer',
@@ -227,8 +238,8 @@ const en_US = {
     'heart_th_from': 'From',
     'heart_th_contract': 'Online Proof Contract',
     'heart_th_nonce': 'Heartbeats Nonce',
-    'bttc_addr': 'Node’s BTTC Address'
-
+    'bttc_addr': 'Node’s BTTC Address',
+    'heart_th_nonce_tips':'心跳计数：用来证明当前节点在线状态的一次性计数，默认每小时计数加1。',
 };
 
 export default en_US

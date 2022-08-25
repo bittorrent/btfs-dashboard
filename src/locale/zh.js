@@ -139,6 +139,16 @@ const zh_CN = {
     'security': '安全',
     'reveal_key': '导出私钥',
     'private_key': '私钥',
+    'advance_config':'高级设置',
+    'advance_config_tips':'配置修改后需要重启服务才可生效',
+    'reset_default':'Reset default',
+    'view_config_file':'View Config File',
+    'enable_storage_host':'Enable Storage Host',
+    'enable_report_online':'Report Online',
+    'enable_report_status_contract':'Report Status Contract',
+    'enable_storage_client':'Enable Storage Client',
+    'reset_advance_config_title':'恢复默认配置',
+    'reset_advance_config_tips':'恢复默认配置后需在客户端重启服务才可生效',
 
 // modal
 
@@ -229,7 +239,8 @@ const zh_CN = {
     'heart_th_from': '发送者',
     'heart_th_contract': '心跳证明合约',
     'heart_th_nonce': '心跳 Nonce',
-    'bttc_addr': '节点BTTC地址'
+    'bttc_addr': '节点BTTC地址',
+    'heart_th_nonce_tips':'心跳计数：用来证明当前节点在线状态的一次性计数，默认每小时计数加1。',
 
 
 };

@@ -1,5 +1,6 @@
 /*eslint-disable*/
 import React, {useState, useRef, useEffect, useContext} from "react";
+import {Tooltip, Switch,Form} from 'antd';
 import {mainContext} from 'reducer';
 import Emitter from "utils/eventBus";
 import {nodeStatusCheck, getPrivateKey, getRepo, changeRepo} from "services/otherService.js";
@@ -7,6 +8,8 @@ import {t} from "utils/text.js";
 import themeStyle from "utils/themeStyle.js";
 import {urlCheck} from "utils/checks.js";
 import PathConfirmModal from "components/Modals/PathConfirmModal.js";
+import CardConfigList from './CardConfigList';
+import ConfigConfirmModal from 'components/Modals/ConfigConfirmModal';
 
 export default function CardSettings({color}) {
 
@@ -71,6 +74,12 @@ export default function CardSettings({color}) {
         // }
     };
 
+    const handleResetDefault = () => {
+        Emitter.emit('openConfigConfirmModal', {});
+    }
+    const handleViewConfigFile = () => {
+        console.log('handleViewConfigFile');
+    }
     return (
         <>
             <div>
@@ -127,6 +136,39 @@ export default function CardSettings({color}) {
                         </button>
                     </div>
                 </div>
+                <div
+                    className={"mb-4 shadow-lg rounded-lg border-0 " + themeStyle.bg[color] + themeStyle.text[color]}>
+                    <div className="rounded-t mb-0 px-6 py-6 flex justify-between">
+                        <div className="flex items-center">
+                            <h5 className={"font-bold uppercase " + themeStyle.title[color]}>
+                                {t('advance_config')}
+                            </h5>
+                            <Tooltip overlayInnerStyle={{width: '180px'}}  placement="top"
+                                    title={<p>{t('advance_config_tips')}</p>}>
+                                <i className="fas fa-info-circle ml-1 text-xs"></i>
+                            </Tooltip>
+                        </div>
+                        <div>
+                        <button
+                            className="bg-indigo-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ml-2"
+                            type="button"
+                            onClick={handleResetDefault}
+                        >
+                            {t('reset_default')}
+                        </button>
+                        <button
+                            className="bg-indigo-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ml-2"
+                            type="button"
+                            onClick={handleViewConfigFile}
+                        >
+                            {t('view_config_file')}
+                        </button>
+                        </div>
+                    </div>
+                    <div className="px-8 pb-6">
+                        <CardConfigList />
+                    </div>
+                </div>
 
 
                 <div className={"shadow-lg rounded-lg border-0 " + themeStyle.bg[color] + themeStyle.text[color]}>
@@ -147,6 +189,7 @@ export default function CardSettings({color}) {
                 </div>
 
                 <PathConfirmModal color={theme}/>
+                <ConfigConfirmModal color={theme}/>
             </div>
 
         </>

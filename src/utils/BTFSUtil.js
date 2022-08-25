@@ -127,3 +127,29 @@ export function getTimes(date) {
 export function appendZero(num) {
     return num < 10 ? '0' + num : num
 }
+/**
+ * 版本比较
+ * @param {*} curVersion 当前版本
+ * @param {*} lastVersion 比较版本
+ * @returns 0：当前版本=比较版本; 1:当前版本>比较版本; -1:当前版本<比较版本
+ */
+export function versionStringCompare (curVersion='', lastVersion='2.2.1'){
+    const sources = curVersion.split('.');
+    const dests = lastVersion.split('.');
+    const maxL = Math.max(sources.length, dests.length);
+    let result = 0;
+    for (let i = 0; i < maxL; i++) {  
+        let preValue = sources.length>i ? sources[i]:0;
+        let preNum = isNaN(Number(preValue)) ? preValue.charCodeAt() : Number(preValue);
+        let lastValue = dests.length>i ? dests[i]:0;
+        let lastNum =  isNaN(Number(lastValue)) ? lastValue.charCodeAt() : Number(lastValue);
+        if (preNum < lastNum) {
+            result = -1;
+            break;
+        } else if (preNum > lastNum) { 
+            result = 1;
+            break;
+        }
+    }
+    return result;
+}
