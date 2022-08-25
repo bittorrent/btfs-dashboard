@@ -127,3 +127,37 @@ export function getTimes(date) {
 export function appendZero(num) {
     return num < 10 ? '0' + num : num
 }
+/**
+ * 版本比较
+ * @param {*} curVersion 当前版本
+ * @param {*} lastVersion 比较版本
+ * @returns 0：当前版本=比较版本; 1:当前版本>比较版本; -1:当前版本<比较版本
+ */
+ export function versionStringCompare (curVersion='', lastVersion='2.2.1'){
+    const sources = curVersion.split('.');
+    const dests = lastVersion.split('.');
+    const maxL = Math.max(sources.length, dests.length);
+    let result = 0;
+    for (let i = 0; i < maxL; i++) {  
+        const preValue = sources.length>i ? sources[i]:0;
+        const preNum = isNaN(Number(preValue)) ? preValue.charCodeAt() : Number(preValue);
+        const lastValue = dests.length>i ? dests[i]:0;
+        const lastNum =  isNaN(Number(lastValue)) ? lastValue.charCodeAt() : Number(lastValue);
+        if (preNum < lastNum) {
+            result = -1;
+            break;
+        } else if (preNum > lastNum) { 
+            result = 1;
+            break;
+        }
+    }
+    return result;
+  }
+  export function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}

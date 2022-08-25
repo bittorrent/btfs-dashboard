@@ -47,8 +47,8 @@ class APIClient10 {
         return this.request('/api/v1/id');
     }
 
-    getHostScore() {
-        return this.request('/api/v1/storage/stats/info?l=false');
+    getHostScore(version=2) {
+        return this.request(`/api/v1/storage/stats/info?l=false&version=${version}`);
     }
 
     getHostPrice() {
@@ -61,6 +61,12 @@ class APIClient10 {
 
     getHostConfig() {
         return this.request('/api/v1/config/show');
+    }
+    editHostConfig(key,value,isBool) {
+        return this.request('/api/v1/config?arg=' + key + '&arg=' + value + '&bool=' + isBool);
+    }
+    resetHostConfig() {
+        return this.request('/api/v1/config/reset');
     }
 
     getNetworkStatus() {

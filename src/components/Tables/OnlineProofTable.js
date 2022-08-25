@@ -1,5 +1,6 @@
 /*eslint-disable*/
 import React, {useState, useEffect, useCallback} from "react";
+import {Tooltip} from 'antd';
 import PropTypes from "prop-types";
 import {Pagination} from 'antd';
 import {getHeartBeatsReportlist} from "services/dashboardService.js";
@@ -71,7 +72,11 @@ export default function OnlineProofTable({color}) {
                                 {t('heart_th_contract')}
                             </th>
                             <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
-                                {t('heart_th_nonce')}
+                                <span>{t('heart_th_nonce')}</span>
+                                <Tooltip overlayInnerStyle={{width: '200px'}}  placement="rightTop"
+                                        title={<p>{t('heart_th_nonce_tips')}</p>}>
+                                    <i className="fas fa-question-circle ml-1 text-xs"></i>
+                                </Tooltip>
                             </th>
                         </tr>
                         </thead>

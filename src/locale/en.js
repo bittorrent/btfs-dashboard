@@ -67,6 +67,13 @@ const en_US = {
     'send': 'Send',
     'in': 'In',
     'out': 'Out',
+    'poor':'Poor',
+    'general':'Average',
+    'good':'Good',
+    'excellent':'Excellent',
+    'online_active':'Activity',
+    'switch_old_version':'Old version',
+    'switch_new_version':'New version',
 
 // cheques
 
@@ -139,6 +146,25 @@ const en_US = {
     'security': 'Security',
     'reveal_key': 'Reveal Private Key',
     'private_key': 'Private Key',
+    'advance_config':'Advanced Settings',
+    'advance_config_tips':'Changes to the settings require the service to be restarted before they can take effect. Please do not change any item if you do not know what it is.',
+    'reset_default':'Reset',
+    'view_config_file':'Config File',
+    'enable_storage_host':'Miner Mode',
+    'enable_storage_host_tips':'The node stores the data uploaded by users only when Storage Host Mode is on. This mode is turned on by default.',
+    'enable_report_online':'Online Report',
+    'enable_report_online_tips':'Once it is turned on, a signature will be created every hour, and the data of all signatures will be reported to the contract.',
+    'enable_report_status_contract':'Status Contract Report',
+    'enable_report_status_contract_tips':`Once it is turned on, the node's uptime will be reported to the Online Proof Contract via a transaction every day. `,
+    'reset_advance_config_title':'Restore the default configuration',
+    'reset_advance_config_tips':'After restoring the default configuration, you need to restart the serviceto take effect',
+    'setting_breadcrumb':'SETTINGS',
+    'setting_file_config_breadcrumb':'View BTFS Configuration File',
+    'setting_file_config_breadcrumb_des':`BTFS's configuration file is a JSON file read by the BTFS daemon. `,
+    'rpc_address':'RPC Address',
+    'rpc_set_btn_name':'set',
+    'copy_url':'Copy URL with API parameter',
+    'copy_url_tips':`Copy the URL with the API endpoint's parameters. You may configure the API endpoint quickly by accessing the URL.`,
 
 // modal
     'transfer': 'Transfer',
@@ -210,6 +236,7 @@ const en_US = {
     'amount_available_check_1': 'The max available BTT = Max BTT - 15 BTT',
     'amount_available_check_2': 'The max available WBTT = Max WBTT (if BTT balance more than 15 BTT)',
     'amount_available_check_3': 'The max available WBTT = 0 (if BTT balance is less than 15 BTT)',
+    'copy_success':'Copy Sucessful !',
 
 // heartBeats
 
@@ -227,8 +254,8 @@ const en_US = {
     'heart_th_from': 'From',
     'heart_th_contract': 'Online Proof Contract',
     'heart_th_nonce': 'Heartbeats Nonce',
-    'bttc_addr': 'Node’s BTTC Address'
-
+    'bttc_addr': 'Node’s BTTC Address',
+    'heart_th_nonce_tips':'Heartbeat Nonce: A nonce used to prove the node is online. The nonce will increase by one as each hour passes. ',
 };
 
 export default en_US
