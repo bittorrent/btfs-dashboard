@@ -67,6 +67,12 @@ const en_US = {
     'send': 'Send',
     'in': 'In',
     'out': 'Out',
+    'general':'General',
+    'good':'Good',
+    'excellent':'Excellent',
+    'online_active':'Online Active',
+    'switch_old_version':'Old Version',
+    'switch_new_version':'New Version',
 
 // cheques
 
@@ -149,7 +155,13 @@ const en_US = {
     'enable_storage_client':'Enable Storage Client',
     'reset_advance_config_title':'恢复默认配置',
     'reset_advance_config_tips':'恢复默认配置后需在客户端重启服务才可生效',
-
+    'setting_breadcrumb':'设置',
+    'setting_file_config_breadcrumb':'查看BTFS 配置文件',
+    'setting_file_config_breadcrumb_des':'BTFS配置文件是一个json文件，启动BTFS守护程序时会读取该文件。',
+    'rpc_address':'RPC Address',
+    'rpc_set_btn_name':'set',
+    'copy_url':'CopyURL',
+    'copy_url_tips':'复制带API end point参数的URL，下次通过访问该URL可以快速配置API end point',
 
 // modal
     'transfer': 'Transfer',
@@ -221,6 +233,7 @@ const en_US = {
     'amount_available_check_1': 'The max available BTT = Max BTT - 15 BTT',
     'amount_available_check_2': 'The max available WBTT = Max WBTT (if BTT balance more than 15 BTT)',
     'amount_available_check_3': 'The max available WBTT = 0 (if BTT balance is less than 15 BTT)',
+    'copy_success':'Copy Sucessful !',
 
 // heartBeats
 

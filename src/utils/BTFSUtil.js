@@ -133,16 +133,16 @@ export function appendZero(num) {
  * @param {*} lastVersion 比较版本
  * @returns 0：当前版本=比较版本; 1:当前版本>比较版本; -1:当前版本<比较版本
  */
-export function versionStringCompare (curVersion='', lastVersion='2.2.1'){
+ export function versionStringCompare (curVersion='', lastVersion='2.2.1'){
     const sources = curVersion.split('.');
     const dests = lastVersion.split('.');
     const maxL = Math.max(sources.length, dests.length);
     let result = 0;
     for (let i = 0; i < maxL; i++) {  
-        let preValue = sources.length>i ? sources[i]:0;
-        let preNum = isNaN(Number(preValue)) ? preValue.charCodeAt() : Number(preValue);
-        let lastValue = dests.length>i ? dests[i]:0;
-        let lastNum =  isNaN(Number(lastValue)) ? lastValue.charCodeAt() : Number(lastValue);
+        const preValue = sources.length>i ? sources[i]:0;
+        const preNum = isNaN(Number(preValue)) ? preValue.charCodeAt() : Number(preValue);
+        const lastValue = dests.length>i ? dests[i]:0;
+        const lastNum =  isNaN(Number(lastValue)) ? lastValue.charCodeAt() : Number(lastValue);
         if (preNum < lastNum) {
             result = -1;
             break;
@@ -152,4 +152,12 @@ export function versionStringCompare (curVersion='', lastVersion='2.2.1'){
         }
     }
     return result;
+  }
+  export function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }

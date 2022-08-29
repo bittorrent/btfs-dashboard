@@ -62,6 +62,12 @@ class APIClient10 {
     getHostConfig() {
         return this.request('/api/v1/config/show');
     }
+    editHostConfig(key,value,isBool) {
+        return this.request('/api/v1/config?arg=' + key + '&arg=' + value + '&bool=' + isBool);
+    }
+    resetHostConfig() {
+        return this.request('/api/v1/config/reset');
+    }
 
     getNetworkStatus() {
         return this.request('/api/v1/network');

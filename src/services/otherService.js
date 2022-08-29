@@ -77,3 +77,17 @@ export const nodeStatusCheck = async (url) => {
     }
 };
 
+export const getHostConfigData = async () => {
+    const data = await Client10.getHostConfig();
+    return data;
+};
+
+export const resetHostConfigData = async () => {
+    const data = await Client10.resetHostConfig();
+    return data;
+};
+export const editHostConfig = async (key,value,isBool) => {
+    const data = await Client10.editHostConfig(key,value,isBool);
+    return data;
+};
+

@@ -5,7 +5,7 @@ import {useIntl} from 'react-intl';
 import {mainContext} from 'reducer';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
-export default function ClipboardCopy({value}) {
+export default function ClipboardCopy({value,btnText}) {
 
     const intl = useIntl();
     const {state} = useContext(mainContext);
@@ -23,6 +23,7 @@ export default function ClipboardCopy({value}) {
     return (
         <CopyToClipboard text={value}>
             <a className="ml-2" onClick={success}>
+                {btnText?btnText:''}
                 <i className="fa fa-paste"/>
             </a>
         </CopyToClipboard>

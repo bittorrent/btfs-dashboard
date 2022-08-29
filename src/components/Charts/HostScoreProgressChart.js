@@ -2,14 +2,40 @@ import React from "react";
 import {Progress} from 'antd';
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
+import Emitter from "utils/eventBus";
 
 let strokeColor = {
     '0%': '#108ee9',
     '100%': '#87d068',
 };
 
-export default function HostScoreProgressChart({color, data}) {
-
+export default function HostScoreProgressChart({color, data, isNewVersion,initIsNewVersion}) {
+    const list = new Array(3).fill("");
+    const progressData = [
+        {
+          id: 1,
+          text: "online_duration",
+          level: data.uptimeLevel,
+        },
+        {
+            id: 2,
+            text: "host_age",
+            level: data.ageLevel,
+          },
+          {
+            id: 3,
+            text: "version",
+            level: data.versionLevel,
+          },
+          {
+            id: 4,
+            text: "online_active",
+            level: data.activeLeve,
+          },
+      ];
+      const handleSwitchVersion = () =>{
+        Emitter.emit('handleSwitchVersion',!isNewVersion);
+      }
     return (
         <>
             <div className='h-full'>
@@ -21,26 +47,59 @@ export default function HostScoreProgressChart({color, data}) {
                                     {t('host_score_factor')} ({t('weight')})
                                 </h6>
                             </div>
+                            {
+                            initIsNewVersion?<div className={themeStyle.link[color]}>
+                                <a className="ml-2" onClick={handleSwitchVersion}>
+                                {t(isNewVersion ? "switch_old_version" : "switch_new_version")} {">"}
+                                </a>
+                            </div>:''
+                            }
+                            
                         </div>
                     </div>
                 </div>
                 <div className="pl-4 flex-auto">
                     <div className="flex flex-col justify-between px-2 h-300-px">
-                        <div className='whitespace-nowrap'>{t('online_duration')} ({data.uptimeWeight * 100} %)</div>
-                        <Progress className={color} strokeColor={strokeColor} percent={data.uptimeScore * 10}
-                                  format={() => (data.uptimeScore)}/>
-                        <div className='whitespace-nowrap'>{t('host_age')} ({data.ageWeight * 100} %)</div>
-                        <Progress className={color} strokeColor={strokeColor} percent={data.ageScore * 10}
-                                  format={() => (data.ageScore)}/>
-                        <div className='whitespace-nowrap'>{t('version')} ({data.versionWeight * 100} %)</div>
-                        <Progress className={color} strokeColor={strokeColor} percent={data.versionScore * 10}
-                                  format={() => (data.versionScore)}/>
-                        <div className='whitespace-nowrap'>{t('download')} ({data.downloadWeight * 100} %)</div>
-                        <Progress className={color} strokeColor={strokeColor} percent={data.downloadScore * 10}
-                                  format={() => (data.downloadScore)}/>
-                        <div className='whitespace-nowrap'>{t('upload')} ({data.uploadWeight * 100} %)</div>
-                        <Progress className={color} strokeColor={strokeColor} percent={data.uploadScore * 10}
-                                  format={() => (data.uploadScore)}/>
+                        {
+                            isNewVersion?<>
+                                 {progressData.map(item=>{
+                                    return <div key={item.id} className="flex w-full">
+                                    <div className='whitespace-nowrap text-right pr-5-px' style={{width:'110px',paddingRight:'10px'}}>{t(item.text)}</div>
+                                    <div className="flex justify-between flex-1">
+                                    {
+                                        list.map((child,index)=>{
+                                            return <Progress
+                                            key={index}
+                                            percent={item.level > index ? 100 : 0}
+                                            showInfo={false}
+                                            style={{ width: "60px" }}
+                                            trailColor="#ECF2FF"
+                                            strokeColor="#3257f6"
+                                          />
+                                        })
+                                    }
+                                    </div>
+                                    </div>
+                                 })}
+                            </>:<>
+                                <div className='whitespace-nowrap'>{t('online_duration')} ({data.uptimeWeight * 100} %)</div>
+                            <Progress className={color} strokeColor={strokeColor} percent={data.uptimeScore * 10}
+                                    format={() => (data.uptimeScore)}/>
+                            <div className='whitespace-nowrap'>{t('host_age')} ({data.ageWeight * 100} %)</div>
+                            <Progress className={color} strokeColor={strokeColor} percent={data.ageScore * 10}
+                                    format={() => (data.ageScore)}/>
+                            <div className='whitespace-nowrap'>{t('version')} ({data.versionWeight * 100} %)</div>
+                            <Progress className={color} strokeColor={strokeColor} percent={data.versionScore * 10}
+                                    format={() => (data.versionScore)}/>
+                            <div className='whitespace-nowrap'>{t('download')} ({data.downloadWeight * 100} %)</div>
+                            <Progress className={color} strokeColor={strokeColor} percent={data.downloadScore * 10}
+                                    format={() => (data.downloadScore)}/>
+                            <div className='whitespace-nowrap'>{t('upload')} ({data.uploadWeight * 100} %)</div>
+                            <Progress className={color} strokeColor={strokeColor} percent={data.uploadScore * 10}
+                                    format={() => (data.uploadScore)}/></>
+
+                        }
+                      
                     </div>
                 </div>
             </div>

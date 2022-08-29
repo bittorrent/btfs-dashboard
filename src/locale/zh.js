@@ -67,6 +67,9 @@ const zh_CN = {
     'send': '发送',
     'in': '下行',
     'out': '上行',
+    'general':'General',
+    'good':'Good',
+    'excellent':'Excellent',
 
 // cheques
 
@@ -149,6 +152,13 @@ const zh_CN = {
     'enable_storage_client':'Enable Storage Client',
     'reset_advance_config_title':'恢复默认配置',
     'reset_advance_config_tips':'恢复默认配置后需在客户端重启服务才可生效',
+    'setting_breadcrumb':'设置',
+    'setting_file_config_breadcrumb':'查看BTFS 配置文件',
+    'setting_file_config_breadcrumb_des':'BTFS配置文件是一个json文件，启动BTFS守护程序时会读取该文件。',
+    'rpc_address':'RPC Address',
+    'rpc_set_btn_name':'set',
+    'copy_url':'CopyURL',
+    'copy_url_tips':'复制带API end point参数的URL，下次通过访问该URL可以快速配置API end point',
 
 // modal
 
@@ -221,6 +231,10 @@ const zh_CN = {
     'amount_available_check_1': '最大可用BTT = 最大BTT - 15 BTT',
     'amount_available_check_2': '最大可用WBTT = 最大WBTT (如果BTT余额大于15 BTT)',
     'amount_available_check_3': '最大可用WBTT = 0 (如果BTT余额小于15 BTT)',
+    'copy_success':'拷贝成功 !',
+    'online_active':'Online Active',
+    'switch_old_version':'Old Version',
+    'switch_new_version':'New Version',
 
 
 // heartBeats

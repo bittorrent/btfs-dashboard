@@ -16,7 +16,6 @@ export default function ConfigConfirmModal({color}) {
     useEffect(() => {
         const set = function (params) {
             openModal();
-            console.log('params', params)
         };
         Emitter.on("openConfigConfirmModal", set);
         return () => {

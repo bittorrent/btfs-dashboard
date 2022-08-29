@@ -63,6 +63,10 @@ export const getHostScore = async () => {
                 versionWeight: data['version_weight'],
                 uploadWeight: data['upload_speed_weight'],
                 downloadWeight: data['download_speed_weight'],
+                uptimeLevel: data['uptime_level'],
+                ageLevel: data['age_level'],
+                versionLevel: data['age_level'],
+                activeLeve: data['active_leve'],
             }
         }
     } catch (e) {
@@ -320,4 +324,8 @@ export const getHeartBeatsReportlist = async (from) => {
     }
 };
 
+export const getHostVersion = async ()=>{
+    const data = Client10.getHostVersion();
+    return  data['Version'] ? data['Version'] : '';
+}
 

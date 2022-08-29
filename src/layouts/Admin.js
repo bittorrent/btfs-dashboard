@@ -83,7 +83,7 @@ export default function Admin() {
 
     useEffect(async () => {
         const NODE_URL = localStorage.getItem('NODE_URL');
-        if (!NODE_URL) {
+        if (!NODE_URL && !window.location.href.includes('/admin/settings')) {
             history.push('/admin/settings');
         } else {
             // check node status

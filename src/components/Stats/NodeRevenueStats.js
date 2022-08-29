@@ -44,10 +44,12 @@ export default function NodeRevenueStats({color}) {
 
     return (
         <>
-            <div className="relative pb-4">
-                <div className="mx-auto w-full">
-                    <div className="flex flex-wrap">
-                        <div className="w-full xl:w-6/12 md:pr-2 md:mb-2 xl:mb-0">
+            <div className="relative w-full h-full flex flex-col">
+
+                {/* <div className="w-full h-full flex flex-col">
+                
+                </div> */}
+                <div className="w-full flex-1 md:pr-2 mb-40-px">
                             <div
                                 className={"relative break-words rounded flex flex-row items-center justify-between p-4 h-full " + themeStyle.bg[color] + themeStyle.text[color]}>
                                 <div className="w-1/2 border-r h-full flex flex-col justify-center">
@@ -82,48 +84,47 @@ export default function NodeRevenueStats({color}) {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                </div>
+                <div style={{height:'30px'}}></div>
 
-                        <div className="w-full xl:w-6/12 md:pr-2 md:mb-2 xl:mb-0">
-                            <div
-                                className={"relative break-words rounded flex flex-row items-center justify-between p-4 h-full " + themeStyle.bg[color] + themeStyle.text[color]}>
-                                <div className="w-1/2 border-r h-full flex flex-col justify-center overflow-auto">
-                                        <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
-                                            {t('total_expense')}
-                                        </h5>
-                                        <div>
-                                            <span className="text-lg font-semibold">{totalExpense}</span>
-                                            <span className='text-xs'>BTT (WBTT)</span>
-                                        </div>
+                <div className="w-full flex-1  md:pr-2 md:mb-2 xl:mb-0">
+                    <div
+                        className={"relative break-words rounded flex flex-row items-center justify-between p-4 h-full " + themeStyle.bg[color] + themeStyle.text[color]}>
+                        <div className="w-1/2 border-r h-full flex flex-col justify-center overflow-auto">
+                                <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
+                                    {t('total_expense')}
+                                </h5>
+                                <div>
+                                    <span className="text-lg font-semibold">{totalExpense}</span>
+                                    <span className='text-xs'>BTT (WBTT)</span>
                                 </div>
-                                <div className="w-1/2 pl-2 flex flex-col justify-between h-full">
-                                    <div className="relative flex flex-col">
-                                        <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
-                                            <i className="fas fa-circle text-red-500 text- mr-2"></i>
-                                            {t('cheque_expense')}&nbsp;({chequeExpensePercent}%)
-                                        </h5>
-                                        <div>
-                                            <span className='text-lg font-semibold'>{chequeExpense}</span>
-                                            <span className='text-xs'>WBTT</span>
-                                        </div>
-                                    </div>
+                        </div>
+                        <div className="w-1/2 pl-2 flex flex-col justify-between h-full">
+                            <div className="relative flex flex-col">
+                                <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
+                                    <i className="fas fa-circle text-red-500 text- mr-2"></i>
+                                    {t('cheque_expense')}&nbsp;({chequeExpensePercent}%)
+                                </h5>
+                                <div>
+                                    <span className='text-lg font-semibold'>{chequeExpense}</span>
+                                    <span className='text-xs'>WBTT</span>
+                                </div>
+                            </div>
 
-                                    <div className="relative flex flex-col justify-between mt-2">
-                                        <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
-                                            <i className="fas fa-circle text-red-400 text- mr-2"></i>
-                                            {t('gas_fee')}
-                                            <Tooltip placement="bottom"
-                                                title={<p>{t('cheque_expense_des')}</p>}>
-                                                <i className="fas fa-question-circle ml-1 font-semibold text-xs"></i>
-                                            </Tooltip>
-                                            &nbsp;
-                                            ({gasFeePercent}%)
-                                        </h5>
-                                        <div>
-                                            <span className='text-lg font-semibold'>{gasFee}</span>
-                                            <span className='text-xs'>BTT</span>
-                                        </div>
-                                    </div>
+                            <div className="relative flex flex-col justify-between mt-2">
+                                <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
+                                    <i className="fas fa-circle text-red-400 text- mr-2"></i>
+                                    {t('gas_fee')}
+                                    <Tooltip placement="bottom"
+                                        title={<p>{t('cheque_expense_des')}</p>}>
+                                        <i className="fas fa-question-circle ml-1 font-semibold text-xs"></i>
+                                    </Tooltip>
+                                    &nbsp;
+                                    ({gasFeePercent}%)
+                                </h5>
+                                <div>
+                                    <span className='text-lg font-semibold'>{gasFee}</span>
+                                    <span className='text-xs'>BTT</span>
                                 </div>
                             </div>
                         </div>
