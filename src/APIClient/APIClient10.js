@@ -47,8 +47,8 @@ class APIClient10 {
         return this.request('/api/v1/id');
     }
 
-    getHostScore() {
-        return this.request('/api/v1/storage/stats/info?l=false');
+    getHostScore(version=2) {
+        return this.request(`/api/v1/storage/stats/info?l=false&version=${version}`);
     }
 
     getHostPrice() {

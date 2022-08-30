@@ -14,4 +14,5 @@ export const CHAIN_NAME = {
     199: 'BTTC',
     1029: 'BTTC Donau Testnet'
 };
-
+export const OLD_SCORE_VERSION = 1;
+export const NEW_SCORE_VERSION = 2;

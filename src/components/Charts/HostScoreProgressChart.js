@@ -9,7 +9,7 @@ let strokeColor = {
     '100%': '#87d068',
 };
 
-export default function HostScoreProgressChart({color, data, isNewVersion,initIsNewVersion}) {
+export default function HostScoreProgressChart({color, data, isNewVersion}) {
     const list = new Array(3).fill("");
     const progressData = [
         {
@@ -47,13 +47,11 @@ export default function HostScoreProgressChart({color, data, isNewVersion,initIs
                                     {t('host_score_factor')} ({t('weight')})
                                 </h6>
                             </div>
-                            {
-                            initIsNewVersion?<div className={themeStyle.link[color]}>
+                            <div className={themeStyle.link[color]}>
                                 <a className="ml-2" onClick={handleSwitchVersion}>
                                 {t(isNewVersion ? "switch_old_version" : "switch_new_version")} {">"}
                                 </a>
-                            </div>:''
-                            }
+                            </div>
                             
                         </div>
                     </div>

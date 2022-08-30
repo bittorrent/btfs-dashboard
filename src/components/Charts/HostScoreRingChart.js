@@ -44,6 +44,7 @@ export default function HostScoreRingChart({color,isNewVersion, data}) {
                     <div className="relative flex flex-col justify-between items-center h-300-px">
                         <div className='mt-4'>
                         {isNewVersion ? (
+                            data.level?
                             <Progress
                             // trailColor={activeTheme === "light" ? "#ECF2FF" : "#0B254C"}
                             strokeColor={scoreLevelObj.color}
@@ -59,7 +60,7 @@ export default function HostScoreRingChart({color,isNewVersion, data}) {
                                 </div>
                                 </div>
                             )}
-                            />
+                            />:''
                         ) : (
                             <Progress
                             className={color}

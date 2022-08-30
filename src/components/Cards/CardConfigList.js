@@ -136,7 +136,7 @@ export default function CardConfigList({ color }) {
         Emitter.emit('handleConfigChange',{checked,parentIndex, childIndex});
     };
     return (
-      <div className={configItem.isChild?'border-l border-solid pl-2  flex ml-2 justify-between items-center py-1':'flex justify-between items-center py-1'}>
+      <div className={'flex justify-between items-center py-1'}>
         <div className="">{t(configItem.title)}</div>
         <div className="mr-6">
             <Switch size="small" disabled={configItem.isDisable} checked={configItem.checked} onChange={onChange} />

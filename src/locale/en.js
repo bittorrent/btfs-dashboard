@@ -160,7 +160,7 @@ const en_US = {
     'setting_file_config_breadcrumb_des':'BTFS配置文件是一个json文件，启动BTFS守护程序时会读取该文件。',
     'rpc_address':'RPC Address',
     'rpc_set_btn_name':'set',
-    'copy_url':'CopyURL',
+    'copy_url':'Copy URL with API parameter',
     'copy_url_tips':'复制带API end point参数的URL，下次通过访问该URL可以快速配置API end point',
 
 // modal
