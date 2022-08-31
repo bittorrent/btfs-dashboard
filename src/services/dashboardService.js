@@ -84,7 +84,7 @@ export const getHostScore = async (version) => {
             return {
                 leftData: {
                     lastUpdated: data['last_updated'],
-                    level: data["score"]
+                    level: data["level"]
                 },
                 rightData: {
                     uptimeLevel: data['uptime_level'] || 0,
