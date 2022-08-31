@@ -33,7 +33,7 @@ export default function CardHostScore({color}) {
         uptimeLevel: 0,
         ageLevel: 0,
         versionLevel: 0,
-        activeLeve: 0,
+        activeLevel: 0,
     });
 
 

@@ -90,7 +90,7 @@ export const getHostScore = async (version) => {
                     uptimeLevel: data['uptime_level'] || 0,
                     ageLevel: data['age_level'] || 0,
                     versionLevel: data['version_level'] || 0,
-                    activeLeve: data['active_leve'] || 0,
+                    activeLevel: data['active_level'] || 0,
                 }
             }
 

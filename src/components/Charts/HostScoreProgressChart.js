@@ -31,7 +31,7 @@ export default function HostScoreProgressChart({color, data, isNewVersion,scoreI
           {
             id: 4,
             text: "online_active",
-            level: data.activeLeve,
+            level: data.activeLevel,
           },
       ];
       const handleSwitchVersion = () =>{
