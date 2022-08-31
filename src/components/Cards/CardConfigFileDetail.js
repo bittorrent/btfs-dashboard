@@ -38,7 +38,6 @@ export default function CardConfigFileDetail({ color }) {
             <Link
               to={{
                 search: "?fileDetail=0",
-                state: { fromDashboard: true },
               }}
             >
               <span>{t("setting_breadcrumb")}</span>

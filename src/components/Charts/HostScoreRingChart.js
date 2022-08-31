@@ -46,7 +46,6 @@ export default function HostScoreRingChart({color,isNewVersion, data}) {
                         {isNewVersion ? (
                             data.level?
                             <Progress
-                            // trailColor={activeTheme === "light" ? "#ECF2FF" : "#0B254C"}
                             strokeColor={scoreLevelObj.color}
                             type="circle"
                             percent={100}

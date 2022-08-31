@@ -8,9 +8,8 @@ import {t} from "utils/text.js";
 import themeStyle from "utils/themeStyle.js";
 import {urlCheck} from "utils/checks.js";
 import PathConfirmModal from "components/Modals/PathConfirmModal.js";
-import CardConfigList from './CardConfigList';
+import CardConfig from './CardConfig';
 import ConfigConfirmModal from 'components/Modals/ConfigConfirmModal';
-import {Link} from "react-router-dom";
 import ClipboardCopy from "components/Utils/ClipboardCopy";
 import {getParameterByName} from  "utils/BTFSUtil.js";
 
@@ -172,46 +171,7 @@ export default function CardSettings({color}) {
                         </button>
                     </div>
                 </div>
-                <div
-                    className={"mb-4 shadow-lg rounded-lg border-0 " + themeStyle.bg[color] + themeStyle.text[color]}>
-                    <div className="rounded-t mb-0 px-6 py-6 flex justify-between">
-                        <div className="flex items-center">
-                            <h5 className={"font-bold uppercase " + themeStyle.title[color]}>
-                                {t('advance_config')}
-                            </h5>
-                            <Tooltip placement="top"
-                                    title={<p>{t('advance_config_tips')}</p>}>
-                                <i className="fas fa-info-circle ml-1 text-xs"></i>
-                            </Tooltip>
-                        </div>
-                        <div>
-                        <button
-                            className="bg-indigo-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ml-2"
-                            type="button"
-                            onClick={handleResetDefault}
-                        >
-                            {t('reset_default')}
-                        </button>
-                        <Link to={{
-                            search: "?fileDetail=1",
-                            state: { fromDashboard: true }
-                        }}>
-                            <button
-                                className="bg-indigo-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ml-2"
-                                type="button"
-                            >
-                                {t('view_config_file')}
-                            </button>
-                        </Link>
-                       
-                        </div>
-                    </div>
-                    <div className="px-8 pb-6">
-                        <CardConfigList color={color} />
-                    </div>
-                </div>
-
-
+                <CardConfig color={color} />
                 <div className={"shadow-lg rounded-lg border-0 " + themeStyle.bg[color] + themeStyle.text[color]}>
                     <div className="rounded-t mb-0 px-6 py-6">
                         <h5 className={"font-bold uppercase " + themeStyle.title[color]}>

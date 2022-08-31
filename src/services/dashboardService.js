@@ -85,14 +85,6 @@ export const getHostScore = async (version) => {
                 versionLevel: data['version_level'],
                 activeLeve: data['active_leve'],
             }
-            /**
-             * 
-             分数等级： level
-             在线时长：uptime_level，
-             Host年龄：age_level
-             版本：version_level
-             在线活跃：active_leve
-             */
         }
     } catch (e) {
         console.log(e);
