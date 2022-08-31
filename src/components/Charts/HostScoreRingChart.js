@@ -11,20 +11,17 @@ let strokeColor = {
 export default function HostScoreRingChart({color,isNewVersion, data}) {
     const scoreConfig = {
         3: {
-          color: "#06A561",
-          icon: "excellent-icon",
-          text: "excellent",
-        },
-        2: {
           color: "#2EBBB9",
-          icon: "good-icon",
           text: "good",
         },
-        1: {
+        2: {
           color: "#F99600",
-          icon: "general-icon",
           text: "general",
         },
+        1: {
+            color: "#C33730",
+            text: "poor",
+          },
       };
       const level = data.level || 1;
       const scoreLevelObj = scoreConfig[level] 

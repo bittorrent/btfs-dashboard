@@ -67,6 +67,7 @@ const zh_CN = {
     'send': '发送',
     'in': '下行',
     'out': '上行',
+    'poor':'不佳',
     'general':'一般',
     'good':'优秀',
     'excellent':'极好',

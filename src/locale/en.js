@@ -67,6 +67,7 @@ const en_US = {
     'send': 'Send',
     'in': 'In',
     'out': 'Out',
+    'poor':'Poor',
     'general':'Average',
     'good':'Good',
     'excellent':'Excellent',
