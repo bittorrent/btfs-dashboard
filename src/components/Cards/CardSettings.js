@@ -179,7 +179,7 @@ export default function CardSettings({color}) {
                             <h5 className={"font-bold uppercase " + themeStyle.title[color]}>
                                 {t('advance_config')}
                             </h5>
-                            <Tooltip overlayInnerStyle={{width: '180px'}}  placement="top"
+                            <Tooltip placement="top"
                                     title={<p>{t('advance_config_tips')}</p>}>
                                 <i className="fas fa-info-circle ml-1 text-xs"></i>
                             </Tooltip>

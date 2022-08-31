@@ -61,19 +61,21 @@ export default function HostScoreProgressChart({color, data, isNewVersion}) {
                         {
                             isNewVersion?<>
                                  {progressData.map(item=>{
-                                    return <div key={item.id} className="flex w-full">
+                                    return <div key={item.id} className="flex items-center w-full">
                                     <div className='whitespace-nowrap text-right pr-5-px' style={{width:'110px',paddingRight:'10px'}}>{t(item.text)}</div>
-                                    <div className="flex justify-between flex-1">
+                                    <div className="flex justify-between flex-1 py-1">
                                     {
                                         list.map((child,index)=>{
-                                            return <Progress
+                                            return <>
+                                            <Progress
                                             key={index}
                                             percent={item.level > index ? 100 : 0}
                                             showInfo={false}
-                                            style={{ width: "60px" }}
                                             trailColor="#ECF2FF"
                                             strokeColor="#3257f6"
                                           />
+                                          {index<2?<div style={{width:'20px'}}></div>:''}
+                                          </>
                                         })
                                     }
                                     </div>

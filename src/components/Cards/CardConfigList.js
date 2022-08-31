@@ -1,6 +1,5 @@
 import React, { useState, useEffect,useRef } from "react";
-// import CardConfigItem from "./CardConfigItem";
-import {Switch} from 'antd';
+import {Switch, Tooltip} from 'antd';
 import Emitter from "utils/eventBus";
 import { t } from "utils/text.js";
 import themeStyle from "utils/themeStyle.js";
@@ -45,7 +44,6 @@ export default function CardConfigList({ color }) {
     });
   };
   const handleUpdateConfig = async (needUpdateData) => {
-    console.log("needUpdateData", needUpdateData);
     for (let i = 0; i < needUpdateData.length; i++) {
       const { key, checked } = needUpdateData[i];
       editHostConfig(`Experimental.${key}`,checked,true);
@@ -99,9 +97,11 @@ export default function CardConfigList({ color }) {
         title: "enable_storage_host",
         checked: StorageHostEnabled,
         key: "StorageHostEnabled",
+        tips:"enable_storage_host_tips",
         children: [
           {
             title: "enable_report_online",
+            tips:"enable_report_online_tips",
             isChild: true,
             checked: ReportOnline,
             key: "ReportOnline",
@@ -109,6 +109,7 @@ export default function CardConfigList({ color }) {
           },
           {
             title: "enable_report_status_contract",
+            tips:"enable_report_status_contract_tips",
             isChild: true,
             checked: ReportStatusContract,
             key: "ReportStatusContract",
@@ -137,7 +138,11 @@ export default function CardConfigList({ color }) {
     };
     return (
       <div className={'flex justify-between items-center py-1'}>
-        <div className="">{t(configItem.title)}</div>
+        <div className="">{t(configItem.title)} 
+        <Tooltip placement="right"
+                title={<p>{t(configItem.tips)}</p>}>
+            <i className="fas fa-info-circle ml-1 text-xs"></i>
+        </Tooltip></div>
         <div className="mr-6">
             <Switch size="small" disabled={configItem.isDisable} checked={configItem.checked} onChange={onChange} />
         </div>
@@ -166,9 +171,14 @@ export default function CardConfigList({ color }) {
         );
       })}
       <div className="py-4">
-        <div className="py-1">{t('rpc_address')}</div>
-          {/* 'rpc_address':'RPC Address',
-    'rpc_set_btn_name':'set', */}
+        <div className="py-1">
+        <label
+          className="block uppercase text-xs font-bold mb-2"
+          htmlFor="grid-password"
+          >
+             {t('rpc_address')}
+          </label>
+          </div>
         <div className="pb-6 flex justify-between">
           <input
             type="text"

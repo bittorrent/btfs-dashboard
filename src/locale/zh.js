@@ -67,9 +67,12 @@ const zh_CN = {
     'send': '发送',
     'in': '下行',
     'out': '上行',
-    'general':'General',
-    'good':'Good',
-    'excellent':'Excellent',
+    'general':'一般',
+    'good':'优秀',
+    'excellent':'极好',
+    'online_active':'在线活跃',
+    'switch_old_version':'切换旧版分数',
+    'switch_new_version':'切换新版分数',
 
 // cheques
 
@@ -142,22 +145,25 @@ const zh_CN = {
     'security': '安全',
     'reveal_key': '导出私钥',
     'private_key': '私钥',
+
     'advance_config':'高级设置',
-    'advance_config_tips':'配置修改后需要重启服务才可生效',
-    'reset_default':'Reset default',
-    'view_config_file':'View Config File',
-    'enable_storage_host':'Enable Storage Host',
-    'enable_report_online':'Report Online',
-    'enable_report_status_contract':'Report Status Contract',
-    'enable_storage_client':'Enable Storage Client',
+    'advance_config_tips':'配置修改后需要重启服务才可生效，如果您不理解这些配置的含义，请不要修改它们',
+    'reset_default':'恢复默认配置',
+    'view_config_file':'查看配置文件',
+    'enable_storage_host':'启用矿工模式',
+    'enable_storage_host_tips':'存储Host模式开关。打开后本节点方可存储用户上传数据，关闭则无法存储，默认开启。',
+    'enable_report_online':'启用上报签名',
+    'enable_report_online_tips':'上报签名开关。开启后每小时签名一次，累计的签名数据最终会上报到合约中',
+    'enable_report_status_contract':'启用上报status合约',
+    'enable_report_status_contract_tips':'上报status合约开关。开启后每天通过交易向在线证明合约上报一次节点在线状态',
     'reset_advance_config_title':'恢复默认配置',
     'reset_advance_config_tips':'恢复默认配置后需在客户端重启服务才可生效',
     'setting_breadcrumb':'设置',
-    'setting_file_config_breadcrumb':'查看BTFS 配置文件',
+    'setting_file_config_breadcrumb':'查看BTFS配置文件',
     'setting_file_config_breadcrumb_des':'BTFS配置文件是一个json文件，启动BTFS守护程序时会读取该文件。',
-    'rpc_address':'RPC Address',
-    'rpc_set_btn_name':'set',
-    'copy_url':'Copy URL with API parameter',
+    'rpc_address':'RPC 地址',
+    'rpc_set_btn_name':'设置',
+    'copy_url':'复制带API end point参数的URL',
     'copy_url_tips':'复制带API end point参数的URL，下次通过访问该URL可以快速配置API end point',
 
 // modal
@@ -232,9 +238,6 @@ const zh_CN = {
     'amount_available_check_2': '最大可用WBTT = 最大WBTT (如果BTT余额大于15 BTT)',
     'amount_available_check_3': '最大可用WBTT = 0 (如果BTT余额小于15 BTT)',
     'copy_success':'拷贝成功 !',
-    'online_active':'Online Active',
-    'switch_old_version':'Old Version',
-    'switch_new_version':'New Version',
 
 
 // heartBeats

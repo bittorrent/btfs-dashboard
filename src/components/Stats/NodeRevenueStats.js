@@ -49,7 +49,7 @@ export default function NodeRevenueStats({color}) {
                 {/* <div className="w-full h-full flex flex-col">
                 
                 </div> */}
-                <div className="w-full flex-1 md:pr-2 mb-40-px">
+                <div className="w-full flex-1 mb-40-px">
                             <div
                                 className={"relative break-words rounded flex flex-row items-center justify-between p-4 h-full " + themeStyle.bg[color] + themeStyle.text[color]}>
                                 <div className="w-1/2 border-r h-full flex flex-col justify-center">
@@ -87,7 +87,7 @@ export default function NodeRevenueStats({color}) {
                 </div>
                 <div style={{height:'30px'}}></div>
 
-                <div className="w-full flex-1  md:pr-2 md:mb-2 xl:mb-0">
+                <div className="w-full flex-1  md:mb-2 xl:mb-0">
                     <div
                         className={"relative break-words rounded flex flex-row items-center justify-between p-4 h-full " + themeStyle.bg[color] + themeStyle.text[color]}>
                         <div className="w-1/2 border-r h-full flex flex-col justify-center overflow-auto">
