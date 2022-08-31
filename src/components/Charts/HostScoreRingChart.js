@@ -49,7 +49,7 @@ export default function HostScoreRingChart({color,isNewVersion, data}) {
                     <div className="relative flex flex-col justify-between items-center h-300-px">
                         <div className='mt-4'>
                         {isNewVersion ? (
-                            data.level?
+                            data.level && scoreLevelObj?
                             <Progress
                             strokeColor={scoreLevelObj.color}
                             type="circle"

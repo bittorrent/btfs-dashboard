@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import HostScoreRingChart from "components/Charts/HostScoreRingChart.js";
 import HostScoreProgressChart from "components/Charts/HostScoreProgressChart.js";
-import HostWarning from "components/Warning/HostWarning.js";
 import {getHostAllScore} from "services/dashboardService.js";
 import themeStyle from "utils/themeStyle.js";
 import Emitter from "utils/eventBus";
@@ -39,6 +38,7 @@ export default function CardHostScore({color}) {
 
 
     const [scoreInit, setScoreInit] = useState(true);
+    const [newScoreInit, setNewScoreInit] = useState(true);
     const handleSwitchVersion = (versionStatus)=>{
         setVersion(versionStatus);
     }
@@ -68,6 +68,9 @@ export default function CardHostScore({color}) {
             if(newLeftData.level){
                 setNewRingChartData(newLeftData);
                 setNewProgressChartData(newRightData);
+                setNewScoreInit(false)
+            }else{
+                setNewScoreInit(true)
             }
             
         }
@@ -82,12 +85,7 @@ export default function CardHostScore({color}) {
                        <HostScoreRingChart  isNewVersion={isNewVersion} data={isNewVersion?newRingChartData:ringChartData}  color={color}/>
                     </div>
                     <div className='w-1/2 pl-2'>
-                      {
-                          !scoreInit && <HostScoreProgressChart isNewVersion={isNewVersion} data={isNewVersion?newProgressChartData:progressChartData} color={color}/>
-                      }
-                      {
-                          scoreInit && <HostWarning />
-                      }
+                    <HostScoreProgressChart scoreInit={isNewVersion?newScoreInit:scoreInit} isNewVersion={isNewVersion} data={isNewVersion?newProgressChartData:progressChartData} color={color}/>
                     </div>
                 </div>
 

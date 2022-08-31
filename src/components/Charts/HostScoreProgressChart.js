@@ -3,13 +3,14 @@ import {Progress} from 'antd';
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
 import Emitter from "utils/eventBus";
+import HostWarning from "components/Warning/HostWarning.js";
 
 let strokeColor = {
     '0%': '#108ee9',
     '100%': '#87d068',
 };
 
-export default function HostScoreProgressChart({color, data, isNewVersion}) {
+export default function HostScoreProgressChart({color, data, isNewVersion,scoreInit}) {
     const list = new Array(3).fill("");
     const progressData = [
         {
@@ -56,7 +57,9 @@ export default function HostScoreProgressChart({color, data, isNewVersion}) {
                         </div>
                     </div>
                 </div>
-                <div className="pl-4 flex-auto">
+                {scoreInit && <HostWarning/>}
+                {
+                    !scoreInit && <div className="pl-4 flex-auto">
                     <div className="flex flex-col justify-between px-2 h-300-px">
                         {
                             isNewVersion?<>
@@ -105,6 +108,7 @@ export default function HostScoreProgressChart({color, data, isNewVersion}) {
                       
                     </div>
                 </div>
+                }
             </div>
         </>
     );

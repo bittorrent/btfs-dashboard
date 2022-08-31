@@ -52,40 +52,50 @@ export const getHostAllScore = async () => {
 
 export const getHostScore = async (version) => {
     try {
-        let {host_stats} = await Client10.getHostScore(version);
-        let data = host_stats ? host_stats : {};
-        if(version === OLD_SCORE_VERSION){
-            return {
-                leftData: {
-                    score: data['score'],
-                    lastUpdated: data['last_updated'],
-                },
-                rightData: {
-                    uptimeScore: data['uptime_score'],
-                    ageScore: data['age_score'],
-                    versionScore: data['version_score'],
-                    downloadScore: data['download_speed_score'],
-                    uploadScore: data['upload_speed_score'],
-                    uptimeWeight: data['uptime_weight'],
-                    ageWeight: data['age_weight'],
-                    versionWeight: data['version_weight'],
-                    uploadWeight: data['upload_speed_weight'],
-                    downloadWeight: data['download_speed_weight'],
+        const promise = new Promise((resolve) => {
+            Client10.getHostScore(version).then(
+              (data) => {resolve(data)},
+              () => {resolve({})}
+            );
+          });
+          return Promise.all([promise]).then((res)=>{
+            let {host_stats} = res[0];
+            let data = host_stats ? host_stats : {};
+            if(version === OLD_SCORE_VERSION){
+                return {
+                    leftData: {
+                        score: data['score'],
+                        lastUpdated: data['last_updated'],
+                    },
+                    rightData: {
+                        uptimeScore: data['uptime_score'],
+                        ageScore: data['age_score'],
+                        versionScore: data['version_score'],
+                        downloadScore: data['download_speed_score'],
+                        uploadScore: data['upload_speed_score'],
+                        uptimeWeight: data['uptime_weight'],
+                        ageWeight: data['age_weight'],
+                        versionWeight: data['version_weight'],
+                        uploadWeight: data['upload_speed_weight'],
+                        downloadWeight: data['download_speed_weight'],
+                    }
                 }
             }
-        }
-        return {
-            leftData: {
-                lastUpdated: data['last_updated'],
-                level: data["score"]
-            },
-            rightData: {
-                uptimeLevel: data['uptime_level'] || 0,
-                ageLevel: data['age_level'] || 0,
-                versionLevel: data['version_level'] || 0,
-                activeLeve: data['active_leve'] || 0,
+            return {
+                leftData: {
+                    lastUpdated: data['last_updated'],
+                    level: data["score"]
+                },
+                rightData: {
+                    uptimeLevel: data['uptime_level'] || 0,
+                    ageLevel: data['age_level'] || 0,
+                    versionLevel: data['version_level'] || 0,
+                    activeLeve: data['active_leve'] || 0,
+                }
             }
-        }
+
+          })
+        
     } catch (e) {
         console.log(e);
     }
