@@ -158,7 +158,7 @@ const en_US = {
     'enable_report_status_contract_tips':`Once it is turned on, the node's uptime will be reported to the Online Proof Contract via a transaction every day. `,
     'reset_advance_config_title':'Restore the default configuration',
     'reset_advance_config_tips':'After restoring the default configuration, you need to restart the serviceto take effect',
-    'setting_breadcrumb':'SETTING',
+    'setting_breadcrumb':'SETTINGS',
     'setting_file_config_breadcrumb':'View BTFS Configuration File',
     'setting_file_config_breadcrumb_des':`BTFS's configuration file is a JSON file read by the BTFS daemon. `,
     'rpc_address':'RPC Address',
@@ -255,7 +255,7 @@ const en_US = {
     'heart_th_contract': 'Online Proof Contract',
     'heart_th_nonce': 'Heartbeats Nonce',
     'bttc_addr': 'Node’s BTTC Address',
-    'heart_th_nonce_tips':'心跳计数：用来证明当前节点在线状态的一次性计数，默认每小时计数加1。',
+    'heart_th_nonce_tips':'Heartbeat Nonce: A nonce used to prove the node is online. The nonce will increase by one as each hour passes. ',
 };
 
 export default en_US

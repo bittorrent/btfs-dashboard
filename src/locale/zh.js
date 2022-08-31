@@ -256,7 +256,7 @@ const zh_CN = {
     'heart_th_txhash': '交易哈希',
     'heart_th_from': '发送者',
     'heart_th_contract': '心跳证明合约',
-    'heart_th_nonce': '心跳 Nonce',
+    'heart_th_nonce': '心跳计数',
     'bttc_addr': '节点BTTC地址',
     'heart_th_nonce_tips':'心跳计数：用来证明当前节点在线状态的一次性计数，默认每小时计数加1。',
 

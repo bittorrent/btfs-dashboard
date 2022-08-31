@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, memo } from "react";
 import { Switch, Tooltip } from "antd";
 import { Link } from "react-router-dom";
 import Emitter from "utils/eventBus";
@@ -10,7 +10,7 @@ import {
   resetHostConfigData,
   editHostConfig,
 } from "services/otherService.js";
-export default function CardConfig({ color }) {
+function CardConfig({ color }) {
   const [configList, setConfigList] = useState([]);
   const [rpcAddress, setRpcAddress] = useState("");
   const rpcAddressRef = useRef(null);
@@ -133,11 +133,11 @@ export default function CardConfig({ color }) {
   const changeRpcAddress = async (e) => {
     editHostConfig("ChainInfo.Endpoint", rpcAddressRef.current.value, false);
   };
-  const CardConfigItem = function CardConfigItem({
+  const CardConfigItem =  ({
     configItem,
     parentIndex,
     childIndex,
-  }) {
+  })=>{
     const onChange = (checked) => {
       Emitter.emit("handleConfigChange", { checked, parentIndex, childIndex });
     };
@@ -256,3 +256,4 @@ export default function CardConfig({ color }) {
     </>
   );
 }
+export default memo(CardConfig);
