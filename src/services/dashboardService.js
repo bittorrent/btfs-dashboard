@@ -2,11 +2,11 @@
 import Client10 from "APIClient/APIClient10.js";
 import BigNumber from 'bignumber.js';
 import {switchStorageUnit2, switchBalanceUnit, toThousands, getTimes} from "utils/BTFSUtil.js";
-import {PRECISION, FEE} from "utils/constants.js";
+import {PRECISION, FEE, OLD_SCORE_VERSION, NEW_SCORE_VERSION} from "utils/constants.js";
 
 export const getNodeBasicStats = async () => {
     let data1 = Client10.getHostInfo();
-    let data2 = Client10.getHostScore();
+    let data2 = Client10.getHostScore(NEW_SCORE_VERSION);
     let data3 = Client10.getPeers();
     let data4 = Client10.getHostVersion();
     let data5 = Client10.getNetworkStatus();
@@ -42,29 +42,60 @@ export const getNodeBasicStats = async () => {
         }
     })
 };
+export const getHostAllScore = async () => {
+    const data1 = getHostScore(OLD_SCORE_VERSION);
+    const data2 = getHostScore(NEW_SCORE_VERSION);
+    return Promise.all([data1, data2]).then((result) => {
+        return result;
+    })
+}
 
-export const getHostScore = async () => {
+export const getHostScore = async (version) => {
     try {
-        let {host_stats} = await Client10.getHostScore();
-        let data = host_stats ? host_stats : {};
-        return {
-            leftData: {
-                score: data['score'],
-                lastUpdated: data['last_updated'],
-            },
-            rightData: {
-                uptimeScore: data['uptime_score'],
-                ageScore: data['age_score'],
-                versionScore: data['version_score'],
-                downloadScore: data['download_speed_score'],
-                uploadScore: data['upload_speed_score'],
-                uptimeWeight: data['uptime_weight'],
-                ageWeight: data['age_weight'],
-                versionWeight: data['version_weight'],
-                uploadWeight: data['upload_speed_weight'],
-                downloadWeight: data['download_speed_weight'],
+        const promise = new Promise((resolve) => {
+            Client10.getHostScore(version).then(
+              (data) => {resolve(data)},
+              () => {resolve({})}
+            );
+          });
+          return Promise.all([promise]).then((res)=>{
+            let {host_stats} = res[0];
+            let data = host_stats ? host_stats : {};
+            if(version === OLD_SCORE_VERSION){
+                return {
+                    leftData: {
+                        score: data['score'],
+                        lastUpdated: data['last_updated'],
+                    },
+                    rightData: {
+                        uptimeScore: data['uptime_score'],
+                        ageScore: data['age_score'],
+                        versionScore: data['version_score'],
+                        downloadScore: data['download_speed_score'],
+                        uploadScore: data['upload_speed_score'],
+                        uptimeWeight: data['uptime_weight'],
+                        ageWeight: data['age_weight'],
+                        versionWeight: data['version_weight'],
+                        uploadWeight: data['upload_speed_weight'],
+                        downloadWeight: data['download_speed_weight'],
+                    }
+                }
             }
-        }
+            return {
+                leftData: {
+                    lastUpdated: data['last_updated'],
+                    level: data["level"]
+                },
+                rightData: {
+                    uptimeLevel: data['uptime_level'] || 0,
+                    ageLevel: data['age_level'] || 0,
+                    versionLevel: data['version_level'] || 0,
+                    activeLevel: data['active_level'] || 0,
+                }
+            }
+
+          })
+        
     } catch (e) {
         console.log(e);
     }
@@ -320,4 +351,8 @@ export const getHeartBeatsReportlist = async (from) => {
     }
 };
 
+export const getHostVersion = async ()=>{
+    const data = Client10.getHostVersion();
+    return  data['Version'] ? data['Version'] : '';
+}
 

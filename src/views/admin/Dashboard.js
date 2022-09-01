@@ -5,7 +5,6 @@ import NodeWalletStats from "components/Stats/NodeWalletStats.js";
 import NodeStorageStats from "components/Stats/NodeStorageStats.js";
 import CardHostScore from "components/Cards/CardHostScore.js";
 import CardNetworkFlow from "components/Cards/CardNetworkFlow.js";
-import HostScoreHistoryLineChart from "components/Charts/HostScoreHistoryLineChart.js";
 import RevenueHistoryLineChart from "components/Charts/RevenueHistoryLineChart.js";
 import NetworkLineChart from "components/Charts/NetworkLineChart.js";
 import WithdrawDepositModal from "components/Modals/WithdrawDepositModal.js";
@@ -24,15 +23,14 @@ export default function Dashboard() {
     return (
         <>
             <NodeBasicStats color={theme}/>
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap pb-4">
                 <div className="w-full xl:w-6/12 mb-4 xl:mb-0 xl:pr-2">
                     <CardHostScore color={theme}/>
                 </div>
-                <div className="w-full xl:w-6/12 mb-4 xl:pl-2">
-                    <HostScoreHistoryLineChart color={theme}/>
+                <div className="w-full xl:w-6/12 xl:pl-2">
+                   <NodeRevenueStats color={theme}/>
                 </div>
             </div>
-            <NodeRevenueStats color={theme}/>
             <RevenueHistoryLineChart color={theme}/>
             <NodeWalletStats color={theme}/>
             <NodeStorageStats color={theme}/>
