@@ -127,13 +127,7 @@ export function getTimes(date) {
 export function appendZero(num) {
     return num < 10 ? '0' + num : num
 }
-/**
- * 版本比较
- * @param {*} curVersion 当前版本
- * @param {*} lastVersion 比较版本
- * @returns 0：当前版本=比较版本; 1:当前版本>比较版本; -1:当前版本<比较版本
- */
- export function versionStringCompare (curVersion='', lastVersion='2.2.1'){
+export function versionStringCompare (curVersion='', lastVersion='2.2.1'){
     const sources = curVersion.split('.');
     const dests = lastVersion.split('.');
     const maxL = Math.max(sources.length, dests.length);
@@ -152,7 +146,7 @@ export function appendZero(num) {
         }
     }
     return result;
-  }
+}
   export function getParameterByName(name, url = window.location.href) {
     name = name.replace(/[\[\]]/g, '\\$&');
     var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
