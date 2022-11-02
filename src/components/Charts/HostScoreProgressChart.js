@@ -58,9 +58,8 @@ export default function HostScoreProgressChart({color, data,scoreInit}) {
                                 <div className="flex justify-between flex-1 py-1">
                                 {list.map((child, index) => {
                                     return (
-                                    <>
+                                    <div className="flex justify-between flex-1 py-1" key={index}>
                                         <Progress
-                                        key={index}
                                         percent={item.level > index ? 100 : 0}
                                         showInfo={false}
                                         trailColor="#ECF2FF"
@@ -71,7 +70,7 @@ export default function HostScoreProgressChart({color, data,scoreInit}) {
                                         ) : (
                                         ""
                                         )}
-                                    </>
+                                    </div>
                                     );
                                 })}
                                 </div>
