@@ -3,12 +3,8 @@ import {Progress} from 'antd';
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
 
-let strokeColor = {
-    '0%': '#108ee9',
-    '100%': '#87d068',
-};
 
-export default function HostScoreRingChart({color,isNewVersion, data}) {
+export default function HostScoreRingChart({color, data}) {
     const scoreConfig = {
         1: {
             color: "#C33730",
@@ -48,7 +44,7 @@ export default function HostScoreRingChart({color,isNewVersion, data}) {
                 <div className="py-4 flex-auto">
                     <div className="relative flex flex-col justify-between items-center h-300-px">
                         <div className='mt-4'>
-                        {isNewVersion ? (
+                        { (
                             data.level && scoreLevelObj?
                             <Progress
                             strokeColor={scoreLevelObj.color}
@@ -73,15 +69,7 @@ export default function HostScoreRingChart({color,isNewVersion, data}) {
                                 </div>
                               )}
                             />:''
-                        ) : (
-                            <Progress
-                            className={color}
-                            strokeColor={strokeColor}
-                            type="circle"
-                            percent={data.score * 10}
-                            format={(percent) => `${percent / 10}`}
-                            />
-                        )}
+                        ) }
                             
                         </div>
                         {/* Divider */}

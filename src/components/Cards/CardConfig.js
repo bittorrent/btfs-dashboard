@@ -54,23 +54,18 @@ function CardConfig({ color }) {
       editHostConfig(`Experimental.${key}`, checked, true);
     }
   };
-  const handleResetConfig = async () => {
-    const data = await resetHostConfigData();
-    let experimentalData = {};
-    if (data) {
-      experimentalData = {
-        ReportOnline: data["Experimental.ReportOnline"],
-        ReportStatusContract: data["Experimental.ReportStatusContract"],
-        StorageHostEnabled: data["Experimental.StorageHostEnabled"],
-      };
-    }
-    const configList = handleExperimentalData(experimentalData);
-    const rpcAddress = data["ChainInfo.Endpoint"];
-    setRpcAddress(rpcAddress);
-    setConfigList(() => {
-      return configList;
-    });
-  };
+ 
+ 
+  useEffect(() => {
+    fetchData();
+    Emitter.on("handleConfigChange", handleChange);
+    Emitter.on("handleResetConfig", handleResetConfig);
+    return () => {
+      Emitter.removeListener("handleConfigChange");
+      Emitter.removeListener("handleResetConfig");
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const fetchData = async () => {
     const data = await getHostConfigData();
     let configList = [];
@@ -121,15 +116,23 @@ function CardConfig({ color }) {
     ];
     return configList;
   };
-  useEffect(() => {
-    fetchData();
-    Emitter.on("handleConfigChange", handleChange);
-    Emitter.on("handleResetConfig", handleResetConfig);
-    return () => {
-      Emitter.removeListener("handleConfigChange");
-      Emitter.removeListener("handleResetConfig");
-    };
-  }, []);
+  const handleResetConfig = async () => {
+    const data = await resetHostConfigData();
+    let experimentalData = {};
+    if (data) {
+      experimentalData = {
+        ReportOnline: data["Experimental.ReportOnline"],
+        ReportStatusContract: data["Experimental.ReportStatusContract"],
+        StorageHostEnabled: data["Experimental.StorageHostEnabled"],
+      };
+    }
+    const configList = handleExperimentalData(experimentalData);
+    const rpcAddress = data["ChainInfo.Endpoint"];
+    setRpcAddress(rpcAddress);
+    setConfigList(() => {
+      return configList;
+    });
+  };
   const changeRpcAddress = async (e) => {
     editHostConfig("ChainInfo.Endpoint", rpcAddressRef.current.value, false);
   };
