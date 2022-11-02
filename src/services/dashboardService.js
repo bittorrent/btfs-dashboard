@@ -43,9 +43,8 @@ export const getNodeBasicStats = async () => {
     })
 };
 export const getHostAllScore = async () => {
-    const data1 = getHostScore(OLD_SCORE_VERSION);
     const data2 = getHostScore(NEW_SCORE_VERSION);
-    return Promise.all([data1, data2]).then((result) => {
+    return Promise.all([data2]).then((result) => {
         return result;
     })
 }
@@ -61,26 +60,6 @@ export const getHostScore = async (version) => {
           return Promise.all([promise]).then((res)=>{
             let {host_stats} = res[0];
             let data = host_stats ? host_stats : {};
-            if(version === OLD_SCORE_VERSION){
-                return {
-                    leftData: {
-                        score: data['score'],
-                        lastUpdated: data['last_updated'],
-                    },
-                    rightData: {
-                        uptimeScore: data['uptime_score'],
-                        ageScore: data['age_score'],
-                        versionScore: data['version_score'],
-                        downloadScore: data['download_speed_score'],
-                        uploadScore: data['upload_speed_score'],
-                        uptimeWeight: data['uptime_weight'],
-                        ageWeight: data['age_weight'],
-                        versionWeight: data['version_weight'],
-                        uploadWeight: data['upload_speed_weight'],
-                        downloadWeight: data['download_speed_weight'],
-                    }
-                }
-            }
             return {
                 leftData: {
                     lastUpdated: data['last_updated'],
