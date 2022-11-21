@@ -1,48 +1,43 @@
-import React, {memo, useEffect} from "react";
+import React, {memo, useEffect, useState, useCallback} from "react";
 import {useIntl} from "react-intl";
 import {Chart} from "chart.js";
+import {Menu} from 'antd';
 import {getChequeExpenseHistory} from "services/chequeService.js";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
+import {INIT_CHART_LINE_DATASETS} from "utils/constants.js";
 
 function ChequeExpenseLineChart({color}) {
 
     const intl = useIntl();
+    const [current, setCurrent] = useState('chequesNumber');
+    const handleClick = useCallback(e => {
+        console.log('click ', e.key);
+        setCurrent(e.key);
+    }, []);
 
     useEffect(() => {
+        const datasetsList = JSON.parse(JSON.stringify(INIT_CHART_LINE_DATASETS)).map(item=>{
+            if(current === 'chequesNumber'){
+                item['yAxisID'] = 'y';
+            }else{
+                item['yAxisID'] = 'y1';
+            }
+            
+            return item;
+        })
 
         var config = {
             type: 'line',
             data: {
                 labels: [],
-                datasets: [
-                    {
-                        label: 'Sent',
-                        borderColor: 'red',
-                        backgroundColor: 'rgb(255, 99, 132, 0.3)',
-                        data: [],
-                        fill: false,
-                        cubicInterpolationMode: 'monotone',
-                        tension: 0,
-                        yAxisID: 'y',
-                    },
-                    {
-                        label: 'Sent Amount',
-                        borderColor: 'blue',
-                        backgroundColor: 'rgb(54, 162, 235, 0.3)',
-                        data: [],
-                        fill: false,
-                        cubicInterpolationMode: 'monotone',
-                        tension: 0,
-                        yAxisID: 'y1',
-                    },
-                ]
+                datasets: datasetsList,
             },
 
             options: {
                 plugins: {
                     legend: {
-                        display: false
+                        // display: false
                     },
                     tooltip: {
                         mode: "index",
@@ -50,14 +45,11 @@ function ChequeExpenseLineChart({color}) {
                         callbacks: {
                             label: function (context) {
                                 var label = context.dataset.label || '';
-                                if (context.datasetIndex === 1) {
-                                    if (label) {
-                                        label += ' : ' + context.parsed.y + ' WBTT ';
-                                    }
-                                }
-                                if (context.datasetIndex === 0) {
-                                    if (label) {
+                                if (label) {
+                                    if(current === 'chequesNumber'){
                                         label += ' : ' + context.parsed.y + ' ';
+                                    }else{
+                                        label += ' : ' + context.parsed.y + ' WBTT ';
                                     }
                                 }
                                 return label;
@@ -129,7 +121,7 @@ function ChequeExpenseLineChart({color}) {
             }
         }
 
-    }, [color, intl]);
+    }, [color, intl, current]);
 
     const update = async () => {
         let data = await getChequeExpenseHistory();
@@ -137,6 +129,8 @@ function ChequeExpenseLineChart({color}) {
             window.chequeExpenseLineChart.data.labels = data.labels;
             window.chequeExpenseLineChart.data.datasets[0].data = data.data[1];
             window.chequeExpenseLineChart.data.datasets[1].data = data.data[0];
+            window.chequeExpenseLineChart.data.datasets[2].data = data.data[1];
+            window.chequeExpenseLineChart.data.datasets[3].data = data.data[0];
             window.chequeExpenseLineChart.update();
         }
     };
@@ -146,18 +140,40 @@ function ChequeExpenseLineChart({color}) {
             <div className={"relative flex flex-col h-400-px justify-center p-4" + themeStyle.bg[color]}>
                 <div className="rounded-t mb-0 py-3 bg-transparent">
                     <div className="flex flex-wrap items-center">
-                        <div className="relative w-full max-w-full flex-grow flex-1">
+                        <div className="relative w-full max-w-full flex-grow flex-1 flex items-center">
                             <h6 className={"uppercase  mb-1 text-xs font-semibold " + themeStyle.title[color]}>
                                 {t('cheque_expense_history')}
                             </h6>
+                            <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal"
+                                    style={{'background': 'transparent',minWidth:"300px"}} >
+                                <Menu.Item key="chequesNumber">
+                                    <h5 className={"uppercase cheques-tab-item  " + themeStyle.title[color]}>
+                                        <span style={{fontSize:'0.65rem'}}> {t('cheques_number')}</span>
+                                    </h5>
+                                </Menu.Item>
+                                <Menu.Item key="chequesAmount">
+                                    <h5 className={"uppercase cheques-tab-item " + themeStyle.title[color]}>
+                                        <span style={{fontSize:'0.65rem'}}> {t('cheques_amount')}</span>
+                                    </h5>
+                                </Menu.Item>
+                            </Menu>
                         </div>
                     </div>
                 </div>
                 <div className="p-4 flex-auto">
                     {/* Chart */}
-                    <div id="cheque-expense-line-chart-content" className="relative h-300-px">
-                        <canvas id="cheque-expense-line-chart" style={{height: '300px', width: '100%'}}></canvas>
-                    </div>
+                    {
+                        current === 'chequesNumber' && 
+                        <div id="cheque-expense-line-chart-content" className="relative h-300-px">
+                            <canvas id="cheque-expense-line-chart" style={{height: '300px', width: '100%'}}></canvas>
+                        </div>
+                    }
+                    {
+                        current === 'chequesAmount' && 
+                        <div id="cheque-expense-line-chart-content" className="relative h-300-px">
+                            <canvas id="cheque-expense-line-chart" style={{height: '300px', width: '100%'}}></canvas>
+                        </div>
+                    }
                 </div>
             </div>
         </>

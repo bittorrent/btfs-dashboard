@@ -31,6 +31,11 @@ export default function ChequeExpenseTable({color}) {
         didCancel = false;
         let {cheques, total} = await getChequeExpenseList();
         if (!didCancel) {
+             // TO DO
+             cheques.forEach(item=>{
+                item.icon = 'trx';
+                item.unit = 'TRX';
+            })
             chequesAll = cheques;
             setTotal(total);
             sliceDate(1);
@@ -63,7 +68,11 @@ export default function ChequeExpenseTable({color}) {
                                 {t('chequebook')}
                             </th>
                             <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
-                                {t('total_sent')} (WBTT)
+                                {t('currency_type')}
+                            </th>
+                            <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
+                                {/* {t('total_sent')} (WBTT) */}
+                                {t('total_sent')} 
                             </th>
                         </tr>
                         </thead>
@@ -93,6 +102,16 @@ export default function ChequeExpenseTable({color}) {
                                                 <ClipboardCopy value={item['Vault']}/>
                                             </div>
                                         </td>
+                                        <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4 flex items-center">
+                                        <img
+                                            src={
+                                                require(`assets/img/${item.icon}.svg`).default
+                                            }
+                                            alt=""
+                                            className="mr-2"
+                                            />
+                                        {item.unit}
+                                    </td>
                                         <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             {switchBalanceUnit(item['Payout'])}
                                         </td>

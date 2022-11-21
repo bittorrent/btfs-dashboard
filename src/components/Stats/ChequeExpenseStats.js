@@ -4,6 +4,7 @@ import {Progress} from 'antd';
 import {getChequeExpenseStats} from "services/chequeService.js";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
+import MultipleCurrenyList from "./MultipleCurrenyList.js"
 
 let strokeColor = {
     '0%': '#108ee9',
@@ -42,7 +43,8 @@ export default function ChequeExpenseStats({color}) {
                         <div className="w-full xl:w-6/12 xl:pr-2">
                             <div
                                 className={"relative break-words rounded mb-2 xl:mb-0  " + themeStyle.bg[color] + themeStyle.text[color]}>
-                                <div className="p-4 h-180-px">
+                                {/* <div className="p-4 h-180-px"> */}
+                                <div className="p-4 h-600-px flex flex-col  justify-between">
                                     <div>
                                         <h5 className={" uppercase font-bold " + themeStyle.title[color]}>
                                             {t('sent_cheques')}
@@ -51,6 +53,7 @@ export default function ChequeExpenseStats({color}) {
                                     <div className='p-4'>
                                         <span className='font-semibold text-3xl'>{chequesStats.chequeSentCount}</span>
                                     </div>
+                                    <MultipleCurrenyList color={color} type={"sentCheques"} />
                                 </div>
                             </div>
                         </div>
@@ -58,7 +61,8 @@ export default function ChequeExpenseStats({color}) {
                         <div className="w-full xl:w-6/12 xl:pl-2">
                             <div
                                 className={"relative break-words rounded " + themeStyle.bg[color] + themeStyle.text[color]}>
-                                <div className="flex flex-col justify-between p-4 h-180-px">
+                                {/* <div className="flex flex-col justify-between p-4 h-180-px"> */}
+                                <div className="flex flex-col justify-between p-4 h-600-px">
                                     <div>
                                         <h5 className={" uppercase font-bold " + themeStyle.title[color]}>
                                             {t('sent_cheques_amount')}
@@ -90,6 +94,7 @@ export default function ChequeExpenseStats({color}) {
                                             {chequesStats.uncashedValue} <span className='text-xs'>WBTT</span>
                                         </div>
                                     </div>
+                                    <MultipleCurrenyList color={color} />
                                 </div>
                             </div>
                         </div>

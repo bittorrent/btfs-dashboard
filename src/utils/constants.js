@@ -16,3 +16,61 @@ export const CHAIN_NAME = {
 };
 export const OLD_SCORE_VERSION = 1;
 export const NEW_SCORE_VERSION = 2;
+export const CURRENCY_CONFIG = {
+    wbtt: {
+        icon: "wbtt",
+        unit:"WBTT",
+
+    },
+    usdd: {
+        icon: "usdd",
+        unit:"USDD",
+    },
+    trx: {
+        icon: "trx",
+        unit:"TRX",
+    },
+    usdt: {
+        icon: "usdt",
+        unit:"USDT",
+    }
+}
+
+export const INIT_CHART_LINE_DATASETS = [
+    {
+        label: 'WBTT',
+        borderColor: '#000000',
+        backgroundColor: '#000000',
+        data: [],
+        fill: false,
+        cubicInterpolationMode: 'monotone',
+        tension: 0,
+    },
+    {
+        label: 'TRX',
+        borderColor: "#FF0000",
+        backgroundColor: "#FF0000",
+        data: [],
+        fill: false,
+        cubicInterpolationMode: 'monotone',
+        tension: 0,
+    },
+    {
+        label: 'USDD',
+        borderColor: "#006E57",
+        backgroundColor: "#006E57",
+        data: [],
+        fill: false,
+        cubicInterpolationMode: 'monotone',
+        tension: 0,
+    },
+    {
+        label: 'USDT',
+        borderColor: "#0AB194",
+        backgroundColor:"#0AB194",
+        data: [],
+        fill: false,
+        cubicInterpolationMode: 'monotone',
+        tension: 0,
+    },
+]

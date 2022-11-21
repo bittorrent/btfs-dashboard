@@ -74,6 +74,10 @@ const en_US = {
     'online_active':'Activity',
     'switch_old_version':'Old version',
     'switch_new_version':'New version',
+    'cheque_earnings_des':'According to the current exchange rate, other currencies are converted into BTT. The value is for reference only. Click to view the details',
+    'cheque_earning_detail': 'Cheques Earning Detials',
+    'checks_expense_detials': 'Cheques Expense Detials',
+
 
 // cheques
 
@@ -103,6 +107,10 @@ const en_US = {
     'expense_list': 'Expense List',
     'recipient': 'Recipient',
     'cheques_number': 'Cheques Number',
+    'chashed': 'Chashed',
+    'unchashed': 'Unchashed',
+    'currency_type': 'Currency',
+    'cheques_amount': 'Cheques Amount',
 
 // files
 

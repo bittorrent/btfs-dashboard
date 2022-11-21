@@ -38,6 +38,11 @@ export default function ChequeCashingListTable({color, enableCash}) {
         didCancel = false;
         let {cheques, total} = await getChequeCashingList((page - 1) * 10, 10);
         if (!didCancel) {
+            // TO DO
+            cheques.forEach(item=>{
+                item.icon = 'trx';
+                item.unit = 'TRX';
+            })
             setCheques(cheques);
             setTotal(total);
             setCurrent(page);
@@ -84,14 +89,19 @@ export default function ChequeCashingListTable({color, enableCash}) {
                             <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 {t('chequebook')}
                             </th>
+                            <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
+                                {t('currency_type')}
+                            </th>
                             <th className={"cursor-pointer px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 <div className='flex items-center'>
-                                    <div>{t('uncashed')} (WBTT)</div>
+                                    {/* <div>{t('uncashed')} (WBTT)</div> */}
+                                    <div>{t('uncashed')}</div>
                                 </div>
                             </th>
                             <th className={"cursor-pointer px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 <div className='flex items-center'>
-                                    <div>{t('cashed')} (WBTT)</div>
+                                    {/* <div>{t('cashed')} (WBTT)</div> */}
+                                    <div>{t('cashed')}</div>
                                 </div>
                             </th>
                         </tr>
@@ -127,6 +137,16 @@ export default function ChequeCashingListTable({color, enableCash}) {
                                             </a>
                                             <ClipboardCopy value={item['Vault']}/>
                                         </div>
+                                    </td>
+                                    <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4 flex items-center">
+                                        <img
+                                            src={
+                                                require(`assets/img/${item.icon}.svg`).default
+                                            }
+                                            alt=""
+                                            className="mr-2"
+                                            />
+                                        {item.unit}
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         {switchBalanceUnit((item['Payout'] - item['CashedAmount']))}

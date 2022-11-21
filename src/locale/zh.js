@@ -74,6 +74,9 @@ const zh_CN = {
     'online_active':'在线活跃',
     'switch_old_version':'切换旧版分数',
     'switch_new_version':'切换新版分数',
+    'cheque_earnings_des':'按照当前汇率其他货币转换为BTT，数值仅供参考，点击可查看详情',
+    'cheque_earning_detail': '支票收益详情',
+    'checks_expense_detials': '支票支出详情',
 
 // cheques
 
@@ -103,6 +106,10 @@ const zh_CN = {
     'expense_list': '支出列表',
     'recipient': '接收者',
     'cheques_number': '支票数量',
+    'chashed': '已兑现',
+    'unchashed': '未兑现',
+    'currency_type': '币种',
+    'cheques_amount': '支票数额',
 
 // files
 

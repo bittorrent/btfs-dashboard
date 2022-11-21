@@ -25,6 +25,11 @@ export default function ChequeCashingHistoryTable({color}) {
         didCancel = false;
         let {cheques, total} = await getChequeCashingHistoryList((page - 1) * 10, 10);
         if (!didCancel) {
+            // TO DO
+            cheques.forEach(item=>{
+                item.icon = 'trx';
+                item.unit = 'TRX';
+            })
             setCheques(cheques);
             setTotal(total);
             setCurrent(page);
@@ -59,9 +64,13 @@ export default function ChequeCashingHistoryTable({color}) {
                             <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 {t('chequebook')}
                             </th>
+                            <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
+                                {t('currency_type')}
+                            </th>
                             <th className={"cursor-pointer px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 <div className='flex items-center'>
-                                    <div>{t('amount')} (WBTT)</div>
+                                    {/* <div>{t('amount')} (WBTT)</div> */}
+                                    <div>{t('amount')}</div>
                                 </div>
                             </th>
                             <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
@@ -106,6 +115,16 @@ export default function ChequeCashingHistoryTable({color}) {
                                             </a>
                                             <ClipboardCopy value={item['vault']}/>
                                         </div>
+                                    </td>
+                                    <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4 flex items-center">
+                                        <img
+                                            src={
+                                                require(`assets/img/${item.icon}.svg`).default
+                                            }
+                                            alt=""
+                                            className="mr-2"
+                                            />
+                                        {item.unit}
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         {switchBalanceUnit(item['amount'])}

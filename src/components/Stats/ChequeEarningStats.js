@@ -4,6 +4,7 @@ import {Progress} from 'antd';
 import {getChequeEarningStats} from "services/chequeService.js";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
+import MultipleCurrenyList from "./MultipleCurrenyList.js"
 
 let strokeColor = {
     '0%': '#108ee9',
@@ -22,6 +23,36 @@ export default function ChequeEarningStats({color}) {
         cashedCountPercent: 0,
         cashedValuePercent: 0,
     });
+    const dataList = [
+        {
+            icon: "wbtt",
+            chashed: 8000,
+            unChashed: 2000,
+            unit:"WBTT",
+            width:"80%"
+        },
+        {
+            icon: "usdd",
+            chashed: 800,
+            unChashed: 1200,
+            unit:"USDD",
+            width:"10%"
+            },
+            {
+            icon: "trx",
+            chashed: 800,
+            unChashed: 1200,
+            unit:"TRX",
+            width:"10%"
+            },
+            {
+            icon: "usdt",
+            chashed: 0,
+            unChashed: 0,
+            unit:"USDT",
+            width:"0%"
+            },
+        ];
 
     useEffect(() => {
         let didCancel = false;
@@ -45,7 +76,8 @@ export default function ChequeEarningStats({color}) {
                         <div className="w-full xl:w-6/12 xl:pr-2">
                             <div
                                 className={"relative break-words rounded mb-2 xl:mb-0  " + themeStyle.bg[color] + themeStyle.text[color]}>
-                                <div className="flex flex-col justify-between p-4 h-180-px">
+                                {/* <div className="flex flex-col justify-between p-4 h-180-px"> */}
+                                <div className="flex flex-col justify-between p-4 h-600-px">
                                     <div>
                                         <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
                                             {t('received_cheques')}
@@ -75,6 +107,8 @@ export default function ChequeEarningStats({color}) {
                                             {chequesStats.uncashedCount}
                                         </div>
                                     </div>
+
+                                   <MultipleCurrenyList color={color} />
                                 </div>
                             </div>
                         </div>
@@ -82,7 +116,8 @@ export default function ChequeEarningStats({color}) {
                         <div className="w-full xl:w-6/12 xl:pl-2">
                             <div
                                 className={"relative break-words rounded " + themeStyle.bg[color] + themeStyle.text[color]}>
-                                <div className="flex flex-col justify-between p-4 h-180-px">
+                                {/* <div className="flex flex-col justify-between p-4 h-180-px"> */}
+                                <div className="flex flex-col justify-between p-4 h-600-px">
                                     <div>
                                         <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
                                             {t('received_cheques_amount')}
@@ -113,6 +148,7 @@ export default function ChequeEarningStats({color}) {
                                             {chequesStats.uncashedValue} <span className='text-xs'>WBTT</span>
                                         </div>
                                     </div>
+                                    <MultipleCurrenyList color={color} />
                                 </div>
                             </div>
                         </div>
