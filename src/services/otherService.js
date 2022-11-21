@@ -10,19 +10,6 @@ export const setApiUrl = (url) => {
     }
 };
 
-export const getRepo = async () => {
-    let data = await Client10.getRepo();
-    return {
-        path: data['RepoPath'],
-        size: data['RepoSize']
-    };
-};
-
-export const changeRepo = async (path, volume) => {
-    let data = await Client10.changeRepo(path, volume);
-    return data;
-};
-
 export const getPeers = async () => {
     let data = await Client10.getPeers();
     return {
@@ -75,19 +62,5 @@ export const nodeStatusCheck = async (url) => {
         console.log(e);
         return false
     }
-};
-
-export const getHostConfigData = async () => {
-    const data = await Client10.getHostConfig();
-    return data;
-};
-
-export const resetHostConfigData = async () => {
-    const data = await Client10.resetHostConfig();
-    return data;
-};
-export const editHostConfig = async (key,value,isBool) => {
-    const data = await Client10.editHostConfig(key,value,isBool);
-    return data;
 };
 

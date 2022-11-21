@@ -11,7 +11,6 @@ const zh_CN = {
     'view_code': '查看源码',
     'report_bugs': '报告错误',
     'contact_us': '联系我们',
-    'heartbeats': '在线证明',
 
 // dashboard
 
@@ -38,9 +37,6 @@ const zh_CN = {
     'cheque_earnings': '支票收益',
     'cheque_expense': '支票支出',
     'airdrop': '空投',
-    'total_expense': '总支出',
-    'cheque_expense_des': '仅统计在线证明Gas费',
-    'gas_fee': 'Gas支出',
     'chequebook': '金库',
     'vault': '金库',
     'contracts': '合约',
@@ -67,13 +63,6 @@ const zh_CN = {
     'send': '发送',
     'in': '下行',
     'out': '上行',
-    'poor':'不佳',
-    'general':'一般',
-    'good':'优秀',
-    'excellent':'极好',
-    'online_active':'在线活跃',
-    'switch_old_version':'切换旧版分数',
-    'switch_new_version':'切换新版分数',
 
 // cheques
 
@@ -141,42 +130,14 @@ const zh_CN = {
     'system_config': '系统配置',
     'submit': '提交',
     'endpoint': '端口',
-    'storage_path': '存储路径',
-    'change': '更改',
     'security': '安全',
     'reveal_key': '导出私钥',
     'private_key': '私钥',
-
-    'advance_config':'高级设置',
-    'advance_config_tips':'配置修改后需要重启服务才可生效，如果您不理解这些配置的含义，请不要修改它们',
-    'reset_default':'恢复默认配置',
-    'view_config_file':'查看配置文件',
-    'enable_storage_host':'启用矿工模式',
-    'enable_storage_host_tips':'存储Host模式开关。打开后本节点方可存储用户上传数据，关闭则无法存储，默认开启。',
-    'enable_report_online':'签名上报',
-    'enable_report_online_tips':'上报签名开关。开启后每小时签名一次，累计的签名数据最终会上报到合约中',
-    'enable_report_status_contract':'状态合约上报',
-    'enable_report_status_contract_tips':'上报status合约开关。开启后每天通过交易向在线证明合约上报一次节点在线状态',
-    'reset_advance_config_title':'恢复默认配置',
-    'reset_advance_config_tips':'恢复默认配置后需在客户端重启服务才可生效',
-    'setting_breadcrumb':'设置',
-    'setting_file_config_breadcrumb':'查看BTFS配置文件',
-    'setting_file_config_breadcrumb_des':'BTFS配置文件是一个json文件，启动BTFS守护程序时会读取该文件。',
-    'rpc_address':'RPC 地址',
-    'rpc_set_btn_name':'设置',
-    'copy_url':'复制带API end point参数的URL',
-    'copy_url_tips':'复制带API end point参数的URL，下次通过访问该URL可以快速配置API end point',
 
 // modal
 
     'transfer': '转账',
     'exchange': '兑换',
-    'BTFS_10_withdraw': 'BTFS 1.0 取款',
-    'withdraw10':'取款',
-    '10_withdraw_description': '提现金额将会发送至节点对应的TRON地址',
-    'node_tron_addr': '节点TRON地址',
-    'available': '可提取',
-    'BTFS_10_withdraw_limit': '单次提现限制',
     'insert_cid': '使用BTFS路径（CID）导入。 例如:',
     'insert_name': '输入要创建的文件夹名称',
     'chequebook_withdraw': '取款',
@@ -199,8 +160,6 @@ const zh_CN = {
     'enter_bttc_address': '请输入有效BTTC地址',
     'key_warning_1': '私钥可以控制资产',
     'key_warning_2': '不要把私钥暴露给任何人',
-    'storage_path_confirmation': "存储路径确认",
-    'storage_path_info': "确定要将BTFS存储修改到此路径吗？",
 
 // warning
 
@@ -216,7 +175,6 @@ const zh_CN = {
     'no_data': '无数据',
     'setting_error': '设置失败，请确认API地址的有效性',
     'setting_success': '设置成功！',
-    'change_success': '更改路径成功！',
     'api_invalid': 'API地址格式不正确！',
     'api_not_set': '未设置API地址！',
     'withdraw_success': '提取成功！',
@@ -238,28 +196,6 @@ const zh_CN = {
     'amount_available_check_1': '最大可用BTT = 最大BTT - 15 BTT',
     'amount_available_check_2': '最大可用WBTT = 最大WBTT (如果BTT余额大于15 BTT)',
     'amount_available_check_3': '最大可用WBTT = 0 (如果BTT余额小于15 BTT)',
-    'copy_success':'拷贝成功 !',
-
-
-// heartBeats
-
-    'heart_contract': '在线证明合约',
-    'heart_contract_des': '节点从在线签名服务中获得在线证明，并将其上报给在线证明合约。该合约用来存储每个节点的最新在线验证数据。',
-    'heart_transaction': '在线证明交易',
-    'in_total': '总计',
-    'gas_spend': 'Gas消耗',
-    'gas_spend_des': '在线证明交易所消耗的Gas费',
-    'transaction_list': '在线证明交易',
-    'list_des': '节点通过对在线证明合约周期性发送交易来证明该节点的在线状态',
-    'heart_to_scan': '在BTFS scan上查看心跳图表 >',
-    'heart_th_time': '上报时间(UTC)',
-    'heart_th_txhash': '交易哈希',
-    'heart_th_from': '发送者',
-    'heart_th_contract': '心跳证明合约',
-    'heart_th_nonce': '心跳计数',
-    'bttc_addr': '节点BTTC地址',
-    'heart_th_nonce_tips':'心跳计数：用来证明当前节点在线状态的一次性计数，默认每小时计数加1。',
-
 
 };
 

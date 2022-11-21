@@ -1,12 +1,12 @@
 /*eslint-disable*/
 import Client10 from "APIClient/APIClient10.js";
 import BigNumber from 'bignumber.js';
-import {switchStorageUnit2, switchBalanceUnit, toThousands, getTimes} from "utils/BTFSUtil.js";
-import {PRECISION, FEE, OLD_SCORE_VERSION, NEW_SCORE_VERSION} from "utils/constants.js";
+import {switchStorageUnit2, switchBalanceUnit} from "utils/BTFSUtil.js";
+import {PRECISION, FEE} from "utils/constants.js";
 
 export const getNodeBasicStats = async () => {
     let data1 = Client10.getHostInfo();
-    let data2 = Client10.getHostScore(NEW_SCORE_VERSION);
+    let data2 = Client10.getHostScore();
     let data3 = Client10.getPeers();
     let data4 = Client10.getHostVersion();
     let data5 = Client10.getNetworkStatus();
@@ -42,60 +42,29 @@ export const getNodeBasicStats = async () => {
         }
     })
 };
-export const getHostAllScore = async () => {
-    const data1 = getHostScore(OLD_SCORE_VERSION);
-    const data2 = getHostScore(NEW_SCORE_VERSION);
-    return Promise.all([data1, data2]).then((result) => {
-        return result;
-    })
-}
 
-export const getHostScore = async (version) => {
+export const getHostScore = async () => {
     try {
-        const promise = new Promise((resolve) => {
-            Client10.getHostScore(version).then(
-              (data) => {resolve(data)},
-              () => {resolve({})}
-            );
-          });
-          return Promise.all([promise]).then((res)=>{
-            let {host_stats} = res[0];
-            let data = host_stats ? host_stats : {};
-            if(version === OLD_SCORE_VERSION){
-                return {
-                    leftData: {
-                        score: data['score'],
-                        lastUpdated: data['last_updated'],
-                    },
-                    rightData: {
-                        uptimeScore: data['uptime_score'],
-                        ageScore: data['age_score'],
-                        versionScore: data['version_score'],
-                        downloadScore: data['download_speed_score'],
-                        uploadScore: data['upload_speed_score'],
-                        uptimeWeight: data['uptime_weight'],
-                        ageWeight: data['age_weight'],
-                        versionWeight: data['version_weight'],
-                        uploadWeight: data['upload_speed_weight'],
-                        downloadWeight: data['download_speed_weight'],
-                    }
-                }
+        let {host_stats} = await Client10.getHostScore();
+        let data = host_stats ? host_stats : {};
+        return {
+            leftData: {
+                score: data['score'],
+                lastUpdated: data['last_updated'],
+            },
+            rightData: {
+                uptimeScore: data['uptime_score'],
+                ageScore: data['age_score'],
+                versionScore: data['version_score'],
+                downloadScore: data['download_speed_score'],
+                uploadScore: data['upload_speed_score'],
+                uptimeWeight: data['uptime_weight'],
+                ageWeight: data['age_weight'],
+                versionWeight: data['version_weight'],
+                uploadWeight: data['upload_speed_weight'],
+                downloadWeight: data['download_speed_weight'],
             }
-            return {
-                leftData: {
-                    lastUpdated: data['last_updated'],
-                    level: data["level"]
-                },
-                rightData: {
-                    uptimeLevel: data['uptime_level'] || 0,
-                    ageLevel: data['age_level'] || 0,
-                    versionLevel: data['version_level'] || 0,
-                    activeLevel: data['active_level'] || 0,
-                }
-            }
-
-          })
-        
+        }
     } catch (e) {
         console.log(e);
     }
@@ -141,66 +110,37 @@ export const getHostHistory = async (flag) => {
 
 export const getNodeRevenueStats = async () => {
     let data1 = Client10.getChequeValue();
-    let data3 = Client10.getHeartBeatsStats();
-    return Promise.all([data1, data3]).then((result) => {
-        console.log('data3', result)
-        const gasFee = +result[1]['total_gas_spend'] ? +result[1]['total_gas_spend'] : 0
-        const chequeExpense = +result[0]['totalSent']
-        const hasTotalExpense = gasFee || chequeExpense
-
+    return Promise.all([data1]).then((result) => {
         return {
             chequeEarning: switchBalanceUnit(result[0]['totalReceived']),
             uncashedPercent: result[0]['totalReceived'] ? new BigNumber((result[0]['totalReceived'] - result[0]['settlement_received_cashed'])).dividedBy(result[0]['totalReceived']).multipliedBy(100).toFixed(0) : 0,
             cashedPercent: result[0]['totalReceived'] ? new BigNumber((result[0]['settlement_received_cashed'])).dividedBy(result[0]['totalReceived']).multipliedBy(100).toFixed(0) : 0,
-            chequeExpense: switchBalanceUnit(chequeExpense),
-            totalExpense: switchBalanceUnit(gasFee + chequeExpense),
-            gasFee: switchBalanceUnit(gasFee),
-            gasFeePercent: hasTotalExpense ? new BigNumber(gasFee).dividedBy((gasFee + chequeExpense)).multipliedBy(100).toFixed(0) : 0,
-            chequeExpensePercent: hasTotalExpense ? new BigNumber(chequeExpense).dividedBy((gasFee + chequeExpense)).multipliedBy(100).toFixed(0) : 0,
+            chequeExpense: switchBalanceUnit(result[0]['totalSent']),
         }
     })
 };
 
-// export const getNodeRevenueStats = async () => {
-//     let data = await Client10.getChainInfo();
-//     let BTTCAddress = data['node_addr'];
-//     let data1 = Client10.getChequeValue();
-//     let data2 = Client10.getAirDrop(BTTCAddress);
-//     return Promise.all([data1, data2]).then((result) => {
-//         const airdrop = +result[1].data['total_amount']
-//         const chequeEarning = +result[0]['totalReceived']
-//         const hasTotalEarnings = airdrop || chequeEarning
-
-//         return {
-//             chequeEarning: switchBalanceUnit(result[0]['totalReceived']),
-//             uncashedPercent: result[0]['totalReceived'] ? new BigNumber((result[0]['totalReceived'] - result[0]['settlement_received_cashed'])).dividedBy(result[0]['totalReceived']).multipliedBy(100).toFixed(0) : 0,
-//             cashedPercent: result[0]['totalReceived'] ? new BigNumber((result[0]['settlement_received_cashed'])).dividedBy(result[0]['totalReceived']).multipliedBy(100).toFixed(0) : 0,
-//             chequeExpense: switchBalanceUnit(result[0]['totalSent']),
-//             airdrop: switchBalanceUnit(airdrop),
-//             totalEarnings: switchBalanceUnit(chequeEarning + airdrop),
-//             chequePercent: hasTotalEarnings ? new BigNumber(chequeEarning).dividedBy((chequeEarning + airdrop)).multipliedBy(100).toFixed(0) : 0,
-//             airDropPercent: hasTotalEarnings ? new BigNumber(airdrop).dividedBy((chequeEarning + airdrop)).multipliedBy(100).toFixed(0) : 0
-//         }
-//     })
-// };
 
 export const getNodeWalletStats = async () => {
+    const web3Provider = window.ethereum;
+    if (web3Provider) {
+        // let web3js = new window.Web3(web3Provider);
+        //  let accounts = await web3js.eth.getAccounts();
+    }
+
     let data1 = await Client10.getChainInfo();
     let BTTCAddress = data1['node_addr'];
     let chequeAddress = data1['vault_addr'];
     let chequeBookBalance = Client10.getChequeBookBalance();
     let BTTCAddressBTT = Client10.getChequeBTTBalance(BTTCAddress);
     let BTTCAddressWBTT = Client10.getChequeWBTTBalance(BTTCAddress);
-    let BTFS10Balance = Client10.getBTFS10Balance();
-    let host = Client10.getHostInfo();
 
-    return Promise.all([chequeBookBalance, BTTCAddressBTT, BTTCAddressWBTT, BTFS10Balance, host]).then((result) => {
+    return Promise.all([chequeBookBalance, BTTCAddressBTT, BTTCAddressWBTT]).then((result) => {
+
         let maxBTT = new BigNumber(result[1]['balance']).dividedBy(PRECISION).toNumber();
         let maxWBTT = new BigNumber(result[2]['balance']).dividedBy(PRECISION).toNumber();
         let maxChequeBookWBTT = new BigNumber(result[0]['balance']).dividedBy(PRECISION).toNumber();
-        let base = new BigNumber(maxBTT).minus(FEE).toNumber();
-        let balance10 = result[3]['BtfsWalletBalance'] ? new BigNumber(result[3]['BtfsWalletBalance']).dividedBy(1000000).toNumber() : 0;
-        let tronAddress = result[4]['TronAddress'];
+        let base=  new BigNumber(maxBTT).minus(FEE).toNumber();
 
         return {
             BTTCAddress: BTTCAddress,
@@ -210,9 +150,7 @@ export const getNodeWalletStats = async () => {
             BTTCAddressWBTT: switchBalanceUnit(result[2]['balance']),
             maxAvailableBTT: base > 0 ? base : 0,
             maxAvailableWBTT: base > 0 ? maxWBTT : 0,
-            maxAvailableChequeBookWBTT: base > 0 ? maxChequeBookWBTT : 0,
-            balance10: balance10,
-            tronAddress: tronAddress
+            maxAvailableChequeBookWBTT: base > 0 ? maxChequeBookWBTT : 0
         }
     })
 };
@@ -230,7 +168,7 @@ export const getNodeStorageStats = async () => {
                 storageUsed: switchStorageUnit2(result[1]['RepoSize']),
                 percentage: new BigNumber(result[1]['RepoSize']).dividedBy(result[1]['StorageMax']).multipliedBy(100).toFixed(2),
                 hostPrice: (result[0]['price'] * 30 / PRECISION).toFixed(2),
-                contracts: result[2]['active_contract_num'],
+                contracts: result[2]['contracts'].length,
                 uncashed: switchBalanceUnit(result[3]['total_received_uncashed']),
                 uncashedChange: switchBalanceUnit(result[3]['total_received_daily_uncashed']),
             }
@@ -259,9 +197,10 @@ export const getFilesStorage = async () => {
 };
 
 const formAmount = (amount) => {
-    let amount_str = new BigNumber(amount).multipliedBy(PRECISION).toFixed();
+    let temp = new Number(new BigNumber(amount).multipliedBy(PRECISION).toString()).toLocaleString();
+    let amount_str = temp.replace(/,/g, "");
     return amount_str;
-};
+}
 
 export const withdraw = async (amount) => {
     let amount_str = formAmount(amount);
@@ -277,7 +216,6 @@ export const deposit = async (amount) => {
 
 export const BTTTransfer = async (to, amount) => {
     let amount_str = formAmount(amount);
-    console.log(amount_str);
     let data = await Client10.BTTTransfer(to, amount_str);
     return data
 };
@@ -299,60 +237,4 @@ export const WBTT2BTT = async (amount) => {
     let data = await Client10.WBTT2BTT(amount_str);
     return data
 };
-
-export const withdraw10 = async (amount, pwd) => {
-    let temp = new Number(new BigNumber(amount).multipliedBy(1000000).toString()).toString();
-    let amount_str = temp.replace(/,/g, "");
-    let data = await Client10.withdraw10(amount_str, pwd);
-    return data
-};
-
-export const getHeartBeatsStats = async () => {
-    try {
-        let {status_contract, total_count, total_gas_spend} = await Client10.getHeartBeatsStats();
-
-        return {
-            status_contract,
-            total_count,
-            total_gas_spend: total_gas_spend ? new BigNumber(total_gas_spend).dividedBy(PRECISION).toNumber(): 0
-        };
-    } catch (e) {
-        console.log(e)
-        return {
-            status_contract: "--",
-            total_count: '--',
-            total_gas_spend: ''
-        }
-    }
-};
-
-export const getHeartBeatsReportlist = async (from) => {
-    try {
-        let {records, total, peer_id} = await Client10.getHeartBeatsReportlist(from);
-
-        records.forEach(item => {
-            let date = new Date(item.report_time)
-            item.gas_spend = new BigNumber(item.gas_spend).dividedBy(PRECISION).toNumber()
-            item.report_time = getTimes(date)
-        });
-
-        return {
-            records,
-            total,
-            peer_id
-        };
-    } catch (e) {
-        console.log(e)
-        return {
-            records: [],
-            total: 0,
-            peer_id: ''
-        };
-    }
-};
-
-export const getHostVersion = async ()=>{
-    const data = Client10.getHostVersion();
-    return  data['Version'] ? data['Version'] : '';
-}
 

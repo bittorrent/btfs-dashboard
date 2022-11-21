@@ -2,10 +2,9 @@ import React, {useState, useEffect, useContext, useRef} from "react";
 import {useIntl} from 'react-intl';
 import {Tooltip} from 'antd';
 import {mainContext} from "reducer";
-import ClipboardCopy from "components/Utils/ClipboardCopy";
 import ButtonCancel from "components/Buttons/ButtonCancel.js";
 import ButtonConfirm from "components/Buttons/ButtonConfirm.js";
-import {withdraw, deposit, withdraw10} from "services/dashboardService.js";
+import {withdraw, deposit} from "services/dashboardService.js";
 import Emitter from "utils/eventBus";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
@@ -22,7 +21,6 @@ export default function WithdrawDepositModal({color}) {
     const [description, setDescription] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [max, setMax] = useState(0);
-    const [account, setAccount] = useState(null);
     const [valid, setValid] = useState(false);
 
     useEffect(() => {
@@ -40,17 +38,9 @@ export default function WithdrawDepositModal({color}) {
                 setDescription("amount_to_deposit");
                 setMax(params.maxWBTT);
             }
-            if (params.type === 'withdraw10') {
-                setTitle('BTFS_10_withdraw');
-                setDescription('10_withdraw_description');
-                setAccount(params.account);
-                setMax(params.maxBTT);
-                if(params.maxBTT) {
-                    setValid(true);
-                    // setTimeout(()=>{
-                    //     inputRef.current.value = params.maxBTT;
-                    // }, 100);
-                }
+            if (params.type === 'change') {
+                setTitle('Change Recipient Address');
+                setDescription("Please enter new recipient address below.");
             }
         };
         Emitter.on("openWithdrawDepositModal", set);
@@ -59,25 +49,6 @@ export default function WithdrawDepositModal({color}) {
             window.body.style.overflow = '';
         }
     }, []);
-
-    const _withdraw10 = async () => {
-        let amount = inputRef.current.value;
-        closeModal();
-        let result = await withdraw10(amount);
-        if (result['Type'] === 'error') {
-            Emitter.emit('showMessageAlert', {message: result['Message'], status: 'error'});
-        } else {
-            Emitter.emit('showMessageAlert', {message: 'withdraw_success', status: 'success', type: 'frontEnd'});
-            Emitter.emit("updateWallet");
-        }
-        // needPWD()
-    };
-
-    /*
-    const needPWD = () => {
-        Emitter.emit('openPWDModal', {type: 'init', amount: inputRef.current.value});
-        closeModal();
-    };*/
 
     const _withdraw = async () => {
         let amount = inputRef.current.value;
@@ -120,14 +91,9 @@ export default function WithdrawDepositModal({color}) {
     const manipulation = {
         withdraw: _withdraw,
         deposit: _deposit,
-        withdraw10: _withdraw10
     };
 
     const setMaxNum = () => {
-        if (type === 'withdraw10' && max > 99999) {
-            inputRef.current.value = 99999
-            return
-        }
         inputRef.current.value = max;
         check();
     };
@@ -149,7 +115,7 @@ export default function WithdrawDepositModal({color}) {
                 <>
                     <div
                         className={"fixed flex z-50 modal_center md:w-1/2 md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
-                        style={{height: '350px'}}>
+                        style={{height: '300px'}}>
                         <div className="w-full">
                             {/*content*/}
                             <div
@@ -162,10 +128,6 @@ export default function WithdrawDepositModal({color}) {
                                 </div>
                                 {/*body*/}
                                 <div className="relative p-4">
-                                    {type === 'withdraw10' && <p className="pb-4">
-                                        {t('node_tron_addr')} : <span className='font-semibold'> {account} <ClipboardCopy value={account}/> </span>
-                                    </p>
-                                    }
                                     <p className="pb-4">
                                         {t(description)}
                                         <br/>
@@ -174,38 +136,22 @@ export default function WithdrawDepositModal({color}) {
                                         <div className="inputTransition flex-1">
                                             <input
                                                 className={"p4 mb-1 border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full " + themeStyle.bg[color]}
-                                                placeholder={type === 'withdraw10' ? intl.formatMessage({id: 'available'}) + ' : ' + max  : intl.formatMessage({id: 'max_amount'}) + ' : ' + max}
+                                                placeholder={intl.formatMessage({id: 'max_amount'}) + ' : ' + max}
                                                 onChange={inputChange}
                                                 type="number"
                                                 min="0"
-                                                // disabled={type !== 'withdraw10' ? false : true}
                                                 ref={inputRef}
                                             />
                                         </div>
-                                        {/* {type !== 'withdraw10' && <div>
-                                            <button
-                                                className="bg-indigo-500 text-white active:bg-indigo-600 h-full rounded focus:outline-none p-2 ease-linear transition-all duration-150"
-                                                onClick={setMaxNum}>MAX
-                                            </button>
-                                        </div>} */}
                                         <div>
-                                            <button
-                                                className="bg-indigo-500 text-white active:bg-indigo-600 h-full rounded focus:outline-none p-2 ease-linear transition-all duration-150"
-                                                onClick={setMaxNum}>MAX
-                                            </button>
+                                            <button className="bg-indigo-500 text-white active:bg-indigo-600 h-full rounded focus:outline-none p-2 ease-linear transition-all duration-150"
+                                                    onClick={setMaxNum}>MAX</button>
                                         </div>
                                     </div>
-
-                                        {type === 'withdraw10' && <p className="pb-4">
-                                            <br />
-                                            {t('BTFS_10_withdraw_limit')} : 1000-99999 BTT
-                                        </p>
-                                        }
-                                    </div>
+                                </div>
                                 {/*footer*/}
-                                <div
-                                    className={"flex items-center p-4 rounded-b " + (type !== 'withdraw10' ? 'justify-between' : 'justify-end')}>
-                                    <div className={type !== 'withdraw10' ? 'block' : 'hidden'}>
+                                <div className="flex items-center justify-between p-4 rounded-b">
+                                    <div>
                                         {t('est_fee')}: &nbsp;
                                         <span className='text-xl font-semibold'>{FEE} BTT</span>
                                         <Tooltip placement="bottom"

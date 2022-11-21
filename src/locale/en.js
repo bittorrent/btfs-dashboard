@@ -11,7 +11,6 @@ const en_US = {
     'view_code': 'View the Code',
     'report_bugs': 'Report Bugs',
     'contact_us': 'Contact Us',
-    'heartbeats': 'Online Proof',
 
 // dashboard
 
@@ -38,9 +37,6 @@ const en_US = {
     'cheque_earnings': 'Cheque Earnings',
     'cheque_expense': 'Cheque Expense',
     'airdrop': 'Airdrop',
-    'total_expense': 'TOTAL EXPENSE',
-    'cheque_expense_des': 'Only gas expense of online proof transactions are counted.',
-    'gas_fee': 'GAS FEE',
     'chequebook': 'Vault',
     'vault': 'Vault(s)',
     'contracts': 'Contracts',
@@ -67,13 +63,6 @@ const en_US = {
     'send': 'Send',
     'in': 'In',
     'out': 'Out',
-    'poor':'Poor',
-    'general':'Average',
-    'good':'Good',
-    'excellent':'Excellent',
-    'online_active':'Activity',
-    'switch_old_version':'Old version',
-    'switch_new_version':'New version',
 
 // cheques
 
@@ -141,40 +130,13 @@ const en_US = {
     'system_config': 'System Config',
     'submit': 'Submit',
     'endpoint': 'Endpoint',
-    'storage_path':'Storage Path',
-    'change': 'Change',
     'security': 'Security',
     'reveal_key': 'Reveal Private Key',
     'private_key': 'Private Key',
-    'advance_config':'Advanced Settings',
-    'advance_config_tips':'Changes to the settings require the service to be restarted before they can take effect. Please do not change any item if you do not know what it is.',
-    'reset_default':'Reset',
-    'view_config_file':'Config File',
-    'enable_storage_host':'Miner Mode',
-    'enable_storage_host_tips':'The node stores the data uploaded by users only when Storage Host Mode is on. This mode is turned on by default.',
-    'enable_report_online':'Online Report',
-    'enable_report_online_tips':'Once it is turned on, a signature will be created every hour, and the data of all signatures will be reported to the contract.',
-    'enable_report_status_contract':'Status Contract Report',
-    'enable_report_status_contract_tips':`Once it is turned on, the node's uptime will be reported to the Online Proof Contract via a transaction every day. `,
-    'reset_advance_config_title':'Restore the default configuration',
-    'reset_advance_config_tips':'After restoring the default configuration, you need to restart the serviceto take effect',
-    'setting_breadcrumb':'SETTINGS',
-    'setting_file_config_breadcrumb':'View BTFS Configuration File',
-    'setting_file_config_breadcrumb_des':`BTFS's configuration file is a JSON file read by the BTFS daemon. `,
-    'rpc_address':'RPC Address',
-    'rpc_set_btn_name':'set',
-    'copy_url':'Copy URL with API parameter',
-    'copy_url_tips':`Copy the URL with the API endpoint's parameters. You may configure the API endpoint quickly by accessing the URL.`,
 
 // modal
     'transfer': 'Transfer',
     'exchange': 'Exchange',
-    'BTFS_10_withdraw': 'BTFS 1.0 Withdraw',
-    'withdraw10':'Withdraw',
-    '10_withdraw_description': 'The withdrawal will be sent to Node’s corresponding TRON address.',
-    'node_tron_addr': 'Node TRON address',
-    'available': 'Available',
-    'BTFS_10_withdraw_limit': 'Per withdrawal limit',
     'insert_cid': 'Insert an BTFS path (CID) to import. Examples:',
     'insert_name': 'Insert the name of the folder you want to create.',
     'chequebook_withdraw': 'Vault Withdraw',
@@ -197,8 +159,6 @@ const en_US = {
     'enter_bttc_address': 'Please enter a valid BTTC address',
     'key_warning_1': 'Private key controls all your assets',
     'key_warning_2': 'Do Not show the private key to anybody',
-    'storage_path_confirmation': "Storage Path Confirmation",
-    'storage_path_info': "Are you sure you want to change BTFS storage to this path ?",
 
 //  warning
 
@@ -214,7 +174,6 @@ const en_US = {
     'no_data': 'No Data',
     'setting_error': 'Setting failed, please check if you are using a valid API URL!',
     'setting_success': 'Setting Successful !',
-    'change_success':'Change Path Successful !',
     'api_invalid': 'Invalid API URL Format !',
     'api_not_set': 'API ENDPOINT not set !',
     'withdraw_success': 'Withdraw Successful !',
@@ -236,26 +195,8 @@ const en_US = {
     'amount_available_check_1': 'The max available BTT = Max BTT - 15 BTT',
     'amount_available_check_2': 'The max available WBTT = Max WBTT (if BTT balance more than 15 BTT)',
     'amount_available_check_3': 'The max available WBTT = 0 (if BTT balance is less than 15 BTT)',
-    'copy_success':'Copy Sucessful !',
 
-// heartBeats
 
-    'heart_contract': 'ONLINE PROOF CONTRACT',
-    'heart_contract_des': 'The node will get online proof from the online signature service, and report it to the online proof contract. This contract is designed to store the latest online proof data for each node.',
-    'heart_transaction': 'ONLINE PROOF TRANSACTIONS',
-    'in_total': 'in total',
-    'gas_spend': 'Gas Spend',
-    'gas_spend_des': 'The Gas fee consumed by online proof transactions',
-    'transaction_list': 'ONLINE PROOF TRANSACTIONS',
-    'list_des': 'The node proves its online status by periodically sending transactions to the online proof contract.',
-    'heart_to_scan': 'View the chart on BTFS scan >',
-    'heart_th_time': 'Time(UTC)',
-    'heart_th_txhash': 'TX hash',
-    'heart_th_from': 'From',
-    'heart_th_contract': 'Online Proof Contract',
-    'heart_th_nonce': 'Heartbeats Nonce',
-    'bttc_addr': 'Node’s BTTC Address',
-    'heart_th_nonce_tips':'Heartbeat Nonce: A nonce used to prove the node is online. The nonce will increase by one as each hour passes. ',
 };
 
 export default en_US

@@ -47,8 +47,8 @@ class APIClient10 {
         return this.request('/api/v1/id');
     }
 
-    getHostScore(version=2) {
-        return this.request(`/api/v1/storage/stats/info?l=false&version=${version}`);
+    getHostScore() {
+        return this.request('/api/v1/storage/stats/info?l=false');
     }
 
     getHostPrice() {
@@ -61,12 +61,6 @@ class APIClient10 {
 
     getHostConfig() {
         return this.request('/api/v1/config/show');
-    }
-    editHostConfig(key,value,isBool) {
-        return this.request('/api/v1/config?arg=' + key + '&arg=' + value + '&bool=' + isBool);
-    }
-    resetHostConfig() {
-        return this.request('/api/v1/config/reset');
     }
 
     getNetworkStatus() {
@@ -106,7 +100,7 @@ class APIClient10 {
     }
 
     getContractsNumber() {
-        return this.request('/api/v1/storage/contracts/stat?arg=host');
+        return this.request('/api/v1/storage/contracts/list/host');
     }
 
     getChequeTotalExpenseNumbers() {
@@ -165,14 +159,6 @@ class APIClient10 {
         return this.request('/api/v1/files/stat?arg=' + path);
     }
 
-    getRepo() {
-        return this.request('/api/v1/repo/stat');
-    }
-
-    changeRepo(path, volume) {
-        return this.request('/api/v1/storage/path?arg=' + path + '&arg=' + volume);
-    }
-
     getFiles(hash) {
         return this.request('/api/v1/ls?arg=' + hash);
     }
@@ -202,7 +188,6 @@ class APIClient10 {
     }
 
     BTTTransfer(to, amount) {
-        console.log(amount);
         return this.request('/api/v1/bttc/send-btt-to?arg=' + to + '&arg=' + amount);
     }
 
@@ -236,31 +221,6 @@ class APIClient10 {
 
     syncContracts() {
         return this.request('/api/v1/storage/contracts/sync/host');
-    }
-
-    getBTFS10Balance() {
-        return this.request('/api/v1/wallet/balance');
-    }
-
-    withdraw10(amount) {
-        return this.request('/api/v1/wallet/withdraw?arg=' + amount);
-    }
-
-    async getAirDrop(address) {
-        try {
-            let {data} = await xhr.get('https://scan-backend-dev.btfs.io/api/v1/airdrop/node_id/history_total?bttc_addr=' + address);
-            return data;
-        } catch (e) {
-            return {data: {}}
-        }
-    }
-
-    getHeartBeatsStats() {
-        return this.request('/api/v1/statuscontract/total');
-    }
-
-    getHeartBeatsReportlist(from) {
-        return this.request('/api/v1/statuscontract/reportlist?arg=' + from + '&arg=10');
     }
 
 }
