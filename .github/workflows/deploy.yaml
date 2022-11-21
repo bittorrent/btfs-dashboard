@@ -15,10 +15,10 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '16'
 
       - name: Build dashboard
-        run: npm install && npm run build
+        run: yarn install && yarn build
 
       - name: Upload dashboard build - staging
         uses: appleboy/scp-action@master
