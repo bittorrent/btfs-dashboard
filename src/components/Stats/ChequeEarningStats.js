@@ -49,7 +49,7 @@ export default function ChequeEarningStats({color}) {
             icon: "usdt",
             chashed: 0,
             unChashed: 0,
-            unit:"USDT",
+            unit:"USDT_t",
             width:"0%"
             },
         ];

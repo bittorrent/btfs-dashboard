@@ -32,7 +32,7 @@ export const CURRENCY_CONFIG = {
     },
     usdt: {
         icon: "usdt",
-        unit:"USDT",
+        unit:"USDT_t",
     }
 }
 

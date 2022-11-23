@@ -38,7 +38,7 @@ export default function ChequeEarningStats({ color, type }) {
       icon: "usdt",
       chashed: 0,
       unChashed: 0,
-      unit: "USDT",
+      unit: "USDT_t",
       width: "0%",
       cashedValuePercent: 80,
       progressColor: "#0AB194",

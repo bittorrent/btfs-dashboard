@@ -31,7 +31,7 @@ const dataList = [
     icon: "usdt",
     value: 2580.7585,
     bttValue: 2580.7585,
-    unit:"USDT",
+    unit:"USDT_t",
     },
 ];
 
