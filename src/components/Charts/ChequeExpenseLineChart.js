@@ -2,7 +2,7 @@ import React, {memo, useEffect, useState, useCallback} from "react";
 import {useIntl} from "react-intl";
 import {Chart} from "chart.js";
 import {Menu} from 'antd';
-import {getChequeExpenseHistory} from "services/chequeService.js";
+import {getChequeExpenseAllHistory} from "services/chequeService.js";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
 import {INIT_CHART_LINE_DATASETS} from "utils/constants.js";
@@ -11,6 +11,7 @@ function ChequeExpenseLineChart({color}) {
 
     const intl = useIntl();
     const [current, setCurrent] = useState('chequesNumber');
+    const [expenseCurrencyAllHistoryData, setExpenseCurrencyAllHistoryData] = useState([]);
     const handleClick = useCallback(e => {
         console.log('click ', e.key);
         setCurrent(e.key);
@@ -121,16 +122,33 @@ function ChequeExpenseLineChart({color}) {
             }
         }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [color, intl, current]);
-
+    const getKeyData = (key,list ) =>{
+        const data = list.find(item=>item.key === key);
+        return data || {
+            labels: [],
+            data: []
+        }
+    }
     const update = async () => {
-        let data = await getChequeExpenseHistory();
+        let data = [];
+        if(!expenseCurrencyAllHistoryData.length){
+            data = await getChequeExpenseAllHistory();
+            setExpenseCurrencyAllHistoryData(()=>data);
+        }else{
+            data = expenseCurrencyAllHistoryData;
+        }
+        let dataIndex = 0;
+        if(current !== 'chequesNumber'){
+            dataIndex = 1;
+        }
+
         if (window.chequeExpenseLineChart) {
-            window.chequeExpenseLineChart.data.labels = data.labels;
-            window.chequeExpenseLineChart.data.datasets[0].data = data.data[1];
-            window.chequeExpenseLineChart.data.datasets[1].data = data.data[0];
-            window.chequeExpenseLineChart.data.datasets[2].data = data.data[1];
-            window.chequeExpenseLineChart.data.datasets[3].data = data.data[0];
+            window.chequeExpenseLineChart.data.labels = data?.[0]?.labels || [];
+            INIT_CHART_LINE_DATASETS.forEach((item,index) => {
+                window.chequeExpenseLineChart.data.datasets[index].data = getKeyData(item.label,data).data[dataIndex];
+            });
             window.chequeExpenseLineChart.update();
         }
     };

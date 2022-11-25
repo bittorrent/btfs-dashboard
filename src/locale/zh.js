@@ -106,8 +106,6 @@ const zh_CN = {
     'expense_list': '支出列表',
     'recipient': '接收者',
     'cheques_number': '支票数量',
-    'chashed': '已兑现',
-    'unchashed': '未兑现',
     'currency_type': '币种',
     'cheques_amount': '支票数额',
 

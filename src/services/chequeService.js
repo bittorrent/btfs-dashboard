@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import Client10 from "APIClient/APIClient10.js";
 import {switchBalanceUnit, compareInt} from "utils/BTFSUtil.js";
-import {PRECISION} from "utils/constants";
+import {PRECISION, MULTIPLE_CURRENY_LIST} from "utils/constants";
 
 export const getChequeEarningStats = async () => {
     let data = await Client10.getChequeStats();
@@ -16,9 +16,57 @@ export const getChequeEarningStats = async () => {
         cashedValuePercent: data['total_received'] ? new BigNumber((data['total_received'] - data['total_received_uncashed'])).dividedBy(data['total_received']).multipliedBy(100).toFixed(0): 100
     }
 };
+export const getChequeEarningAllStats = async () => {
+    let allData = await Client10.getChequeAllStats();
+    const earningValueAllStatsData = JSON.parse(JSON.stringify(MULTIPLE_CURRENY_LIST));
+    const earningCountAllStatsData = JSON.parse(JSON.stringify(MULTIPLE_CURRENY_LIST));
+    let currencyAllStatsData = [];
+    let allTotalCount = 0;
+    let allValueCount = 0;
+    const keysList = Object.keys(allData);
+    let WBTTData = {};
+    keysList.forEach(key=>{
+        const data = allData[key];
+        const childData = {
+            key,
+            chequeReceivedCount: data['total_received_count'],
+            uncashedCount: data['total_received_count'] - data['total_received_cashed_count'],
+            cashedCount: data['total_received_cashed_count'],
+            chequeReceivedValue: switchBalanceUnit(data['total_received']),
+            uncashedValue: switchBalanceUnit(data['total_received_uncashed']),
+            cashedValue: switchBalanceUnit(data['total_received'] - data['total_received_uncashed']),
+            cashedCountPercent:  data['total_received_count'] ? new BigNumber(data['total_received_cashed_count']).dividedBy(data['total_received_count']).multipliedBy(100).toFixed(0) : 100,
+            cashedValuePercent: data['total_received'] ? new BigNumber((data['total_received'] - data['total_received_uncashed'])).dividedBy(data['total_received']).multipliedBy(100).toFixed(0): 100
+        }
+        allValueCount += childData.chequeReceivedValue;
+        allTotalCount += childData.chequeReceivedCount;
+        
+        currencyAllStatsData.push(childData)
+        if(key === "WBTT"){
+            WBTTData = childData;
+        }
+    })
+    currencyAllStatsData.forEach(childData=>{
+        const index = earningValueAllStatsData.findIndex((item)=>item.key === childData.key);
+        earningValueAllStatsData[index].cashed = childData.cashedCount;
+        earningValueAllStatsData[index].unCashed = childData.uncashedCount;
+        earningValueAllStatsData[index].cashedValuePercent = ((childData.cashedCount/(childData.chequeReceivedCount | 1 ))*100).toFixed();
+        earningValueAllStatsData[index].width = `${((childData.chequeReceivedValue/(allTotalCount|1))*100).toFixed()}%`;
+
+        earningCountAllStatsData[index].cashed = childData.cashedValue;
+        earningCountAllStatsData[index].unCashed = childData.uncashedValue;
+        earningCountAllStatsData[index].cashedValuePercent = ((childData.cashedValue/(childData.chequeReceivedValue | 1 ))*100).toFixed();
+        earningCountAllStatsData[index].width = `${((childData.chequeReceivedValue/(allValueCount|1))*100).toFixed()}%`;
+    })
+    return {
+        earningValueAllStatsData,
+        earningCountAllStatsData,
+        WBTTData
+    }
+};
 
 export const getChequeExpenseStats = async () => {
-    let data = await Client10.getChequeStats();
+    let data = await Client10.getChequeAllStats();
     return {
         chequeSentCount: data['total_issued_count'],
         chequeSentValue: switchBalanceUnit(data['total_issued']),
@@ -26,6 +74,64 @@ export const getChequeExpenseStats = async () => {
         cashedValue: switchBalanceUnit(data['total_issued_cashed']),
         cashedValuePercent: data['total_issued'] ? new BigNumber(data['total_issued_cashed']).dividedBy(data['total_issued']).multipliedBy(100).toFixed(0) : 100
     }
+};
+export const getChequeExpenseAllStats = async () => {
+    let allData = await Client10.getChequeAllStats();
+    const expenseValueAllStatsData = JSON.parse(JSON.stringify(MULTIPLE_CURRENY_LIST));
+    const expenseCountAllStatsData = JSON.parse(JSON.stringify(MULTIPLE_CURRENY_LIST));
+    let currencyAllStatsData = [];
+    let allTotalCount = 0;
+    let allValueCount = 0;
+    const keysList = Object.keys(allData);
+    let WBTTData = {};
+    debugger;
+    keysList.forEach(key=>{
+        const data = allData[key];
+        const childData = {
+            key,
+            chequeSentCount: data['total_issued_count'],
+            chequeSentValue: switchBalanceUnit(data['total_issued']),
+            uncashedValue: switchBalanceUnit(data['total_issued'] - data['total_issued_cashed']),
+            cashedValue: switchBalanceUnit(data['total_issued_cashed']),
+            cashedValuePercent: data['total_issued'] ? new BigNumber(data['total_issued_cashed']).dividedBy(data['total_issued']).multipliedBy(100).toFixed(0) : 100
+        }
+        allValueCount += childData.chequeSentValue;
+        allTotalCount += childData.chequeSentCount;
+        
+        currencyAllStatsData.push(childData)
+        if(key === "WBTT"){
+            WBTTData = childData;
+        }
+    })
+    currencyAllStatsData.forEach(childData=>{
+        const index = expenseValueAllStatsData.findIndex((item)=>item.key === childData.key);
+        
+        if(index>-1){
+            debugger;
+            expenseValueAllStatsData[index].cashed = childData.cashedValue;
+            expenseValueAllStatsData[index].unCashed = childData.uncashedValue;
+            expenseValueAllStatsData[index].cashedValuePercent = ((childData.cashedValue/(childData.chequeSentValue | 1 ))*100).toFixed();
+            expenseValueAllStatsData[index].width = `${((childData.chequeSentValue/(allValueCount|1))*100).toFixed()}%`;
+
+            expenseCountAllStatsData[index].cashed = childData.chequeSentCount;
+            expenseCountAllStatsData[index].width = `${((childData.chequeSentCount/(allTotalCount|1))*100).toFixed()}%`;
+        }
+        
+    })
+    console.log("expenseValueAllStatsData",expenseValueAllStatsData);
+    return {
+        WBTTData,
+        expenseValueAllStatsData,
+        expenseCountAllStatsData,
+
+    }
+    // return {
+    //     chequeSentCount: data['total_issued_count'],
+    //     chequeSentValue: switchBalanceUnit(data['total_issued']),
+    //     uncashedValue: switchBalanceUnit(data['total_issued'] - data['total_issued_cashed']),
+    //     cashedValue: switchBalanceUnit(data['total_issued_cashed']),
+    //     cashedValuePercent: data['total_issued'] ? new BigNumber(data['total_issued_cashed']).dividedBy(data['total_issued']).multipliedBy(100).toFixed(0) : 100
+    // }
 };
 
 export const getChequeCashingList = async (offset, limit) => {
@@ -111,6 +217,7 @@ export const cash = async (cashList, onCashProgress, setErr, setMessage) => {
 export const getChequeEarningHistory = async () => {
     try {
         let data = await Client10.getChequeEarningHistory();
+        console.log("data-Client10.getChequeEarningHistory",data);
         let x = [];
         let y1 = [];
         let y2 = [];
@@ -131,6 +238,67 @@ export const getChequeEarningHistory = async () => {
             labels: [],
             data: [],
         }
+    }
+};
+export const getChequeEarningAllHistory = async () => {
+    try {
+        let data = await Client10.getChequeEarningAllHistory();
+        const keysList  =Object.keys(data);
+        const earningCurrencyAllHistoryData = [];
+        keysList.forEach((key)=>{
+            const keyData = data[key];
+            let x = [];
+            let y1 = [];
+            let y2 = [];
+            keyData.sort(compareInt('date'));
+            keyData.forEach((item) => {
+                let date = new Date(item['date'] * 1000);
+                x.push((date.getMonth() + 1) + '/' + date.getDate());
+                y1.push((item['total_received']/PRECISION).toFixed(4));
+                y2.push(item['total_received_count']);
+            });
+            earningCurrencyAllHistoryData.push({
+                key: key,
+                labels: x,
+                data: [y1, y2],
+            })
+        })
+        return earningCurrencyAllHistoryData;
+
+    } catch (e) {
+        console.log(e);
+        return []
+    }
+};
+
+export const getChequeExpenseAllHistory = async () => {
+    try {
+        let data = await Client10.getChequeExpenseAllHistory();
+        const keysList  =Object.keys(data);
+        const expenseCurrencyAllHistoryData = [];
+        keysList.forEach((key)=>{
+            const keyData = data[key];
+            let x = [];
+            let y1 = [];
+            let y2 = [];
+            keyData.sort(compareInt('date'));
+            keyData.forEach((item) => {
+                let date = new Date(item['date'] * 1000);
+                x.push((date.getMonth() + 1) + '/' + date.getDate());
+                y1.push((item['total_issued']/PRECISION).toFixed(4));
+                y2.push(item['total_issued_count']);
+            });
+            expenseCurrencyAllHistoryData.push({
+                key: key,
+                labels: x,
+                data: [y1, y2],
+            })
+        })
+        return expenseCurrencyAllHistoryData;
+
+    } catch (e) {
+        console.log(e);
+        return []
     }
 };
 

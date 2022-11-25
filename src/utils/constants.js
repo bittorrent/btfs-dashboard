@@ -17,28 +17,54 @@ export const CHAIN_NAME = {
 export const OLD_SCORE_VERSION = 1;
 export const NEW_SCORE_VERSION = 2;
 export const CURRENCY_CONFIG = {
-    wbtt: {
+    WBTT: {
         icon: "wbtt",
         unit:"WBTT",
-
     },
-    usdd: {
+    USDD: {
         icon: "usdd",
-        unit:"USDD",
+        unit:"USDD_t",
     },
-    trx: {
+    TRX: {
         icon: "trx",
         unit:"TRX",
     },
-    usdt: {
+    USDT: {
         icon: "usdt",
         unit:"USDT_t",
     }
 }
+export const INIT_MULTI_CURRENCY_DATA = [
+    {
+        icon: "wbtt",
+        unit:"WBTT",
+        key:"WBTT",
+        rateUnit:"BTT",
+    },
+    {
+        icon: "usdd",
+        unit:"USDD_t",
+        key:"USDD",
+        rateUnit:"USDD"
+    },
+    {
+        icon: "trx",
+        unit:"TRX",
+        key:"TRX",
+        rateUnit:"TRX"
+    },
+    {
+        icon: "usdt",
+        unit:"USDT_t",
+        key:"USDT",
+        rateUnit:"USDT"
+    },
+];
 
 export const INIT_CHART_LINE_DATASETS = [
     {
         label: 'WBTT',
+        icon: "wbtt",
         borderColor: '#000000',
         backgroundColor: '#000000',
         data: [],
@@ -48,6 +74,7 @@ export const INIT_CHART_LINE_DATASETS = [
     },
     {
         label: 'TRX',
+        icon: "trx",
         borderColor: "#FF0000",
         backgroundColor: "#FF0000",
         data: [],
@@ -57,6 +84,7 @@ export const INIT_CHART_LINE_DATASETS = [
     },
     {
         label: 'USDD',
+        icon: "usdd",
         borderColor: "#006E57",
         backgroundColor: "#006E57",
         data: [],
@@ -66,6 +94,7 @@ export const INIT_CHART_LINE_DATASETS = [
     },
     {
         label: 'USDT',
+        icon: "usdt",
         borderColor: "#0AB194",
         backgroundColor:"#0AB194",
         data: [],
@@ -74,3 +103,45 @@ export const INIT_CHART_LINE_DATASETS = [
         tension: 0,
     },
 ]
+export const MULTIPLE_CURRENY_LIST = [
+    {
+      icon: "wbtt",
+      key:"WBTT",
+      unit: "WBTT",
+      progressColor: "#000000",
+      cashed: 0,
+      unCashed: 0,
+      width: "0%",
+      cashedValuePercent: 0,
+    },
+    {
+      icon: "trx",
+      key:"TRX",
+      unit: "TRX",
+      progressColor: "#FF0000",
+      cashed: 0,
+      unCashed: 0,
+      width: "0%",
+      cashedValuePercent: 0,
+    },
+    {
+      icon: "usdd",
+      key:"USDD",
+      unit: "USDD_t",
+      progressColor: "#006E57",
+      cashed: 0,
+      unCashed: 0,
+      width: "0%",
+      cashedValuePercent: 0,
+    },
+    {
+      icon: "usdt",
+      key:"USDT",
+      unit: "USDT_t",
+      progressColor: "#0AB194",
+      cashed: 0,
+      unCashed: 0,
+      width: "0%",
+      cashedValuePercent: 0,
+    },
+  ];

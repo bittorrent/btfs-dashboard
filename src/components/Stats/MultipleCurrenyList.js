@@ -5,45 +5,46 @@ import { Progress } from "antd";
 import themeStyle from "utils/themeStyle.js";
 import { t } from "utils/text.js";
 
-export default function ChequeEarningStats({ color, type }) {
-  const dataList = [
-    {
-      icon: "wbtt",
-      chashed: 8000,
-      unChashed: 2000,
-      unit: "WBTT",
-      width: "80%",
-      cashedValuePercent: 80,
-      progressColor: "#000000",
-    },
-    {
-      icon: "trx",
-      chashed: 800,
-      unChashed: 1200,
-      unit: "TRX",
-      width: "10%",
-      cashedValuePercent: 80,
-      progressColor: "#FF0000",
-    },
-    {
-      icon: "usdd",
-      chashed: 800,
-      unChashed: 1200,
-      unit: "USDD",
-      width: "10%",
-      cashedValuePercent: 80,
-      progressColor: "#006E57",
-    },
-    {
-      icon: "usdt",
-      chashed: 0,
-      unChashed: 0,
-      unit: "USDT_t",
-      width: "0%",
-      cashedValuePercent: 80,
-      progressColor: "#0AB194",
-    },
-  ];
+export default function MultipleCurrenyList({ color, type, dataList=[] }) {
+  console.log("MultipleCurrenyList-dataList",dataList)
+  // const dataList = [
+  //   {
+  //     icon: "wbtt",
+  //     cashed: 8000,
+  //     unCashed: 2000,
+  //     unit: "WBTT",
+  //     width: "80%",
+  //     cashedValuePercent: 80,
+  //     progressColor: "#000000",
+  //   },
+  //   {
+  //     icon: "trx",
+  //     cashed: 800,
+  //     unCashed: 1200,
+  //     unit: "TRX",
+  //     width: "10%",
+  //     cashedValuePercent: 80,
+  //     progressColor: "#FF0000",
+  //   },
+  //   {
+  //     icon: "usdd",
+  //     cashed: 800,
+  //     unCashed: 1200,
+  //     unit: "USDD_t",
+  //     width: "10%",
+  //     cashedValuePercent: 80,
+  //     progressColor: "#006E57",
+  //   },
+  //   {
+  //     icon: "usdt",
+  //     cashed: 0,
+  //     unCashed: 0,
+  //     unit: "USDT_t",
+  //     width: "0%",
+  //     cashedValuePercent: 80,
+  //     progressColor: "#0AB194",
+  //   },
+  // ];
 
   return (
     <div className={"w-full " + themeStyle.bg[color] + themeStyle.text[color]}>
@@ -64,7 +65,7 @@ export default function ChequeEarningStats({ color, type }) {
               {type === "sentCheques" ? (
                 <div className="w-full relative " >
                   <div className={"w-full relative " + themeStyle.title[color]}>
-                    <span className="font-bold">{item.chashed}</span>
+                    <span className="font-bold">{item.cashed}</span>
                   </div>
                   <div className="relative" style={{ width: item.width }}>
                     <Progress
@@ -86,12 +87,12 @@ export default function ChequeEarningStats({ color, type }) {
                     style={{ width: "80%" }}
                   >
                     <div>
-                      <span className="mr-2">{t("chashed")}</span>
-                      <span className="font-bold">{item.chashed}</span>
+                      <span className="mr-2">{t("cashed")}</span>
+                      <span className="font-bold">{item.cashed}</span>
                     </div>
                     <div>
-                      <span className="mr-2">{t("unchashed")}</span>
-                      <span className="font-bold">{item.unChashed}</span>
+                      <span className="mr-2">{t("uncashed")}</span>
+                      <span className="font-bold">{item.unCashed}</span>
                     </div>
                   </div>
                   <div className="relative" style={{ width: item.width }}>

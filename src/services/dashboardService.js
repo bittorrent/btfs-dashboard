@@ -2,7 +2,7 @@
 import Client10 from "APIClient/APIClient10.js";
 import BigNumber from 'bignumber.js';
 import {switchStorageUnit2, switchBalanceUnit, toThousands, getTimes} from "utils/BTFSUtil.js";
-import {PRECISION, FEE, OLD_SCORE_VERSION, NEW_SCORE_VERSION} from "utils/constants.js";
+import {PRECISION, FEE, NEW_SCORE_VERSION, INIT_MULTI_CURRENCY_DATA} from "utils/constants.js";
 
 export const getNodeBasicStats = async () => {
     let data1 = Client10.getHostInfo();
@@ -121,24 +121,86 @@ export const getHostHistory = async (flag) => {
 export const getNodeRevenueStats = async () => {
     let data1 = Client10.getChequeValue();
     let data3 = Client10.getHeartBeatsStats();
-    return Promise.all([data1, data3]).then((result) => {
-        console.log('data3', result)
-        const gasFee = +result[1]['total_gas_spend'] ? +result[1]['total_gas_spend'] : 0
-        const chequeExpense = +result[0]['totalSent']
-        const hasTotalExpense = gasFee || chequeExpense
-
+    const data4 = Client10.getChequeAllStats();
+    const data5 = Client10.getExchangeRate(INIT_MULTI_CURRENCY_DATA[1].rateUnit);
+    const data6 = Client10.getExchangeRate(INIT_MULTI_CURRENCY_DATA[2].rateUnit);
+    const data7 = Client10.getExchangeRate(INIT_MULTI_CURRENCY_DATA[3].rateUnit);
+  
+    return Promise.all([data1, data3, data4, data5, data6, data7]).then(
+      (result) => {
+        console.log("data3", result);
+        const gasFee = +result[1]["total_gas_spend"]
+          ? +result[1]["total_gas_spend"]
+          : 0;
+        const chequeExpense = +result[0]["totalSent"];
+        const hasTotalExpense = gasFee || chequeExpense;
+        const currencyRateList = [];
+        currencyRateList.push(
+          1,
+          result[5]?.data?.rate,
+          result[6]?.data?.rate,
+          result[7]?.data?.rate
+        );
+        const checksExpenseDetialsData = [];
+        const chequeEarningDetailData = [];
+        INIT_MULTI_CURRENCY_DATA.forEach((item, index) => {
+          const expenseItem = { ...item };
+          const earningItem = { ...item };
+          const totolData = result[2]?.[item.key] || {};
+          expenseItem.value = totolData.total_issued_count || 0;
+          expenseItem.bttValue =
+            expenseItem.value *
+            (currencyRateList[index] ? 1 / currencyRateList[index] : 1).toFixed(
+              0
+            );
+          earningItem.value = totolData.total_received_count || 0;
+          earningItem.bttValue =
+            earningItem.value *
+            (currencyRateList[index] ? 1 / currencyRateList[index] : 1).toFixed(
+              0
+            );
+          checksExpenseDetialsData.push(expenseItem);
+          chequeEarningDetailData.push(earningItem);
+        });
+  
         return {
-            chequeEarning: switchBalanceUnit(result[0]['totalReceived']),
-            uncashedPercent: result[0]['totalReceived'] ? new BigNumber((result[0]['totalReceived'] - result[0]['settlement_received_cashed'])).dividedBy(result[0]['totalReceived']).multipliedBy(100).toFixed(0) : 0,
-            cashedPercent: result[0]['totalReceived'] ? new BigNumber((result[0]['settlement_received_cashed'])).dividedBy(result[0]['totalReceived']).multipliedBy(100).toFixed(0) : 0,
-            chequeExpense: switchBalanceUnit(chequeExpense),
-            totalExpense: switchBalanceUnit(gasFee + chequeExpense),
-            gasFee: switchBalanceUnit(gasFee),
-            gasFeePercent: hasTotalExpense ? new BigNumber(gasFee).dividedBy((gasFee + chequeExpense)).multipliedBy(100).toFixed(0) : 0,
-            chequeExpensePercent: hasTotalExpense ? new BigNumber(chequeExpense).dividedBy((gasFee + chequeExpense)).multipliedBy(100).toFixed(0) : 0,
-        }
-    })
-};
+          chequeEarning: switchBalanceUnit(result[0]["totalReceived"]),
+          uncashedPercent: result[0]["totalReceived"]
+            ? new BigNumber(
+                result[0]["totalReceived"] -
+                  result[0]["settlement_received_cashed"]
+              )
+                .dividedBy(result[0]["totalReceived"])
+                .multipliedBy(100)
+                .toFixed(0)
+            : 0,
+          cashedPercent: result[0]["totalReceived"]
+            ? new BigNumber(result[0]["settlement_received_cashed"])
+                .dividedBy(result[0]["totalReceived"])
+                .multipliedBy(100)
+                .toFixed(0)
+            : 0,
+          chequeExpense: switchBalanceUnit(chequeExpense),
+          totalExpense: switchBalanceUnit(gasFee + chequeExpense),
+          gasFee: switchBalanceUnit(gasFee),
+          gasFeePercent: hasTotalExpense
+            ? new BigNumber(gasFee)
+                .dividedBy(gasFee + chequeExpense)
+                .multipliedBy(100)
+                .toFixed(0)
+            : 0,
+          chequeExpensePercent: hasTotalExpense
+            ? new BigNumber(chequeExpense)
+                .dividedBy(gasFee + chequeExpense)
+                .multipliedBy(100)
+                .toFixed(0)
+            : 0,
+          checksExpenseDetialsData,
+          chequeEarningDetailData,
+        };
+      }
+    );
+  };
 
 // export const getNodeRevenueStats = async () => {
 //     let data = await Client10.getChainInfo();

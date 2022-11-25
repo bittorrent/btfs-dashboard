@@ -1,9 +1,10 @@
 /*eslint-disable*/
 import React, {useEffect, useState} from "react";
 import {Progress} from 'antd';
-import {getChequeExpenseStats} from "services/chequeService.js";
+import {getChequeExpenseAllStats} from "services/chequeService.js";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
+import {MULTIPLE_CURRENY_LIST} from "utils/constants";
 import MultipleCurrenyList from "./MultipleCurrenyList.js"
 
 let strokeColor = {
@@ -20,13 +21,17 @@ export default function ChequeExpenseStats({color}) {
         cashedValue: 0,
         cashedValuePercent: 0
     })
+    const [expenseValueAllStatsData, setExpenseValueAllStatsData] = useState(MULTIPLE_CURRENY_LIST);
+    const [expenseCountAllStatsData, setExpenseCountAllStatsData] = useState(MULTIPLE_CURRENY_LIST);
 
     useEffect(() => {
         let didCancel = false;
         const fetchData = async () => {
-            let data = await getChequeExpenseStats();
+            let {WBTTData, expenseValueAllStatsData, expenseCountAllStatsData,} = await getChequeExpenseAllStats();
             if (!didCancel) {
-                setChequesStats(data);
+                setChequesStats(WBTTData);
+                setExpenseValueAllStatsData(()=>expenseValueAllStatsData);
+                setExpenseCountAllStatsData(()=>expenseCountAllStatsData);
             }
         };
         fetchData();
@@ -53,7 +58,7 @@ export default function ChequeExpenseStats({color}) {
                                     <div className='p-4'>
                                         <span className='font-semibold text-3xl'>{chequesStats.chequeSentCount}</span>
                                     </div>
-                                    <MultipleCurrenyList color={color} type={"sentCheques"} />
+                                    <MultipleCurrenyList color={color} type={"sentCheques"} dataList={expenseCountAllStatsData} />
                                 </div>
                             </div>
                         </div>
@@ -94,7 +99,7 @@ export default function ChequeExpenseStats({color}) {
                                             {chequesStats.uncashedValue} <span className='text-xs'>WBTT</span>
                                         </div>
                                     </div>
-                                    <MultipleCurrenyList color={color} />
+                                    <MultipleCurrenyList color={color} dataList={expenseValueAllStatsData} />
                                 </div>
                             </div>
                         </div>

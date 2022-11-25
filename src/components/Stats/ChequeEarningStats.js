@@ -1,9 +1,10 @@
 /*eslint-disable*/
 import React, {useEffect, useState} from "react";
 import {Progress} from 'antd';
-import {getChequeEarningStats} from "services/chequeService.js";
+import {getChequeEarningAllStats} from "services/chequeService.js";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
+import {MULTIPLE_CURRENY_LIST} from "utils/constants";
 import MultipleCurrenyList from "./MultipleCurrenyList.js"
 
 let strokeColor = {
@@ -23,43 +24,17 @@ export default function ChequeEarningStats({color}) {
         cashedCountPercent: 0,
         cashedValuePercent: 0,
     });
-    const dataList = [
-        {
-            icon: "wbtt",
-            chashed: 8000,
-            unChashed: 2000,
-            unit:"WBTT",
-            width:"80%"
-        },
-        {
-            icon: "usdd",
-            chashed: 800,
-            unChashed: 1200,
-            unit:"USDD",
-            width:"10%"
-            },
-            {
-            icon: "trx",
-            chashed: 800,
-            unChashed: 1200,
-            unit:"TRX",
-            width:"10%"
-            },
-            {
-            icon: "usdt",
-            chashed: 0,
-            unChashed: 0,
-            unit:"USDT_t",
-            width:"0%"
-            },
-        ];
-
+    const [earningValueAllStatsData, setEarningValueAllStatsData] = useState(MULTIPLE_CURRENY_LIST);
+    const [earningCountAllStatsData, setEarningCountAllStatsData] = useState(MULTIPLE_CURRENY_LIST);
+    
     useEffect(() => {
         let didCancel = false;
         const fetchData = async () => {
-            let data = await getChequeEarningStats();
+            let { earningValueAllStatsData, earningCountAllStatsData,WBTTData} = await getChequeEarningAllStats();
             if (!didCancel) {
-                setChequesStats(data);
+                setChequesStats(WBTTData);
+                setEarningValueAllStatsData(()=>earningValueAllStatsData);
+                setEarningCountAllStatsData(()=>earningCountAllStatsData)
             }
         };
         fetchData();
@@ -108,7 +83,7 @@ export default function ChequeEarningStats({color}) {
                                         </div>
                                     </div>
 
-                                   <MultipleCurrenyList color={color} />
+                                   <MultipleCurrenyList color={color} dataList={earningValueAllStatsData} />
                                 </div>
                             </div>
                         </div>
@@ -148,7 +123,7 @@ export default function ChequeEarningStats({color}) {
                                             {chequesStats.uncashedValue} <span className='text-xs'>WBTT</span>
                                         </div>
                                     </div>
-                                    <MultipleCurrenyList color={color} />
+                                    <MultipleCurrenyList color={color} dataList={earningCountAllStatsData}/>
                                 </div>
                             </div>
                         </div>

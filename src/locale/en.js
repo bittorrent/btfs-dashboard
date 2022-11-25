@@ -107,8 +107,6 @@ const en_US = {
     'expense_list': 'Expense List',
     'recipient': 'Recipient',
     'cheques_number': 'Cheques Number',
-    'chashed': 'Chashed',
-    'unchashed': 'Unchashed',
     'currency_type': 'Currency',
     'cheques_amount': 'Cheques Amount',
 

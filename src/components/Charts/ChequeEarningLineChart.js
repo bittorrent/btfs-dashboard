@@ -2,7 +2,7 @@ import React, {memo, useEffect, useState, useCallback} from "react";
 import {useIntl} from "react-intl";
 import {Chart} from "chart.js";
 import {Menu} from 'antd';
-import {getChequeEarningHistory} from "services/chequeService.js";
+import {getChequeEarningAllHistory} from "services/chequeService.js";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
 import {INIT_CHART_LINE_DATASETS} from "utils/constants.js";
@@ -12,133 +12,13 @@ function ChequeEarningLineChart({color}) {
 
     const intl = useIntl();
     const [current, setCurrent] = useState('chequesNumber');
+    const [earningCurrencyAllHistoryData, setEarningCurrencyAllHistoryData] = useState([]);
 
     const handleClick = useCallback(e => {
         console.log('click ', e.key);
         setCurrent(e.key);
     }, []);
 
-    // useEffect(() => {
-
-    //     var config = {
-    //         type: 'line',
-    //         data: {
-    //             labels: [],
-    //             datasets: [
-    //                 {
-    //                     label: 'Received',
-    //                     borderColor: 'red',
-    //                     backgroundColor: 'rgb(255, 99, 132, 0.3)',
-    //                     data: [],
-    //                     fill: false,
-    //                     cubicInterpolationMode: 'monotone',
-    //                     tension: 0,
-    //                     yAxisID: 'y',
-    //                 },
-    //                 {
-    //                     label: 'Received Amount',
-    //                     borderColor: 'blue',
-    //                     backgroundColor: 'rgb(54, 162, 235, 0.3)',
-    //                     data: [],
-    //                     fill: false,
-    //                     cubicInterpolationMode: 'monotone',
-    //                     tension: 0,
-    //                     yAxisID: 'y1',
-    //                 },
-    //             ]
-    //         },
-
-    //         options: {
-    //             plugins: {
-    //                 legend: {
-    //                     // display: false,
-    //                 },
-    //                 tooltip: {
-    //                     mode: "index",
-    //                     intersect: false,
-    //                     callbacks: {
-    //                         label: function (context) {
-    //                             var label = context.dataset.label || '';
-    //                             if (context.datasetIndex === 1) {
-    //                                 if (label) {
-    //                                     label += ' : ' + context.parsed.y + ' WBTT ';
-    //                                 }
-    //                             }
-    //                             if (context.datasetIndex === 0) {
-    //                                 if (label) {
-    //                                     label += ' : ' + context.parsed.y + ' ';
-    //                                 }
-    //                             }
-    //                             return label;
-    //                         }
-    //                     }
-
-    //                 },
-    //             },
-    //             responsive: false,
-    //             interaction: {
-    //                 intersect: false,
-    //             },
-    //             scales: {
-    //                 x: {
-    //                     display: true,
-    //                     title: {
-    //                         display: true,
-    //                     },
-    //                     ticks: {
-    //                         color: color === 'light' ? 'black' : 'white'
-    //                     },
-    //                 },
-    //                 y: {
-    //                     display: true,
-    //                     position: 'left',
-    //                     title: {
-    //                         display: true,
-    //                         text: intl.formatMessage({id: 'cheques_number'}),
-    //                         color: color === 'light' ? 'black' : 'white'
-    //                     },
-    //                     ticks: {
-    //                         color: color === 'light' ? 'black' : 'white'
-    //                     },
-    //                     min: 0,
-    //                 },
-    //                 y1: {
-    //                     display: true,
-    //                     position: 'right',
-    //                     grid: {
-    //                         drawOnChartArea: false,
-    //                     },
-    //                     title: {
-    //                         display: true,
-    //                         text: 'WBTT',
-    //                         color: color === 'light' ? 'black' : 'white'
-    //                     },
-    //                     ticks: {
-    //                         color: color === 'light' ? 'black' : 'white'
-    //                     },
-    //                     min: 0,
-    //                 }
-    //             }
-    //         },
-    //     };
-
-    //     var content = document.getElementById('cheque-earning-line-chart-content');
-    //     content.innerHTML = '&nbsp;';
-    //     content.innerHTML = "<canvas id='cheque-earning-line-chart' style='height: 300px; width: 100%'></canvas>";
-
-    //     var ctx = document.getElementById("cheque-earning-line-chart").getContext("2d");
-    //     window.ChequeEarningLineChart = new Chart(ctx, config);
-
-    //     update();
-
-    //     return () => {
-    //         if (window.ChequeEarningLineChart) {
-    //             window.ChequeEarningLineChart.destroy();
-    //             window.ChequeEarningLineChart = null;
-    //         }
-    //     }
-
-    // }, [color, intl]);
     useEffect(() => {
         console.log("current-useEffect",current);
         const datasetsList = JSON.parse(JSON.stringify(INIT_CHART_LINE_DATASETS)).map(item=>{
@@ -245,18 +125,32 @@ function ChequeEarningLineChart({color}) {
             }
         }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [color, intl, current]);
-
+    const getKeyData = (key,list ) =>{
+        const data = list.find(item=>item.key === key);
+        return data || {
+            labels: [],
+            data: []
+        }
+    }
     const update = async () => {
-        let data = await getChequeEarningHistory();
-
+        let data = [];
+        if(!earningCurrencyAllHistoryData.length){
+            data = await getChequeEarningAllHistory();
+            setEarningCurrencyAllHistoryData(()=>data);
+        }else{
+            data = earningCurrencyAllHistoryData;
+        }
+        let dataIndex = 0;
+        if(current !== 'chequesNumber'){
+            dataIndex = 1;
+        }
         if (window.ChequeEarningLineChart) {
-            window.ChequeEarningLineChart.data.labels = data.labels;
-            window.ChequeEarningLineChart.data.datasets[0].data = data.data[1];
-            // TO DO   Based on the current
-            window.ChequeEarningLineChart.data.datasets[1].data = data.data[0];
-            window.ChequeEarningLineChart.data.datasets[2].data = data.data[1];
-            window.ChequeEarningLineChart.data.datasets[3].data = data.data[0];
+            window.ChequeEarningLineChart.data.labels = data?.[0]?.labels || [];
+            INIT_CHART_LINE_DATASETS.forEach((item,index) => {
+                window.ChequeEarningLineChart.data.datasets[index].data = getKeyData(item.label,data).data[dataIndex];
+            });
             window.ChequeEarningLineChart.update();
         }
     };

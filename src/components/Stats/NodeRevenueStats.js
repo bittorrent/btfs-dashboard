@@ -19,7 +19,7 @@ const dataList = [
     icon: "usdd",
     value: 2580.7585,
     bttValue: 2580.7585,
-    unit:"USDD",
+    unit:"USDD_t",
     },
     {
     icon: "trx",
@@ -45,36 +45,57 @@ export default function NodeRevenueStats({color}) {
     const [gasFee, setGasFee] = useState(0);
     const [gasFeePercent, setGasFeePercent] = useState(0);
     const [chequeExpensePercent, setChequeExpensePercent] = useState(0);
+    const [checksExpenseDetialList, setChecksExpenseDetialList] = useState([]);
+    const [chequeEarningDetailList, setChequeEarningDetailData] = useState([]);
+
 
     useEffect(() => {
         let didCancel = false;
         const fetchData = async () => {
-            let {chequeEarning, chequeExpense, uncashedPercent, cashedPercent, totalExpense, gasFee, gasFeePercent, chequeExpensePercent} = await getNodeRevenueStats();
-            if (!didCancel) {
-                unstable_batchedUpdates(() => {
-                    setChequeEarning(chequeEarning);
-                    setChequeExpense(chequeExpense);
-                    setCashedPercent(cashedPercent);
-                    setUncashedPercent(uncashedPercent);
+          let {
+            chequeEarning,
+            chequeExpense,
+            uncashedPercent,
+            cashedPercent,
+            totalExpense,
+            gasFee,
+            gasFeePercent,
+            chequeExpensePercent,
+            checksExpenseDetialsData,
+            chequeEarningDetailData,
+          } = await getNodeRevenueStats();
+          if (!didCancel) {
+            unstable_batchedUpdates(() => {
+              setChequeEarning(chequeEarning);
+              setChequeExpense(chequeExpense);
+              setCashedPercent(cashedPercent);
+              setUncashedPercent(uncashedPercent);
+    
+              setTotalExpense(totalExpense);
+              setGasFee(gasFee);
+              setGasFeePercent(gasFeePercent);
+              setChequeExpensePercent(chequeExpensePercent);
 
-                    setTotalExpense(totalExpense);
-                    setGasFee(gasFee);
-                    setGasFeePercent(gasFeePercent);
-                    setChequeExpensePercent(chequeExpensePercent);
-                })
-            }
+              setChecksExpenseDetialList(()=>{
+                return checksExpenseDetialsData;
+              })
+              setChequeEarningDetailData(()=>{
+                return chequeEarningDetailData;
+              })
+            });
+          }
         };
         fetchData();
         return () => {
-            didCancel = true;
+          didCancel = true;
         };
-    }, []);
+      }, []);
 
     const showChequeExpenseTips = ()=>{
-        Emitter.emit('openCheckDetailModal', {title: t("checks_expense_detials") ,dataList});
+        Emitter.emit('openCheckDetailModal', {title: t("checks_expense_detials") ,dataList: checksExpenseDetialList});
     }
     const showChequeEarningTips = ()=>{
-        Emitter.emit('openCheckDetailModal', {title: t("cheque_earning_detail"), dataList:dataList});
+        Emitter.emit('openCheckDetailModal', {title: t("cheque_earning_detail"), dataList: chequeEarningDetailList});
     }
     return (
         <>
@@ -115,7 +136,7 @@ export default function NodeRevenueStats({color}) {
                                             </div>
                                         </div>
                                         <div>
-                                            <i onClick={showChequeEarningTips} class="fa-solid  fa-circle-chevron-right font-semibold cursor-pointer"></i>
+                                            <i onClick={showChequeEarningTips} className="fa-solid  fa-circle-chevron-right font-semibold cursor-pointer"></i>
                                         </div> 
                                     </div>
                                     
@@ -158,7 +179,7 @@ export default function NodeRevenueStats({color}) {
                                     </div>
                                 </div>
                                 <div>
-                                    <i onClick={showChequeExpenseTips} class="fa-solid  fa-circle-chevron-right font-semibold  cursor-pointer"></i>
+                                    <i onClick={showChequeExpenseTips} className="fa-solid  fa-circle-chevron-right font-semibold  cursor-pointer"></i>
                                 </div> 
                             </div>
 
