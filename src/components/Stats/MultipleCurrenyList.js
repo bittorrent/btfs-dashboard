@@ -6,7 +6,6 @@ import themeStyle from "utils/themeStyle.js";
 import { t } from "utils/text.js";
 
 export default function MultipleCurrenyList({ color, type, dataList=[] }) {
-  console.log("MultipleCurrenyList-dataList",dataList)
   // const dataList = [
   //   {
   //     icon: "wbtt",
