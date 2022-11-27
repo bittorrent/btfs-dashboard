@@ -85,12 +85,22 @@ class APIClient10 {
         return this.request('/api/v1/vault/balance');
     }
 
+    // V2.3 new
+    getChequeBookAllBalance() {
+        return this.request('/api/v1/vault/balance_all');
+    }
+
     getChequeBTTBalance(address) {
         return this.request('/api/v1/cheque/bttbalance?arg=' + address);
     }
 
     getChequeWBTTBalance(address) {
         return this.request('/api/v1/vault/wbttbalance?arg=' + address);
+    }
+
+    // V2.3
+    getChequeAllBalance(address) {
+        return this.request('/api/v1/cheque/all_token_balance?arg=' + address);
     }
 
     getChequeValue() {
@@ -137,6 +147,10 @@ class APIClient10 {
 
     getChequeExpenseList() {
         return this.request('/api/v1/cheque/sendlist');
+    }
+    // V2.3 new
+    getChequeAllExpenseList() {
+        return this.request('/api/v1/cheque/sendlistall');
     }
 
     getChequeSentDetailList(offset, limit) {
@@ -211,12 +225,13 @@ class APIClient10 {
         return this.request('/api/v1/cheque/chaininfo');
     }
 
-    withdraw(amount) {
-        return this.request('/api/v1/vault/withdraw?arg=' + amount);
+    withdraw(amount, currencyType) {
+        return this.request('/api/v1/vault/withdraw?arg=' + amount + '&token-type' + currencyType);
     }
 
-    deposit(amount) {
-        return this.request('/api/v1/vault/deposit?arg=' + amount);
+
+    deposit(amount, currencyType) {
+        return this.request('/api/v1/vault/deposit?arg=' + amount + '&token-type' + currencyType);
     }
 
     BTTTransfer(to, amount) {
@@ -227,6 +242,12 @@ class APIClient10 {
     WBTTTransfer(to, amount) {
         return this.request('/api/v1/bttc/send-wbtt-to?arg=' + to + '&arg=' + amount);
     }
+
+    // V2.3 new
+    currencyTransfer(to, amount, currencyType) {
+        return this.request('/api/v1/bttc/send-token-to?arg=' + to + '&arg=' + amount + '&token-type=' + currencyType);
+    }
+
 
     BTT2WBTT(amount) {
         return this.request('/api/v1/bttc/btt2wbtt?arg=' + amount);

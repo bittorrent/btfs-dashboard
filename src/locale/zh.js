@@ -187,7 +187,7 @@ const zh_CN = {
     'chequebook_withdraw': '取款',
     'amount_to_withdraw': '请输入要提取的WBTT数额。',
     'chequebook_deposit': '存款',
-    'amount_to_deposit': '请输入要存入的WBTT数额。',
+    'amount_to_deposit': '请输入从BTTC地址存入金库合约的数额。',
     'transfer_confirmation': '转账确认',
     'cancel': '取消',
     'confirm': '确认',

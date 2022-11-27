@@ -22,6 +22,7 @@ export default function NodeWalletStats({color}) {
     const [_BTTCAddressWBTT, set_BTTCAddressWBTT] = useState(0);
     const [balance10, setBalance10] = useState(0);
     const [tronAddress, setTronAddress] =  useState('--');
+    const [allCurrencyBalanceList, setAllCurrencyBalanceList] = useState([]);
 
     useEffect(() => {
         fetchData();
@@ -44,7 +45,7 @@ export default function NodeWalletStats({color}) {
 
     const fetchData = async () => {
         didCancel = false;
-        let {BTTCAddress, chequeAddress, chequeBookBalance, BTTCAddressBTT, BTTCAddressWBTT, maxAvailableChequeBookWBTT, maxAvailableBTT, maxAvailableWBTT, balance10, tronAddress} = await getNodeWalletStats();
+        let {BTTCAddress, chequeAddress, chequeBookBalance, BTTCAddressBTT, BTTCAddressWBTT, maxAvailableChequeBookWBTT, maxAvailableBTT, maxAvailableWBTT, balance10, tronAddress, allCurrencyBalanceList} = await getNodeWalletStats();
         if (!didCancel) {
             unstable_batchedUpdates(() => {
                 setBTTCAddress(BTTCAddress);
@@ -57,29 +58,30 @@ export default function NodeWalletStats({color}) {
                 set_BTTCAddressWBTT(maxAvailableWBTT);
                 setBalance10(balance10);
                 setTronAddress(tronAddress);
+                setAllCurrencyBalanceList(()=>allCurrencyBalanceList)
             })
         }
     };
 
     const onDeposit = (e) => {
         e.preventDefault();
-        Emitter.emit('openWithdrawDepositModal', {type: 'deposit', maxWBTT: _BTTCAddressWBTT});
+        Emitter.emit('openWithdrawDepositModal', {type: 'deposit', maxWBTT: _BTTCAddressWBTT, allCurrencyBalanceList: allCurrencyBalanceList});
     };
 
     const onWithdraw = (e) => {
         e.preventDefault();
-        Emitter.emit('openWithdrawDepositModal', {type: 'withdraw', maxWBTT: _chequeBookWBTT});
+        Emitter.emit('openWithdrawDepositModal', {type: 'withdraw', maxWBTT: _chequeBookWBTT, allCurrencyBalanceList: allCurrencyBalanceList});
     };
 
     const onWithdraw10 = (e) => {
         e.preventDefault();
         console.log(tronAddress);
-        Emitter.emit('openWithdrawDepositModal', {type: 'withdraw10', maxBTT: balance10, account: tronAddress});
+        Emitter.emit('openWithdrawDepositModal', {type: 'withdraw10', maxBTT: balance10, account: tronAddress, allCurrencyBalanceList: allCurrencyBalanceList});
     };
 
     const onTransfer = (e) => {
         e.preventDefault();
-        Emitter.emit('openTransferConfirmModal', {type: 'transfer', maxBTT: _BTTCAddressBTT, maxWBTT: _BTTCAddressWBTT});
+        Emitter.emit('openTransferConfirmModal', {type: 'transfer', maxBTT: _BTTCAddressBTT, maxWBTT: _BTTCAddressWBTT, allCurrencyBalanceList: allCurrencyBalanceList});
     };
 
     const onExchange = (e) => {
@@ -126,6 +128,25 @@ export default function NodeWalletStats({color}) {
                                             <span className='text-lg font-semibold'> {BTTCAddressWBTT} </span>
                                             <span className='text-xs'>WBTT</span>
                                         </div>
+                                        <div className="flex items-center flex-wrap w-full mt-2">
+                                            {allCurrencyBalanceList.map(item=>{
+                                                return(
+                                                    <div key={item.unit} className="flex items-center w-1/2 mb-2" >
+                                                        <img
+                                                        src={require(`assets/img/${item.icon}.svg`).default}
+                                                        alt=""
+                                                        className="mr-2 block "
+                                                        />
+                                                        <div className={"font-bold mr-2 " + themeStyle.title[color]}>
+                                                        {item.addressValue}
+                                                        </div>
+                                                        <div className={ themeStyle.title[color]}>
+                                                        {item.unit}
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
                                         <div className='transfer_exchange'>
                                             <button
                                                 className={"border-1 px-4 py-2 rounded outline-none focus:outline-none mx-2 mt-2 shadow hover:shadow-md inline-flex items-center font-bold " + themeStyle.bg[color]}
@@ -170,6 +191,25 @@ export default function NodeWalletStats({color}) {
                                             <span className='font-semibold'>{t('balance')}: &nbsp;</span>
                                             <span className='text-lg font-semibold'>{chequeBookBalance}</span>
                                             <span className='text-xs'>WBTT</span>
+                                        </div>
+                                        <div className="flex items-center flex-wrap w-full mt-2">
+                                            {allCurrencyBalanceList.map(item=>{
+                                                return(
+                                                    <div key={item.unit} className="flex items-center w-1/2 mb-2" >
+                                                        <img
+                                                        src={require(`assets/img/${item.icon}.svg`).default}
+                                                        alt=""
+                                                        className="mr-2 block "
+                                                        />
+                                                        <div className={"font-bold mr-2 " + themeStyle.title[color]}>
+                                                        {item.bookBalanceValue}
+                                                        </div>
+                                                        <div className={ themeStyle.title[color]}>
+                                                        {item.unit}
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })}
                                         </div>
                                         <div className='withdraw_deposit'>
                                             <button

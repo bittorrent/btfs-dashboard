@@ -2,7 +2,7 @@
 import Client10 from "APIClient/APIClient10.js";
 import BigNumber from 'bignumber.js';
 import {switchStorageUnit2, switchBalanceUnit, toThousands, getTimes} from "utils/BTFSUtil.js";
-import {PRECISION, FEE, NEW_SCORE_VERSION, INIT_MULTI_CURRENCY_DATA} from "utils/constants.js";
+import {PRECISION, FEE, NEW_SCORE_VERSION, INIT_MULTI_CURRENCY_DATA, MULTIPLE_CURRENY_LIST} from "utils/constants.js";
 
 export const getNodeBasicStats = async () => {
     let data1 = Client10.getHostInfo();
@@ -234,14 +234,35 @@ export const getNodeWalletStats = async () => {
     let BTTCAddressWBTT = Client10.getChequeWBTTBalance(BTTCAddress);
     let BTFS10Balance = Client10.getBTFS10Balance();
     let host = Client10.getHostInfo();
+    const getAllBalanceData = Client10.getChequeAllBalance(BTTCAddress);
+    const getChequeBookAllBalanceData = Client10.getChequeBookAllBalance();
 
-    return Promise.all([chequeBookBalance, BTTCAddressBTT, BTTCAddressWBTT, BTFS10Balance, host]).then((result) => {
+    return Promise.all([chequeBookBalance, BTTCAddressBTT, BTTCAddressWBTT, BTFS10Balance, host, getAllBalanceData, getChequeBookAllBalanceData]).then((result) => {
         let maxBTT = new BigNumber(result[1]['balance']).dividedBy(PRECISION).toNumber();
         let maxWBTT = new BigNumber(result[2]['balance']).dividedBy(PRECISION).toNumber();
         let maxChequeBookWBTT = new BigNumber(result[0]['balance']).dividedBy(PRECISION).toNumber();
         let base = new BigNumber(maxBTT).minus(FEE).toNumber();
         let balance10 = result[3]['BtfsWalletBalance'] ? new BigNumber(result[3]['BtfsWalletBalance']).dividedBy(1000000).toNumber() : 0;
         let tronAddress = result[4]['TronAddress'];
+        const  allBalanceData = result[5];
+        const  chequeBookAllBalanceData = result[6];
+        const allCurrencyBalanceList = [];
+        MULTIPLE_CURRENY_LIST.forEach(item=>{
+            const newItem = {...item};
+            newItem.addressValue = 0;
+            newItem.maxAddressCount = 0;
+            newItem.bookBalanceValue = 0;
+            newItem.maxBookBalanceCount = 0;
+            if(allBalanceData?.[item.key]){
+                newItem.addressValue = switchBalanceUnit(allBalanceData?.[item.key]);
+                newItem.maxAddressCount = new BigNumber(allBalanceData?.[item.key]).dividedBy(PRECISION).toNumber();
+            }
+            if(chequeBookAllBalanceData?.[item.key]){
+                newItem.bookBalanceValue = switchBalanceUnit(chequeBookAllBalanceData?.[item.key]);
+                newItem.maxBookBalanceCount = new BigNumber(chequeBookAllBalanceData?.[item.key]).dividedBy(PRECISION).toNumber();
+            }
+            allCurrencyBalanceList.push({...newItem});
+        })
 
         return {
             BTTCAddress: BTTCAddress,
@@ -253,7 +274,8 @@ export const getNodeWalletStats = async () => {
             maxAvailableWBTT: base > 0 ? maxWBTT : 0,
             maxAvailableChequeBookWBTT: base > 0 ? maxChequeBookWBTT : 0,
             balance10: balance10,
-            tronAddress: tronAddress
+            tronAddress: tronAddress,
+            allCurrencyBalanceList,
         }
     })
 };
@@ -304,15 +326,15 @@ const formAmount = (amount) => {
     return amount_str;
 };
 
-export const withdraw = async (amount) => {
+export const withdraw = async (amount, currencyType) => {
     let amount_str = formAmount(amount);
-    let data = await Client10.withdraw(amount_str);
+    let data = await Client10.withdraw(amount_str, currencyType);
     return data
 };
 
-export const deposit = async (amount) => {
+export const deposit = async (amount, currencyType) => {
     let amount_str = formAmount(amount);
-    let data = await Client10.deposit(amount_str);
+    let data = await Client10.deposit(amount_str, currencyType);
     return data
 };
 
@@ -326,6 +348,12 @@ export const BTTTransfer = async (to, amount) => {
 export const WBTTTransfer = async (to, amount) => {
     let amount_str = formAmount(amount);
     let data = await Client10.WBTTTransfer(to, amount_str);
+    return data
+};
+
+export const currencyTransfer = async (to, amount, currencyType) => {
+    let amount_str = formAmount(amount);
+    let data = await Client10.currencyTransfer(to, amount_str, currencyType);
     return data
 };
 
