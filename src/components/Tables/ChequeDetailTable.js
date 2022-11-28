@@ -34,11 +34,6 @@ export default function ChequeDetailTable({color, type}) {
         let {cheques, total} = data;
 
         if (!didCancel) {
-            // TO DO
-            cheques.forEach(item=>{
-                item.icon = 'trx';
-                item.unit = 'TRX';
-            })
             setCheques(cheques);
             setTotal(total);
             setCurrent(page);

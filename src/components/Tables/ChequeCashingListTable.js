@@ -18,8 +18,8 @@ export default function ChequeCashingListTable({color, enableCash}) {
     const [total, setTotal] = useState(0);
     const [current, setCurrent] = useState(1);
 
-    const select = (e, id, amount) => {
-        enableCash(e.target.checked, id, amount);
+    const select = (e, id, amount, selectItemData) => {
+        enableCash(e.target.checked, id, amount,false, selectItemData);
     };
 
     const unSelect = () => {
@@ -38,11 +38,6 @@ export default function ChequeCashingListTable({color, enableCash}) {
         didCancel = false;
         let {cheques, total} = await getChequeCashingList((page - 1) * 10, 10);
         if (!didCancel) {
-            // TO DO
-            cheques.forEach(item=>{
-                item.icon = 'trx';
-                item.unit = 'TRX';
-            })
             setCheques(cheques);
             setTotal(total);
             setCurrent(page);
@@ -115,7 +110,7 @@ export default function ChequeCashingListTable({color, enableCash}) {
                                             type="checkbox" name="checkbox"
                                             className={"bg-gray form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150 "}
                                             onClick={(e) => {
-                                                select(e, item['PeerID'], (item['Payout'] - item['CashedAmount']))
+                                                select(e, item['PeerID'], (item['Payout'] - item['CashedAmount']), item)
                                             }}
                                         />
                                     </td>

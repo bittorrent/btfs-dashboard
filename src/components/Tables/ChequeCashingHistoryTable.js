@@ -25,11 +25,6 @@ export default function ChequeCashingHistoryTable({color}) {
         didCancel = false;
         let {cheques, total} = await getChequeCashingHistoryList((page - 1) * 10, 10);
         if (!didCancel) {
-            // TO DO
-            cheques.forEach(item=>{
-                item.icon = 'trx';
-                item.unit = 'TRX';
-            })
             setCheques(cheques);
             setTotal(total);
             setCurrent(page);

@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import Client10 from "APIClient/APIClient10.js";
 import {switchBalanceUnit, compareInt} from "utils/BTFSUtil.js";
-import {PRECISION, MULTIPLE_CURRENY_LIST} from "utils/constants";
+import {PRECISION, MULTIPLE_CURRENY_LIST, CURRENCY_CONFIG} from "utils/constants";
 
 export const getChequeEarningStats = async () => {
     let data = await Client10.getChequeStats();
@@ -130,43 +130,105 @@ export const getChequeExpenseAllStats = async () => {
 };
 
 export const getChequeCashingList = async (offset, limit) => {
-    let data = await Client10.getChequeCashingList(offset, limit);
-    return {
-        cheques: data['Cheques'] ? data['Cheques'] : [],
-        total: data['Len']
-    }
+    const data1 =  Client10.getChequeCashingAllList(offset, limit);
+    const data2 =  Client10.getSupportTokens();
+    return Promise.all([data1, data2]).then((result) => {
+        const tokenList = result[1]; 
+        let cheques =  result[0]['Cheques'] ? result[0]['Cheques'] : [];
+        cheques = formatCurrencyTokenData(cheques,tokenList,'Token');
+        
+        return {
+            cheques: cheques,
+            total: result[0]['Len']
+        }
+    })
+   
 };
 
+// export const getChequeCashingList = async (offset, limit) => {
+//     let data = await Client10.getChequeCashingAllList(offset, limit);
+//     const cheques =  data['Cheques'] ? data['Cheques'] : [];
+//     cheques.forEach(item=>{
+//         item.icon = 'wbtt';
+//         item.unit = 'WBTT';
+//     })
+    
+//     return {
+//         cheques: data['Cheques'] ? data['Cheques'] : [],
+//         total: data['Len']
+//     }
+// };
 export const getChequeCashingHistoryList = async (offset, limit) => {
-    let data = await Client10.getChequeCashingHistoryList(offset, limit);
-    return {
-        cheques: data['records'] ? data['records'] : [],
-        total: data['total']
-    }
+    const data1 =  Client10.getChequeCashingHistoryList(offset, limit);
+    const data2 =  Client10.getSupportTokens();
+    return Promise.all([data1, data2]).then((result) => {
+        const tokenList = result[1]; 
+        let cheques =  result[0]['records'] ? result[0]['records'] : [];
+        cheques = formatCurrencyTokenData(cheques,tokenList,'token');
+        return {
+            cheques: cheques,
+            total: result[0]['total']
+        }
+    })
 };
-
+const formatCurrencyTokenData = (cheques,tokenList,tokenName) =>{
+    cheques.forEach(item=>{
+        const keyList = Object.keys(tokenList);
+        let itemKey = "WBTT";
+        keyList.forEach(key=>{
+            if(tokenList[key] === item[tokenName].toLowerCase()){
+                itemKey = key;
+            }
+        })
+        item.key = itemKey;
+        item.icon = CURRENCY_CONFIG[itemKey].icon;
+        item.unit = CURRENCY_CONFIG[itemKey].unit;
+    })
+    return cheques;
+}
 export const getChequeReceivedDetailList = async (offset, limit) => {
-    let data = await Client10.getChequeReceivedDetailList(offset, limit);
-    return {
-        cheques: data['records'] ? data['records'] : [],
-        total: data['total']
-    }
+    const data1 =  Client10.getChequeReceivedDetailList(offset, limit);
+    const data2 =  Client10.getSupportTokens();
+    return Promise.all([data1, data2]).then((result) => {
+        const tokenList = result[1]; 
+        let cheques =  result[0]['records'] ? result[0]['records'] : [];
+        cheques = formatCurrencyTokenData(cheques,tokenList,'Token');
+
+        return {
+            cheques: cheques,
+            total: result[0]['total']
+        }
+    })
 };
 
 export const getChequeExpenseList = async () => {
-    let data = await Client10.getChequeExpenseList();
-    return {
-        cheques: data['Cheques'] ? data['Cheques'] : [],
-        total: data['Len']
-    }
+    const data1 =  Client10.getChequeExpenseList();
+    const data2 =  Client10.getSupportTokens();
+    return Promise.all([data1, data2]).then((result) => {
+        const tokenList = result[1]; 
+        let cheques =  result[0]['Cheques'] ? result[0]['Cheques'] : [];
+        cheques = formatCurrencyTokenData(cheques,tokenList,'Token');
+    
+        return {
+            cheques: cheques,
+            total: result[0]['Len']
+        }
+    })
 };
 
 export const getChequeSentDetailList = async (offset, limit) => {
-    let data = await Client10.getChequeSentDetailList(offset, limit);
-    return {
-        cheques: data['records'] ? data['records'] : [],
-        total: data['total']
-    }
+    const data1 =  Client10.getChequeSentDetailList(offset, limit);
+    const data2 =  Client10.getSupportTokens();
+    return Promise.all([data1, data2]).then((result) => {
+        const tokenList = result[1]; 
+        let cheques =  result[0]['records'] ? result[0]['records'] : [];
+        cheques = formatCurrencyTokenData(cheques,tokenList,'Token');
+    
+        return {
+            cheques: cheques,
+            total: result[0]['total']
+        }
+    })
 };
 
 export const cash = async (cashList, onCashProgress, setErr, setMessage) => {
@@ -184,7 +246,7 @@ export const cash = async (cashList, onCashProgress, setErr, setMessage) => {
         }
 
         for (let i = 0; i < cashList.length; i++) {
-            let {TxHash, Type, Message} = await Client10.cash(cashList[i].id);
+            let {TxHash, Type, Message} = await Client10.cash(cashList[i].id, cashList[i].currencyType);
             if (Type === 'error') {
                 setMessage(Message);
             }

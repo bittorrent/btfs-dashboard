@@ -31,11 +31,6 @@ export default function ChequeExpenseTable({color}) {
         didCancel = false;
         let {cheques, total} = await getChequeExpenseList();
         if (!didCancel) {
-             // TO DO
-             cheques.forEach(item=>{
-                item.icon = 'trx';
-                item.unit = 'TRX';
-            })
             chequesAll = cheques;
             setTotal(total);
             sliceDate(1);
