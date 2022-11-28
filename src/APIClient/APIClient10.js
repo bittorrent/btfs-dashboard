@@ -257,8 +257,8 @@ class APIClient10 {
         return this.request('/api/v1/bttc/wbtt2btt?arg=' + amount);
     }
 
-    cash(id) {
-        return this.request('/api/v1/cheque/cash?arg=' + id);
+    cash(id, currencyType) {
+        return this.request('/api/v1/cheque/cash?arg=' + id + '&token-type=' + currencyType);
     }
 
     addPeer(id) {
