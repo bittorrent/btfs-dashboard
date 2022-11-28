@@ -12,6 +12,7 @@ export default function CheckDetailModal({ color, detailParam }) {
   useEffect(() => {
     const set = function (params) {
       console.log("openCheckDetailModal event has occured");
+      console.log("openCheckDetailModal event has occured",params);
       openModal();
       CheckDetailData.current = params;
     };

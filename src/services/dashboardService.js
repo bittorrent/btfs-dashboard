@@ -147,13 +147,13 @@ export const getNodeRevenueStats = async () => {
           const expenseItem = { ...item };
           const earningItem = { ...item };
           const totolData = result[2]?.[item.key] || {};
-          expenseItem.value = totolData.total_issued_count || 0;
+          expenseItem.value = switchBalanceUnit(+totolData.total_issued || 0);
           expenseItem.bttValue =
             expenseItem.value *
             (currencyRateList[index] ? 1 / currencyRateList[index] : 1).toFixed(
               0
             );
-          earningItem.value = totolData.total_received_count || 0;
+          earningItem.value = switchBalanceUnit(+totolData.total_received || 0);
           earningItem.bttValue =
             earningItem.value *
             (currencyRateList[index] ? 1 / currencyRateList[index] : 1).toFixed(

@@ -8,33 +8,6 @@ import Emitter from "utils/eventBus";
 import {t} from "utils/text.js";
 
 
-const dataList = [
-{
-    icon: "wbtt",
-    value: 2580.7585,
-    bttValue: 2580.7585,
-    unit:"WBTT",
-},
-{
-    icon: "usdd",
-    value: 2580.7585,
-    bttValue: 2580.7585,
-    unit:"USDD_t",
-    },
-    {
-    icon: "trx",
-    value: 2580.7585,
-    bttValue: 2580.7585,
-    unit:"TRX",
-    },
-    {
-    icon: "usdt",
-    value: 2580.7585,
-    bttValue: 2580.7585,
-    unit:"USDT_t",
-    },
-];
-
 export default function NodeRevenueStats({color}) {
 
     const [chequeEarning, setChequeEarning] = useState(0);
@@ -75,7 +48,7 @@ export default function NodeRevenueStats({color}) {
               setGasFee(gasFee);
               setGasFeePercent(gasFeePercent);
               setChequeExpensePercent(chequeExpensePercent);
-
+            console.log("checksExpenseDetialsData",checksExpenseDetialsData);
               setChecksExpenseDetialList(()=>{
                 return checksExpenseDetialsData;
               })
