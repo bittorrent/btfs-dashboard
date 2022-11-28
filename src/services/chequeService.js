@@ -38,26 +38,35 @@ export const getChequeEarningAllStats = async () => {
             cashedCountPercent:  data['total_received_count'] ? new BigNumber(data['total_received_cashed_count']).dividedBy(data['total_received_count']).multipliedBy(100).toFixed(0) : 100,
             cashedValuePercent: data['total_received'] ? new BigNumber((data['total_received'] - data['total_received_uncashed'])).dividedBy(data['total_received']).multipliedBy(100).toFixed(0): 100
         }
-        allValueCount += childData.chequeReceivedValue;
-        allTotalCount += childData.chequeReceivedCount;
+        allValueCount += Number(childData.chequeReceivedValue);
+        allTotalCount += Number(childData.chequeReceivedCount);
         
         currencyAllStatsData.push(childData)
         if(key === "WBTT"){
             WBTTData = childData;
         }
     })
+    if(allTotalCount === 0){
+        allTotalCount = 1;
+    }
+    if(allValueCount === 0){
+        allValueCount = 1;
+    }
+    console.log("allTotalCount",allTotalCount)
+    console.log("allValueCount",allValueCount)
+    debugger;
     currencyAllStatsData.forEach(childData=>{
         const index = earningValueAllStatsData.findIndex((item)=>item.key === childData.key);
         if(index>-1){
             earningValueAllStatsData[index].cashed = childData.cashedCount;
             earningValueAllStatsData[index].unCashed = childData.uncashedCount;
-            earningValueAllStatsData[index].cashedValuePercent = ((childData.cashedCount/(childData.chequeReceivedCount | 1 ))*100).toFixed();
-            earningValueAllStatsData[index].width = `${((childData.chequeReceivedValue/(allTotalCount|1))*100).toFixed()}%`;
+            earningValueAllStatsData[index].cashedValuePercent = ((earningValueAllStatsData[index].cashed/(childData.chequeReceivedCount))*100).toFixed();
+            earningValueAllStatsData[index].width = `${((earningValueAllStatsData[index].cashed/(allTotalCount))*100).toFixed()}%`;
 
             earningCountAllStatsData[index].cashed = childData.cashedValue;
             earningCountAllStatsData[index].unCashed = childData.uncashedValue;
-            earningCountAllStatsData[index].cashedValuePercent = ((childData.cashedValue/(childData.chequeReceivedValue | 1 ))*100).toFixed();
-            earningCountAllStatsData[index].width = `${((childData.chequeReceivedValue/(allValueCount|1))*100).toFixed()}%`;
+            earningCountAllStatsData[index].cashedValuePercent = ((childData.cashedValue/(childData.chequeReceivedValue ))*100).toFixed();
+            earningCountAllStatsData[index].width = `${((earningCountAllStatsData[index].cashed/(allValueCount))*100).toFixed()}%`;
         }
         
     })
@@ -107,17 +116,23 @@ export const getChequeExpenseAllStats = async () => {
             WBTTData = childData;
         }
     })
+    if(allTotalCount === 0){
+        allTotalCount = 1;
+    }
+    if(allValueCount === 0){
+        allValueCount = 1;
+    }
     currencyAllStatsData.forEach(childData=>{
         const index = expenseValueAllStatsData.findIndex((item)=>item.key === childData.key);
         
         if(index>-1){
             expenseValueAllStatsData[index].cashed = childData.cashedValue;
             expenseValueAllStatsData[index].unCashed = childData.uncashedValue;
-            expenseValueAllStatsData[index].cashedValuePercent = ((childData.cashedValue/(childData.chequeSentValue | 1 ))*100).toFixed();
-            expenseValueAllStatsData[index].width = `${((childData.chequeSentValue/(allValueCount|1))*100).toFixed()}%`;
+            expenseValueAllStatsData[index].cashedValuePercent = ((childData.cashedValue/(childData.chequeSentValue ))*100).toFixed();
+            expenseValueAllStatsData[index].width = `${((expenseValueAllStatsData[index].cashed/(allValueCount))*100).toFixed()}%`;
 
             expenseCountAllStatsData[index].cashed = childData.chequeSentCount;
-            expenseCountAllStatsData[index].width = `${((childData.chequeSentCount/(allTotalCount|1))*100).toFixed()}%`;
+            expenseCountAllStatsData[index].width = `${((expenseCountAllStatsData[index].cashed/(allTotalCount))*100).toFixed()}%`;
         }
         
     })
