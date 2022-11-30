@@ -77,7 +77,7 @@ const zh_CN = {
     'cheque_earnings_des':'按照当前汇率其他货币转换为BTT，数值仅供参考，点击可查看详情',
     'cheque_earning_detail': '支票收益详情',
     'checks_expense_detials': '支票支出详情',
-
+    'vault_contract_balance': '金库合约余额todo',
 // cheques
 
     'earning': '收益',
@@ -184,10 +184,10 @@ const zh_CN = {
     'BTFS_10_withdraw_limit': '单次提现限制',
     'insert_cid': '使用BTFS路径（CID）导入。 例如:',
     'insert_name': '输入要创建的文件夹名称',
-    'chequebook_withdraw': '取款',
-    'amount_to_withdraw': '请输入要提取的WBTT数额。',
-    'chequebook_deposit': '存款',
-    'amount_to_deposit': '请输入从BTTC地址存入金库合约的数额。',
+    'chequebook_withdraw': '从合约提取',
+    'amount_to_withdraw': '请输入从金库合约提取至BTTC地址的数额',
+    'chequebook_deposit': '存入至合约',
+    'amount_to_deposit': '请输入从BTTC地址存入金库合约的数额',
     'transfer_confirmation': '转账确认',
     'cancel': '取消',
     'confirm': '确认',

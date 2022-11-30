@@ -52,9 +52,6 @@ export const getChequeEarningAllStats = async () => {
     if(allValueCount === 0){
         allValueCount = 1;
     }
-    console.log("allTotalCount",allTotalCount)
-    console.log("allValueCount",allValueCount)
-    debugger;
     currencyAllStatsData.forEach(childData=>{
         const index = earningValueAllStatsData.findIndex((item)=>item.key === childData.key);
         if(index>-1){
