@@ -1,10 +1,7 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo, useEffect } from 'react'
 import { useIntl } from 'react-intl'
 import { Chart } from 'chart.js'
-import {
-    getChequeEarningAllHistory,
-    getChequeEarningHistory,
-} from 'services/chequeService.js'
+import { getChequeEarningAllHistory } from 'services/chequeService.js'
 import themeStyle from 'utils/themeStyle.js'
 import { t } from 'utils/text.js'
 import { INIT_CHART_LINE_DATASETS } from 'utils/constants'
@@ -84,6 +81,23 @@ function RevenueHistoryLineChart({ color }) {
             .getContext('2d')
         window.revenueHistoryLineChart = new Chart(ctx, config)
 
+        const update = async () => {
+            let data = await getChequeEarningAllHistory()
+            if (window.revenueHistoryLineChart) {
+                //   window.revenueHistoryLineChart.data.labels = data.labels
+                //   window.revenueHistoryLineChart.data.datasets[0].data = data.data[0]
+                //   window.revenueHistoryLineChart.update()
+    
+                window.revenueHistoryLineChart.data.labels = data?.[0]?.labels || []
+                INIT_CHART_LINE_DATASETS.forEach((item, index) => {
+                    window.revenueHistoryLineChart.data.datasets[index].data = getKeyData(
+                        item.label,
+                        data
+                    ).data[0]
+                })
+                window.revenueHistoryLineChart.update()
+            }
+        }
         update()
 
         return () => {
@@ -92,7 +106,7 @@ function RevenueHistoryLineChart({ color }) {
                 window.revenueHistoryLineChart = null
             }
         }
-    }, [color])
+    }, [color, intl])
     const getKeyData = (key, list) => {
         const data = list.find((item) => item.key === key)
         return (
@@ -101,23 +115,6 @@ function RevenueHistoryLineChart({ color }) {
                 data: [],
             }
         )
-    }
-    const update = async () => {
-        let data = await getChequeEarningAllHistory()
-        if (window.revenueHistoryLineChart) {
-            //   window.revenueHistoryLineChart.data.labels = data.labels
-            //   window.revenueHistoryLineChart.data.datasets[0].data = data.data[0]
-            //   window.revenueHistoryLineChart.update()
-
-            window.revenueHistoryLineChart.data.labels = data?.[0]?.labels || []
-            INIT_CHART_LINE_DATASETS.forEach((item, index) => {
-                window.revenueHistoryLineChart.data.datasets[index].data = getKeyData(
-                    item.label,
-                    data
-                ).data[0]
-            })
-            window.revenueHistoryLineChart.update()
-        }
     }
 
     return (
