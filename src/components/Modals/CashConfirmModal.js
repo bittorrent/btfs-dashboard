@@ -8,6 +8,7 @@ import Emitter from "utils/eventBus";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
 import {PRECISION} from "utils/constants.js";
+import { toNonExponential } from "utils/BTFSUtil";
 
 export default function CashConfirmModal({color}) {
 
@@ -150,7 +151,7 @@ export default function CashConfirmModal({color}) {
                                                 <div className='text-xl font-semibold text-right'>
                                                 {cashList.current.currencyList.map((item,index)=>{
                                                     return (
-                                                        <div key={index}>{item.total} {item.unit}</div>
+                                                        <div key={index}> {toNonExponential(item.total)} {item.unit}</div>
                                                     )
                                                 })}
                                                 {/* <div >{cashList.current.total} WBTT</div> */}

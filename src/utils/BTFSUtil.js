@@ -156,3 +156,8 @@ export function versionStringCompare (curVersion='', lastVersion='2.2.1'){
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
+
+export function toNonExponential(num) {
+    var m = num.toExponential().match(/\d(?:\.(\d*))?e([+-]\d+)/);
+    return num.toFixed(Math.max(0, (m[1] || '').length - m[2]));
+}
