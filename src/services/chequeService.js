@@ -24,34 +24,47 @@ export const getChequeEarningAllStats = async () => {
     let allTotalCount = 0;
     let allValueCount = 0;
     const keysList = Object.keys(allData);
-    let WBTTData = {};
+    let WBTTData = null;
     keysList.forEach(key=>{
         const data = allData[key];
+
         const childData = {
             key,
             chequeReceivedCount: data['total_received_count'],
             uncashedCount: data['total_received_count'] - data['total_received_cashed_count'],
             cashedCount: data['total_received_cashed_count'],
-            chequeReceivedValue: switchBalanceUnit(data['total_received']),
-            uncashedValue: switchBalanceUnit(data['total_received_uncashed']),
-            cashedValue: switchBalanceUnit(data['total_received'] - data['total_received_uncashed']),
-            cashedCountPercent:  data['total_received_count'] ? new BigNumber(data['total_received_cashed_count']).dividedBy(data['total_received_count']).multipliedBy(100).toFixed(0) : 100,
-            cashedValuePercent: data['total_received'] ? new BigNumber((data['total_received'] - data['total_received_uncashed'])).dividedBy(data['total_received']).multipliedBy(100).toFixed(0): 100
+            chequeReceivedValue: Number(switchBalanceUnit(data['total_received'])),
+            uncashedValue: Number(switchBalanceUnit(data['total_received_uncashed'])),
+            cashedValue: Number(switchBalanceUnit(data['total_received'] - data['total_received_uncashed'])),
         }
+        
         allValueCount += Number(childData.chequeReceivedValue);
         allTotalCount += Number(childData.chequeReceivedCount);
         
         currencyAllStatsData.push(childData)
-        if(key === "WBTT"){
-            WBTTData = childData;
+
+        if(!WBTTData){
+            WBTTData = {...childData};
+        }else{
+            WBTTData.chequeReceivedCount += childData.chequeReceivedCount;
+            WBTTData.uncashedCount += childData.uncashedCount;
+            WBTTData.cashedCount += childData.cashedCount;
+            WBTTData.chequeReceivedValue += childData.chequeReceivedValue;
+            WBTTData.uncashedValue += childData.uncashedValue;
+            WBTTData.cashedValue += childData.cashedValue;
         }
     })
+    WBTTData.cashedCountPercent = WBTTData.chequeReceivedCount ? ((WBTTData.cashedCount/WBTTData.chequeReceivedCount)*100).toFixed(): 100;
+    WBTTData.cashedValuePercent = WBTTData.chequeReceivedValue ? ((WBTTData.cashedValue/WBTTData.chequeReceivedValue)*100).toFixed(): 100;
+
+
     if(allTotalCount === 0){
         allTotalCount = 1;
     }
     if(allValueCount === 0){
         allValueCount = 1;
     }
+
     currencyAllStatsData.forEach(childData=>{
         const index = earningValueAllStatsData.findIndex((item)=>item.key === childData.key);
         if(index>-1){
@@ -94,25 +107,34 @@ export const getChequeExpenseAllStats = async () => {
     let allTotalCount = 0;
     let allValueCount = 0;
     const keysList = Object.keys(allData);
-    let WBTTData = {};
+    let WBTTData = null;
     keysList.forEach(key=>{
         const data = allData[key];
         const childData = {
             key,
             chequeSentCount: data['total_issued_count'],
-            chequeSentValue: switchBalanceUnit(data['total_issued']),
-            uncashedValue: switchBalanceUnit(data['total_issued'] - data['total_issued_cashed']),
-            cashedValue: switchBalanceUnit(data['total_issued_cashed']),
-            cashedValuePercent: data['total_issued'] ? new BigNumber(data['total_issued_cashed']).dividedBy(data['total_issued']).multipliedBy(100).toFixed(0) : 100
+            chequeSentValue: Number(switchBalanceUnit(data['total_issued'])),
+            uncashedValue: Number(switchBalanceUnit(data['total_issued'] - data['total_issued_cashed'])),
+            cashedValue: Number(switchBalanceUnit(data['total_issued_cashed'])),
+            // cashedValuePercent: data['total_issued'] ? new BigNumber(data['total_issued_cashed']).dividedBy(data['total_issued']).multipliedBy(100).toFixed(0) : 100
         }
         allValueCount += childData.chequeSentValue;
         allTotalCount += childData.chequeSentCount;
         
         currencyAllStatsData.push(childData)
-        if(key === "WBTT"){
-            WBTTData = childData;
+        
+        if(!WBTTData){
+            WBTTData = {...childData};
+        }else{
+            WBTTData.chequeSentCount += childData.chequeSentCount;
+            WBTTData.chequeSentValue += childData.chequeSentValue;
+            WBTTData.uncashedValue += childData.uncashedValue;
+            WBTTData.uncashedValue += childData.uncashedValue;
+            WBTTData.cashedValue += childData.cashedValue;
         }
     })
+    WBTTData.cashedValuePercent += WBTTData.chequeSentValue ? ((WBTTData.cashedValue/WBTTData.chequeSentValue)*100).toFixed() : 100;
+
     if(allTotalCount === 0){
         allTotalCount = 1;
     }
