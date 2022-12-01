@@ -77,7 +77,7 @@ const zh_CN = {
     'cheque_earnings_des':'按照当前汇率其他货币转换为BTT，数值仅供参考，点击可查看详情',
     'cheque_earning_detail': '支票收益详情',
     'checks_expense_detials': '支票支出详情',
-    'vault_contract_balance': '金库合约余额todo',
+    'vault_contract_balance': '金库合约余额',
 // cheques
 
     'earning': '收益',

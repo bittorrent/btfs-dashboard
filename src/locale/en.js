@@ -77,7 +77,7 @@ const en_US = {
     'cheque_earnings_des':'According to the current exchange rate, other currencies are converted into BTT. The value is for reference only. Click to view the details',
     'cheque_earning_detail': 'Cheques Earning Detials',
     'checks_expense_detials': 'Cheques Expense Detials',
-    'vault_contract_balance': '金库合约余额todo',
+    'vault_contract_balance': 'Vault Balance',
 
 // cheques
 
@@ -183,10 +183,10 @@ const en_US = {
     'BTFS_10_withdraw_limit': 'Per withdrawal limit',
     'insert_cid': 'Insert an BTFS path (CID) to import. Examples:',
     'insert_name': 'Insert the name of the folder you want to create.',
-    'chequebook_withdraw': 'Vault Withdraw',
-    'amount_to_withdraw': 'Please enter the amount of BTTC you would like to withdraw.',
-    'chequebook_deposit': 'Vault Deposit',
-    'amount_to_deposit': 'Please enter the amount deposited into the vault contract from the BTTC address.',
+    'chequebook_withdraw': 'Withdraw from Vault',
+    'amount_to_withdraw': 'Please enter the amount you would like to withdraw from vault',
+    'chequebook_deposit': 'Deposit into Vault',
+    'amount_to_deposit': 'Please enter the amount you would like to deposit into vault',
     'transfer_confirmation': 'Transfer Confirmation',
     'cancel': 'Cancel',
     'confirm': 'Confirm',
