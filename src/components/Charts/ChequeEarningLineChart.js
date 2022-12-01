@@ -1,7 +1,6 @@
-import React, { memo, useEffect, useState, useCallback } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { useIntl } from 'react-intl'
 import { Chart } from 'chart.js'
-import { Menu } from 'antd'
 import { getChequeEarningAllHistory } from 'services/chequeService.js'
 import themeStyle from 'utils/themeStyle.js'
 import { t } from 'utils/text.js'
@@ -13,21 +12,11 @@ function ChequeEarningLineChart({ color, type }) {
     const [earningCurrencyAllHistoryData, setEarningCurrencyAllHistoryData] =
         useState([])
 
-    const handleClick = useCallback((e) => {
-        console.log('click ', e.key)
-        setCurrent(e.key)
-    }, [])
-
     useEffect(() => {
         console.log('current-useEffect', current)
         const datasetsList = JSON.parse(
             JSON.stringify(INIT_CHART_LINE_DATASETS)
         ).map((item) => {
-            //   if (current === 'chequesNumber') {
-            //     item['yAxisID'] = 'y'
-            //   } else {
-            //     item['yAxisID'] = 'y1'
-            //   }
             return item
         })
 
@@ -183,37 +172,22 @@ function ChequeEarningLineChart({ color, type }) {
                         >
                             {t('cheque_earnings_history')}
                         </h5>
-                        <Menu
-                            onClick={handleClick}
-                            selectedKeys={[current]}
-                            mode="horizontal"
-                            style={{ background: 'transparent', minWidth: '300px' }}
-                        >
-                            <Menu.Item key="chequesNumber">
-                                <h5
-                                    className={
-                                        'uppercase cheques-tab-item  ' + themeStyle.title[color]
-                                    }
-                                >
-                                    <span style={{ fontSize: '0.65rem' }}>
-                                        {' '}
-                                        {t('cheques_number')}
-                                    </span>
-                                </h5>
-                            </Menu.Item>
-                            <Menu.Item key="chequesAmount">
-                                <h5
-                                    className={
-                                        'uppercase cheques-tab-item ' + themeStyle.title[color]
-                                    }
-                                >
-                                    <span style={{ fontSize: '0.65rem' }}>
-                                        {' '}
-                                        {t('cheques_amount')}
-                                    </span>
-                                </h5>
-                            </Menu.Item>
-                        </Menu>
+                        <div className={"ml-2 " + themeStyle.bg[color]}>
+                            <div
+                                onClick={() => setCurrent("chequesNumber")} 
+                                className={'inline-block h-6 pl-2 pr-2 rounded cursor-pointer ' + (current === 'chequesNumber' ? 'bg-black text-white ' : themeStyle.title[color])}
+                                style={{border: '1px solid #000', borderRadius: '0.5rem 0 0 0.5rem'}}
+                            >
+                                {t('cheques_number')}
+                            </div>
+                            <div 
+                                onClick={() => setCurrent("chequesAmount")} 
+                                className={'inline-block h-6 pl-2 pr-2 rounded-r cursor-pointer ' + (current === 'chequesAmount' ? 'bg-black text-white ' : themeStyle.title[color])}
+                                style={{border: '1px solid #000', borderLeft: 'none', borderRadius: '0 0.5rem 0.5rem 0'}}
+                            >
+                                {t('cheques_amount')}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
