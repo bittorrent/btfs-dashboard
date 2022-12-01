@@ -78,6 +78,8 @@ const en_US = {
     'cheque_earning_detail': 'Cheques Earning Detials',
     'checks_expense_detials': 'Cheques Expense Detials',
     'vault_contract_balance': 'Vault Balance',
+    'vault_contract_address': '金库合约地址',
+    'address_balance': '地址余额',
 
 // cheques
 

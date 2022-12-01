@@ -78,6 +78,8 @@ const zh_CN = {
     'cheque_earning_detail': '支票收益详情',
     'checks_expense_detials': '支票支出详情',
     'vault_contract_balance': '金库合约余额',
+    'vault_contract_address': '金库合约地址',
+    'address_balance': '地址余额',
 // cheques
 
     'earning': '收益',

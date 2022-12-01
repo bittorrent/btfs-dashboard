@@ -55,8 +55,11 @@ export default function ChequeExpenseStats({color}) {
                                             {t('sent_cheques')}
                                         </h5>
                                     </div>
-                                    <div className='p-4'>
-                                        <span className='font-semibold text-3xl'>{chequesStats.chequeSentCount}</span>
+                                    <div>
+                                        <div className='font-semibold text-3xl'>{chequesStats.chequeSentCount}</div>
+                                        {chequesStats.chequeSentCount > 0 && <Progress className={color} percent={100} showInfo={false}
+                                                  strokeWidth={30}
+                                                  strokeColor={strokeColor}/>}
                                     </div>
                                     <MultipleCurrenyList color={color} type={"sentCheques"} dataList={expenseCountAllStatsData} />
                                 </div>

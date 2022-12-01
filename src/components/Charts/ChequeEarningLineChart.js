@@ -13,12 +13,7 @@ function ChequeEarningLineChart({ color, type }) {
         useState([])
 
     useEffect(() => {
-        console.log('current-useEffect', current)
-        const datasetsList = JSON.parse(
-            JSON.stringify(INIT_CHART_LINE_DATASETS)
-        ).map((item) => {
-            return item
-        })
+        const datasetsList = JSON.parse(JSON.stringify(INIT_CHART_LINE_DATASETS))
 
         const axisYConfig =
             current === 'chequesNumber'
@@ -43,7 +38,7 @@ function ChequeEarningLineChart({ color, type }) {
                     },
                     title: {
                         display: true,
-                        text: 'WBTT',
+                        text: intl.formatMessage({ id: 'cheques_amount' }),
                         color: color === 'light' ? 'black' : 'white',
                     },
                     ticks: {
@@ -73,7 +68,7 @@ function ChequeEarningLineChart({ color, type }) {
                                     if (current === 'chequesNumber') {
                                         label += ' : ' + context.parsed.y + ' '
                                     } else {
-                                        label += ' : ' + context.parsed.y + ' WBTT '
+                                        label += ' : ' + context.parsed.y + ' ' + label
                                     }
                                 }
                                 return label

@@ -31,7 +31,6 @@ export default function WithdrawDepositModal({color}) {
 
     useEffect(() => {
         const set = function (params) {
-            console.log("openWithdrawDepositModal event has occured");
             openModal();
             setType(params.type);
             let currentObj = {};
@@ -172,8 +171,8 @@ export default function WithdrawDepositModal({color}) {
             {showModal ? (
                 <>
                     <div
-                        className={"fixed flex z-50 modal_center md:w-1/2 md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
-                        style={{height: '350px'}}>
+                        className={"fixed flex z-50 md:w-1/2 md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
+                        style={{height: 'min-content'}}>
                         <div className="w-full">
                             {/*content*/}
                             <div
@@ -197,7 +196,7 @@ export default function WithdrawDepositModal({color}) {
                                     <div className="flex justify-center items-center">
                                         {
                                             type !== 'withdraw10'? <div>
-                                            <Select className={color} defaultValue="WBTT" style={{width: 90}}
+                                            <Select className={color} defaultValue="WBTT" style={{width: 100}}
                                                 onChange={handleChange}
                                                     dropdownStyle={{background: themeStyle.bg[color]}}>
                                                 {

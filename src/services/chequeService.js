@@ -133,7 +133,7 @@ export const getChequeExpenseAllStats = async () => {
             WBTTData.cashedValue += childData.cashedValue;
         }
     })
-    WBTTData.cashedValuePercent += WBTTData.chequeSentValue ? ((WBTTData.cashedValue/WBTTData.chequeSentValue)*100).toFixed() : 100;
+    WBTTData.cashedValuePercent = WBTTData.chequeSentValue ? ((WBTTData.cashedValue/WBTTData.chequeSentValue)*100).toFixed() : 100;
 
     if(allTotalCount === 0){
         allTotalCount = 1;
