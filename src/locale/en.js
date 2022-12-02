@@ -78,8 +78,8 @@ const en_US = {
     'cheque_earning_detail': 'Cheques Earning Detials',
     'checks_expense_detials': 'Cheques Expense Detials',
     'vault_contract_balance': 'Vault Balance',
-    'vault_contract_address': '金库合约地址',
-    'address_balance': '地址余额',
+    'vault_contract_address': 'Vault Contract Address',
+    'address_balance': 'Balance',
 
 // cheques
 
@@ -111,7 +111,7 @@ const en_US = {
     'cheques_number': 'Cheques Number',
     'currency_type': 'Currency',
     'cheques_amount': 'Cheques Amount',
-    'cheques_amount_tooltip': '总额按照当前汇率其他货币转换为BTT，数值仅供参考',
+    'cheques_amount_tooltip': 'The total amount is converted into BTT from other currencies at the current exchange rate, and the value is for reference only',
 
 // files
 
