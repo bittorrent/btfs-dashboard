@@ -111,6 +111,7 @@ const en_US = {
     'cheques_number': 'Cheques Number',
     'currency_type': 'Currency',
     'cheques_amount': 'Cheques Amount',
+    'cheques_amount_tooltip': '总额按照当前汇率其他货币转换为BTT，数值仅供参考',
 
 // files
 
