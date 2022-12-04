@@ -130,7 +130,7 @@ export default function ChequeDetailTable({color, type}) {
                                         {item.unit}
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        {switchBalanceUnit(item['Amount'])}
+                                        {switchBalanceUnit(item['Amount'], item?.price?.rate)}
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         {new Date(item['Time'] * 1000).toLocaleString()}

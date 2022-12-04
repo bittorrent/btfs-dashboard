@@ -78,9 +78,11 @@ export async function fileArrayBuffer(file) {
     })
 }
 
-export function switchBalanceUnit(balance) {
+export function switchBalanceUnit(balance, precision = PRECISION) {
+    // added precision param, dont modify function signature
     let num = 0;
-    balance = balance / PRECISION;
+    precision = parseFloat(precision);
+    balance = balance / precision;
     if (balance / B > 1) {
         num = (balance / B).toFixed(4);
         return num + ' B '

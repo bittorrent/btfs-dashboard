@@ -144,10 +144,10 @@ export default function ChequeCashingListTable({color, enableCash}) {
                                         {item.unit}
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        {switchBalanceUnit((item['Payout'] - item['CashedAmount']))}
+                                        {switchBalanceUnit((item['Payout'] - item['CashedAmount']), item?.price?.rate)}
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        {switchBalanceUnit(item['CashedAmount'])}
+                                        {switchBalanceUnit(item['CashedAmount'], item?.price?.rate)}
                                     </td>
                                 </tr>
                             )
