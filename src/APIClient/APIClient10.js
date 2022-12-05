@@ -226,12 +226,12 @@ class APIClient10 {
     }
 
     withdraw(amount, currencyType) {
-        return this.request('/api/v1/vault/withdraw?arg=' + amount + '&token-type' + currencyType);
+        return this.request('/api/v1/vault/withdraw?arg=' + amount + '&token-type=' + currencyType);
     }
 
 
     deposit(amount, currencyType) {
-        return this.request('/api/v1/vault/deposit?arg=' + amount + '&token-type' + currencyType);
+        return this.request('/api/v1/vault/deposit?arg=' + amount + '&token-type=' + currencyType);
     }
 
     BTTTransfer(to, amount) {
