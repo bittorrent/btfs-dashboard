@@ -55,6 +55,14 @@ class APIClient10 {
         return this.request('/api/v1/cheque/price');
     }
 
+    getHostPriceByTokenType(tokenType) {
+        return this.request(`/api/v1/cheque/price?token-type=${tokenType}`);
+    }
+
+    getHostPriceAll() {
+        return this.request('/api/v1/cheque/price-all');
+    }
+
     getHostScoreHistory(from, to) {
         return this.request('/api/v1/storage/stats/list?arg=' + from + '&arg=' + to);
     }

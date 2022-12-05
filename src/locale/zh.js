@@ -110,6 +110,7 @@ const zh_CN = {
     'cheques_number': '支票数量',
     'currency_type': '币种',
     'cheques_amount': '支票数额',
+    'cheques_amount_tooltip': '总额按照当前汇率其他货币转换为BTT，数值仅供参考',
 
 // files
 

@@ -125,7 +125,6 @@ export const getNodeRevenueStats = async () => {
     const data5 = Client10.getExchangeRate(INIT_MULTI_CURRENCY_DATA[1].rateUnit);
     const data6 = Client10.getExchangeRate(INIT_MULTI_CURRENCY_DATA[2].rateUnit);
     const data7 = Client10.getExchangeRate(INIT_MULTI_CURRENCY_DATA[3].rateUnit);
-  
     return Promise.all([data1, data3, data4, data5, data6, data7]).then(
       (result) => {
         console.log("data3", result);
@@ -236,47 +235,76 @@ export const getNodeWalletStats = async () => {
     let host = Client10.getHostInfo();
     const getAllBalanceData = Client10.getChequeAllBalance(BTTCAddress);
     const getChequeBookAllBalanceData = Client10.getChequeBookAllBalance();
-
-    return Promise.all([chequeBookBalance, BTTCAddressBTT, BTTCAddressWBTT, BTFS10Balance, host, getAllBalanceData, getChequeBookAllBalanceData]).then((result) => {
-        let maxBTT = new BigNumber(result[1]['balance']).dividedBy(PRECISION).toNumber();
-        let maxWBTT = new BigNumber(result[2]['balance']).dividedBy(PRECISION).toNumber();
-        let maxChequeBookWBTT = new BigNumber(result[0]['balance']).dividedBy(PRECISION).toNumber();
-        let base = new BigNumber(maxBTT).minus(FEE).toNumber();
-        let balance10 = result[3]['BtfsWalletBalance'] ? new BigNumber(result[3]['BtfsWalletBalance']).dividedBy(1000000).toNumber() : 0;
-        let tronAddress = result[4]['TronAddress'];
-        const  allBalanceData = result[5];
-        const  chequeBookAllBalanceData = result[6];
-        const allCurrencyBalanceList = [];
-        MULTIPLE_CURRENY_LIST.forEach(item=>{
-            const newItem = {...item};
-            newItem.addressValue = 0;
-            newItem.maxAddressCount = 0;
-            newItem.bookBalanceValue = 0;
-            newItem.maxBookBalanceCount = 0;
-            if(allBalanceData?.[item.key]){
-                newItem.addressValue = switchBalanceUnit(allBalanceData?.[item.key]);
-                newItem.maxAddressCount = new BigNumber(allBalanceData?.[item.key]).dividedBy(PRECISION).toNumber();
-            }
-            if(chequeBookAllBalanceData?.[item.key]){
-                newItem.bookBalanceValue = switchBalanceUnit(chequeBookAllBalanceData?.[item.key]);
-                newItem.maxBookBalanceCount = new BigNumber(chequeBookAllBalanceData?.[item.key]).dividedBy(PRECISION).toNumber();
-            }
-            allCurrencyBalanceList.push({...newItem});
-        })
-
-        return {
-            BTTCAddress: BTTCAddress,
-            chequeAddress: chequeAddress,
-            chequeBookBalance: switchBalanceUnit(result[0]['balance']),
-            BTTCAddressBTT: switchBalanceUnit(result[1]['balance']),
-            BTTCAddressWBTT: switchBalanceUnit(result[2]['balance']),
-            maxAvailableBTT: base > 0 ? base : 0,
-            maxAvailableWBTT: base > 0 ? maxWBTT : 0,
-            maxAvailableChequeBookWBTT: base > 0 ? maxChequeBookWBTT : 0,
-            balance10: balance10,
-            tronAddress: tronAddress,
-            allCurrencyBalanceList,
+    const getPriceList = Client10.getHostPriceAll();
+    return Promise.all([
+      chequeBookBalance,
+      BTTCAddressBTT,
+      BTTCAddressWBTT,
+      BTFS10Balance,
+      host,
+      getAllBalanceData,
+      getChequeBookAllBalanceData,
+      getPriceList,
+    ]).then((result) => {
+      const priceList = result[7];
+      let maxBTT = new BigNumber(result[1]['balance'])
+        .dividedBy(PRECISION)
+        .toNumber()
+      let maxWBTT = new BigNumber(result[2]['balance'])
+        .dividedBy(PRECISION)
+        .toNumber()
+      let maxChequeBookWBTT = new BigNumber(result[0]['balance'])
+        .dividedBy(PRECISION)
+        .toNumber()
+      let base = new BigNumber(maxBTT).minus(FEE).toNumber()
+      let balance10 = result[3]['BtfsWalletBalance']
+        ? new BigNumber(result[3]['BtfsWalletBalance'])
+            .dividedBy(1000000)
+            .toNumber()
+        : 0
+      let tronAddress = result[4]['TronAddress']
+      const allBalanceData = result[5]
+      const chequeBookAllBalanceData = result[6]
+      const allCurrencyBalanceList = []
+      MULTIPLE_CURRENY_LIST.forEach((item) => {
+        const newItem = { ...item }
+        newItem.addressValue = 0
+        newItem.maxAddressCount = 0
+        newItem.bookBalanceValue = 0
+        newItem.maxBookBalanceCount = 0
+        if (allBalanceData?.[item.key]) {
+          newItem.addressValue = switchBalanceUnit(allBalanceData?.[item.key], priceList?.[item.key]?.rate)
+          newItem.maxAddressCount = new BigNumber(allBalanceData?.[item.key])
+            .dividedBy(PRECISION)
+            .toNumber()
         }
+        if (chequeBookAllBalanceData?.[item.key]) {
+          newItem.bookBalanceValue = switchBalanceUnit(
+            chequeBookAllBalanceData?.[item.key],
+            priceList?.[item.key]?.rate
+          )
+          newItem.maxBookBalanceCount = new BigNumber(
+            chequeBookAllBalanceData?.[item.key]
+          )
+            .dividedBy(PRECISION)
+            .toNumber()
+        }
+        allCurrencyBalanceList.push({ ...newItem })
+      })
+
+      return {
+        BTTCAddress: BTTCAddress,
+        chequeAddress: chequeAddress,
+        chequeBookBalance: switchBalanceUnit(result[0]['balance']),
+        BTTCAddressBTT: switchBalanceUnit(result[1]['balance']),
+        BTTCAddressWBTT: switchBalanceUnit(result[2]['balance']),
+        maxAvailableBTT: base > 0 ? base : 0,
+        maxAvailableWBTT: base > 0 ? maxWBTT : 0,
+        maxAvailableChequeBookWBTT: base > 0 ? maxChequeBookWBTT : 0,
+        balance10: balance10,
+        tronAddress: tronAddress,
+        allCurrencyBalanceList,
+      }
     })
 };
 

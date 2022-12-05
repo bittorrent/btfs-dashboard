@@ -133,9 +133,9 @@ function ChequeEarningLineChart({ color, type }) {
         } else {
             data = earningCurrencyAllHistoryData
         }
-        let dataIndex = 0
+        let dataIndex = 1
         if (current !== 'chequesNumber') {
-            dataIndex = 1
+            dataIndex = 0
         }
         if (window.ChequeEarningLineChart) {
             window.ChequeEarningLineChart.data.labels = data?.[0]?.labels || []

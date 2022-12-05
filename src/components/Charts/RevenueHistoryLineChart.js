@@ -133,9 +133,9 @@ function RevenueHistoryLineChart({ color }) {
         } else {
             data = earningCurrencyAllHistoryData
         }
-        let dataIndex = 0
+        let dataIndex = 1
         if (current !== 'chequesNumber') {
-            dataIndex = 1
+            dataIndex = 0
         }
         if (window.revenueHistoryLineChart) {
             window.revenueHistoryLineChart.data.labels = data?.[0]?.labels || []

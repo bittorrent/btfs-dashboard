@@ -1,11 +1,12 @@
 /*eslint-disable*/
 import React, { useEffect, useState } from "react";
-import { Progress } from 'antd';
+import { Progress, Tooltip } from 'antd';
 import { getChequeEarningAllStats } from "services/chequeService.js";
 import themeStyle from "utils/themeStyle.js";
 import { t } from "utils/text.js";
 import { MULTIPLE_CURRENY_LIST } from "utils/constants";
 import MultipleCurrenyList from "./MultipleCurrenyList.js"
+import { switchBalanceUnit } from "utils/BTFSUtil.js";
 
 let strokeColor = {
     '0%': '#108ee9',
@@ -24,17 +25,17 @@ export default function ChequeEarningStats({ color }) {
         cashedCountPercent: 0,
         cashedValuePercent: 0,
     });
-    const [earningValueAllStatsData, setEarningValueAllStatsData] = useState(MULTIPLE_CURRENY_LIST);
     const [earningCountAllStatsData, setEarningCountAllStatsData] = useState(MULTIPLE_CURRENY_LIST);
+    const [earningValueAllStatsData, setEarningValueAllStatsData] = useState(MULTIPLE_CURRENY_LIST);
 
     useEffect(() => {
         let didCancel = false;
         const fetchData = async () => {
-            let { earningValueAllStatsData, earningCountAllStatsData, WBTTData } = await getChequeEarningAllStats();
+            let { earningCountAllStatsData, earningValueAllStatsData, WBTTData } = await getChequeEarningAllStats();
             if (!didCancel) {
                 setChequesStats(WBTTData);
-                setEarningValueAllStatsData(() => earningValueAllStatsData);
                 setEarningCountAllStatsData(() => earningCountAllStatsData)
+                setEarningValueAllStatsData(() => earningValueAllStatsData);
             }
         };
         fetchData();
@@ -82,7 +83,7 @@ export default function ChequeEarningStats({ color }) {
                                     </div>
                                 </div>
 
-                                <MultipleCurrenyList type="recievedCheques" color={color} dataList={earningValueAllStatsData} />
+                                <MultipleCurrenyList type="recievedCheques" color={color} dataList={earningCountAllStatsData} />
                             </div>
                         </div>
                     </div>
@@ -92,15 +93,20 @@ export default function ChequeEarningStats({ color }) {
                             className={"relative break-words rounded " + themeStyle.bg[color] + themeStyle.text[color]}>
                             {/* <div className="flex flex-col justify-between p-4 h-180-px"> */}
                             <div className="flex flex-col justify-between p-4 h-600-px">
-                                <div>
+                                <div className="flex items-center">
                                     <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
                                         {t('received_cheques_amount')}
                                     </h5>
+                                    <Tooltip title={t('cheques_amount_tooltip')}>
+                                        <div className="ml-1">
+                                            <i className="fa-sharp fa-solid fa-circle-info"></i>
+                                        </div>
+                                    </Tooltip>
                                 </div>
                                 <div className='flex justify-between'>
                                     <div>
-                                        <span className='font-semibold text-xl'>{chequesStats.chequeReceivedValue} </span>
-                                        <span className='text-xs'>WBTT</span>
+                                        <span className='font-semibold text-xl'>{switchBalanceUnit(chequesStats.chequeReceivedValue, 1)} </span>
+                                        <span className='text-xs'>BTT</span>
                                     </div>
                                     <div>
                                         {chequesStats.cashedValuePercent} %
@@ -114,15 +120,15 @@ export default function ChequeEarningStats({ color }) {
                                     <div>
                                         {t('cashed')}
                                         <br />
-                                        {chequesStats.cashedValue} <span className='text-xs'>WBTT</span>
+                                        <span className="font-bold text-black">≈{switchBalanceUnit(chequesStats.cashedValue, 1)} <span className='text-xs'>BTT</span></span>
                                     </div>
                                     <div>
                                         {t('uncashed')}
                                         <br />
-                                        {chequesStats.uncashedValue} <span className='text-xs'>WBTT</span>
+                                        <span className="font-bold text-black">≈{switchBalanceUnit(chequesStats.uncashedValue, 1)} <span className='text-xs'>BTT</span></span>
                                     </div>
                                 </div>
-                                <MultipleCurrenyList color={color} dataList={earningCountAllStatsData} />
+                                <MultipleCurrenyList color={color} dataList={earningValueAllStatsData} />
                             </div>
                         </div>
                     </div>

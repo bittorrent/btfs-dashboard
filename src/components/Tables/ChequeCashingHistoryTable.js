@@ -122,7 +122,7 @@ export default function ChequeCashingHistoryTable({color}) {
                                         {item.unit}
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        {switchBalanceUnit(item['amount'])}
+                                        {switchBalanceUnit(item['amount'], item?.price?.rate)}
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         {new Date(item['cash_time']*1000).toLocaleString()}

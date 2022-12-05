@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import Client10 from "APIClient/APIClient10.js";
 import {switchBalanceUnit, compareInt} from "utils/BTFSUtil.js";
-import {PRECISION, MULTIPLE_CURRENY_LIST, CURRENCY_CONFIG} from "utils/constants";
+import {PRECISION, MULTIPLE_CURRENY_LIST, CURRENCY_CONFIG, INIT_MULTI_CURRENCY_DATA} from "utils/constants";
 
 export const getChequeEarningStats = async () => {
     let data = await Client10.getChequeStats();
@@ -16,75 +16,117 @@ export const getChequeEarningStats = async () => {
         cashedValuePercent: data['total_received'] ? new BigNumber((data['total_received'] - data['total_received_uncashed'])).dividedBy(data['total_received']).multipliedBy(100).toFixed(0): 100
     }
 };
+
+/** get all coins' exchange rates to BTT */
+export const getAllExchangeRate = async () => {
+    const promiseUSDDRate = Client10.getExchangeRate(
+        INIT_MULTI_CURRENCY_DATA[1].rateUnit
+      ),
+      promiseTRXRate = Client10.getExchangeRate(
+        INIT_MULTI_CURRENCY_DATA[2].rateUnit
+      ),
+      promiseUSDTRate = Client10.getExchangeRate(
+        INIT_MULTI_CURRENCY_DATA[3].rateUnit
+      )
+
+    const [USDDRate, TRXRate, USDTRate] = await Promise.all([promiseUSDDRate, promiseTRXRate,promiseUSDTRate]);
+    const currencyRates = {};
+    currencyRates.WBTT = 1;
+    currencyRates.USDD = USDDRate?.data?.rate;
+    currencyRates.TRX = TRXRate?.data?.rate;
+    currencyRates.USDT = USDTRate?.data?.rate;
+    return currencyRates;
+}
+
 export const getChequeEarningAllStats = async () => {
-    let allData = await Client10.getChequeAllStats();
+    const promiseChequeAllStats = Client10.getChequeAllStats(),
+      promiseHostPriceAll = Client10.getHostPriceAll(),
+      promiseExchangeRates = getAllExchangeRate();
+    const [allData, priceList, exchangeRates] = await Promise.all([
+      promiseChequeAllStats,
+      promiseHostPriceAll,
+      promiseExchangeRates
+    ])
+
     const earningValueAllStatsData = JSON.parse(JSON.stringify(MULTIPLE_CURRENY_LIST));
     const earningCountAllStatsData = JSON.parse(JSON.stringify(MULTIPLE_CURRENY_LIST));
     let currencyAllStatsData = [];
-    let allTotalCount = 0;
-    let allValueCount = 0;
     const keysList = Object.keys(allData);
-    let WBTTData = null;
+    
+    const WBTTData = {
+        chequeReceivedCount: 0,
+        uncashedCount: 0,
+        cashedCount:0,
+        chequeReceivedValue: 0,
+        uncashedValue: 0,
+        cashedValue: 0,
+        cashedCountPercent: 0,
+        cashedValuePercent: 0,
+    };    
     keysList.forEach(key=>{
         const data = allData[key];
+        const price = priceList[key];
+        const exchangeRate = exchangeRates[key];
+
+        if(!data || !price || !exchangeRate) return;
 
         const childData = {
             key,
             chequeReceivedCount: data['total_received_count'],
             uncashedCount: data['total_received_count'] - data['total_received_cashed_count'],
             cashedCount: data['total_received_cashed_count'],
-            chequeReceivedValue: Number(switchBalanceUnit(data['total_received'])),
-            uncashedValue: Number(switchBalanceUnit(data['total_received_uncashed'])),
-            cashedValue: Number(switchBalanceUnit(data['total_received'] - data['total_received_uncashed'])),
+            chequeReceivedValue: data['total_received'],
+            uncashedValue: data['total_received_uncashed'],
+            cashedValue: data['total_received'] - data['total_received_uncashed'],
+            price,
+            exchangeRate,
         }
-        
-        allValueCount += Number(childData.chequeReceivedValue);
-        allTotalCount += Number(childData.chequeReceivedCount);
-        
+
+        childData.exchangeChequeReceivedValue = childData.chequeReceivedValue / childData.price.rate / childData.exchangeRate;
+        childData.exchangeUncashedValue  = childData.uncashedValue / childData.price.rate / childData.exchangeRate;
+        childData.exchangecashedValue = childData.cashedValue / childData.price.rate / childData.exchangeRate;
+
         currencyAllStatsData.push(childData)
 
-        if(!WBTTData){
-            WBTTData = {...childData};
-        }else{
-            WBTTData.chequeReceivedCount += childData.chequeReceivedCount;
-            WBTTData.uncashedCount += childData.uncashedCount;
-            WBTTData.cashedCount += childData.cashedCount;
-            WBTTData.chequeReceivedValue += childData.chequeReceivedValue;
-            WBTTData.uncashedValue += childData.uncashedValue;
-            WBTTData.cashedValue += childData.cashedValue;
-        }
+        // summary
+        WBTTData.chequeReceivedCount += childData.chequeReceivedCount;
+        WBTTData.uncashedCount += childData.uncashedCount;
+        WBTTData.cashedCount += childData.cashedCount;
+        WBTTData.chequeReceivedValue += childData.exchangeChequeReceivedValue;
+        WBTTData.uncashedValue += childData.exchangeUncashedValue;
+        WBTTData.cashedValue += childData.exchangecashedValue;
     })
-    WBTTData.cashedCountPercent = WBTTData.chequeReceivedCount ? ((WBTTData.cashedCount/WBTTData.chequeReceivedCount)*100).toFixed(): 100;
-    WBTTData.cashedValuePercent = WBTTData.chequeReceivedValue ? ((WBTTData.cashedValue/WBTTData.chequeReceivedValue)*100).toFixed(): 100;
-
-
-    if(allTotalCount === 0){
-        allTotalCount = 1;
-    }
-    if(allValueCount === 0){
-        allValueCount = 1;
-    }
+    WBTTData.cashedCountPercent = WBTTData.chequeReceivedCount
+      ? ((WBTTData.cashedCount / WBTTData.chequeReceivedCount) * 100).toFixed()
+      : 100
+    WBTTData.cashedValuePercent = WBTTData.chequeReceivedValue
+      ? ((WBTTData.cashedValue / WBTTData.chequeReceivedValue) * 100).toFixed()
+      : 100
 
     currencyAllStatsData.forEach(childData=>{
         const index = earningValueAllStatsData.findIndex((item)=>item.key === childData.key);
         if(index>-1){
-            earningValueAllStatsData[index].cashed = childData.cashedCount;
-            earningValueAllStatsData[index].unCashed = childData.uncashedCount;
-            earningValueAllStatsData[index].cashedValuePercent = ((earningValueAllStatsData[index].cashed/(childData.chequeReceivedCount))*100).toFixed();
-            earningValueAllStatsData[index].width = `${((earningValueAllStatsData[index].cashed/(allTotalCount))*100).toFixed()}%`;
+            earningCountAllStatsData[index].cashed = childData.cashedCount;
+            earningCountAllStatsData[index].unCashed = childData.uncashedCount;
+            earningCountAllStatsData[index].cashedValuePercent = ((childData.cashedCount/(childData.chequeReceivedCount || 1))*100).toFixed();
+            earningCountAllStatsData[index].width = `${((childData.chequeReceivedCount/(WBTTData.chequeReceivedCount || 1))*100).toFixed()}%`;
 
-            earningCountAllStatsData[index].cashed = childData.cashedValue;
-            earningCountAllStatsData[index].unCashed = childData.uncashedValue;
-            earningCountAllStatsData[index].cashedValuePercent = ((childData.cashedValue/(childData.chequeReceivedValue ))*100).toFixed();
-            earningCountAllStatsData[index].width = `${((earningCountAllStatsData[index].cashed/(allValueCount))*100).toFixed()}%`;
+            earningValueAllStatsData[index].cashed = childData.cashedValue;
+            earningValueAllStatsData[index].unCashed = childData.uncashedValue;
+            earningValueAllStatsData[index].cashedValuePercent = ((childData.cashedValue/(childData.chequeReceivedValue || 1))*100).toFixed();
+            earningValueAllStatsData[index].width = `${((childData.exchangeChequeReceivedValue/(WBTTData.chequeReceivedValue || 1))*100).toFixed()}%`;
+            earningValueAllStatsData[index].price = childData.price;
+            earningValueAllStatsData[index].exchangeChequeReceivedValue = childData.exchangeChequeReceivedValue;
+            earningValueAllStatsData[index].exchangeUncashedValue = childData.exchangeUncashedValue;
+            earningValueAllStatsData[index].exchangecashedValue = childData.exchangecashedValue;
         }
-        
     })
-    console.log("earningValueAllStatsData",earningValueAllStatsData)
-    console.log("earningCountAllStatsData",earningCountAllStatsData)
+    console.log("earningCountAllStatsData", earningCountAllStatsData)
+    console.log("earningValueAllStatsData", earningValueAllStatsData)
+    console.log("wbttData", WBTTData)
     return {
-        earningValueAllStatsData,
         earningCountAllStatsData,
+        earningValueAllStatsData,
         WBTTData
     }
 };
@@ -100,65 +142,81 @@ export const getChequeExpenseStats = async () => {
     }
 };
 export const getChequeExpenseAllStats = async () => {
-    let allData = await Client10.getChequeAllStats();
+    const promiseChequeAllStats = Client10.getChequeAllStats(),
+        promiseHostPriceAll = Client10.getHostPriceAll(),
+        promiseExchangeRates = getAllExchangeRate();
+    const [allData, priceList, exchangeRates] = await Promise.all([
+      promiseChequeAllStats,
+      promiseHostPriceAll,
+      promiseExchangeRates,
+    ])
     const expenseValueAllStatsData = JSON.parse(JSON.stringify(MULTIPLE_CURRENY_LIST));
     const expenseCountAllStatsData = JSON.parse(JSON.stringify(MULTIPLE_CURRENY_LIST));
     let currencyAllStatsData = [];
-    let allTotalCount = 0;
-    let allValueCount = 0;
     const keysList = Object.keys(allData);
-    let WBTTData = null;
+
+    const WBTTData = {
+      chequeSentCount: 0,
+      chequeSentValue: 0,
+      uncashedValue: 0,
+      cashedValue: 0,
+      cashedValuePercent: 0,
+    }
+
     keysList.forEach(key=>{
         const data = allData[key];
+        const price = priceList[key];
+        const exchangeRate = exchangeRates[key];
+
+        if(!data || !price || !exchangeRate) return;
+
         const childData = {
             key,
             chequeSentCount: data['total_issued_count'],
-            chequeSentValue: Number(switchBalanceUnit(data['total_issued'])),
-            uncashedValue: Number(switchBalanceUnit(data['total_issued'] - data['total_issued_cashed'])),
-            cashedValue: Number(switchBalanceUnit(data['total_issued_cashed'])),
-            // cashedValuePercent: data['total_issued'] ? new BigNumber(data['total_issued_cashed']).dividedBy(data['total_issued']).multipliedBy(100).toFixed(0) : 100
+            chequeSentValue: data['total_issued'],
+            uncashedValue: data['total_issued'] - data['total_issued_cashed'],
+            cashedValue: data['total_issued_cashed'],
+            price,
+            exchangeRate,
         }
-        allValueCount += childData.chequeSentValue;
-        allTotalCount += childData.chequeSentCount;
+        childData.exchangeSentValue = childData.chequeSentValue / childData.price.rate / childData.exchangeRate;
+        childData.exchangeCashedValue = childData.cashedValue / childData.price.rate / childData.exchangeRate;
+        childData.exchangeUncashedValue  = childData.uncashedValue / childData.price.rate / childData.exchangeRate;
+
         
         currencyAllStatsData.push(childData)
         
-        if(!WBTTData){
-            WBTTData = {...childData};
-        }else{
-            WBTTData.chequeSentCount += childData.chequeSentCount;
-            WBTTData.chequeSentValue += childData.chequeSentValue;
-            WBTTData.uncashedValue += childData.uncashedValue;
-            WBTTData.uncashedValue += childData.uncashedValue;
-            WBTTData.cashedValue += childData.cashedValue;
-        }
+        WBTTData.chequeSentCount += childData.chequeSentCount;
+        WBTTData.chequeSentValue += childData.exchangeSentValue;
+        WBTTData.cashedValue += childData.exchangeCashedValue;
+        WBTTData.uncashedValue += childData.exchangeUncashedValue;
     })
     WBTTData.cashedValuePercent = WBTTData.chequeSentValue ? ((WBTTData.cashedValue/WBTTData.chequeSentValue)*100).toFixed() : 100;
 
-    if(allTotalCount === 0){
-        allTotalCount = 1;
-    }
-    if(allValueCount === 0){
-        allValueCount = 1;
-    }
     currencyAllStatsData.forEach(childData=>{
         const index = expenseValueAllStatsData.findIndex((item)=>item.key === childData.key);
         
         if(index>-1){
+            expenseCountAllStatsData[index].cashed = childData.chequeSentCount;
+            expenseCountAllStatsData[index].width = `${((childData.chequeSentCount/(WBTTData.chequeSentCount || 1))*100).toFixed()}%`;
+            
             expenseValueAllStatsData[index].cashed = childData.cashedValue;
             expenseValueAllStatsData[index].unCashed = childData.uncashedValue;
-            expenseValueAllStatsData[index].cashedValuePercent = ((childData.cashedValue/(childData.chequeSentValue ))*100).toFixed();
-            expenseValueAllStatsData[index].width = `${((expenseValueAllStatsData[index].cashed/(allValueCount))*100).toFixed()}%`;
-
-            expenseCountAllStatsData[index].cashed = childData.chequeSentCount;
-            expenseCountAllStatsData[index].width = `${((expenseCountAllStatsData[index].cashed/(allTotalCount))*100).toFixed()}%`;
+            expenseValueAllStatsData[index].cashedValuePercent = ((childData.cashedValue/(childData.chequeSentValue || 1))*100).toFixed();
+            expenseValueAllStatsData[index].width = `${((childData.exchangeSentValue/(WBTTData.chequeSentValue || 1))*100).toFixed()}%`;
+            expenseValueAllStatsData[index].price = childData.price;
+            expenseValueAllStatsData[index].exchangeSentValue = childData.exchangeSentValue;
+            expenseValueAllStatsData[index].exchangeCashedValue = childData.exchangeCashedValue;
+            expenseValueAllStatsData[index].exchangeUncashedValue = childData.exchangeUncashedValue;
         }
         
     })
+
+    console.log(WBTTData, expenseCountAllStatsData, expenseValueAllStatsData);
     return {
         WBTTData,
-        expenseValueAllStatsData,
         expenseCountAllStatsData,
+        expenseValueAllStatsData,
 
     }
 };
@@ -166,45 +224,32 @@ export const getChequeExpenseAllStats = async () => {
 export const getChequeCashingList = async (offset, limit) => {
     const data1 =  Client10.getChequeCashingAllList(offset, limit);
     const data2 =  Client10.getSupportTokens();
-    return Promise.all([data1, data2]).then((result) => {
-        const tokenList = result[1]; 
-        let cheques =  result[0]['Cheques'] ? result[0]['Cheques'] : [];
-        cheques = formatCurrencyTokenData(cheques,tokenList,'Token');
-        
+    const data3 = Client10.getHostPriceAll();
+    return Promise.all([data1, data2, data3]).then(([chequeList, tokenList, priceList]) => {
+        let cheques =  chequeList['Cheques'] ? chequeList['Cheques'] : [];
+        cheques = formatCurrencyTokenDataWithPrices(cheques, tokenList, 'Token', priceList);
         return {
             cheques: cheques,
-            total: result[0]['Len']
+            total: chequeList['Len']
         }
     })
    
 };
 
-// export const getChequeCashingList = async (offset, limit) => {
-//     let data = await Client10.getChequeCashingAllList(offset, limit);
-//     const cheques =  data['Cheques'] ? data['Cheques'] : [];
-//     cheques.forEach(item=>{
-//         item.icon = 'wbtt';
-//         item.unit = 'WBTT';
-//     })
-    
-//     return {
-//         cheques: data['Cheques'] ? data['Cheques'] : [],
-//         total: data['Len']
-//     }
-// };
 export const getChequeCashingHistoryList = async (offset, limit) => {
     const data1 =  Client10.getChequeCashingHistoryList(offset, limit);
     const data2 =  Client10.getSupportTokens();
-    return Promise.all([data1, data2]).then((result) => {
-        const tokenList = result[1]; 
-        let cheques =  result[0]['records'] ? result[0]['records'] : [];
-        cheques = formatCurrencyTokenData(cheques,tokenList,'token');
+    const data3 = Client10.getHostPriceAll();
+    return Promise.all([data1, data2, data3]).then(([chequeList, tokenList, priceList]) => {
+        let cheques =  chequeList['records'] ? chequeList['records'] : [];
+        cheques = formatCurrencyTokenDataWithPrices(cheques, tokenList, 'token', priceList);
         return {
             cheques: cheques,
-            total: result[0]['total']
+            total: chequeList['total']
         }
     })
 };
+
 const formatCurrencyTokenData = (cheques,tokenList,tokenName) =>{
     cheques.forEach(item=>{
         const keyList = Object.keys(tokenList);
@@ -220,17 +265,36 @@ const formatCurrencyTokenData = (cheques,tokenList,tokenName) =>{
     })
     return cheques;
 }
+const formatCurrencyTokenDataWithPrices = (cheques,tokenList,tokenName, priceList) =>{
+    console.log(priceList)
+    cheques.forEach(item=>{
+        const keyList = Object.keys(tokenList);
+        let itemKey = "WBTT";
+        let price = null;
+        keyList.forEach(key=>{
+            if(tokenList[key] === item[tokenName].toLowerCase()){
+                itemKey = key;
+                price = priceList[key];
+            }
+        })
+        item.key = itemKey;
+        item.icon = CURRENCY_CONFIG[itemKey].icon;
+        item.unit = CURRENCY_CONFIG[itemKey].unit;
+        item.price = price;
+    })
+    return cheques;
+}
 export const getChequeReceivedDetailList = async (offset, limit) => {
     const data1 =  Client10.getChequeReceivedDetailList(offset, limit);
     const data2 =  Client10.getSupportTokens();
-    return Promise.all([data1, data2]).then((result) => {
-        const tokenList = result[1]; 
-        let cheques =  result[0]['records'] ? result[0]['records'] : [];
-        cheques = formatCurrencyTokenData(cheques,tokenList,'Token');
+    const data3 = Client10.getHostPriceAll();
+    return Promise.all([data1, data2, data3]).then(([chequeList, tokenList, priceList]) => {
+        let cheques =  chequeList['records'] ? chequeList['records'] : [];
+        cheques = formatCurrencyTokenDataWithPrices(cheques,tokenList,'Token', priceList);
 
         return {
             cheques: cheques,
-            total: result[0]['total']
+            total: chequeList['total']
         }
     })
 };
@@ -238,14 +302,14 @@ export const getChequeReceivedDetailList = async (offset, limit) => {
 export const getChequeExpenseList = async () => {
     const data1 =  Client10.getChequeExpenseList();
     const data2 =  Client10.getSupportTokens();
-    return Promise.all([data1, data2]).then((result) => {
-        const tokenList = result[1]; 
-        let cheques =  result[0]['Cheques'] ? result[0]['Cheques'] : [];
-        cheques = formatCurrencyTokenData(cheques,tokenList,'Token');
+    const data3 = Client10.getHostPriceAll();
+    return Promise.all([data1, data2, data3]).then(([chequeList, tokenList, priceList]) => {
+        let cheques =  chequeList['Cheques'] ? chequeList['Cheques'] : [];
+        cheques = formatCurrencyTokenDataWithPrices(cheques, tokenList, 'Token', priceList);
     
         return {
             cheques: cheques,
-            total: result[0]['Len']
+            total: chequeList['Len']
         }
     })
 };
@@ -253,14 +317,14 @@ export const getChequeExpenseList = async () => {
 export const getChequeSentDetailList = async (offset, limit) => {
     const data1 =  Client10.getChequeSentDetailList(offset, limit);
     const data2 =  Client10.getSupportTokens();
-    return Promise.all([data1, data2]).then((result) => {
-        const tokenList = result[1]; 
-        let cheques =  result[0]['records'] ? result[0]['records'] : [];
-        cheques = formatCurrencyTokenData(cheques,tokenList,'Token');
+    const data3 = Client10.getHostPriceAll();
+    return Promise.all([data1, data2, data3]).then(([chequeList, tokenList, priceList]) => {
+        let cheques =  chequeList['records'] ? chequeList['records'] : [];
+        cheques = formatCurrencyTokenDataWithPrices(cheques, tokenList, 'Token', priceList);
     
         return {
             cheques: cheques,
-            total: result[0]['total']
+            total: chequeList['total']
         }
     })
 };
@@ -333,11 +397,14 @@ export const getChequeEarningHistory = async () => {
 };
 export const getChequeEarningAllHistory = async () => {
     try {
-        let data = await Client10.getChequeEarningAllHistory();
+        const [data, priceList] = await Promise.all([Client10.getChequeEarningAllHistory(), Client10.getHostPriceAll()]);
         const keysList  =Object.keys(data);
         const earningCurrencyAllHistoryData = [];
         keysList.forEach((key)=>{
             const keyData = data[key];
+            const price = priceList[key];
+            const precision = parseFloat(price.rate);
+
             let x = [];
             let y1 = [];
             let y2 = [];
@@ -345,7 +412,7 @@ export const getChequeEarningAllHistory = async () => {
             keyData.forEach((item) => {
                 let date = new Date(item['date'] * 1000);
                 x.push((date.getMonth() + 1) + '/' + date.getDate());
-                y1.push((item['total_received']/PRECISION).toFixed(4));
+                y1.push((item['total_received']/precision).toFixed(4));
                 y2.push(item['total_received_count']);
             });
             earningCurrencyAllHistoryData.push({
@@ -364,11 +431,14 @@ export const getChequeEarningAllHistory = async () => {
 
 export const getChequeExpenseAllHistory = async () => {
     try {
-        let data = await Client10.getChequeExpenseAllHistory();
+        const [data, priceList] = await Promise.all([Client10.getChequeExpenseAllHistory(), Client10.getHostPriceAll()]);
         const keysList  =Object.keys(data);
         const expenseCurrencyAllHistoryData = [];
         keysList.forEach((key)=>{
             const keyData = data[key];
+            const price = priceList[key];
+            const pricesion = price.rate;
+
             let x = [];
             let y1 = [];
             let y2 = [];
@@ -376,7 +446,7 @@ export const getChequeExpenseAllHistory = async () => {
             keyData.forEach((item) => {
                 let date = new Date(item['date'] * 1000);
                 x.push((date.getMonth() + 1) + '/' + date.getDate());
-                y1.push((item['total_issued']/PRECISION).toFixed(4));
+                y1.push((item['total_issued']/pricesion).toFixed(4));
                 y2.push(item['total_issued_count']);
             });
             expenseCurrencyAllHistoryData.push({
