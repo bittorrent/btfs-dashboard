@@ -267,7 +267,7 @@ export const getChequeSentDetailList = async (offset, limit) => {
     const data3 = Client10.getHostPriceAll();
     return Promise.all([data1, data2, data3]).then(([chequeList, tokenList, priceList]) => {
         let cheques =  chequeList['records'] ? chequeList['records'] : [];
-        cheques = formatCurrencyTokenData(cheques, tokenList, 'Token', priceList);
+        cheques = formatCurrencyTokenDataWithPrices(cheques, tokenList, 'Token', priceList);
     
         return {
             cheques: cheques,
