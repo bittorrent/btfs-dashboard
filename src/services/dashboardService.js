@@ -423,6 +423,23 @@ export const getHeartBeatsStats = async () => {
     }
 };
 
+export const getHeartBeatsStatsV2 = async () => {
+    try {
+        const [result1, result2] = await Promise.all([
+            Client10.getHeartBeatsStatsV2(),
+            Client10.getHeartBeatsLastInfo()
+        ])
+
+        return {
+            ...result1,
+            ...result2,
+        };
+    } catch (e) {
+        console.error(e)
+        return {}
+    }
+};
+
 export const getHeartBeatsReportlist = async (from) => {
     try {
         let {records, total, peer_id} = await Client10.getHeartBeatsReportlist(from);
@@ -444,6 +461,32 @@ export const getHeartBeatsReportlist = async (from) => {
             records: [],
             total: 0,
             peer_id: ''
+        };
+    }
+};
+
+export const getHeartBeatsReportlistV2 = async (from) => {
+    try {
+        let {records, total, peer_id, bttc_addr} = await Client10.getHeartBeatsReportlistV2(from);
+
+        records.forEach(item => {
+            let date = new Date(item.report_time)
+            item.report_time = getTimes(date)
+        });
+
+        return {
+            records,
+            total,
+            peer_id,
+            bttc_addr
+        };
+    } catch (e) {
+        console.error(e)
+        return {
+            records: [],
+            total: 0,
+            peer_id: '',
+            bttc_addr: ''
         };
     }
 };

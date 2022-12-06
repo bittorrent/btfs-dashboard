@@ -306,8 +306,19 @@ class APIClient10 {
         return this.request('/api/v1/statuscontract/total');
     }
 
+    getHeartBeatsStatsV2() {
+        return this.request('/api/v1/statuscontract/daily_total');
+    }
+
+    getHeartBeatsLastInfo() {
+        return this.request('/api/v1/statuscontract/lastinfo');
+    }
+
     getHeartBeatsReportlist(from) {
         return this.request('/api/v1/statuscontract/reportlist?arg=' + from + '&arg=10');
+    }
+    getHeartBeatsReportlistV2(from) {
+        return this.request('/api/v1/statuscontract/daily_report_list?arg=' + from + '&arg=10');
     }
 
     // V2.3 new

@@ -1,5 +1,7 @@
 const en_US = {
-
+    // common
+    'close': 'Close',
+    'check': 'Check',
 // sidebar
 
     'dashboard': 'Dashboard',
@@ -265,6 +267,25 @@ const en_US = {
     'heart_th_nonce': 'Heartbeats Nonce',
     'bttc_addr': 'Node’s BTTC Address',
     'heart_th_nonce_tips':'Heartbeat Nonce: A nonce used to prove the node is online. The nonce will increase by one as each hour passes. ',
+    'switch_to_v1': 'Switch to V1',
+    'switch_to_v2': 'Switch to V2',
+    'switch_v1_v2_tootip': 'switch_v1_v2_tootip',
+    'online_proof_data': 'ONLINE PROOF DATA',
+    'online_proof_nonce': 'CURRENT NONCE',
+    'online_proof_detail': 'ONLINE PROOF DETAIL',
+    'online_proof_detail_des': 'The node proves its online status by periodically sending transactions to the online proof contract.',
+    'online_proof_link_to_scan': 'Check on Scan',
+    'online_proof_node_id':'Node ID',
+    'online_proof_sign_time':'Sign Time',
+    'online_proof_heart_beats':'Heart Beats',
+    'online_proof_table_detail':'Detail',
+    'online_proof_table_detail_last_signature': 'Last Singature',
+    'online_proof_table_detail_peer_id': 'PeerID',
+    'online_proof_table_detail_create_time': 'Create Time',
+    'online_proof_table_detail_version': 'Version',
+    'online_proof_table_detail_nonce': 'Nonce',
+    'online_proof_table_detail_bttc_address': 'BTTC Address',
+    'online_proof_table_detail_signed_time': 'Signed Time',
 };
 
 export default en_US

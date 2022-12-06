@@ -1,5 +1,7 @@
 const zh_CN = {
-
+    // common
+    'close': '关闭',
+    'check': '查看',
 // sidebar
 
     'dashboard': '数据看板',
@@ -267,7 +269,25 @@ const zh_CN = {
     'heart_th_nonce': '心跳计数',
     'bttc_addr': '节点BTTC地址',
     'heart_th_nonce_tips':'心跳计数：用来证明当前节点在线状态的一次性计数，默认每小时计数加1。',
-
+    'switch_to_v1': '切换到版本1',
+    'switch_to_v2': '切换到版本2',
+    'switch_v1_v2_tootip': 'switch_v1_v2_tootip',
+    'online_proof_data': '在线证明数据',
+    'online_proof_nonce': '当前心跳',
+    'online_proof_detail': '在线证明详情',
+    'online_proof_detail_des': 'The node proves its online status by periodically sending transactions to the online proof contract.',
+    'online_proof_link_to_scan': '在Scan上查看和验证',
+    'online_proof_node_id':'节点ID',
+    'online_proof_sign_time':'签名时间',
+    'online_proof_heart_beats':'心跳计数',
+    'online_proof_table_detail':'详情',
+    'online_proof_table_detail_last_signature': 'Last Singature',
+    'online_proof_table_detail_peer_id': 'PeerID',
+    'online_proof_table_detail_create_time': 'Create Time',
+    'online_proof_table_detail_version': 'Version',
+    'online_proof_table_detail_nonce': 'Nonce',
+    'online_proof_table_detail_bttc_address': 'BTTC Address',
+    'online_proof_table_detail_signed_time': 'Signed Time',
 
 };
 

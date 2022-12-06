@@ -250,21 +250,6 @@ export const getChequeCashingHistoryList = async (offset, limit) => {
     })
 };
 
-const formatCurrencyTokenData = (cheques,tokenList,tokenName) =>{
-    cheques.forEach(item=>{
-        const keyList = Object.keys(tokenList);
-        let itemKey = "WBTT";
-        keyList.forEach(key=>{
-            if(tokenList[key] === item[tokenName].toLowerCase()){
-                itemKey = key;
-            }
-        })
-        item.key = itemKey;
-        item.icon = CURRENCY_CONFIG[itemKey].icon;
-        item.unit = CURRENCY_CONFIG[itemKey].unit;
-    })
-    return cheques;
-}
 const formatCurrencyTokenDataWithPrices = (cheques,tokenList,tokenName, priceList) =>{
     console.log(priceList)
     cheques.forEach(item=>{

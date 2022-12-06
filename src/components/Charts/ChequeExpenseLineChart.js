@@ -1,7 +1,6 @@
-import React, {memo, useEffect, useState, useCallback} from "react";
+import React, {memo, useEffect, useState} from "react";
 import {useIntl} from "react-intl";
 import {Chart} from "chart.js";
-import {Menu} from 'antd';
 import {getChequeExpenseAllHistory} from "services/chequeService.js";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
