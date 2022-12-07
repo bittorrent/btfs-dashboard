@@ -78,21 +78,42 @@ export async function fileArrayBuffer(file) {
     })
 }
 
+// format a balance number which is between 0 and 1
+function formatDecimalBalance(balance) {
+    const balanceStr = String(balance);
+    const [integer, decimal] = balanceStr.split('.');
+    const lastZeroIndex = decimal.lastIndexOf('0');
+    const rate = lastZeroIndex === -1 ? 0 : lastZeroIndex + 1;
+    const significantDecimal = decimal.slice(lastZeroIndex + 1);
+    const rateDecimal = parseFloat('0.'+significantDecimal) * 100;
+    return `${integer}.${'0'.repeat(rate)}${rateDecimal.toFixed(0) }`
+}
+
 export function switchBalanceUnit(balance, precision = PRECISION) {
-    // added precision param, dont modify function signature
     let num = 0;
     precision = parseFloat(precision);
     balance = balance / precision;
+
+    // handle big number
     if (balance / B > 1) {
-        num = (balance / B).toFixed(4);
+        num = (balance / B).toFixed(2);
         return num + ' B '
     }
     if (balance / M > 1) {
-        num = (balance / M).toFixed(4);
+        num = (balance / M).toFixed(2);
         return num + ' M '
     }
 
-    return balance.toFixed(4) + ' ';
+    // handle small number
+    if(balance === 0) {
+        return '0 ';
+    }
+
+    if (balance < 1) {
+        formatDecimalBalance(balance);
+    }
+
+    return balance.toFixed(2) + ' ';
 }
 
 export function ceilLatency(str) {

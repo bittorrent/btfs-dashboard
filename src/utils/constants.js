@@ -1,5 +1,7 @@
 export const PRECISION = 1000000000000000000;
 
+export const PRECISION_RATE = 1000000;
+
 export const FEE = 20;  // BTT, not with precision
 
 export const BTFSSCAN_MAIN = 'https://scan.btfs.io';
