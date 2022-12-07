@@ -1,10 +1,11 @@
-/*eslint-disable*/
-import React, { useContext, useState } from 'react'
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React, { useContext, useState, useEffect } from 'react'
 import QRModal from 'components/Modals/QRModal.js'
 import OnlineProofStats from 'components/Stats/OnlineProofStats.js'
 import OnlineProofStatsV2 from 'components/Stats/OnlineProofStatsV2.js'
 import OnlineProofTable from 'components/Tables/OnlineProofTable.js'
 import OnlineProofTableV2 from 'components/Tables/OnlineProofTableV2.js'
+import {getHeartBeatsStats} from "services/dashboardService.js"
 import { t } from 'utils/text.js'
 import { mainContext } from 'reducer'
 import { Tooltip } from 'antd'
@@ -18,14 +19,24 @@ export default function HeartBeats() {
   const { theme } = state
 
   const [version, setVersion] = useState(V2)
+  const [hasV1Data, setHasV1Data] = useState(false);
 
   const handleClick = () => {
     setVersion(version === V2 ? V1 : V2)
   }
 
+  const fetchV1Data = async () => {
+    let {status_contract, total_count, total_gas_spend} = await getHeartBeatsStats();
+    setHasV1Data(!!(status_contract || total_count || total_gas_spend));
+  };
+
+  useEffect(() => {
+    fetchV1Data();
+  }, []);
+
   return (
     <>
-      <SwitchVersion version={version} onClick={handleClick} />
+      {hasV1Data && <SwitchVersion version={version} onClick={handleClick} />}
       {version === V2 && (
         <>
           <OnlineProofStatsV2 color={theme} />
@@ -33,7 +44,7 @@ export default function HeartBeats() {
           <QRModal color={theme} />
         </>
       )}
-      {version === V1 && (
+      {hasV1Data && version === V1 && (
         <>
           <OnlineProofStats color={theme} />
           <OnlineProofTable color={theme} />
