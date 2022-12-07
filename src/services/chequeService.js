@@ -285,7 +285,7 @@ export const getChequeReceivedDetailList = async (offset, limit) => {
 };
 
 export const getChequeExpenseList = async () => {
-    const data1 =  Client10.getChequeExpenseList();
+    const data1 =  Client10.getChequeAllExpenseList();
     const data2 =  Client10.getSupportTokens();
     const data3 = Client10.getHostPriceAll();
     return Promise.all([data1, data2, data3]).then(([chequeList, tokenList, priceList]) => {
