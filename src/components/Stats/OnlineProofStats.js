@@ -1,4 +1,4 @@
-/*eslint-disable*/
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {useEffect, useState} from "react";
 import {Tooltip} from 'antd';
 import ClipboardCopy from "components/Utils/ClipboardCopy";
@@ -27,9 +27,9 @@ export default function HeartBeatsStats({color}) {
         let {status_contract, total_count, total_gas_spend} = await getHeartBeatsStats();
 
         if (!didCancel) {
-            setStatusContarct(status_contract);
-            setTotal(total_count);
-            setGas(total_gas_spend);
+            setStatusContarct(status_contract ?? '--');
+            setTotal(total_count ?? 0);
+            setGas(total_gas_spend ?? 0);
         }
     };
 
