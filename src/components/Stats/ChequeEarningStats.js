@@ -51,7 +51,6 @@ export default function ChequeEarningStats({ color }) {
                     <div className="w-full xl:w-6/12 xl:pr-2">
                         <div
                             className={"relative break-words rounded mb-2 xl:mb-0  " + themeStyle.bg[color] + themeStyle.text[color]}>
-                            {/* <div className="flex flex-col justify-between p-4 h-180-px"> */}
                             <div className="flex flex-col justify-between p-4 h-600-px">
                                 <div>
                                     <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
@@ -91,7 +90,6 @@ export default function ChequeEarningStats({ color }) {
                     <div className="w-full xl:w-6/12 xl:pl-2">
                         <div
                             className={"relative break-words rounded " + themeStyle.bg[color] + themeStyle.text[color]}>
-                            {/* <div className="flex flex-col justify-between p-4 h-180-px"> */}
                             <div className="flex flex-col justify-between p-4 h-600-px">
                                 <div className="flex items-center">
                                     <h5 className={"uppercase font-bold " + themeStyle.title[color]}>
