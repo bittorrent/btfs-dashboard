@@ -106,7 +106,7 @@ export default function NodeRevenueStats({color}) {
                                     </div>
                                 </div>
                                 <div>
-                                    <i onClick={showChequeEarningTips} className="fa-solid  fa-circle-chevron-right font-semibold cursor-pointer"></i>
+                                    <i onClick={showChequeEarningTips} className="fas fa-chevron-circle-right font-semibold cursor-pointer"></i>
                                 </div> 
                             </div>
                             
@@ -156,7 +156,7 @@ export default function NodeRevenueStats({color}) {
                                     </div>
                                 </div>
                                 <div>
-                                    <i onClick={showChequeExpenseTips} className="fa-solid  fa-circle-chevron-right font-semibold  cursor-pointer"></i>
+                                    <i onClick={showChequeExpenseTips} className="fas fa-chevron-circle-right font-semibold  cursor-pointer"></i>
                                 </div> 
                             </div>
 

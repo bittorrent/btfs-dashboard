@@ -64,11 +64,11 @@ function SwitchVersion({ version, onClick }) {
       <a onClick={onClick}>
         <span className={`text-md font-bold ${themeStyle.text[theme]}`}>{version === V2 ? t('switch_to_v1') : t('switch_to_v2')}</span>
         <span className={`text-sm px-1 ${themeStyle.text[theme]}`}>
-          <i className="fa-solid fa-arrow-right-arrow-left"></i>
+          <i class="fas fa-arrows-alt-h"></i>
         </span>
         <Tooltip title={t('switch_v1_v2_tootip')}>
             <span className='text-sm text-blueGray-500'>
-              <i className="fa-sharp fa-solid fa-circle-question"></i>
+              <i class="fas fa-question-circle"></i>
             </span>
         </Tooltip>
       </a>
