@@ -8,6 +8,7 @@ import Emitter from "utils/eventBus";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
 import {PRECISION} from "utils/constants.js";
+import { toNonExponential } from "utils/BTFSUtil";
 
 export default function CashConfirmModal({color}) {
 
@@ -23,6 +24,30 @@ export default function CashConfirmModal({color}) {
     useEffect(() => {
         const set = async function (params) {
             console.log("openCashConfirmModal event has occured");
+            const currencyData = {};
+            const currencyList = [];
+            params.data.forEach(item=>{
+                const {amount} = item;
+                const {key,unit,icon} = item.selectItemData;
+                if(!currencyData[key]){
+                    currencyData[key] = {};
+                    currencyData[key].total = 0;
+                    currencyData[key].len = 0;
+                    currencyData[key].unit = unit;
+                    currencyData[key].icon = icon;
+
+                }
+                currencyData[key].amount = amount
+                currencyData[key].total += amount;
+                currencyData[key].len++;
+            })
+            Object.keys(currencyData).forEach(key=>{
+                currencyData[key].total =  currencyData[key].total / PRECISION;
+                currencyList.push(currencyData[key]);
+            })
+            
+
+            cashList.current.currencyList = currencyList;
             cashList.current.list = params.data;
             cashList.current.total = 0;
 
@@ -102,7 +127,7 @@ export default function CashConfirmModal({color}) {
                 showModal ? (
                     <>
                         <div className={"fixed flex z-50 modal_center md:w-1/2 md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
-                            style={{height: '300px'}}>
+                            style={{height: '350px'}}>
                             <div className="w-full">
                                 {/*content*/}
                                 <div
@@ -123,7 +148,13 @@ export default function CashConfirmModal({color}) {
                                             className={" flex flex-col " + (color === 'light' ? 'bg-blueGray-100' : 'bg-blueGray-600')}>
                                             <div className='flex justify-between p-3'>
                                                 <div>{t('total')}</div>
-                                                <div className='text-xl font-semibold'>{cashList.current.total} WBTT
+                                                <div className='text-xl font-semibold text-right'>
+                                                {cashList.current.currencyList.map((item,index)=>{
+                                                    return (
+                                                        <div key={index}> {toNonExponential(item.total)} {item.unit}</div>
+                                                    )
+                                                })}
+                                                {/* <div >{cashList.current.total} WBTT</div> */}
                                                 </div>
                                             </div>
                                             <div className='flex justify-between p-3'>

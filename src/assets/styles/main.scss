@@ -134,7 +134,9 @@
   -webkit-transition: bottom 1s; /* Safari and Chrome */
   -o-transition: bottom 1s; /* Opera */
 }
-
+.cheques-tab-item{
+  min-width: 100px;
+}
 @media (max-width: 768px) {
   .modal_center {
     width: calc(100% - 2rem);

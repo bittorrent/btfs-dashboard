@@ -18,8 +18,8 @@ export default function ChequeCashingListTable({color, enableCash}) {
     const [total, setTotal] = useState(0);
     const [current, setCurrent] = useState(1);
 
-    const select = (e, id, amount) => {
-        enableCash(e.target.checked, id, amount);
+    const select = (e, id, amount, selectItemData) => {
+        enableCash(e.target.checked, id, amount,false, selectItemData);
     };
 
     const unSelect = () => {
@@ -84,14 +84,19 @@ export default function ChequeCashingListTable({color, enableCash}) {
                             <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 {t('chequebook')}
                             </th>
+                            <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
+                                {t('currency_type')}
+                            </th>
                             <th className={"cursor-pointer px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 <div className='flex items-center'>
-                                    <div>{t('uncashed')} (WBTT)</div>
+                                    {/* <div>{t('uncashed')} (WBTT)</div> */}
+                                    <div>{t('uncashed')}</div>
                                 </div>
                             </th>
                             <th className={"cursor-pointer px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
                                 <div className='flex items-center'>
-                                    <div>{t('cashed')} (WBTT)</div>
+                                    {/* <div>{t('cashed')} (WBTT)</div> */}
+                                    <div>{t('cashed')}</div>
                                 </div>
                             </th>
                         </tr>
@@ -105,7 +110,7 @@ export default function ChequeCashingListTable({color, enableCash}) {
                                             type="checkbox" name="checkbox"
                                             className={"bg-gray form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150 "}
                                             onClick={(e) => {
-                                                select(e, item['PeerID'], (item['Payout'] - item['CashedAmount']))
+                                                select(e, item['PeerID'], (item['Payout'] - item['CashedAmount']), item)
                                             }}
                                         />
                                     </td>
@@ -128,11 +133,21 @@ export default function ChequeCashingListTable({color, enableCash}) {
                                             <ClipboardCopy value={item['Vault']}/>
                                         </div>
                                     </td>
-                                    <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        {switchBalanceUnit((item['Payout'] - item['CashedAmount']))}
+                                    <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4 flex items-center">
+                                        <img
+                                            src={
+                                                require(`assets/img/${item.icon}.svg`).default
+                                            }
+                                            alt=""
+                                            className="mr-2"
+                                            />
+                                        {item.unit}
                                     </td>
                                     <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        {switchBalanceUnit(item['CashedAmount'])}
+                                        {switchBalanceUnit((item['Payout'] - item['CashedAmount']), item?.price?.rate)}
+                                    </td>
+                                    <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                        {switchBalanceUnit(item['CashedAmount'], item?.price?.rate)}
                                     </td>
                                 </tr>
                             )

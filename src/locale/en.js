@@ -1,5 +1,7 @@
 const en_US = {
-
+    // common
+    'close': 'Close',
+    'check': 'Check',
 // sidebar
 
     'dashboard': 'Dashboard',
@@ -74,6 +76,12 @@ const en_US = {
     'online_active':'Activity',
     'switch_old_version':'Old version',
     'switch_new_version':'New version',
+    'cheque_earnings_des':'According to the current exchange rate, other currencies are converted into BTT. The value is for reference only. Click to view the details',
+    'cheque_earning_detail': 'Cheques Earning Detials',
+    'checks_expense_detials': 'Cheques Expense Detials',
+    'vault_contract_balance': 'Vault Balance',
+    'vault_contract_address': 'Vault Contract Address',
+    'address_balance': 'Balance',
 
 // cheques
 
@@ -103,6 +111,9 @@ const en_US = {
     'expense_list': 'Expense List',
     'recipient': 'Recipient',
     'cheques_number': 'Cheques Number',
+    'currency_type': 'Currency',
+    'cheques_amount': 'Cheques Amount',
+    'cheques_amount_tooltip': 'The total amount is converted into BTT from other currencies at the current exchange rate, and the value is for reference only',
 
 // files
 
@@ -177,10 +188,10 @@ const en_US = {
     'BTFS_10_withdraw_limit': 'Per withdrawal limit',
     'insert_cid': 'Insert an BTFS path (CID) to import. Examples:',
     'insert_name': 'Insert the name of the folder you want to create.',
-    'chequebook_withdraw': 'Vault Withdraw',
-    'amount_to_withdraw': 'Please enter the amount of WBTT you would like to withdraw.',
-    'chequebook_deposit': 'Vault Deposit',
-    'amount_to_deposit': 'Please enter the amount of WBTT you would like to deposit.',
+    'chequebook_withdraw': 'Withdraw from Vault',
+    'amount_to_withdraw': 'Please enter the amount you would like to withdraw from vault',
+    'chequebook_deposit': 'Deposit into Vault',
+    'amount_to_deposit': 'Please enter the amount you would like to deposit into vault',
     'transfer_confirmation': 'Transfer Confirmation',
     'cancel': 'Cancel',
     'confirm': 'Confirm',
@@ -256,6 +267,25 @@ const en_US = {
     'heart_th_nonce': 'Heartbeats Nonce',
     'bttc_addr': 'Node’s BTTC Address',
     'heart_th_nonce_tips':'Heartbeat Nonce: A nonce used to prove the node is online. The nonce will increase by one as each hour passes. ',
+    'switch_to_v1': 'Switch to V1',
+    'switch_to_v2': 'Switch to V2',
+    'switch_v1_v2_tootip': 'The V1 version of online proof proves the online status of the node by sending transactions to the contract, which is no longer used after BTFS 2.3',
+    'online_proof_data': 'ONLINE PROOF DATA',
+    'online_proof_nonce': 'CURRENT NONCE',
+    'online_proof_detail': 'ONLINE PROOF DETAILS',
+    'online_proof_detail_des': 'The node proves the online status of the node by periodically sending status data to the online proof service',
+    'online_proof_link_to_scan': 'View and verify on BTFS Scan',
+    'online_proof_node_id':'Node ID',
+    'online_proof_sign_time':'Sign Time',
+    'online_proof_heart_beats':'Heartbeats Nonce',
+    'online_proof_table_detail':'Detail',
+    'online_proof_table_detail_last_signature': 'Last Singature',
+    'online_proof_table_detail_peer_id': 'PeerID',
+    'online_proof_table_detail_create_time': 'Create Time',
+    'online_proof_table_detail_version': 'Version',
+    'online_proof_table_detail_nonce': 'Heartbeats Nonce',
+    'online_proof_table_detail_bttc_address': 'BTTC Address',
+    'online_proof_table_detail_signed_time': 'Signed Time',
 };
 
 export default en_US

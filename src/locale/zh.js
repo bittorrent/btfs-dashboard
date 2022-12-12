@@ -1,5 +1,7 @@
 const zh_CN = {
-
+    // common
+    'close': '关闭',
+    'check': '查看',
 // sidebar
 
     'dashboard': '数据看板',
@@ -74,7 +76,12 @@ const zh_CN = {
     'online_active':'在线活跃',
     'switch_old_version':'切换旧版分数',
     'switch_new_version':'切换新版分数',
-
+    'cheque_earnings_des':'按照当前汇率其他货币转换为BTT，数值仅供参考，点击可查看详情',
+    'cheque_earning_detail': '支票收益详情',
+    'checks_expense_detials': '支票支出详情',
+    'vault_contract_balance': '金库合约余额',
+    'vault_contract_address': '金库合约地址',
+    'address_balance': '地址余额',
 // cheques
 
     'earning': '收益',
@@ -103,6 +110,9 @@ const zh_CN = {
     'expense_list': '支出列表',
     'recipient': '接收者',
     'cheques_number': '支票数量',
+    'currency_type': '币种',
+    'cheques_amount': '支票数额',
+    'cheques_amount_tooltip': '总额按照当前汇率其他货币转换为BTT，数值仅供参考',
 
 // files
 
@@ -179,10 +189,10 @@ const zh_CN = {
     'BTFS_10_withdraw_limit': '单次提现限制',
     'insert_cid': '使用BTFS路径（CID）导入。 例如:',
     'insert_name': '输入要创建的文件夹名称',
-    'chequebook_withdraw': '取款',
-    'amount_to_withdraw': '请输入要提取的WBTT数额。',
-    'chequebook_deposit': '存款',
-    'amount_to_deposit': '请输入要存入的WBTT数额。',
+    'chequebook_withdraw': '从合约提取',
+    'amount_to_withdraw': '请输入从金库合约提取至BTTC地址的数额',
+    'chequebook_deposit': '存入至合约',
+    'amount_to_deposit': '请输入从BTTC地址存入金库合约的数额',
     'transfer_confirmation': '转账确认',
     'cancel': '取消',
     'confirm': '确认',
@@ -259,7 +269,25 @@ const zh_CN = {
     'heart_th_nonce': '心跳计数',
     'bttc_addr': '节点BTTC地址',
     'heart_th_nonce_tips':'心跳计数：用来证明当前节点在线状态的一次性计数，默认每小时计数加1。',
-
+    'switch_to_v1': '切换到版本1',
+    'switch_to_v2': '切换到版本2',
+    'switch_v1_v2_tootip': 'V1版本的在线证明通过向合约发送交易来证明节点在线状态，在BTFS 2.3版本之后不再使用',
+    'online_proof_data': '在线证明数据',
+    'online_proof_nonce': '当前心跳',
+    'online_proof_detail': '在线证明详情',
+    'online_proof_detail_des': '节点通过向在线证明服务周期性的发送状态数据来证明该节点的在线状态',
+    'online_proof_link_to_scan': '在BTFS Scan上查看和验证',
+    'online_proof_node_id':'节点ID',
+    'online_proof_sign_time':'签名时间',
+    'online_proof_heart_beats':'心跳计数',
+    'online_proof_table_detail':'详情',
+    'online_proof_table_detail_last_signature': '最新签名',
+    'online_proof_table_detail_peer_id': '节点ID',
+    'online_proof_table_detail_create_time': '创建时间',
+    'online_proof_table_detail_version': '版本',
+    'online_proof_table_detail_nonce': '心跳计数',
+    'online_proof_table_detail_bttc_address': 'BTTC 地址',
+    'online_proof_table_detail_signed_time': '签名时间',
 
 };
 

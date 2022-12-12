@@ -2,7 +2,7 @@
 import Client10 from "APIClient/APIClient10.js";
 import BigNumber from 'bignumber.js';
 import {switchStorageUnit2, switchBalanceUnit, toThousands, getTimes} from "utils/BTFSUtil.js";
-import {PRECISION, FEE, OLD_SCORE_VERSION, NEW_SCORE_VERSION} from "utils/constants.js";
+import {PRECISION, FEE, NEW_SCORE_VERSION, INIT_MULTI_CURRENCY_DATA, MULTIPLE_CURRENY_LIST} from "utils/constants.js";
 
 export const getNodeBasicStats = async () => {
     let data1 = Client10.getHostInfo();
@@ -121,24 +121,85 @@ export const getHostHistory = async (flag) => {
 export const getNodeRevenueStats = async () => {
     let data1 = Client10.getChequeValue();
     let data3 = Client10.getHeartBeatsStats();
-    return Promise.all([data1, data3]).then((result) => {
-        console.log('data3', result)
-        const gasFee = +result[1]['total_gas_spend'] ? +result[1]['total_gas_spend'] : 0
-        const chequeExpense = +result[0]['totalSent']
-        const hasTotalExpense = gasFee || chequeExpense
-
+    const data4 = Client10.getChequeAllStats();
+    const data5 = Client10.getExchangeRate(INIT_MULTI_CURRENCY_DATA[1].rateUnit);
+    const data6 = Client10.getExchangeRate(INIT_MULTI_CURRENCY_DATA[2].rateUnit);
+    const data7 = Client10.getExchangeRate(INIT_MULTI_CURRENCY_DATA[3].rateUnit);
+    return Promise.all([data1, data3, data4, data5, data6, data7]).then(
+      (result) => {
+        console.log("data3", result);
+        const gasFee = +result[1]["total_gas_spend"]
+          ? +result[1]["total_gas_spend"]
+          : 0;
+        const chequeExpense = +result[0]["totalSent"];
+        const hasTotalExpense = gasFee || chequeExpense;
+        const currencyRateList = [];
+        currencyRateList.push(
+          1,
+          result[5]?.data?.rate,
+          result[6]?.data?.rate,
+          result[7]?.data?.rate
+        );
+        const checksExpenseDetialsData = [];
+        const chequeEarningDetailData = [];
+        INIT_MULTI_CURRENCY_DATA.forEach((item, index) => {
+          const expenseItem = { ...item };
+          const earningItem = { ...item };
+          const totolData = result[2]?.[item.key] || {};
+          expenseItem.value = switchBalanceUnit(+totolData.total_issued || 0);
+          expenseItem.bttValue =
+            expenseItem.value *
+            (currencyRateList[index] ? 1 / currencyRateList[index] : 1).toFixed(
+              0
+            );
+          earningItem.value = switchBalanceUnit(+totolData.total_received || 0);
+          earningItem.bttValue =
+            earningItem.value *
+            (currencyRateList[index] ? 1 / currencyRateList[index] : 1).toFixed(
+              0
+            );
+          checksExpenseDetialsData.push(expenseItem);
+          chequeEarningDetailData.push(earningItem);
+        });
+  
         return {
-            chequeEarning: switchBalanceUnit(result[0]['totalReceived']),
-            uncashedPercent: result[0]['totalReceived'] ? new BigNumber((result[0]['totalReceived'] - result[0]['settlement_received_cashed'])).dividedBy(result[0]['totalReceived']).multipliedBy(100).toFixed(0) : 0,
-            cashedPercent: result[0]['totalReceived'] ? new BigNumber((result[0]['settlement_received_cashed'])).dividedBy(result[0]['totalReceived']).multipliedBy(100).toFixed(0) : 0,
-            chequeExpense: switchBalanceUnit(chequeExpense),
-            totalExpense: switchBalanceUnit(gasFee + chequeExpense),
-            gasFee: switchBalanceUnit(gasFee),
-            gasFeePercent: hasTotalExpense ? new BigNumber(gasFee).dividedBy((gasFee + chequeExpense)).multipliedBy(100).toFixed(0) : 0,
-            chequeExpensePercent: hasTotalExpense ? new BigNumber(chequeExpense).dividedBy((gasFee + chequeExpense)).multipliedBy(100).toFixed(0) : 0,
-        }
-    })
-};
+          chequeEarning: switchBalanceUnit(result[0]["totalReceived"]),
+          uncashedPercent: result[0]["totalReceived"]
+            ? new BigNumber(
+                result[0]["totalReceived"] -
+                  result[0]["settlement_received_cashed"]
+              )
+                .dividedBy(result[0]["totalReceived"])
+                .multipliedBy(100)
+                .toFixed(0)
+            : 0,
+          cashedPercent: result[0]["totalReceived"]
+            ? new BigNumber(result[0]["settlement_received_cashed"])
+                .dividedBy(result[0]["totalReceived"])
+                .multipliedBy(100)
+                .toFixed(0)
+            : 0,
+          chequeExpense: switchBalanceUnit(chequeExpense),
+          totalExpense: switchBalanceUnit(gasFee + chequeExpense),
+          gasFee: switchBalanceUnit(gasFee),
+          gasFeePercent: hasTotalExpense
+            ? new BigNumber(gasFee)
+                .dividedBy(gasFee + chequeExpense)
+                .multipliedBy(100)
+                .toFixed(0)
+            : 0,
+          chequeExpensePercent: hasTotalExpense
+            ? new BigNumber(chequeExpense)
+                .dividedBy(gasFee + chequeExpense)
+                .multipliedBy(100)
+                .toFixed(0)
+            : 0,
+          checksExpenseDetialsData,
+          chequeEarningDetailData,
+        };
+      }
+    );
+  };
 
 // export const getNodeRevenueStats = async () => {
 //     let data = await Client10.getChainInfo();
@@ -172,27 +233,78 @@ export const getNodeWalletStats = async () => {
     let BTTCAddressWBTT = Client10.getChequeWBTTBalance(BTTCAddress);
     let BTFS10Balance = Client10.getBTFS10Balance();
     let host = Client10.getHostInfo();
-
-    return Promise.all([chequeBookBalance, BTTCAddressBTT, BTTCAddressWBTT, BTFS10Balance, host]).then((result) => {
-        let maxBTT = new BigNumber(result[1]['balance']).dividedBy(PRECISION).toNumber();
-        let maxWBTT = new BigNumber(result[2]['balance']).dividedBy(PRECISION).toNumber();
-        let maxChequeBookWBTT = new BigNumber(result[0]['balance']).dividedBy(PRECISION).toNumber();
-        let base = new BigNumber(maxBTT).minus(FEE).toNumber();
-        let balance10 = result[3]['BtfsWalletBalance'] ? new BigNumber(result[3]['BtfsWalletBalance']).dividedBy(1000000).toNumber() : 0;
-        let tronAddress = result[4]['TronAddress'];
-
-        return {
-            BTTCAddress: BTTCAddress,
-            chequeAddress: chequeAddress,
-            chequeBookBalance: switchBalanceUnit(result[0]['balance']),
-            BTTCAddressBTT: switchBalanceUnit(result[1]['balance']),
-            BTTCAddressWBTT: switchBalanceUnit(result[2]['balance']),
-            maxAvailableBTT: base > 0 ? base : 0,
-            maxAvailableWBTT: base > 0 ? maxWBTT : 0,
-            maxAvailableChequeBookWBTT: base > 0 ? maxChequeBookWBTT : 0,
-            balance10: balance10,
-            tronAddress: tronAddress
+    const getAllBalanceData = Client10.getChequeAllBalance(BTTCAddress);
+    const getChequeBookAllBalanceData = Client10.getChequeBookAllBalance();
+    const getPriceList = Client10.getHostPriceAll();
+    return Promise.all([
+      chequeBookBalance,
+      BTTCAddressBTT,
+      BTTCAddressWBTT,
+      BTFS10Balance,
+      host,
+      getAllBalanceData,
+      getChequeBookAllBalanceData,
+      getPriceList,
+    ]).then((result) => {
+      const priceList = result[7];
+      let maxBTT = new BigNumber(result[1]['balance'])
+        .dividedBy(PRECISION)
+        .toNumber()
+      let maxWBTT = new BigNumber(result[2]['balance'])
+        .dividedBy(PRECISION)
+        .toNumber()
+      let maxChequeBookWBTT = new BigNumber(result[0]['balance'])
+        .dividedBy(PRECISION)
+        .toNumber()
+      let base = new BigNumber(maxBTT).minus(FEE).toNumber()
+      let balance10 = result[3]['BtfsWalletBalance']
+        ? new BigNumber(result[3]['BtfsWalletBalance'])
+            .dividedBy(1000000)
+            .toNumber()
+        : 0
+      let tronAddress = result[4]['TronAddress']
+      const allBalanceData = result[5]
+      const chequeBookAllBalanceData = result[6]
+      const allCurrencyBalanceList = []
+      MULTIPLE_CURRENY_LIST.forEach((item) => {
+        const newItem = { ...item }
+        newItem.addressValue = 0
+        newItem.maxAddressCount = 0
+        newItem.bookBalanceValue = 0
+        newItem.maxBookBalanceCount = 0
+        if (allBalanceData?.[item.key]) {
+          newItem.addressValue = switchBalanceUnit(allBalanceData?.[item.key], priceList?.[item.key]?.rate)
+          newItem.maxAddressCount = new BigNumber(allBalanceData?.[item.key])
+            .dividedBy(PRECISION)
+            .toNumber()
         }
+        if (chequeBookAllBalanceData?.[item.key]) {
+          newItem.bookBalanceValue = switchBalanceUnit(
+            chequeBookAllBalanceData?.[item.key],
+            priceList?.[item.key]?.rate
+          )
+          newItem.maxBookBalanceCount = new BigNumber(
+            chequeBookAllBalanceData?.[item.key]
+          )
+            .dividedBy(PRECISION)
+            .toNumber()
+        }
+        allCurrencyBalanceList.push({ ...newItem })
+      })
+
+      return {
+        BTTCAddress: BTTCAddress,
+        chequeAddress: chequeAddress,
+        chequeBookBalance: switchBalanceUnit(result[0]['balance']),
+        BTTCAddressBTT: switchBalanceUnit(result[1]['balance']),
+        BTTCAddressWBTT: switchBalanceUnit(result[2]['balance']),
+        maxAvailableBTT: base > 0 ? base : 0,
+        maxAvailableWBTT: base > 0 ? maxWBTT : 0,
+        maxAvailableChequeBookWBTT: base > 0 ? maxChequeBookWBTT : 0,
+        balance10: balance10,
+        tronAddress: tronAddress,
+        allCurrencyBalanceList,
+      }
     })
 };
 
@@ -242,15 +354,15 @@ const formAmount = (amount) => {
     return amount_str;
 };
 
-export const withdraw = async (amount) => {
+export const withdraw = async (amount, currencyType) => {
     let amount_str = formAmount(amount);
-    let data = await Client10.withdraw(amount_str);
+    let data = await Client10.withdraw(amount_str, currencyType);
     return data
 };
 
-export const deposit = async (amount) => {
+export const deposit = async (amount, currencyType) => {
     let amount_str = formAmount(amount);
-    let data = await Client10.deposit(amount_str);
+    let data = await Client10.deposit(amount_str, currencyType);
     return data
 };
 
@@ -264,6 +376,12 @@ export const BTTTransfer = async (to, amount) => {
 export const WBTTTransfer = async (to, amount) => {
     let amount_str = formAmount(amount);
     let data = await Client10.WBTTTransfer(to, amount_str);
+    return data
+};
+
+export const currencyTransfer = async (to, amount, currencyType) => {
+    let amount_str = formAmount(amount);
+    let data = await Client10.currencyTransfer(to, amount_str, currencyType);
     return data
 };
 
@@ -305,6 +423,23 @@ export const getHeartBeatsStats = async () => {
     }
 };
 
+export const getHeartBeatsStatsV2 = async () => {
+    try {
+        const [result1, result2] = await Promise.all([
+            Client10.getHeartBeatsStatsV2(),
+            Client10.getHeartBeatsLastInfo()
+        ])
+
+        return {
+            ...result1,
+            ...result2,
+        };
+    } catch (e) {
+        console.error(e)
+        return {}
+    }
+};
+
 export const getHeartBeatsReportlist = async (from) => {
     try {
         let {records, total, peer_id} = await Client10.getHeartBeatsReportlist(from);
@@ -326,6 +461,32 @@ export const getHeartBeatsReportlist = async (from) => {
             records: [],
             total: 0,
             peer_id: ''
+        };
+    }
+};
+
+export const getHeartBeatsReportlistV2 = async (from) => {
+    try {
+        let {records, total, peer_id, bttc_addr} = await Client10.getHeartBeatsReportlistV2(from);
+
+        records.forEach(item => {
+            let date = new Date(item.report_time)
+            item.report_time = getTimes(date)
+        });
+
+        return {
+            records,
+            total,
+            peer_id,
+            bttc_addr
+        };
+    } catch (e) {
+        console.error(e)
+        return {
+            records: [],
+            total: 0,
+            peer_id: '',
+            bttc_addr: ''
         };
     }
 };

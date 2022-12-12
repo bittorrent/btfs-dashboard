@@ -4,11 +4,11 @@ import {mainContext} from "reducer";
 import {Select, Tooltip} from 'antd';
 import ButtonCancel from "components/Buttons/ButtonCancel.js";
 import ButtonConfirm from "components/Buttons/ButtonConfirm.js";
-import {BTTTransfer, WBTTTransfer} from "services/dashboardService.js";
+import {BTTTransfer, WBTTTransfer, currencyTransfer} from "services/dashboardService.js";
 import Emitter from "utils/eventBus";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
-import {FEE} from "utils/constants.js";
+import {FEE, MULTIPLE_CURRENY_LIST} from "utils/constants.js";
 import {inputAddressCheck, inputNumberCheck} from "utils/checks.js";
 
 const {Option} = Select;
@@ -31,10 +31,15 @@ export default function TransferConfirmModal({color}) {
             console.log("openTransferConfirmModal event has occured");
             openModal();
             tokenRef.current = 'BTT';
-            maxRef.current = {
+            const currentObj = {
                 BTT: params.maxBTT,
-                WBTT: params.maxWBTT
             };
+            params.allCurrencyBalanceList.forEach(item => {
+                currentObj[item.key] = item.maxAddressCount;
+            });
+        
+            maxRef.current = currentObj;
+            
             setMax(maxRef.current.BTT);
         };
         Emitter.on("openTransferConfirmModal", set);
@@ -58,6 +63,8 @@ export default function TransferConfirmModal({color}) {
         }
         if (tokenRef.current === 'WBTT') {
             result = await WBTTTransfer(inputAddressRef.current.value.trim(), inputAmountRef.current.value);
+        }else{
+            result = await currencyTransfer(inputAddressRef.current.value.trim(), inputAmountRef.current.value, tokenRef.current);
         }
 
         if (result['Type'] === 'error') {
@@ -101,12 +108,16 @@ export default function TransferConfirmModal({color}) {
     const handleChange = useCallback((value) => {
         tokenRef.current = value;
         inputAmountRef.current.value = null;
+
         if (value === 'BTT') {
             setMax(maxRef.current.BTT);
+        }else{
+            setMax(maxRef.current[value]);
         }
-        if (value === 'WBTT') {
-            setMax(maxRef.current.WBTT);
-        }
+        // if (value === 'WBTT') {
+        //     setMax(maxRef.current.WBTT);
+        // }
+
     }, []);
 
     const openModal = () => {
@@ -221,7 +232,14 @@ export default function TransferConfirmModal({color}) {
                                                         onChange={handleChange}
                                                         dropdownStyle={{background: themeStyle.bg[color]}}>
                                                     <Option value="BTT">BTT</Option>
-                                                    <Option value="WBTT">WBTT</Option>
+                                                    {
+                                                        MULTIPLE_CURRENY_LIST.map(item=>{
+                                                            return (
+                                                                <Option value={item.key}>{item.unit}</Option>
+                                                            )
+                                                        })
+                                                    }
+                                                
                                                 </Select>
                                             </div>
                                             <div className="inputTransition flex-1">

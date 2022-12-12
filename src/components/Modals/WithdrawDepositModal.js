@@ -1,6 +1,6 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, {useState, useEffect, useContext, useRef, useCallback} from "react";
 import {useIntl} from 'react-intl';
-import {Tooltip} from 'antd';
+import {Select, Tooltip} from 'antd';
 import {mainContext} from "reducer";
 import ClipboardCopy from "components/Utils/ClipboardCopy";
 import ButtonCancel from "components/Buttons/ButtonCancel.js";
@@ -9,12 +9,15 @@ import {withdraw, deposit, withdraw10} from "services/dashboardService.js";
 import Emitter from "utils/eventBus";
 import themeStyle from "utils/themeStyle.js";
 import {t} from "utils/text.js";
-import {FEE} from "utils/constants.js";
+import {FEE, MULTIPLE_CURRENY_LIST} from "utils/constants.js";
 import {inputNumberCheck} from "utils/checks.js";
+
+const {Option} = Select;
 
 export default function WithdrawDepositModal({color}) {
     const intl = useIntl();
     const inputRef = useRef(null);
+    const tokenRef = useRef('WBTT');
     const {state} = useContext(mainContext);
     const {sidebarShow} = state;
     const [type, setType] = useState(null);
@@ -24,21 +27,29 @@ export default function WithdrawDepositModal({color}) {
     const [max, setMax] = useState(0);
     const [account, setAccount] = useState(null);
     const [valid, setValid] = useState(false);
+    const maxRef = useRef(null);
 
     useEffect(() => {
         const set = function (params) {
-            console.log("openWithdrawDepositModal event has occured");
             openModal();
             setType(params.type);
+            let currentObj = {};
+
             if (params.type === 'withdraw') {
                 setTitle('chequebook_withdraw');
                 setDescription("amount_to_withdraw");
                 setMax(params.maxWBTT);
+                params.allCurrencyBalanceList.forEach(item => {
+                    currentObj[item.key] = item.maxBookBalanceCount;
+                });
             }
             if (params.type === 'deposit') {
                 setTitle('chequebook_deposit');
                 setDescription("amount_to_deposit");
                 setMax(params.maxWBTT);
+                params.allCurrencyBalanceList.forEach(item => {
+                    currentObj[item.key] = item.maxAddressCount;
+                });
             }
             if (params.type === 'withdraw10') {
                 setTitle('BTFS_10_withdraw');
@@ -52,6 +63,8 @@ export default function WithdrawDepositModal({color}) {
                     // }, 100);
                 }
             }
+           
+            maxRef.current = currentObj;
         };
         Emitter.on("openWithdrawDepositModal", set);
         return () => {
@@ -82,7 +95,7 @@ export default function WithdrawDepositModal({color}) {
     const _withdraw = async () => {
         let amount = inputRef.current.value;
         closeModal();
-        let result = await withdraw(amount);
+        let result = await withdraw(amount, tokenRef.current);
         if (result['Type'] === 'error') {
             Emitter.emit('showMessageAlert', {message: result['Message'], status: 'error'});
         } else {
@@ -94,7 +107,7 @@ export default function WithdrawDepositModal({color}) {
     const _deposit = async () => {
         let amount = inputRef.current.value;
         closeModal();
-        let result = await deposit(amount);
+        let result = await deposit(amount, tokenRef.current);
         if (result['Type'] === 'error') {
             Emitter.emit('showMessageAlert', {message: result['Message'], status: 'error'});
         } else {
@@ -142,14 +155,24 @@ export default function WithdrawDepositModal({color}) {
         setShowModal(false);
         window.body.style.overflow = '';
     };
+    const handleChange = useCallback((value) => {
+        tokenRef.current = value;
+        inputRef.current.value = null;
+        if (value === 'BTT') {
+            setMax(maxRef.current.BTT);
+        }else{
+            setMax(maxRef.current[value]);
+        }
+
+    }, []);
 
     return (
         <>
             {showModal ? (
                 <>
                     <div
-                        className={"fixed flex z-50 modal_center md:w-1/2 md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
-                        style={{height: '350px'}}>
+                        className={"fixed flex z-50 md:w-1/2 md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
+                        style={{height: 'min-content'}}>
                         <div className="w-full">
                             {/*content*/}
                             <div
@@ -170,7 +193,24 @@ export default function WithdrawDepositModal({color}) {
                                         {t(description)}
                                         <br/>
                                     </p>
-                                    <div className="flex">
+                                    <div className="flex justify-center items-center">
+                                        {
+                                            type !== 'withdraw10'? <div>
+                                            <Select className={color} defaultValue="WBTT" style={{width: 100}}
+                                                onChange={handleChange}
+                                                    dropdownStyle={{background: themeStyle.bg[color]}}>
+                                                {
+                                                    MULTIPLE_CURRENY_LIST.map(item=>{
+                                                        return (
+                                                            <Option value={item.key}>{item.unit}</Option>
+                                                        )
+                                                    })
+                                                }
+                                            
+                                            </Select>
+                                        </div>: ""
+                                        }
+                                        
                                         <div className="inputTransition flex-1">
                                             <input
                                                 className={"p4 mb-1 border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full " + themeStyle.bg[color]}

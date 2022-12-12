@@ -18,12 +18,14 @@ export default function CardChequeEarningList({color}) {
         setCurrent(e.key);
     }, []);
 
-    const enableCash = useCallback((flag, id, amount, cancel) => {
+    const enableCash = useCallback((flag, id, amount, cancel, selectItemData) => {
         if (flag) {
             if (amount > 0) {
                 cashList.current.push({
                     id: id,
-                    amount: amount
+                    amount: amount,
+                    selectItemData,
+                    currencyType: selectItemData.key,
                 });
                 setCashStatus(flag);
             }
