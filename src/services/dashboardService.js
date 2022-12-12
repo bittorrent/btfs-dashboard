@@ -181,9 +181,25 @@ export const getNodeRevenueStats = async () => {
           checksExpenseDetialsData.push(expenseItem)
           chequeEarningDetailData.push(earningItem)
         })
+        let chequeEarningTotalBTT = 0;
+        let checksExpenseTotalBTT = 0;
+        chequeEarningDetailData.forEach((item=>{
+            chequeEarningTotalBTT += Number(item.bttValue);
+        }))
+        if(chequeEarningTotalBTT>0){
+            chequeEarningTotalBTT = chequeEarningTotalBTT.toFixed(2);
+        }
+        checksExpenseDetialsData.forEach((item=>{
+            checksExpenseTotalBTT += Number(item.bttValue);
+        }))
+        if(checksExpenseTotalBTT>0){
+            checksExpenseTotalBTT = checksExpenseTotalBTT.toFixed(2);
+        }
+        
   
         return {
-          chequeEarning: switchBalanceUnit(result[0]["totalReceived"]),
+        //   chequeEarning: switchBalanceUnit(result[0]["totalReceived"]),
+        chequeEarning: chequeEarningTotalBTT,
           uncashedPercent: result[0]["totalReceived"]
             ? new BigNumber(
                 result[0]["totalReceived"] -
@@ -199,7 +215,8 @@ export const getNodeRevenueStats = async () => {
                 .multipliedBy(100)
                 .toFixed(0)
             : 0,
-          chequeExpense: switchBalanceUnit(chequeExpense),
+        //   chequeExpense: switchBalanceUnit(chequeExpense),
+        chequeExpense: checksExpenseTotalBTT,
           totalExpense: switchBalanceUnit(gasFee + chequeExpense),
           gasFee: switchBalanceUnit(gasFee),
           gasFeePercent: hasTotalExpense
@@ -335,6 +352,7 @@ export const getNodeStorageStats = async () => {
         let data2 = Client10.getFilesStorage();
         let data3 = Client10.getContractsNumber();
         let data4 = Client10.getChequeStats();
+        // let data4 = Client10.getChequeAllStats();
         return Promise.all([data1, data2, data3, data4]).then((result) => {
             return {
                 capacity: switchStorageUnit2(result[1]['StorageMax']),
