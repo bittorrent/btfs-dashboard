@@ -162,21 +162,21 @@ export const getNodeRevenueStats = async () => {
           const totolData = result[2]?.[item.key] || {}
           expenseItem.value = switchBalanceUnit(
             +totolData.total_issued || 0,
-            priceItem?.rate
+            priceItem?.rate * PRECISION_RATE
           )
           expenseItem.bttValue = switchBalanceUnit(
             (+totolData.total_issued || 0) *
               (currencyRateList[index] ? 1 / currencyRateList[index] : 1),
-            priceItem?.rate * exchangeRate
+            priceItem?.rate * exchangeRate * PRECISION_RATE
           )
           earningItem.value = switchBalanceUnit(
             +totolData.total_received || 0,
-            priceItem?.rate
+            priceItem?.rate * PRECISION_RATE
           )
           earningItem.bttValue = switchBalanceUnit(
             (+totolData.total_received || 0) *
               (currencyRateList[index] ? 1 / currencyRateList[index] : 1),
-            priceItem?.rate * exchangeRate
+            priceItem?.rate * exchangeRate * PRECISION_RATE
           )
           checksExpenseDetialsData.push(expenseItem)
           chequeEarningDetailData.push(earningItem)
