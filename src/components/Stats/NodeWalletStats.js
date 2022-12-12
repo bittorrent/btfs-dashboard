@@ -244,7 +244,7 @@ export default function NodeWalletStats({ color }) {
                         <i className="fas fa-exchange-alt mx-4"></i>
                         WBTT
                       </button>
-                      <button
+                      {/* <button
                         className={
                           'border-1 px-4 py-2 rounded outline-none focus:outline-none mx-2 mt-2 shadow hover:shadow-md inline-flex items-center font-bold ' +
                           themeStyle.bg[color]
@@ -253,7 +253,7 @@ export default function NodeWalletStats({ color }) {
                         onClick={onWithdraw10}
                       >
                         BTFS 1.0 Withdraw
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                 </div>

@@ -30,14 +30,14 @@ function SingleCurrency({ item, type, color }) {
       >
         <div>
           <span className="mr-2">{t('cashed')}</span>
-          <span className="font-bold">{item.price?.rate ? switchBalanceUnit(item.cashed, item.price.rate * PRECISION_RATE): item.cashed}</span>
+          <span className="font-bold">{item.price?.rate ? switchBalanceUnit(item.cashed, item.price.rate): item.cashed}</span>
           {type !== 'recievedCheques' && item.unit && (
             <span className="font-bold">{item.unit}</span>
           )}
         </div>
         <div>
           <span className="mr-2">{t('uncashed')}</span>
-          <span className="font-bold">{item.price?.rate ? switchBalanceUnit(item.unCashed, item.price?.rate * PRECISION_RATE) : item.unCashed}</span>
+          <span className="font-bold">{item.price?.rate ? switchBalanceUnit(item.unCashed, item.price?.rate) : item.unCashed}</span>
           {type !== 'recievedCheques' && item.unit && (
             <span className="font-bold">{item.unit}</span>
           )}

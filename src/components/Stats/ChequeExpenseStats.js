@@ -60,27 +60,29 @@ export default function ChequeExpenseStats({ color }) {
               >
                 <div className="p-4 h-600-px flex flex-col  justify-between">
                   <div>
-                    <h5
-                      className={
-                        ' uppercase font-bold ' + themeStyle.title[color]
-                      }
-                    >
-                      {t('sent_cheques')}
-                    </h5>
-                  </div>
-                  <div>
-                    <div className="font-semibold text-3xl">
-                      {chequesStats.chequeSentCount}
+                    <div>
+                      <h5
+                        className={
+                          ' uppercase font-bold ' + themeStyle.title[color]
+                        }
+                      >
+                        {t('sent_cheques')}
+                      </h5>
                     </div>
-                    {chequesStats.chequeSentCount > 0 && (
-                      <Progress
-                        className={color}
-                        percent={100}
-                        showInfo={false}
-                        strokeWidth={30}
-                        strokeColor={strokeColor}
-                      />
-                    )}
+                    <div>
+                      <div className="font-semibold text-xl" style={{marginTop: 7, marginBottom: 6}}>
+                        {chequesStats.chequeSentCount}
+                      </div>
+                      {chequesStats.chequeSentCount > 0 && (
+                        <Progress
+                          className={color}
+                          percent={100}
+                          showInfo={false}
+                          strokeWidth={30}
+                          strokeColor={strokeColor}
+                        />
+                      )}
+                    </div>
                   </div>
                   <MultipleCurrenyList
                     color={color}
@@ -119,7 +121,7 @@ export default function ChequeExpenseStats({ color }) {
                       <span className="font-semibold text-xl">
                         {switchBalanceUnit(
                           chequesStats.chequeSentValue,
-                          PRECISION_RATE
+                          1
                         )}{' '}
                       </span>
                       <span className="text-xs">BTT</span>
@@ -143,7 +145,7 @@ export default function ChequeExpenseStats({ color }) {
                         ≈
                         {switchBalanceUnit(
                           chequesStats.cashedValue,
-                          PRECISION_RATE
+                          1
                         )}{' '}
                         <span className="text-xs">BTT</span>
                       </span>
@@ -155,7 +157,7 @@ export default function ChequeExpenseStats({ color }) {
                         ≈
                         {switchBalanceUnit(
                           chequesStats.uncashedValue,
-                          PRECISION_RATE
+                          1
                         )}{' '}
                         <span className="text-xs">BTT</span>
                       </span>

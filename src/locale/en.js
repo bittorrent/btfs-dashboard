@@ -111,7 +111,7 @@ const en_US = {
     'expense_list': 'Expense List',
     'recipient': 'Recipient',
     'cheques_number': 'Cheques Number',
-    'currency_type': 'Currency',
+    'currency_type': 'Token',
     'cheques_amount': 'Cheques Amount',
     'cheques_amount_tooltip': 'The total amount is converted into BTT from other currencies at the current exchange rate, and the value is for reference only',
 

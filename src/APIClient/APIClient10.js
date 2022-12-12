@@ -1,4 +1,5 @@
 import xhr from "axios/index";
+import { PRECISION_RATE } from "utils/constants";
 
 class APIClient10 {
     constructor() {
@@ -60,7 +61,14 @@ class APIClient10 {
     }
 
     getHostPriceAll() {
-        return this.request('/api/v1/cheque/price-all');
+        // return this.request('/api/v1/cheque/price-all');
+        return this.request('/api/v1/cheque/price-all').then((res) => {
+            Object.keys(res).forEach((key) => {
+                const item = res[key];
+                item.rate = +item.rate * PRECISION_RATE;
+            })
+            return res;
+        });
     }
 
     getHostScoreHistory(from, to) {

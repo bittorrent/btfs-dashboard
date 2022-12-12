@@ -2,7 +2,7 @@
 import Client10 from "APIClient/APIClient10.js";
 import BigNumber from 'bignumber.js';
 import {switchStorageUnit2, switchBalanceUnit, toThousands, getTimes} from "utils/BTFSUtil.js";
-import {PRECISION, PRECISION_RATE, FEE, NEW_SCORE_VERSION, INIT_MULTI_CURRENCY_DATA, MULTIPLE_CURRENY_LIST} from "utils/constants.js";
+import {PRECISION, PRECISION_RATE, PRECISION_OLD, FEE, NEW_SCORE_VERSION, INIT_MULTI_CURRENCY_DATA, MULTIPLE_CURRENY_LIST} from "utils/constants.js";
 
 export const getNodeBasicStats = async () => {
     let data1 = Client10.getHostInfo();
@@ -162,21 +162,21 @@ export const getNodeRevenueStats = async () => {
           const totolData = result[2]?.[item.key] || {}
           expenseItem.value = switchBalanceUnit(
             +totolData.total_issued || 0,
-            priceItem?.rate * PRECISION_RATE
+            priceItem?.rate
           )
           expenseItem.bttValue = switchBalanceUnit(
             (+totolData.total_issued || 0) *
               (currencyRateList[index] ? 1 / currencyRateList[index] : 1),
-            priceItem?.rate * exchangeRate * PRECISION_RATE
+            priceItem?.rate * exchangeRate
           )
           earningItem.value = switchBalanceUnit(
             +totolData.total_received || 0,
-            priceItem?.rate * PRECISION_RATE
+            priceItem?.rate
           )
           earningItem.bttValue = switchBalanceUnit(
             (+totolData.total_received || 0) *
               (currencyRateList[index] ? 1 / currencyRateList[index] : 1),
-            priceItem?.rate * exchangeRate * PRECISION_RATE
+            priceItem?.rate * exchangeRate
           )
           checksExpenseDetialsData.push(expenseItem)
           chequeEarningDetailData.push(earningItem)
@@ -294,7 +294,7 @@ export const getNodeWalletStats = async () => {
       let base = new BigNumber(maxBTT).minus(FEE).toNumber()
       let balance10 = result[3]['BtfsWalletBalance']
         ? new BigNumber(result[3]['BtfsWalletBalance'])
-            .dividedBy(PRECISION_RATE)
+            .dividedBy(PRECISION_OLD)
             .toNumber()
         : 0
       let tronAddress = result[4]['TronAddress']
@@ -308,20 +308,20 @@ export const getNodeWalletStats = async () => {
         newItem.bookBalanceValue = 0
         newItem.maxBookBalanceCount = 0
         if (allBalanceData?.[item.key]) {
-          newItem.addressValue = switchBalanceUnit(allBalanceData?.[item.key], priceList?.[item.key]?.rate * PRECISION_RATE)
+          newItem.addressValue = switchBalanceUnit(allBalanceData?.[item.key], priceList?.[item.key]?.rate)
           newItem.maxAddressCount = new BigNumber(allBalanceData?.[item.key])
-            .dividedBy(PRECISION)
+            .dividedBy(priceList?.[item.key]?.rate)
             .toNumber()
         }
         if (chequeBookAllBalanceData?.[item.key]) {
           newItem.bookBalanceValue = switchBalanceUnit(
             chequeBookAllBalanceData?.[item.key],
-            priceList?.[item.key]?.rate * PRECISION_RATE
+            priceList?.[item.key]?.rate
           )
           newItem.maxBookBalanceCount = new BigNumber(
             chequeBookAllBalanceData?.[item.key]
           )
-            .dividedBy(PRECISION)
+            .dividedBy(priceList?.[item.key]?.rate)
             .toNumber()
         }
         allCurrencyBalanceList.push({ ...newItem })
