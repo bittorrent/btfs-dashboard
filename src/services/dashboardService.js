@@ -2,7 +2,7 @@
 import Client10 from "APIClient/APIClient10.js";
 import BigNumber from 'bignumber.js';
 import {switchStorageUnit2, switchBalanceUnit, toThousands, getTimes} from "utils/BTFSUtil.js";
-import {PRECISION, FEE, NEW_SCORE_VERSION, INIT_MULTI_CURRENCY_DATA, MULTIPLE_CURRENY_LIST} from "utils/constants.js";
+import {PRECISION, PRECISION_RATE, FEE, NEW_SCORE_VERSION, INIT_MULTI_CURRENCY_DATA, MULTIPLE_CURRENY_LIST} from "utils/constants.js";
 
 export const getNodeBasicStats = async () => {
     let data1 = Client10.getHostInfo();
@@ -125,8 +125,10 @@ export const getNodeRevenueStats = async () => {
     const data5 = Client10.getExchangeRate(INIT_MULTI_CURRENCY_DATA[1].rateUnit);
     const data6 = Client10.getExchangeRate(INIT_MULTI_CURRENCY_DATA[2].rateUnit);
     const data7 = Client10.getExchangeRate(INIT_MULTI_CURRENCY_DATA[3].rateUnit);
-    return Promise.all([data1, data3, data4, data5, data6, data7]).then(
+    const data8 = Client10.getHostPriceAll();
+    return Promise.all([data1, data3, data4, data5, data6, data7, data8]).then(
       (result) => {
+        const priceList = result[6];
         console.log("data3", result);
         const gasFee = +result[1]["total_gas_spend"]
           ? +result[1]["total_gas_spend"]
@@ -143,24 +145,31 @@ export const getNodeRevenueStats = async () => {
         const checksExpenseDetialsData = [];
         const chequeEarningDetailData = [];
         INIT_MULTI_CURRENCY_DATA.forEach((item, index) => {
-          const expenseItem = { ...item };
-          const earningItem = { ...item };
-          const totolData = result[2]?.[item.key] || {};
-          expenseItem.value = switchBalanceUnit(+totolData.total_issued || 0);
-          expenseItem.bttValue =
-            expenseItem.value *
-            (currencyRateList[index] ? 1 / currencyRateList[index] : 1).toFixed(
-              0
-            );
-          earningItem.value = switchBalanceUnit(+totolData.total_received || 0);
-          earningItem.bttValue =
-            earningItem.value *
-            (currencyRateList[index] ? 1 / currencyRateList[index] : 1).toFixed(
-              0
-            );
-          checksExpenseDetialsData.push(expenseItem);
-          chequeEarningDetailData.push(earningItem);
-        });
+          const expenseItem = { ...item }
+          const earningItem = { ...item }
+          const priceItem = priceList?.[item.key] || {}
+          const totolData = result[2]?.[item.key] || {}
+          expenseItem.value = switchBalanceUnit(
+            +totolData.total_issued || 0,
+            priceItem?.rate
+          )
+          expenseItem.bttValue = switchBalanceUnit(
+            (+totolData.total_issued || 0) *
+              (currencyRateList[index] ? 1 / currencyRateList[index] : 1),
+            priceItem?.rate * PRECISION_RATE
+          )
+          earningItem.value = switchBalanceUnit(
+            +totolData.total_received || 0,
+            priceItem?.rate
+          )
+          earningItem.bttValue = switchBalanceUnit(
+            (+totolData.total_received || 0) *
+              (currencyRateList[index] ? 1 / currencyRateList[index] : 1),
+            priceItem?.rate * PRECISION_RATE
+          )
+          checksExpenseDetialsData.push(expenseItem)
+          chequeEarningDetailData.push(earningItem)
+        })
   
         return {
           chequeEarning: switchBalanceUnit(result[0]["totalReceived"]),

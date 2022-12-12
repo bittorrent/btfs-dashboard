@@ -38,18 +38,18 @@ export default function WithdrawDepositModal({color}) {
             if (params.type === 'withdraw') {
                 setTitle('chequebook_withdraw');
                 setDescription("amount_to_withdraw");
-                setMax(params.maxWBTT);
                 params.allCurrencyBalanceList.forEach(item => {
                     currentObj[item.key] = item.maxBookBalanceCount;
                 });
+                setMax(currentObj.WBTT);
             }
             if (params.type === 'deposit') {
                 setTitle('chequebook_deposit');
                 setDescription("amount_to_deposit");
-                setMax(params.maxWBTT);
                 params.allCurrencyBalanceList.forEach(item => {
                     currentObj[item.key] = item.maxAddressCount;
                 });
+                setMax(currentObj.WBTT);
             }
             if (params.type === 'withdraw10') {
                 setTitle('BTFS_10_withdraw');
