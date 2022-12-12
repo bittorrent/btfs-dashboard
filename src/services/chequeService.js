@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import Client10 from "APIClient/APIClient10.js";
 import {switchBalanceUnit, compareInt} from "utils/BTFSUtil.js";
-import {PRECISION, MULTIPLE_CURRENY_LIST, CURRENCY_CONFIG, INIT_MULTI_CURRENCY_DATA} from "utils/constants";
+import {PRECISION, MULTIPLE_CURRENY_LIST, CURRENCY_CONFIG, INIT_MULTI_CURRENCY_DATA, PRECISION_RATE} from "utils/constants";
 
 export const getChequeEarningStats = async () => {
     let data = await Client10.getChequeStats();
@@ -227,6 +227,10 @@ export const getChequeCashingList = async (offset, limit) => {
     const data3 = Client10.getHostPriceAll();
     return Promise.all([data1, data2, data3]).then(([chequeList, tokenList, priceList]) => {
         let cheques =  chequeList['Cheques'] ? chequeList['Cheques'] : [];
+        cheques.forEach(item => {
+            item.CashedAmount /= PRECISION_RATE;
+            item.Payout /= PRECISION_RATE;
+        })
         cheques = formatCurrencyTokenDataWithPrices(cheques, tokenList, 'Token', priceList);
         return {
             cheques: cheques,
@@ -242,6 +246,9 @@ export const getChequeCashingHistoryList = async (offset, limit) => {
     const data3 = Client10.getHostPriceAll();
     return Promise.all([data1, data2, data3]).then(([chequeList, tokenList, priceList]) => {
         let cheques =  chequeList['records'] ? chequeList['records'] : [];
+        cheques.forEach(item => {
+            item.amount /= PRECISION_RATE;
+        })
         cheques = formatCurrencyTokenDataWithPrices(cheques, tokenList, 'token', priceList);
         return {
             cheques: cheques,
@@ -275,6 +282,9 @@ export const getChequeReceivedDetailList = async (offset, limit) => {
     const data3 = Client10.getHostPriceAll();
     return Promise.all([data1, data2, data3]).then(([chequeList, tokenList, priceList]) => {
         let cheques =  chequeList['records'] ? chequeList['records'] : [];
+        cheques.forEach(item => {
+            item.Amount /= PRECISION_RATE;
+        })
         cheques = formatCurrencyTokenDataWithPrices(cheques,tokenList,'Token', priceList);
 
         return {
@@ -290,6 +300,10 @@ export const getChequeExpenseList = async () => {
     const data3 = Client10.getHostPriceAll();
     return Promise.all([data1, data2, data3]).then(([chequeList, tokenList, priceList]) => {
         let cheques =  chequeList['Cheques'] ? chequeList['Cheques'] : [];
+        cheques.forEach(item => {
+            item.CashedAmount /= PRECISION_RATE;
+            item.Payout /= PRECISION_RATE;
+        })
         cheques = formatCurrencyTokenDataWithPrices(cheques, tokenList, 'Token', priceList);
     
         return {
@@ -305,6 +319,9 @@ export const getChequeSentDetailList = async (offset, limit) => {
     const data3 = Client10.getHostPriceAll();
     return Promise.all([data1, data2, data3]).then(([chequeList, tokenList, priceList]) => {
         let cheques =  chequeList['records'] ? chequeList['records'] : [];
+        cheques.forEach(item => {
+            item.Amount /= PRECISION_RATE;
+        })
         cheques = formatCurrencyTokenDataWithPrices(cheques, tokenList, 'Token', priceList);
     
         return {
@@ -397,7 +414,7 @@ export const getChequeEarningAllHistory = async () => {
             keyData.forEach((item) => {
                 let date = new Date(item['date'] * 1000);
                 x.push((date.getMonth() + 1) + '/' + date.getDate());
-                y1.push((item['total_received']/precision).toFixed(4));
+                y1.push((item['total_received']/precision/PRECISION_RATE).toFixed(4));
                 y2.push(item['total_received_count']);
             });
             earningCurrencyAllHistoryData.push({
@@ -431,7 +448,7 @@ export const getChequeExpenseAllHistory = async () => {
             keyData.forEach((item) => {
                 let date = new Date(item['date'] * 1000);
                 x.push((date.getMonth() + 1) + '/' + date.getDate());
-                y1.push((item['total_issued']/pricesion).toFixed(4));
+                y1.push((item['total_issued']/pricesion/PRECISION_RATE).toFixed(4));
                 y2.push(item['total_issued_count']);
             });
             expenseCurrencyAllHistoryData.push({
