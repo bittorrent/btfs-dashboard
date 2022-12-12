@@ -129,6 +129,9 @@ export const getNodeRevenueStats = async () => {
     return Promise.all([data1, data3, data4, data5, data6, data7, data8]).then(
       (result) => {
         const priceList = result[6];
+        const usddExchangeRate = result[3];
+        const trxExchangeRate = result[4];
+        const usdtExchangeRate = result[5];
         console.log("data3", result);
         const gasFee = +result[1]["total_gas_spend"]
           ? +result[1]["total_gas_spend"]
@@ -145,6 +148,14 @@ export const getNodeRevenueStats = async () => {
         const checksExpenseDetialsData = [];
         const chequeEarningDetailData = [];
         INIT_MULTI_CURRENCY_DATA.forEach((item, index) => {
+          let exchangeRate = 1;
+          if(item.key === 'USDD') {
+            exchangeRate = usddExchangeRate?.data?.rate ?? 1;
+          } else if(item.key === 'TRX') {
+            exchangeRate = trxExchangeRate?.data?.rate ?? 1;
+          } else if(item.key === 'USDT') {
+            exchangeRate = usdtExchangeRate?.data?.rate ?? 1;
+          }
           const expenseItem = { ...item }
           const earningItem = { ...item }
           const priceItem = priceList?.[item.key] || {}
@@ -156,7 +167,7 @@ export const getNodeRevenueStats = async () => {
           expenseItem.bttValue = switchBalanceUnit(
             (+totolData.total_issued || 0) *
               (currencyRateList[index] ? 1 / currencyRateList[index] : 1),
-            priceItem?.rate * PRECISION_RATE
+            priceItem?.rate * exchangeRate
           )
           earningItem.value = switchBalanceUnit(
             +totolData.total_received || 0,
@@ -165,7 +176,7 @@ export const getNodeRevenueStats = async () => {
           earningItem.bttValue = switchBalanceUnit(
             (+totolData.total_received || 0) *
               (currencyRateList[index] ? 1 / currencyRateList[index] : 1),
-            priceItem?.rate * PRECISION_RATE
+            priceItem?.rate * exchangeRate
           )
           checksExpenseDetialsData.push(expenseItem)
           chequeEarningDetailData.push(earningItem)
