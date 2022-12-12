@@ -196,7 +196,15 @@ export const getNodeRevenueStats = async () => {
             checksExpenseTotalBTT = checksExpenseTotalBTT.toFixed(2);
         }
         
-  
+        const gasFeeShow = switchBalanceUnit(gasFee);
+        const totalExpense = switchBalanceUnit((+gasFeeShow) + (+checksExpenseTotalBTT), 1);
+        const gasFeePercent = hasTotalExpense
+        ? (+gasFeeShow / (+totalExpense || 1) * 100).toFixed(0)
+        : 0;
+        const chequeExpensePercent = hasTotalExpense
+        ? (+checksExpenseTotalBTT / (+totalExpense || 1) * 100).toFixed(0)
+        : 0;
+
         return {
         //   chequeEarning: switchBalanceUnit(result[0]["totalReceived"]),
         chequeEarning: chequeEarningTotalBTT,
@@ -217,20 +225,10 @@ export const getNodeRevenueStats = async () => {
             : 0,
         //   chequeExpense: switchBalanceUnit(chequeExpense),
         chequeExpense: checksExpenseTotalBTT,
-          totalExpense: switchBalanceUnit(gasFee + chequeExpense),
-          gasFee: switchBalanceUnit(gasFee),
-          gasFeePercent: hasTotalExpense
-            ? new BigNumber(gasFee)
-                .dividedBy(gasFee + chequeExpense)
-                .multipliedBy(100)
-                .toFixed(0)
-            : 0,
-          chequeExpensePercent: hasTotalExpense
-            ? new BigNumber(chequeExpense)
-                .dividedBy(gasFee + chequeExpense)
-                .multipliedBy(100)
-                .toFixed(0)
-            : 0,
+          totalExpense,
+          gasFee: gasFeeShow,
+          gasFeePercent,
+          chequeExpensePercent,
           checksExpenseDetialsData,
           chequeEarningDetailData,
         };
@@ -296,7 +294,7 @@ export const getNodeWalletStats = async () => {
       let base = new BigNumber(maxBTT).minus(FEE).toNumber()
       let balance10 = result[3]['BtfsWalletBalance']
         ? new BigNumber(result[3]['BtfsWalletBalance'])
-            .dividedBy(1000000)
+            .dividedBy(PRECISION_RATE)
             .toNumber()
         : 0
       let tronAddress = result[4]['TronAddress']
@@ -310,7 +308,7 @@ export const getNodeWalletStats = async () => {
         newItem.bookBalanceValue = 0
         newItem.maxBookBalanceCount = 0
         if (allBalanceData?.[item.key]) {
-          newItem.addressValue = switchBalanceUnit(allBalanceData?.[item.key], priceList?.[item.key]?.rate)
+          newItem.addressValue = switchBalanceUnit(allBalanceData?.[item.key], priceList?.[item.key]?.rate * PRECISION_RATE)
           newItem.maxAddressCount = new BigNumber(allBalanceData?.[item.key])
             .dividedBy(PRECISION)
             .toNumber()
@@ -318,7 +316,7 @@ export const getNodeWalletStats = async () => {
         if (chequeBookAllBalanceData?.[item.key]) {
           newItem.bookBalanceValue = switchBalanceUnit(
             chequeBookAllBalanceData?.[item.key],
-            priceList?.[item.key]?.rate
+            priceList?.[item.key]?.rate * PRECISION_RATE
           )
           newItem.maxBookBalanceCount = new BigNumber(
             chequeBookAllBalanceData?.[item.key]

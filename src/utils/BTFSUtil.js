@@ -81,12 +81,25 @@ export async function fileArrayBuffer(file) {
 // format a balance number which is between 0 and 1
 function formatDecimalBalance(balance) {
     const balanceStr = String(balance);
+    // if(balanceStr.indexOf('e') !== -1) {
+    //     let [precision, exp] = balanceStr.split('e');
+    //     let rateDecimal = (precision * 10).toFixed(0);
+    //     exp = exp.slice(1);
+    //     return `0.${'0'.repeat(parseInt(exp))}${rateDecimal}`
+    // } else {
     const [integer, decimal] = balanceStr.split('.');
-    const lastZeroIndex = decimal.lastIndexOf('0');
-    const rate = lastZeroIndex === -1 ? 0 : lastZeroIndex + 1;
-    const significantDecimal = decimal.slice(lastZeroIndex + 1);
+    let lastZeroIndex = 0;
+    for(let i = 0; i < decimal.length; i++) {
+        if(decimal[i] !== '0') {
+            lastZeroIndex = i;
+            break;
+        } 
+    }
+    const rate = lastZeroIndex;
+    const significantDecimal = decimal.slice(lastZeroIndex);
     const rateDecimal = parseFloat('0.'+significantDecimal) * 100;
     return `${integer}.${'0'.repeat(rate)}${rateDecimal.toFixed(0) }`
+    // }
 }
 
 export function switchBalanceUnit(balance, precision = PRECISION) {
@@ -110,7 +123,7 @@ export function switchBalanceUnit(balance, precision = PRECISION) {
     }
 
     if (balance < 1) {
-        formatDecimalBalance(balance);
+        return formatDecimalBalance(balance);
     }
 
     return balance.toFixed(2) + ' ';
