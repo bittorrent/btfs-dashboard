@@ -4,7 +4,6 @@ import { Progress } from 'antd'
 import themeStyle from 'utils/themeStyle.js'
 import { t } from 'utils/text.js'
 import { switchBalanceUnit } from 'utils/BTFSUtil'
-import { PRECISION_RATE } from 'utils/constants'
 
 function SingleCurrency({ item, type, color }) {
   return type === 'sentCheques' ? (

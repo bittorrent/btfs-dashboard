@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import Client10 from "APIClient/APIClient10.js";
 import {switchBalanceUnit, compareInt} from "utils/BTFSUtil.js";
-import {PRECISION, MULTIPLE_CURRENY_LIST, CURRENCY_CONFIG, INIT_MULTI_CURRENCY_DATA, PRECISION_RATE} from "utils/constants";
+import {PRECISION, MULTIPLE_CURRENY_LIST, CURRENCY_CONFIG, INIT_MULTI_CURRENCY_DATA} from "utils/constants";
 
 export const getChequeEarningStats = async () => {
     let data = await Client10.getChequeStats();
