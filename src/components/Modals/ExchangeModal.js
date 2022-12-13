@@ -215,11 +215,7 @@ export default function ExchangeModal({color}) {
                                         <span className='text-xl font-semibold'>{FEE} BTT</span>
                                         <Tooltip placement="bottom"
                                                  title={
-                                                     <>
-                                                         <p>{t('amount_available_check_1')}</p>
-                                                         <p>{t('amount_available_check_2')}</p>
-                                                         <p>{t('amount_available_check_3')}</p>
-                                                     </>
+                                                    <p>{t('estimate_transition_fee_tooltip')}</p>
                                                  }>
                                             <i className="fas fa-question-circle text-lg ml-2"></i>
                                         </Tooltip>

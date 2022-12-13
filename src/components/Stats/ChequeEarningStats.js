@@ -97,13 +97,13 @@ export default function ChequeEarningStats({ color }) {
                                     </h5>
                                     <Tooltip title={t('cheques_amount_tooltip')}>
                                         <div className="ml-1">
-                                            <i class="fas fa-info-circle"></i>
+                                            <i className="fas fa-info-circle"></i>
                                         </div>
                                     </Tooltip>
                                 </div>
                                 <div className='flex justify-between'>
                                     <div>
-                                        <span className='font-semibold text-xl'>{switchBalanceUnit(chequesStats.chequeReceivedValue, PRECISION_RATE)} </span>
+                                        <span className='font-semibold text-xl'>{switchBalanceUnit(chequesStats.chequeReceivedValue, 1)} </span>
                                         <span className='text-xs'>BTT</span>
                                     </div>
                                     <div>
@@ -118,12 +118,12 @@ export default function ChequeEarningStats({ color }) {
                                     <div>
                                         {t('cashed')}
                                         <br />
-                                        <span className="font-bold text-black">≈{switchBalanceUnit(chequesStats.cashedValue, PRECISION_RATE)} <span className='text-xs'>BTT</span></span>
+                                        <span className="font-bold text-black">≈{switchBalanceUnit(chequesStats.cashedValue, 1)} <span className='text-xs'>BTT</span></span>
                                     </div>
                                     <div>
                                         {t('uncashed')}
                                         <br />
-                                        <span className="font-bold text-black">≈{switchBalanceUnit(chequesStats.uncashedValue, PRECISION_RATE)} <span className='text-xs'>BTT</span></span>
+                                        <span className="font-bold text-black">≈{switchBalanceUnit(chequesStats.uncashedValue, 1)} <span className='text-xs'>BTT</span></span>
                                     </div>
                                 </div>
                                 <MultipleCurrenyList color={color} dataList={earningValueAllStatsData} />

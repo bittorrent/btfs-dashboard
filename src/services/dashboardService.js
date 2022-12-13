@@ -2,7 +2,7 @@
 import Client10 from "APIClient/APIClient10.js";
 import BigNumber from 'bignumber.js';
 import {switchStorageUnit2, switchBalanceUnit, toThousands, getTimes} from "utils/BTFSUtil.js";
-import {PRECISION, FEE, NEW_SCORE_VERSION, INIT_MULTI_CURRENCY_DATA, MULTIPLE_CURRENY_LIST} from "utils/constants.js";
+import {PRECISION, PRECISION_RATE, PRECISION_OLD, FEE, NEW_SCORE_VERSION, INIT_MULTI_CURRENCY_DATA, MULTIPLE_CURRENY_LIST} from "utils/constants.js";
 
 export const getNodeBasicStats = async () => {
     let data1 = Client10.getHostInfo();
@@ -125,8 +125,13 @@ export const getNodeRevenueStats = async () => {
     const data5 = Client10.getExchangeRate(INIT_MULTI_CURRENCY_DATA[1].rateUnit);
     const data6 = Client10.getExchangeRate(INIT_MULTI_CURRENCY_DATA[2].rateUnit);
     const data7 = Client10.getExchangeRate(INIT_MULTI_CURRENCY_DATA[3].rateUnit);
-    return Promise.all([data1, data3, data4, data5, data6, data7]).then(
+    const data8 = Client10.getHostPriceAll();
+    return Promise.all([data1, data3, data4, data5, data6, data7, data8]).then(
       (result) => {
+        const priceList = result[6];
+        const usddExchangeRate = result[3];
+        const trxExchangeRate = result[4];
+        const usdtExchangeRate = result[5];
         console.log("data3", result);
         const gasFee = +result[1]["total_gas_spend"]
           ? +result[1]["total_gas_spend"]
@@ -143,27 +148,66 @@ export const getNodeRevenueStats = async () => {
         const checksExpenseDetialsData = [];
         const chequeEarningDetailData = [];
         INIT_MULTI_CURRENCY_DATA.forEach((item, index) => {
-          const expenseItem = { ...item };
-          const earningItem = { ...item };
-          const totolData = result[2]?.[item.key] || {};
-          expenseItem.value = switchBalanceUnit(+totolData.total_issued || 0);
-          expenseItem.bttValue =
-            expenseItem.value *
-            (currencyRateList[index] ? 1 / currencyRateList[index] : 1).toFixed(
-              0
-            );
-          earningItem.value = switchBalanceUnit(+totolData.total_received || 0);
-          earningItem.bttValue =
-            earningItem.value *
-            (currencyRateList[index] ? 1 / currencyRateList[index] : 1).toFixed(
-              0
-            );
-          checksExpenseDetialsData.push(expenseItem);
-          chequeEarningDetailData.push(earningItem);
-        });
-  
+          let exchangeRate = 1;
+          if(item.key === 'USDD') {
+            exchangeRate = usddExchangeRate?.data?.rate ?? 1;
+          } else if(item.key === 'TRX') {
+            exchangeRate = trxExchangeRate?.data?.rate ?? 1;
+          } else if(item.key === 'USDT') {
+            exchangeRate = usdtExchangeRate?.data?.rate ?? 1;
+          }
+          const expenseItem = { ...item }
+          const earningItem = { ...item }
+          const priceItem = priceList?.[item.key] || {}
+          const totolData = result[2]?.[item.key] || {}
+          expenseItem.value = switchBalanceUnit(
+            +totolData.total_issued || 0,
+            priceItem?.rate
+          )
+          expenseItem.bttValue = switchBalanceUnit(
+            (+totolData.total_issued || 0) *
+              (currencyRateList[index] ? 1 / currencyRateList[index] : 1),
+            priceItem?.rate * exchangeRate
+          )
+          earningItem.value = switchBalanceUnit(
+            +totolData.total_received || 0,
+            priceItem?.rate
+          )
+          earningItem.bttValue = switchBalanceUnit(
+            (+totolData.total_received || 0) *
+              (currencyRateList[index] ? 1 / currencyRateList[index] : 1),
+            priceItem?.rate * exchangeRate
+          )
+          checksExpenseDetialsData.push(expenseItem)
+          chequeEarningDetailData.push(earningItem)
+        })
+        let chequeEarningTotalBTT = 0;
+        let checksExpenseTotalBTT = 0;
+        chequeEarningDetailData.forEach((item=>{
+            chequeEarningTotalBTT += Number(item.bttValue);
+        }))
+        if(chequeEarningTotalBTT>0){
+            chequeEarningTotalBTT = chequeEarningTotalBTT.toFixed(2);
+        }
+        checksExpenseDetialsData.forEach((item=>{
+            checksExpenseTotalBTT += Number(item.bttValue);
+        }))
+        if(checksExpenseTotalBTT>0){
+            checksExpenseTotalBTT = checksExpenseTotalBTT.toFixed(2);
+        }
+        
+        const gasFeeShow = switchBalanceUnit(gasFee);
+        const totalExpense = switchBalanceUnit((+gasFeeShow) + (+checksExpenseTotalBTT), 1);
+        const gasFeePercent = hasTotalExpense
+        ? (+gasFeeShow / (+totalExpense || 1) * 100).toFixed(0)
+        : 0;
+        const chequeExpensePercent = hasTotalExpense
+        ? (+checksExpenseTotalBTT / (+totalExpense || 1) * 100).toFixed(0)
+        : 0;
+
         return {
-          chequeEarning: switchBalanceUnit(result[0]["totalReceived"]),
+        //   chequeEarning: switchBalanceUnit(result[0]["totalReceived"]),
+        chequeEarning: chequeEarningTotalBTT,
           uncashedPercent: result[0]["totalReceived"]
             ? new BigNumber(
                 result[0]["totalReceived"] -
@@ -179,21 +223,12 @@ export const getNodeRevenueStats = async () => {
                 .multipliedBy(100)
                 .toFixed(0)
             : 0,
-          chequeExpense: switchBalanceUnit(chequeExpense),
-          totalExpense: switchBalanceUnit(gasFee + chequeExpense),
-          gasFee: switchBalanceUnit(gasFee),
-          gasFeePercent: hasTotalExpense
-            ? new BigNumber(gasFee)
-                .dividedBy(gasFee + chequeExpense)
-                .multipliedBy(100)
-                .toFixed(0)
-            : 0,
-          chequeExpensePercent: hasTotalExpense
-            ? new BigNumber(chequeExpense)
-                .dividedBy(gasFee + chequeExpense)
-                .multipliedBy(100)
-                .toFixed(0)
-            : 0,
+        //   chequeExpense: switchBalanceUnit(chequeExpense),
+        chequeExpense: checksExpenseTotalBTT,
+          totalExpense,
+          gasFee: gasFeeShow,
+          gasFeePercent,
+          chequeExpensePercent,
           checksExpenseDetialsData,
           chequeEarningDetailData,
         };
@@ -259,7 +294,7 @@ export const getNodeWalletStats = async () => {
       let base = new BigNumber(maxBTT).minus(FEE).toNumber()
       let balance10 = result[3]['BtfsWalletBalance']
         ? new BigNumber(result[3]['BtfsWalletBalance'])
-            .dividedBy(1000000)
+            .dividedBy(PRECISION_OLD)
             .toNumber()
         : 0
       let tronAddress = result[4]['TronAddress']
@@ -275,7 +310,7 @@ export const getNodeWalletStats = async () => {
         if (allBalanceData?.[item.key]) {
           newItem.addressValue = switchBalanceUnit(allBalanceData?.[item.key], priceList?.[item.key]?.rate)
           newItem.maxAddressCount = new BigNumber(allBalanceData?.[item.key])
-            .dividedBy(PRECISION)
+            .dividedBy(priceList?.[item.key]?.rate)
             .toNumber()
         }
         if (chequeBookAllBalanceData?.[item.key]) {
@@ -286,7 +321,7 @@ export const getNodeWalletStats = async () => {
           newItem.maxBookBalanceCount = new BigNumber(
             chequeBookAllBalanceData?.[item.key]
           )
-            .dividedBy(PRECISION)
+            .dividedBy(priceList?.[item.key]?.rate)
             .toNumber()
         }
         allCurrencyBalanceList.push({ ...newItem })
@@ -315,6 +350,7 @@ export const getNodeStorageStats = async () => {
         let data2 = Client10.getFilesStorage();
         let data3 = Client10.getContractsNumber();
         let data4 = Client10.getChequeStats();
+        // let data4 = Client10.getChequeAllStats();
         return Promise.all([data1, data2, data3, data4]).then((result) => {
             return {
                 capacity: switchStorageUnit2(result[1]['StorageMax']),

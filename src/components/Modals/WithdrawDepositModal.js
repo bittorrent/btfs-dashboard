@@ -38,18 +38,18 @@ export default function WithdrawDepositModal({color}) {
             if (params.type === 'withdraw') {
                 setTitle('chequebook_withdraw');
                 setDescription("amount_to_withdraw");
-                setMax(params.maxWBTT);
                 params.allCurrencyBalanceList.forEach(item => {
                     currentObj[item.key] = item.maxBookBalanceCount;
                 });
+                setMax(currentObj.WBTT);
             }
             if (params.type === 'deposit') {
                 setTitle('chequebook_deposit');
                 setDescription("amount_to_deposit");
-                setMax(params.maxWBTT);
                 params.allCurrencyBalanceList.forEach(item => {
                     currentObj[item.key] = item.maxAddressCount;
                 });
+                setMax(currentObj.WBTT);
             }
             if (params.type === 'withdraw10') {
                 setTitle('BTFS_10_withdraw');
@@ -250,10 +250,7 @@ export default function WithdrawDepositModal({color}) {
                                         <span className='text-xl font-semibold'>{FEE} BTT</span>
                                         <Tooltip placement="bottom"
                                                  title={
-                                                     <>
-                                                         <p>{t('amount_available_check_2')}</p>
-                                                         <p>{t('amount_available_check_3')}</p>
-                                                     </>
+                                                    <p>{t('estimate_transition_fee_tooltip')}</p>
                                                  }>
                                             <i className="fas fa-question-circle text-lg ml-2"></i>
                                         </Tooltip>
