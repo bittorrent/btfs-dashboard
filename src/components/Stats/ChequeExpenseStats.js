@@ -112,7 +112,7 @@ export default function ChequeExpenseStats({ color }) {
                     </h5>
                     <Tooltip title={t('cheques_amount_tooltip')}>
                       <div className="ml-1">
-                        <i class="fas fa-info-circle"></i>
+                        <i className="fas fa-info-circle"></i>
                       </div>
                     </Tooltip>
                   </div>

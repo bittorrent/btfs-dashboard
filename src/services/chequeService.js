@@ -414,7 +414,7 @@ export const getChequeEarningAllHistory = async () => {
             keyData.forEach((item) => {
                 let date = new Date(item['date'] * 1000);
                 x.push((date.getMonth() + 1) + '/' + date.getDate());
-                y1.push((item['total_received']/precision).toFixed(4));
+                y1.push(switchBalanceUnit(item['total_received'], precision));
                 y2.push(item['total_received_count']);
             });
             earningCurrencyAllHistoryData.push({
@@ -448,7 +448,7 @@ export const getChequeExpenseAllHistory = async () => {
             keyData.forEach((item) => {
                 let date = new Date(item['date'] * 1000);
                 x.push((date.getMonth() + 1) + '/' + date.getDate());
-                y1.push((item['total_issued']/pricesion).toFixed(4));
+                y1.push(switchBalanceUnit(item['total_issued'], pricesion));
                 y2.push(item['total_issued_count']);
             });
             expenseCurrencyAllHistoryData.push({
