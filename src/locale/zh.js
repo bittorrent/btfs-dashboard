@@ -245,9 +245,7 @@ const zh_CN = {
     'network_unstable_bttc': '无法连接到 BTTC RPC',
     'network_unstable_btfs': '无法连接到 BTFS 网络',
     'check_network_request': '请检查你的网络连接',
-    'amount_available_check_1': '最大可用BTT = 最大BTT - 15 BTT',
-    'amount_available_check_2': '最大可用WBTT = 最大WBTT (如果BTT余额大于15 BTT)',
-    'amount_available_check_3': '最大可用WBTT = 0 (如果BTT余额小于15 BTT)',
+    'estimate_transition_fee_tooltip': 'BTT余额小于预估手续费可能导致交易无法成功发送',
     'copy_success':'拷贝成功 !',
 
 

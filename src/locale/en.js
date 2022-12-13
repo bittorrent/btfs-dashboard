@@ -244,9 +244,7 @@ const en_US = {
     'network_unstable_bttc': 'Can not connect to BTTC RPC.',
     'network_unstable_btfs': 'Can not connect to BTFS Network.',
     'check_network_request': 'Please check your network connection.',
-    'amount_available_check_1': 'The max available BTT = Max BTT - 15 BTT',
-    'amount_available_check_2': 'The max available WBTT = Max WBTT (if BTT balance more than 15 BTT)',
-    'amount_available_check_3': 'The max available WBTT = 0 (if BTT balance is less than 15 BTT)',
+    'estimate_transition_fee_tooltip': 'If the BTT balance is less than the estimated transaction fee, the transaction may not be sent successfully',
     'copy_success':'Copy Sucessful !',
 
 // heartBeats
