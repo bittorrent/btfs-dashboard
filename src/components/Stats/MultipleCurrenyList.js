@@ -1,7 +1,6 @@
 import React from 'react';
 import { Progress } from 'antd';
 
-import themeStyle from 'utils/themeStyle.js';
 import { switchBalanceUnit } from 'utils/BTFSUtil';
 import { CashedItem, UnCashedItem } from './ChequeStats';
 import { PROGRESS_COLORS } from 'utils/constants';
