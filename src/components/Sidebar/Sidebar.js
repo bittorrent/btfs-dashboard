@@ -37,9 +37,9 @@ export default function Sidebar() {
                     {/* Brand */}
                     <div className={"flex justify-between " + themeStyle.link[theme]}>
                         <div className="items-center">
-                            <Link className={"text-left mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold px-0" + themeStyle.link[theme]} to="/">
+                            <Link className={"text-left mr-0 inline-block whitespace-nowrap text-sm font-bold px-0" + themeStyle.link[theme]} to="/">
                                 <img className="inline-block" src={require('assets/img/btfs_logo.png').default} style={{width: '37px', height: '40px'}}/>
-                                BTFS 2.0
+                                BTFS Dashboard 2.0
                             </Link>
                         </div>
                         <div className="hidden md:flex items-center cursor-pointer" onClick={sidebarToggle}>
