@@ -1,0 +1,115 @@
+@import 'color.scss';
+
+.dark {
+  .theme-text-base {
+    color: $dark-base-color;
+  }
+  .theme-text-main {
+    color: $dark-text-color-main;
+  }
+  .theme-text-sub-main {
+    color: $dark-text-color-sub-main;
+  }
+  .theme-text-sub-info {
+    color: $dark-text-color-sub-info;
+  }
+  .theme-text-gray-info {
+    color: $dark-text-color-gray-info;
+  }
+
+  .theme-bg {
+    background-color: $dark-bg-color;
+  }
+  .theme-base-bg {
+    background-color: $black;
+  }
+  .theme-fill-base {
+    background-color: $dark-fill-color-base;
+  }
+  .theme-fill-error {
+    background-color: $dark-fill-color-error;
+  }
+  .theme-fill-gray {
+    background-color: $dark-fill-color-gray;
+  }
+
+  .nav-link-li {
+    &:hover {
+      color: $dark-text-color-main;
+    }
+  }
+
+  .theme-common-btn {
+    background-color: $dark-base-color;
+    border-color: $dark-base-color;
+    color: #fff;
+    &:focus {
+      background-color: $dark-base-color;
+      border-color: $dark-base-color;
+      color: #fff;
+    }
+    &:hover {
+      background-color: $dark-hover-color;
+      border-color: $dark-hover-color;
+      color: #fff;
+    }
+    &:active {
+      background-color: $dark-active-color;
+      border-color: $dark-active-color;
+      color: #fff;
+    }
+  }
+
+  .theme-round-btn {
+    background-color: $black;
+    border-color: $dark-border-color;
+    color: $dark-text-color-sub-main;
+    &:focus {
+      background-color: $black;
+      border-color: $dark-border-color;
+      color: $dark-text-color-sub-main;
+    }
+    &:hover {
+      background-color: $dark-hover-color;
+      border-color: $dark-hover-color;
+      color: #fff;
+    }
+    &:active {
+      background-color: $dark-active-color;
+      border-color: $dark-active-color;
+      color: #fff;
+    }
+  }
+
+  .theme-toggle-btn {
+    background-color: transparent;
+    border-color: $dark-border-color;
+    color: $dark-text-color-sub-main;
+    &:focus {
+      background-color: transparent;
+      border-color: $dark-border-color;
+      color: $dark-text-color-sub-main;
+    }
+    &:hover {
+      background-color: transparent;
+      border-color: $dark-hover-color;
+      color: #fff;
+    }
+    &:active {
+      background-color: transparent;
+      border-color: $dark-active-color;
+      color: #fff;
+    }
+  }
+
+  .theme-sidebar-link {
+    color: $dark-text-color-sub-main;
+    &:hover {
+      color: $dark-base-color;
+    }
+  }
+
+  .theme-divider {
+    background-color: $dark-line-color;
+  }
+}

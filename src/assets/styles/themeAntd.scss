@@ -1,5 +1,25 @@
+@import 'color.scss';
+// antd theme light
+.ant-btn {
+  line-height: 1;
+  border-color: #D7DBEC;
+  color: #5A607F;
 
+  &:hover {
+    color: $base-color;
+    border-color: $base-color;
+  }
+}
+
+
+// antd theme dark
 .dark {
+  .ant-btn {
+    color: #fff;
+    border-color: #fff;
+    background-color: transparent;
+  }
+
   .ant-progress-outer {
     .ant-progress-inner {
       background-color: lightblue;
@@ -23,31 +43,10 @@
   .ant-pagination-disabled .anticon{
     color: gray !important;
   }
-}
 
-.copied_light .ant-message-notice-content {
-  border-radius: 5px;
-  .anticon {
-    top: -2px !important;
+  .ant-progress-outer {
+    .ant-progress-inner {
+      background-color: lightblue;
+    }
   }
-}
-
-.copied_dark .ant-message-notice-content {
-  background: lightblue;
-  border-radius: 5px;
-  .anticon {
-    top: -2px !important;
-  }
-}
-
-input.dark {
-  background: lightblue !important;
-}
-
-.text-black-900 {
-  color: #131523;
-}
-
-.text-gray-900 {
-  color: #5A607F;
 }
