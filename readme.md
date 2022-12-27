@@ -2,12 +2,12 @@
 
 :warning: To successfully connect to the BTFS node, you will need to enable the CORS. Follow below commands and then restart the BTFS node.
 ```
-btfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["https://dashboard.btfs.io"]'
+btfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["http://dashboard.btfs.io", "http://127.0.0.1:5001"]'
 btfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT","GET","POST"]'
 ```
 
 ## Website 
-Browse https://dashboard.btfs.io 
+Browse http://dashboard.btfs.io 
 
 ## Docker
 Run docker image and browse http://localhost
