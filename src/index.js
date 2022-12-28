@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import '@fortawesome/fontawesome-free/css/all.css';
 import 'antd/dist/antd.min.css';
 import 'assets/styles/overwrite.scss';
 import 'assets/styles/tailwind.css';
