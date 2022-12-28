@@ -75,7 +75,7 @@ function RevenueHistoryLineChart({ color }) {
                         },
                     },
                 },
-                responsive: false,
+                maintainAspectRatio: false,
                 interaction: {
                     intersect: false,
                 },
@@ -169,14 +169,14 @@ function RevenueHistoryLineChart({ color }) {
                         </h6>
                         <div className={"ml-2 " + themeStyle.bg[color]}>
                             <div
-                                onClick={() => setCurrent("chequesNumber")} 
+                                onClick={() => setCurrent("chequesNumber")}
                                 className={'inline-block h-6 pl-2 pr-2 rounded cursor-pointer ' + (current === 'chequesNumber' ? 'bg-black text-white ' : themeStyle.title[color])}
                                 style={{border: '1px solid #000', borderRadius: '0.5rem 0 0 0.5rem'}}
                             >
                                 {t('cheques_number')}
                             </div>
-                            <div 
-                                onClick={() => setCurrent("chequesAmount")} 
+                            <div
+                                onClick={() => setCurrent("chequesAmount")}
                                 className={'inline-block h-6 pl-2 pr-2 rounded-r cursor-pointer ' + (current === 'chequesAmount' ? 'bg-black text-white ' : themeStyle.title[color])}
                                 style={{border: '1px solid #000', borderLeft: 'none', borderRadius: '0 0.5rem 0.5rem 0'}}
                             >

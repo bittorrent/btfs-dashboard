@@ -74,7 +74,7 @@ function ChequeExpenseLineChart({ color }) {
             },
           },
         },
-        responsive: false,
+        maintainAspectRatio: false,
         interaction: {
           intersect: false,
         },
@@ -147,7 +147,7 @@ function ChequeExpenseLineChart({ color }) {
   return (
     <>
       <div
-        className={'relative flex flex-col justify-center p-4' + themeStyle.bg[color]}
+        className={'relative flex flex-col justify-center p-4 rounded-2xl' + themeStyle.bg[color]}
         style={{ height: 360 }}>
         <div className="rounded-t mb-0 py-4 bg-transparent">
           <div className="flex flex-wrap items-center">

@@ -66,7 +66,6 @@ function NetworkLineChart({color}) {
                     },
                 },
                 maintainAspectRatio: false,
-                responsive: false,
                 title: {
                     display: false,
                     text: "Sales Charts",

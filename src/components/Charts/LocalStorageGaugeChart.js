@@ -16,7 +16,7 @@ function LocalStorageGaugeChart({color, data}) {
             },
             options: {
                 events: ['click'],
-                responsive: false,
+                maintainAspectRatio: false,
                 cutoutPercentage: 90,
                 layout: {
                     padding: {

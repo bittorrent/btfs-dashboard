@@ -52,7 +52,7 @@ function HostScoreHistoryLineChart({color}) {
 
                         },
                     },
-                    responsive: false,
+                    maintainAspectRatio: false,
                     interaction: {
                         intersect: false,
                     },
