@@ -123,7 +123,7 @@ export default function Sidebar() {
               className="md:flex-col md:min-w-full flex flex-col list-none uppercase text-xs font-bold"
               onClick={collapse}>
               {NavLinksConfig.map(({ path, text, iconClass }) => (
-                <LinkLi path={path} text={text} iconClass={iconClass} />
+                <LinkLi key={path} path={path} text={text} iconClass={iconClass} />
               ))}
             </ul>
           </div>

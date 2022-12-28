@@ -983,21 +983,22 @@ video {
   transition-duration: 150ms;
 }
 
-.common-button {
+.common-btn {
   border-radius: 0.25rem;
   font-weight: 700;
+  height: 2.25rem;
   font-size: 0.75rem;
   line-height: 1rem;
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
 
-.common-button:focus {
+.common-btn:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
 
-.common-button {
+.common-btn {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   padding-left: 1rem;
@@ -1006,12 +1007,13 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.common-button:hover {
+.common-btn:hover {
   --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.common-button {
+.common-btn {
+  white-space: nowrap;
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
@@ -1022,7 +1024,6 @@ video {
   display: flex;
   -webkit-align-items: center;
           align-items: center;
-  margin-bottom: 0.75rem;
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
@@ -1044,7 +1045,7 @@ video {
   position: relative;
   --tw-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-  z-index: 10
+  z-index: 10;
 }
 
 @media (min-width: 768px) {
@@ -1088,6 +1089,22 @@ video {
   width: 2.5rem;
 }
 
+.copy-btn {
+  border-radius: 0.125rem;
+  border-width: 1px;
+  display: -webkit-inline-flex;
+  display: inline-flex;
+  -webkit-align-items: center;
+          align-items: center;
+  height: 1.5rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  line-height: 1;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  padding: 0.25rem;
+}
+
 .sidebar-link {
   display: block;
   font-size: 0.75rem;
@@ -1096,6 +1113,25 @@ video {
   padding-right: 0.5rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+}
+
+.common-modal-wrapper {
+  height: 100%;
+  padding: 1.5rem;
+}
+
+.common-modal-header {
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  margin-bottom: 2.25rem;
+}
+
+.common-modal-footer {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: flex-end;
+          justify-content: flex-end;
 }
 
 .bg-black {
@@ -1434,6 +1470,10 @@ video {
   height: 2rem;
 }
 
+.h-10 {
+  height: 2.5rem;
+}
+
 .h-12 {
   height: 3rem;
 }
@@ -1635,8 +1675,16 @@ video {
   margin-top: 2rem;
 }
 
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
 .ml-8 {
   margin-left: 2rem;
+}
+
+.mb-12 {
+  margin-bottom: 3rem;
 }
 
 .mt-14 {
@@ -1699,10 +1747,6 @@ video {
 
 .p-0 {
   padding: 0px;
-}
-
-.p-1 {
-  padding: 0.25rem;
 }
 
 .p-2 {
@@ -1978,11 +2022,6 @@ video {
 .text-red-500 {
   --tw-text-opacity: 1;
   color: rgba(239, 68, 68, var(--tw-text-opacity));
-}
-
-.text-gray-400 {
-  --tw-text-opacity: 1;
-  color: rgba(161, 161, 170, var(--tw-text-opacity));
 }
 
 .text-gray-900 {
@@ -2272,11 +2311,6 @@ video {
   .md\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
-  }
-
-  .md\:px-10 {
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
   }
 
   .md\:pr-2 {

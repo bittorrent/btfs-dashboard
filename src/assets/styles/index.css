@@ -6,30 +6,46 @@
 
 @layer components {
   .common-card {
-    @apply p-6 shadow-lg rounded-2xl border-0 transition-all;
+    @apply p-6 border-0 shadow-lg rounded-2xl transition-all;
   }
 
   .common-input {
-    @apply border px-3.5 h-9 leading-none placeholder-blueGray-300 transition-all rounded-sm text-sm shadow focus:outline-none focus:ring w-full;
+    @apply px-3.5 w-full h-9 border shadow rounded-sm focus:outline-none focus:ring text-sm leading-none placeholder-blueGray-300 transition-all;
   }
 
-  .common-button {
-    @apply transition-all font-bold text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none;
+  .common-btn {
+    @apply h-9 px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none font-bold text-xs whitespace-nowrap transition-all;
   }
 
   .setting-header {
-    @apply flex items-center mb-3 transition-all;
+    @apply flex items-center transition-all;
   }
 
   .sidebar {
-    @apply md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl flex flex-wrap items-center justify-between relative z-10 py-4 px-6
+    @apply relative z-10 py-4 px-6 flex flex-wrap items-center justify-between shadow-xl md:fixed md:left-0 md:top-0 md:bottom-0 md:block md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden;
   }
 
   .round-btn {
-    @apply inline-flex justify-center items-center border rounded-full h-10 w-10 p-0 font-bold outline-none focus:outline-none;
+    @apply h-10 w-10 p-0 inline-flex justify-center items-center border rounded-full outline-none focus:outline-none font-bold;
+  }
+
+  .copy-btn {
+    @apply h-6 p-1 inline-flex items-center border rounded-sm outline-none text-xs leading-none;
   }
 
   .sidebar-link {
-    @apply text-xs px-2 py-3 block;
+    @apply px-2 py-3 block text-xs;
+  }
+
+  .common-modal-wrapper {
+    @apply h-full p-6;
+  }
+
+  .common-modal-header {
+    @apply mb-9 text-base font-bold;
+  }
+
+  .common-modal-footer {
+    @apply flex justify-end;
   }
 }

@@ -102,6 +102,27 @@
     }
   }
 
+  .theme-copy-btn {
+    background-color: transparent;
+    border-color: $dark-border-color;
+    color: $dark-text-color-sub-main;
+    &:focus {
+      background-color: transparent;
+      border-color: $dark-border-color;
+      color: $dark-text-color-sub-main;
+    }
+    &:hover {
+      background-color: $dark-hover-color;
+      border-color: $dark-hover-color;
+      color: $white;
+    }
+    &:active {
+      background-color: $dark-active-color;
+      border-color: $dark-active-color;
+      color: $white;
+    }
+  }
+
   .theme-sidebar-link {
     color: $dark-text-color-sub-main;
     &:hover {

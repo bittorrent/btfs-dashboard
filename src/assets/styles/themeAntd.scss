@@ -1,9 +1,10 @@
 @import 'color.scss';
 // antd theme light
+// button
 .ant-btn {
   line-height: 1;
-  border-color: #D7DBEC;
-  color: #5A607F;
+  border-color: #d7dbec;
+  color: #5a607f;
 
   &:hover {
     color: $base-color;
@@ -11,6 +12,23 @@
   }
 }
 
+// switch
+.ant-switch-checked {
+  background-color: $base-color;
+}
+
+// breadcrumb
+.ant-breadcrumb a {
+  color: $text-color-sub-main;
+}
+.ant-breadcrumb-separator {
+  color: $text-color-main;
+}
+.ant-breadcrumb a:hover,
+.ant-breadcrumb li:last-child,
+.ant-breadcrumb li:last-child a {
+  color: $text-color-main;
+}
 
 // antd theme dark
 .dark {
@@ -31,7 +49,8 @@
   .ant-select-selector {
     background-color: lightblue !important;
   }
-  .ant-pagination-simple-pager, .anticon {
+  .ant-pagination-simple-pager,
+  .anticon {
     color: white;
   }
   .ant-pagination-simple-pager input {
@@ -40,7 +59,7 @@
   .anticon:hover {
     color: #1890ff !important;
   }
-  .ant-pagination-disabled .anticon{
+  .ant-pagination-disabled .anticon {
     color: gray !important;
   }
 
@@ -48,5 +67,23 @@
     .ant-progress-inner {
       background-color: lightblue;
     }
+  }
+
+  // modal
+  .ant-modal-body {
+    background-color: $dark-bg-color;
+  }
+
+  // breadcrumb
+  .ant-breadcrumb a {
+    color: $dark-text-color-sub-main;
+  }
+  .ant-breadcrumb-separator {
+    color: $dark-text-color-main;
+  }
+  .ant-breadcrumb a:hover,
+  .ant-breadcrumb li:last-child,
+  .ant-breadcrumb li:last-child a {
+    color: $dark-text-color-main;
   }
 }

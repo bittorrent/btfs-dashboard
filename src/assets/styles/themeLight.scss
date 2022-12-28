@@ -59,6 +59,27 @@
   }
 }
 
+.theme-danger-btn {
+  background-color: $error-color;
+  border-color: $error-color;
+  color: #fff;
+  &:focus {
+    background-color: $error-color;
+    border-color: $error-color;
+    color: #fff;
+  }
+  &:hover {
+    background-color: $error-color;
+    border-color: $error-color;
+    color: #fff;
+  }
+  &:active {
+    background-color: $error-color;
+    border-color: $error-color;
+    color: #fff;
+  }
+}
+
 .theme-round-btn {
   background-color: $white;
   border-color: $border-color;
@@ -98,6 +119,27 @@
     background-color: transparent;
     border-color: $active-color;
     color: $active-color;
+  }
+}
+
+.theme-copy-btn {
+  background-color: transparent;
+  border-color: $border-color;
+  color: $text-color-sub-main;
+  &:focus {
+    background-color: transparent;
+    border-color: $border-color;
+    color: $text-color-sub-main;
+  }
+  &:hover {
+    background-color: $hover-color;
+    border-color: $hover-color;
+    color: $white;
+  }
+  &:active {
+    background-color: $active-color;
+    border-color: $active-color;
+    color: $white;
   }
 }
 
