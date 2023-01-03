@@ -29,6 +29,10 @@
     @apply h-10 w-10 p-0 inline-flex justify-center items-center border rounded-full outline-none focus:outline-none font-bold;
   }
 
+  .round-rect-btn {
+    @apply h-7 px-2 py-1 inline-flex justify-center items-center border rounded-full outline-none focus:outline-none font-bold text-xs;
+  }
+
   .copy-btn {
     @apply h-6 p-1 inline-flex items-center border rounded-sm outline-none text-xs leading-none;
   }

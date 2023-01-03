@@ -15,6 +15,21 @@
 .theme-text-gray-info {
   color: $text-color-gray-info;
 }
+.theme-text-hover:hover {
+  color: $hover-color;
+}
+.theme-text-success {
+  color: $success-color;
+}
+.theme-text-warning {
+  color: $warning-color;
+}
+.theme-text-info {
+  color: $info-color;
+}
+.theme-text-error {
+  color: $error-color;
+}
 
 .theme-bg {
   background-color: $white;
@@ -30,6 +45,21 @@
 }
 .theme-fill-gray {
   background-color: $fill-color-gray;
+}
+.theme-fill-shallow {
+  background-color: $shallow-color;
+}
+.theme-fill-success {
+  background-color: $success-color;
+}
+.theme-fill-warning {
+  color: $warning-color;
+}
+.theme-fill-info {
+  color: $info-color;
+}
+.theme-fill-error {
+  color: $error-color;
 }
 
 .nav-link-li {
@@ -143,8 +173,47 @@
   }
 }
 
+.theme-switch-btn {
+  background-color: $fill-color-gray;
+  border-color: $fill-color-gray;
+  color: $text-color-sub-info;
+  &:focus {
+    background-color: $fill-color-gray;
+    border-color: $fill-color-gray;
+    color: $text-color-sub-info;
+  }
+  &:hover {
+    background-color: $white;
+    border-color: $white;
+    color: $base-color;
+  }
+  &:active {
+    background-color: $active-color;
+    border-color: $active-color;
+    color: #fff;
+  }
+
+  &.switch-btn-focused {
+    background-color: $white;
+    border-color: $white;
+    color: $base-color;
+    &:focus {
+      background-color: $white;
+      border-color: $white;
+      color: $base-color;
+    }
+  }
+}
+
 .theme-sidebar-link {
   color: $text-color-sub-main;
+  &:hover {
+    color: $base-color;
+  }
+}
+
+.theme-link {
+  color: $text-color-main;
   &:hover {
     color: $base-color;
   }
@@ -193,4 +262,16 @@ a {
 
 svg {
   fill: currentColor;
+}
+
+.bttc-balance {
+  background-image: url(../img/bttc-bg.svg), linear-gradient(180deg, #f2f5f7 0%, #fafbfc 100%);
+  background-repeat: no-repeat no-repeat;
+  background-position: bottom -9px right -12px, 0 0;
+}
+
+.vault-balance {
+  background-image: url(../img/vault-bg.svg), linear-gradient(180deg, #fff3e1 0%, #fafbfc 100%);
+  background-repeat: no-repeat no-repeat;
+  background-position: bottom -9px right -12px, 0 0;
 }

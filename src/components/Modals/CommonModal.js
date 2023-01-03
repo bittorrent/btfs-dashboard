@@ -4,7 +4,7 @@ import { CloseCircleOutlined } from '@ant-design/icons';
 
 const CommonModal = ({ children, ...restProps }) => {
   return (
-    <Modal {...restProps} closeIcon={<CloseCircleOutlined style={{ fontSize: 24 }} />} footer={null}>
+    <Modal {...restProps} centered closeIcon={<CloseCircleOutlined style={{ fontSize: 24 }} />} footer={null}>
       {children}
     </Modal>
   );

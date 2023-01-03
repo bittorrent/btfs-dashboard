@@ -93,7 +93,7 @@ function formatDecimalBalance(balance) {
         if(decimal[i] !== '0') {
             lastZeroIndex = i;
             break;
-        } 
+        }
     }
     const rate = lastZeroIndex;
     const significantDecimal = decimal.slice(lastZeroIndex);
@@ -119,7 +119,7 @@ export function switchBalanceUnit(balance, precision = PRECISION) {
 
     // handle small number
     if(balance === 0) {
-        return '0 ';
+        return '0';
     }
 
     if (balance < 1) {
@@ -168,7 +168,7 @@ export function versionStringCompare (curVersion='', lastVersion='2.2.1'){
     const dests = lastVersion.split('.');
     const maxL = Math.max(sources.length, dests.length);
     let result = 0;
-    for (let i = 0; i < maxL; i++) {  
+    for (let i = 0; i < maxL; i++) {
         const preValue = sources.length>i ? sources[i]:0;
         const preNum = isNaN(Number(preValue)) ? preValue.charCodeAt() : Number(preValue);
         const lastValue = dests.length>i ? dests[i]:0;
@@ -176,7 +176,7 @@ export function versionStringCompare (curVersion='', lastVersion='2.2.1'){
         if (preNum < lastNum) {
             result = -1;
             break;
-        } else if (preNum > lastNum) { 
+        } else if (preNum > lastNum) {
             result = 1;
             break;
         }
