@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Progress } from 'antd';
-
+import { mainContext } from 'reducer';
 import { switchBalanceUnit } from 'utils/BTFSUtil';
 import { CashedItem, UnCashedItem } from './ChequeStats';
 import { PROGRESS_COLORS } from 'utils/constants';
@@ -13,7 +13,7 @@ const CurrencyIcon = ({ icon }) => (
 
 function SingleCurrency({ item, type, color, index }) {
   let { unit, cashed, unCashed, cashedValuePercent, icon } = item;
-  if(type !== 'sentCheques') {
+  if (type !== 'sentCheques') {
     const rate = item?.price?.rate ?? 1;
     cashed = switchBalanceUnit(cashed, rate);
     unCashed = switchBalanceUnit(unCashed, rate);
@@ -21,18 +21,18 @@ function SingleCurrency({ item, type, color, index }) {
 
   let style = {};
   if (index === 0) {
-    style = {borderRight: '1px solid #E6E9F4', borderBottom: '1px solid #E6E9F4'}
-  } else if(index === 1) {
-    style = {borderLeft: '1px solid #E6E9F4', borderBottom: '1px solid #E6E9F4'}
-  } else if(index === 2) {
-    style = {borderRight: '1px solid #E6E9F4', borderTop: '1px solid #E6E9F4'}
-  } else if(index === 3) {
-    style = {borderLeft: '1px solid #E6E9F4', borderTop: '1px solid #E6E9F4'}
+    style = { borderRight: '1px solid #E6E9F4', borderBottom: '1px solid #E6E9F4' };
+  } else if (index === 1) {
+    style = { borderBottom: '1px solid #E6E9F4' };
+  } else if (index === 2) {
+    style = { borderRight: '1px solid #E6E9F4' };
+  } else if (index === 3) {
+    style = {};
   }
 
   return type === 'sentCheques' ? (
     <div className="w-1/2 p-3 pr-8 inline-flex justify-between items-center" style={style}>
-      <div className='w-full'>
+      <div className="w-full">
         {/* title */}
         <div className="flex">
           <CurrencyIcon icon={icon} />
@@ -82,8 +82,12 @@ function SingleCurrency({ item, type, color, index }) {
 }
 
 export default function MultipleCurrenyList({ color, type, dataList = [] }) {
+  const { state } = useContext(mainContext);
+  const { theme } = state;
   return (
-    <div className="w-full p-4" style={{ backgroundColor: '#ECF2FF' }}>
+    <div
+      className="w-full p-4 rounded-b-2xl"
+      style={{ backgroundColor: theme === 'light' ? '#ECF2FF' : '#130D00' }}>
       {dataList.map((item, index) => {
         return <SingleCurrency item={item} type={type} color={color} index={index} />;
       })}

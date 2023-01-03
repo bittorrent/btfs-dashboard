@@ -1,175 +1,166 @@
-/*eslint-disable*/
-import React, {useState, useEffect, useCallback} from "react";
-import PropTypes from "prop-types";
-import {Pagination} from 'antd';
-import ClipboardCopy from "components/Utils/ClipboardCopy";
-import {getChequeReceivedDetailList, getChequeSentDetailList} from "services/chequeService.js";
-import themeStyle from "utils/themeStyle.js";
-import {Truncate, t} from "utils/text.js"
-import {switchBalanceUnit} from "utils/BTFSUtil.js";
-import {btfsScanLinkCheck, bttcScanLinkCheck} from "utils/checks.js";
+import React, { useState, useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
+import { Pagination } from 'antd';
+import ClipboardCopy from 'components/Utils/ClipboardCopy';
+import { getChequeReceivedDetailList, getChequeSentDetailList } from 'services/chequeService.js';
+import { Truncate, t } from 'utils/text.js';
+import { switchBalanceUnit } from 'utils/BTFSUtil.js';
+import { btfsScanLinkCheck, bttcScanLinkCheck } from 'utils/checks.js';
 
 let didCancel = false;
 
-export default function ChequeDetailTable({color, type}) {
+export default function ChequeDetailTable({ color, type }) {
+  const [cheques, setCheques] = useState(null);
+  const [total, setTotal] = useState(0);
+  const [current, setCurrent] = useState(1);
 
-    const [cheques, setCheques] = useState(null);
-    const [total, setTotal] = useState(0);
-    const [current, setCurrent] = useState(1);
+  const pageChange = useCallback(page => {
+    updateTable(page);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    const pageChange = useCallback((page) => {
-        updateTable(page);
-    }, []);
+  const updateTable = async page => {
+    didCancel = false;
+    let data;
+    if (type === 'earning') {
+      data = await getChequeReceivedDetailList((page - 1) * 10, 10);
+    }
+    if (type === 'expense') {
+      data = await getChequeSentDetailList((page - 1) * 10, 10);
+    }
 
-    const updateTable = async (page) => {
-        didCancel = false;
-        let data;
-        if (type === 'earning') {
-            data = await getChequeReceivedDetailList((page - 1) * 10, 10);
-        }
-        if (type === 'expense') {
-            data = await getChequeSentDetailList((page - 1) * 10, 10);
-        }
+    let { cheques, total } = data;
 
-        let {cheques, total} = data;
+    if (!didCancel) {
+      setCheques(cheques);
+      setTotal(total);
+      setCurrent(page);
+    }
+  };
 
-        if (!didCancel) {
-            setCheques(cheques);
-            setTotal(total);
-            setCurrent(page);
-        }
+  useEffect(() => {
+    updateTable(1);
+    return () => {
+      didCancel = true;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    useEffect(() => {
-        updateTable(1);
-        return () => {
-            didCancel = true;
-        };
-    }, []);
-
-    return (
-
-        <>
-            <div
-                className={"relative flex flex-col min-w-0 break-words w-full shadow-lg rounded " + themeStyle.bg[color]}>
-                <div className="block w-full overflow-x-auto">
-                    <table className="items-center w-full bg-transparent border-collapse">
-                        <thead>
-                        <tr className="text-xs uppercase whitespace-nowrap">
-                            <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
-                                {t('host_id')}
-                            </th>
-                            <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
-                                {t('blockchain')}
-                            </th>
-                            <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
-                                {type === 'earning' && t('chequebook')}
-                                {type === 'expense' && t('recipient')}
-                            </th>
-                            <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
-                                {t('currency_type')}
-                            </th>
-                            <th className={"cursor-pointer px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
-                                <div className='flex items-center'>
-                                    {/* <div>{t('amount')} (WBTT)</div> */}
-                                    <div>{t('amount')}</div>
-                                </div>
-                            </th>
-                            <th className={"px-6 border border-solid py-3 border-l-0 border-r-0 font-semibold text-left " + themeStyle.th[color]}>
-                                {type === 'earning' && t('receive')}
-                                {type === 'expense' && t('send')}
-                                &nbsp;{t('time')}
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        {cheques && cheques.map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        <div className='flex'>
-                                            <a href={btfsScanLinkCheck() + '/#/node/' + item['PeerId']}
-                                               target='_blank' rel="noreferrer">
-                                                <Truncate>{item['PeerId']}</Truncate>
-                                            </a>
-                                            <ClipboardCopy value={item['PeerId']}/>
-                                        </div>
-                                    </td>
-                                    <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        BTTC
-                                    </td>
-                                    <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        {
-                                            type === 'earning' && <div className='flex'>
-                                                <a href={bttcScanLinkCheck() + '/address/' + item['Vault']}
-                                                   target='_blank' rel="noreferrer">
-                                                    <Truncate>{item['Vault']}</Truncate>
-                                                </a>
-                                                <ClipboardCopy value={item['Vault']}/>
-                                            </div>
-                                        }
-                                        {
-                                            type === 'expense' && <div className='flex'>
-                                                <a href={bttcScanLinkCheck() + '/address/' + item['Beneficiary']}
-                                                   target='_blank' rel="noreferrer">
-                                                    <Truncate>{item['Beneficiary']}</Truncate>
-                                                </a>
-                                                <ClipboardCopy value={item['Beneficiary']}/>
-                                            </div>
-                                        }
-                                    </td>
-                                    <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4 flex items-center">
-                                        <img
-                                            src={
-                                                require(`assets/img/${item.icon}.svg`).default
-                                            }
-                                            alt=""
-                                            className="mr-2"
-                                            />
-                                        {item.unit}
-                                    </td>
-                                    <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        {switchBalanceUnit(item['Amount'], item?.price?.rate)}
-                                    </td>
-                                    <td className="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        {new Date(item['Time'] * 1000).toLocaleString()}
-                                    </td>
-                                </tr>
-                            )
-                        })}
-
-                        </tbody>
-                    </table>
-                    {
-                        !cheques && <div className='w-full flex justify-center pt-4'>
-                            <img alt='loading' src={require('../../assets/img/loading.svg').default}
-                                 style={{width: '50px', height: '50px'}}/>
-                        </div>
-                    }
-                    {
-                        (cheques && total === 0) && <div className='w-full flex justify-center p-4'>
-                            {t('no_data')}
-                        </div>
-                    }
+  return (
+    <div className="min-w-0 w-full flex flex-col shadow-lg rounded break-words theme-bg theme-text-main">
+      <div className="w-full overflow-x-auto border-b" style={{ minHeight: 160 }}>
+        <table className="w-full bg-transparent border-collapse">
+          <thead className="theme-table-head-bg">
+            <tr className="common-table-head-tr theme-text-sub-info">
+              <th className="common-table-head-th">{t('host_id')}</th>
+              <th className="common-table-head-th">{t('blockchain')}</th>
+              <th className="common-table-head-th">
+                {type === 'earning' && t('chequebook')}
+                {type === 'expense' && t('recipient')}
+              </th>
+              <th className="common-table-head-th">{t('currency_type')}</th>
+              <th className="common-table-head-th">
+                <div className="flex items-center">
+                  <div>{t('amount')}</div>
                 </div>
-                <div className='flex justify-between items-center'>
-                    <div className='p-4'>Total: {total}</div>
-                    <div>
-                        <Pagination className={'float-right p-4 ' + color} simple current={current} total={total}
-                                    hideOnSinglePage={true}
-                                    onChange={pageChange}/>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
+              </th>
+              <th className="common-table-head-th">
+                {type === 'earning' && t('receive')}
+                {type === 'expense' && t('send')}
+                &nbsp;{t('time')}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {cheques &&
+              cheques.map((item, index) => {
+                return (
+                  <tr key={index} className="text-sm theme-text-main">
+                    <td className="common-table-body-td theme-table-row-hover">
+                      <div className="flex">
+                        <a
+                          href={btfsScanLinkCheck() + '/#/node/' + item['PeerId']}
+                          target="_blank"
+                          rel="noreferrer">
+                          <Truncate>{item['PeerId']}</Truncate>
+                        </a>
+                        <ClipboardCopy value={item['PeerId']} />
+                      </div>
+                    </td>
+                    <td className="common-table-body-td theme-table-row-hover">BTTC</td>
+                    <td className="common-table-body-td theme-table-row-hover">
+                      {type === 'earning' && (
+                        <div className="flex">
+                          <a
+                            href={bttcScanLinkCheck() + '/address/' + item['Vault']}
+                            target="_blank"
+                            rel="noreferrer">
+                            <Truncate>{item['Vault']}</Truncate>
+                          </a>
+                          <ClipboardCopy value={item['Vault']} />
+                        </div>
+                      )}
+                      {type === 'expense' && (
+                        <div className="flex">
+                          <a
+                            href={bttcScanLinkCheck() + '/address/' + item['Beneficiary']}
+                            target="_blank"
+                            rel="noreferrer">
+                            <Truncate>{item['Beneficiary']}</Truncate>
+                          </a>
+                          <ClipboardCopy value={item['Beneficiary']} />
+                        </div>
+                      )}
+                    </td>
+                    <td className="common-table-body-td theme-table-row-hover">
+                      <img src={require(`assets/img/${item.icon}.svg`).default} alt="" className="mr-2" />
+                      {item.unit}
+                    </td>
+                    <td className="common-table-body-td theme-table-row-hover">
+                      {switchBalanceUnit(item['Amount'], item?.price?.rate)}
+                    </td>
+                    <td className="common-table-body-td theme-table-row-hover">
+                      {new Date(item['Time'] * 1000).toLocaleString()}
+                    </td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
+        {!cheques && (
+          <div className="w-full flex justify-center p-12">
+            <img
+              alt="loading"
+              src={require('../../assets/img/loading.svg').default}
+              style={{ width: '50px', height: '50px' }}
+            />
+          </div>
+        )}
+        {cheques && total === 0 && (
+          <div className="p-12 w-full flex justify-center theme-text-main">{t('no_data')}</div>
+        )}
+      </div>
+      <div className="flex justify-between items-center theme-text-main">
+        <div className="p-4">Total: {total}</div>
+        <div>
+          <Pagination
+            className={'float-right p-4 ' + color}
+            simple
+            current={current}
+            total={total}
+            hideOnSinglePage={true}
+            onChange={pageChange}
+          />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 ChequeDetailTable.defaultProps = {
-    color: "light",
+  color: 'light',
 };
 
 ChequeDetailTable.propTypes = {
-    color: PropTypes.oneOf(["light", "dark"]),
+  color: PropTypes.oneOf(['light', 'dark']),
 };

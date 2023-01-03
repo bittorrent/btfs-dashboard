@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Tooltip } from 'antd';
 import { getChequeEarningAllStats } from 'services/chequeService.js';
-import themeStyle from 'utils/themeStyle.js';
 import { t } from 'utils/text.js';
 import { MULTIPLE_CURRENY_LIST } from 'utils/constants';
 import MultipleCurrenyList from './MultipleCurrenyList.js';
 import { switchBalanceUnit } from 'utils/BTFSUtil.js';
 import { ChequeMain } from './ChequeStats.js';
 
-const ReceivedChequesMain = ({ chequesStats, color }) => {
+const ReceivedChequesMain = ({ chequesStats }) => {
   const { chequeReceivedCount, cashedCountPercent, cashedCount, uncashedCount } = chequesStats;
-  const title = <h5 className={'text-base font-bold' + themeStyle.title[color]}>{t('received_cheques')}</h5>;
+  const title = <h5 className={'text-base font-bold theme-text-main'}>{t('received_cheques')}</h5>;
   return (
     <ChequeMain
       title={title}
@@ -26,7 +25,7 @@ const ReceivedCheques = ({ chequesStats, earningCountAllStatsData, color }) => {
   return (
     <div
       className={
-        'relative break-words rounded mb-2 xl:mb-0  ' + themeStyle.bg[color] + themeStyle.text[color]
+        'relative break-words rounded-2xl mb-2 xl:mb-0 theme-bg theme-text-main'
       }>
       <div className="flex flex-col justify-between" style={{ height: 425 }}>
         <ReceivedChequesMain chequesStats={chequesStats} color={color} />
@@ -42,8 +41,8 @@ const ReceivedAmountMain = ({ chequesStats, color }) => {
   cashedValue = switchBalanceUnit(cashedValue, 1);
   uncashedValue = switchBalanceUnit(uncashedValue, 1);
   const title = (
-    <div className="flex items-center">
-      <h5 className={'text-base font-bold ' + themeStyle.title[color]}>{t('received_cheques_amount')}</h5>
+    <div className="flex items-center theme-text-main">
+      <h5 className={'text-base font-bold theme-text-main'}>{t('received_cheques_amount')}</h5>
       <Tooltip title={t('cheques_amount_tooltip')}>
         <div className="ml-1">
           <i className="fas fa-info-circle"></i>
@@ -66,7 +65,7 @@ const ReceivedAmountMain = ({ chequesStats, color }) => {
 
 const ReceivedAmount = ({ chequesStats, earningValueAllStatsData, color }) => {
   return (
-    <div className={'relative break-words rounded ' + themeStyle.bg[color] + themeStyle.text[color]}>
+    <div className={'relative break-words rounded-2xl theme-bg theme-text-main'}>
       <div className="flex flex-col justify-between" style={{ height: 425 }}>
         <ReceivedAmountMain color={color} chequesStats={chequesStats} />
         <MultipleCurrenyList color={color} dataList={earningValueAllStatsData} />

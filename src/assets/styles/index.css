@@ -52,4 +52,16 @@
   .common-modal-footer {
     @apply flex justify-end;
   }
+
+  .common-table-head-tr {
+    @apply border-b text-sm leading-none whitespace-nowrap;
+  }
+
+  .common-table-head-th {
+    @apply px-4 py-2 text-left font-normal;
+  }
+
+  .common-table-body-td {
+    @apply px-4 py-2 border-b align-middle whitespace-nowrap;
+  }
 }

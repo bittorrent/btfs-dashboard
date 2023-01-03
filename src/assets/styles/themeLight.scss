@@ -37,6 +37,12 @@
 .theme-base-bg {
   background-color: $bg-color;
 }
+.theme-table-head-bg {
+  background-color: #F2F5F7;
+}
+.theme-table-row-hover:hover {
+  background-color: #F7F8FB;
+}
 .theme-fill-base {
   background-color: $fill-color-base;
 }

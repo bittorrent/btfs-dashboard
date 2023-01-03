@@ -86,4 +86,12 @@
   .ant-breadcrumb li:last-child a {
     color: $dark-text-color-main;
   }
+
+  .ant-pagination-options-quick-jumper{
+    color: #D0D6F1;
+    input{
+      background-color:#1C284E;
+      color: #fff;
+    }
+  }
 }
