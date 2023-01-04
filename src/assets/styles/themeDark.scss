@@ -175,9 +175,9 @@
   }
 
   .theme-link {
-    color: $dark-text-color-main;
+    color: $dark-base-color;
     &:hover {
-      color: $dark-base-color;
+      color: $dark-hover-color;
     }
   }
 

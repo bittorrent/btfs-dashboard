@@ -219,9 +219,9 @@
 }
 
 .theme-link {
-  color: $text-color-main;
+  color: $base-color;
   &:hover {
-    color: $base-color;
+    color: $hover-color;
   }
 }
 

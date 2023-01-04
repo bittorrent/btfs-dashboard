@@ -38,7 +38,7 @@ export default function ChequeCashingHistoryTable({ color }) {
 
   return (
     <div className="min-w-0 w-full flex flex-col shadow-lg rounded break-words theme-bg theme-text-main">
-      <div className="w-full overflow-x-auto border-b" style={{ minHeight: 160 }}>
+      <div className="w-full overflow-x-auto" style={{ minHeight: 160 }}>
         <table className="w-full bg-transparent border-collapse">
           <thead className="theme-table-head-bg">
             <tr className="common-table-head-tr theme-text-sub-info">
