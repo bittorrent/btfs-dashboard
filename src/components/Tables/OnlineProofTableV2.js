@@ -104,7 +104,7 @@ export default function OnlineProofTable({ color }) {
         </div>
         <div>
           <Pagination
-            className={'float-right p-4 ' + color}
+            className={'mt-4 ' + color}
             simple
             current={current}
             total={total}

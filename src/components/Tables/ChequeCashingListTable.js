@@ -152,7 +152,7 @@ export default function ChequeCashingListTable({ color, enableCash }) {
         <div className="p-4">Total: {total}</div>
         <div>
           <Pagination
-            className={'float-right p-4 ' + color}
+            className={'mt-4 ' + color}
             simple
             current={current}
             total={total}
