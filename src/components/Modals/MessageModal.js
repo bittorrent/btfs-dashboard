@@ -35,9 +35,9 @@ export default function MessageModal() {
         <header className="common-modal-header theme-text-main">{t('private_key')}</header>
         <main className="mb-12">
           <div className="mb-2 p-2 rounded flex items-center theme-fill-error text-xs text-white font-semibold">
-            <WarningFilled className="mr-3 text-base leading-none" />
-            <span className=" whitespace-nowrap font-normal">{t('key_warning_1')}</span>.
-            <span className="ml-2 whitespace-nowrap">{t('key_warning_2')}</span>
+            <WarningFilled className="mr-3 text-base leading-none text-white" />
+            <span className="whitespace-nowrap font-normal text-white">{t('key_warning_1')}</span>.
+            <span className="ml-2 whitespace-nowrap text-white">{t('key_warning_2')}</span>
           </div>
           <div className="p-2 pl-4 h-10 border rounded-lg flex justify-between items-center">
             <span className=" theme-text-main">{message.current}</span>

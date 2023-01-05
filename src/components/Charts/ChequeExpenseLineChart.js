@@ -168,8 +168,8 @@ function ChequeExpenseLineChart({ color }) {
         />
       </header>
       <main>
-        <div id="cheque-expense-line-chart-content" className="relative h-240-px">
-          <canvas id="cheque-expense-line-chart" style={{ height: 240, width: '100%' }}></canvas>
+        <div id="cheque-expense-line-chart-content" className="relative h-300-px">
+          <canvas id="cheque-expense-line-chart" style={{ height: 300, width: '100%' }}></canvas>
         </div>
       </main>
     </div>

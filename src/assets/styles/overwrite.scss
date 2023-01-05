@@ -36,8 +36,8 @@
   max-width: 500px !important;
 }
 
-
-.ant-modal-content, .ant-modal-body {
+.ant-modal-content,
+.ant-modal-body {
   border-radius: 16px;
 }
 
@@ -51,3 +51,13 @@
   right: 1.5rem;
 }
 
+.ant-message-notice-content {
+  border-radius: 0.375rem;
+  .ant-message-custom-content {
+    display: flex;
+    align-items: center;
+    .anticon {
+      position: static;
+    }
+  }
+}

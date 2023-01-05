@@ -107,7 +107,7 @@ export default function ExchangeModal({ color }) {
       <div className={'common-modal-wrapper'}>
         <header className="common-modal-header theme-text-main">BTT - WBTT {t('exchange')}</header>
         <main className="mb-12 theme-text-main">
-          <div className="relative p-4">
+          <div className="relative">
             {target === 'BTT' && (
               <div className="flex justify-between">
                 <div className="grow">

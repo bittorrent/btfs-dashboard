@@ -139,9 +139,9 @@ export default function TransferConfirmModal({ color }) {
       <div className={'common-modal-wrapper'}>
         <header className="common-modal-header theme-text-main">{t('transfer')}</header>
         <main className="mb-12 theme-text-main">
-          <div className="relative p-4 flex flex-col">
+          <div className="relative flex flex-col">
             <div className="flex pb-2">
-              <div className="mr-4 font-semibold w-120-px flex justify-center items-center">
+              <div className="mr-4 font-semibold w-120-px flex items-center">
                 {t('send_to')}
               </div>
               <div className="inputTransition flex-1">
@@ -159,7 +159,7 @@ export default function TransferConfirmModal({ color }) {
             </div>
 
             <div className="flex pt-2">
-              <div className="mr-4 font-semibold w-120-px flex justify-center items-center">
+              <div className="mr-4 font-semibold w-120-px flex items-center">
                 {t('send_amount')}
               </div>
               <div>

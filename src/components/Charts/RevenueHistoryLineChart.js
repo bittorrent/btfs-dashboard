@@ -169,8 +169,8 @@ function RevenueHistoryLineChart({ color }) {
         />
       </header>
       <main>
-        <div id="revenue-history-line-chart-content" className="relative h-240-px">
-          <canvas id="revenue-history-line-chart" style={{ height: 240, width: '100%' }}></canvas>
+        <div id="revenue-history-line-chart-content" className="relative h-300-px">
+          <canvas id="revenue-history-line-chart" style={{ height: 300, width: '100%' }}></canvas>
         </div>
       </main>
     </div>
