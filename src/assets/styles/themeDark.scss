@@ -27,7 +27,7 @@
     background-color: $black;
   }
   .theme-table-head-bg {
-    background-color: #0D0A08;
+    background-color: #0d0a08;
   }
   .theme-table-row-hover:hover {
     background-color: #080704;
@@ -59,6 +59,27 @@
       background-color: $dark-base-color;
       border-color: $dark-base-color;
       color: #fff;
+    }
+    &:hover {
+      background-color: $dark-hover-color;
+      border-color: $dark-hover-color;
+      color: #fff;
+    }
+    &:active {
+      background-color: $dark-active-color;
+      border-color: $dark-active-color;
+      color: #fff;
+    }
+  }
+
+  .theme-white-btn {
+    background-color: $dark-bg-color;
+    border-color: $dark-bg-color;
+    color: $base-color;
+    &:focus {
+      background-color: $dark-bg-color;
+      border-color: $dark-bg-color;
+      color: $base-color;
     }
     &:hover {
       background-color: $dark-hover-color;

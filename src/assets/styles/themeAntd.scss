@@ -30,6 +30,11 @@
   color: $text-color-main;
 }
 
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  background-color: $white;
+  color: $text-color-main;
+}
+
 // antd theme dark
 .dark {
   .ant-btn {
@@ -46,9 +51,12 @@
   .ant-progress-text {
     color: lightblue !important;
   }
-  .ant-select-selector {
-    background-color: lightblue !important;
+
+  .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    background-color: $dark-bg-color;
+    color: $dark-text-color-main;
   }
+
   .ant-pagination-simple-pager,
   .anticon {
     color: white;
@@ -87,10 +95,10 @@
     color: $dark-text-color-main;
   }
 
-  .ant-pagination-options-quick-jumper{
-    color: #D0D6F1;
-    input{
-      background-color:#1C284E;
+  .ant-pagination-options-quick-jumper {
+    color: #d0d6f1;
+    input {
+      background-color: #1c284e;
       color: #fff;
     }
   }

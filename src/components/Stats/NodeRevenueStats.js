@@ -6,7 +6,7 @@ import { getNodeRevenueStats } from 'services/dashboardService.js';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 
-const ChequeItem = ({ value, unit, percent, dotColor = '#848484', text, hasDetail, disabled, tooltip }) => {
+const ChequeItem = ({ value, unit, percent, dotColor = '#848484', text, hasDetail, onDetail, disabled, tooltip }) => {
   dotColor = disabled ? '#848484' : dotColor;
   const titleClassName = disabled ? ' theme-text-sub-main' : ' theme-text-main';
   return (
@@ -25,7 +25,7 @@ const ChequeItem = ({ value, unit, percent, dotColor = '#848484', text, hasDetai
       </div>
       {hasDetail && (
         <div className="h-full flex items-center">
-          <button className="round-btn w-6 h-6 theme-round-btn">
+          <button className="round-btn w-6 h-6 theme-round-btn" onClick={onDetail}>
             <i className="fa-solid fa-angle-right"></i>
           </button>
         </div>
