@@ -152,8 +152,14 @@ export default function CardSettings({ color }) {
         <div className="mb-2 setting-header">
           <h5 className="font-bold theme-text-main">{t('security')}</h5>
         </div>
-        <div className="">
-          <button className="common-btn theme-danger-btn" type="button" onClick={reveal}>
+        <div className="flex justify-between">
+          <div className="px-3.5 w-full h-9 border rounded-lg flex items-center text-sm leading-none transition-all theme-border-color theme-bg theme-text-sub-info">
+            <span className='mr-2'>
+              <i className="fa-solid fa-lock"></i>
+            </span>
+            <span>{t('private_key')}</span>
+          </div>
+          <button className="ml-2 common-btn theme-danger-btn" type="button" onClick={reveal}>
             {t('reveal_key')}
           </button>
         </div>

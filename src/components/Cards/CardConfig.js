@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, memo } from 'react';
 import { Switch, Tooltip } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import ButtonRoundRect from 'components/Buttons/ButtonRoundRect';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 
@@ -160,16 +161,12 @@ function CardConfig({ color }) {
           </Tooltip>
         </div>
         <div>
-          <button className="common-btn theme-common-btn" type="button" onClick={handleResetDefault}>
-            {t('reset_default')}
-          </button>
+          <ButtonRoundRect text={t('reset_default')} onClick={handleResetDefault} />
           <Link
             to={{
               search: '?fileDetail=1',
             }}>
-            <button className="ml-2 common-btn theme-common-btn" type="button">
-              {t('view_config_file')}
-            </button>
+            <ButtonRoundRect className="ml-2" text={t('view_config_file')} />
           </Link>
         </div>
       </div>
