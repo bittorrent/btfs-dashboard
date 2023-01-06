@@ -32,10 +32,10 @@ export default function QRModal() {
 
   return (
     <CommonModal centered width={500} open={showModal} onCancel={closeModal}>
-      <div className={'common-modal-wrapper'}>
+      <div className={'common-modal-wrapper theme-bg'}>
         <QRCode className="mx-auto my-8" value={address.current} />
         <div className="flex justify-center input-group-append">
-          <span className='theme-text-main'>{address.current}</span>
+          <span className="theme-text-main">{address.current}</span>
           <ClipboardCopy value={address.current} />
         </div>
       </div>

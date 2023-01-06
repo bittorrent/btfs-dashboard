@@ -137,17 +137,15 @@ export default function TransferConfirmModal({ color }) {
   return (
     <>
       <CommonModal open={showModal} onCancel={closeModal} width={640}>
-        <div className={'common-modal-wrapper'}>
+        <div className={'common-modal-wrapper theme-bg'}>
           <header className="common-modal-header theme-text-main">{t('transfer')}</header>
           <main className="mb-12 theme-text-main">
             <div className="relative flex flex-col">
               <div className="flex pb-2">
                 <div className="mr-4 font-semibold w-120-px flex items-center">{t('send_to')}</div>
-                <div className="inputTransition flex-1">
+                <div className="inputTransition theme-border-color flex-1">
                   <input
-                    className={
-                      'p4 border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full h-35-px theme-bg'
-                    }
+                    className="px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full h-35-px theme-bg"
                     type="text"
                     placeholder={intl.formatMessage({ id: 'enter_bttc_address' })}
                     onChange={inputChange}
@@ -161,7 +159,7 @@ export default function TransferConfirmModal({ color }) {
                 <div className="mr-4 font-semibold w-120-px flex items-center">{t('send_amount')}</div>
                 <div>
                   <Select
-                    className={color}
+                    className={'theme-border-color ' + color}
                     defaultValue="BTT"
                     style={{ width: 90 }}
                     onChange={handleChange}
@@ -177,9 +175,9 @@ export default function TransferConfirmModal({ color }) {
                     })}
                   </Select>
                 </div>
-                <div className="inputTransition flex-1">
+                <div className="inputTransition theme-border-color flex-1">
                   <input
-                    className="p4 border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full h-35-px theme-bg"
+                    className="px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full h-35-px theme-bg"
                     placeholder={intl.formatMessage({ id: 'max_available_amount' }) + ' : ' + max}
                     onChange={inputChange}
                     type="number"
@@ -212,7 +210,7 @@ export default function TransferConfirmModal({ color }) {
         </div>
       </CommonModal>
       <CommonModal open={showConfirm} onCancel={close}>
-        <div className={'common-modal-wrapper'}>
+        <div className={'common-modal-wrapper theme-bg'}>
           <header className="common-modal-header theme-text-main">{t('transfer_confirmation')}</header>
           <main className="mb-12 theme-text-main">
             <div className="relative px-4 flex flex-col">

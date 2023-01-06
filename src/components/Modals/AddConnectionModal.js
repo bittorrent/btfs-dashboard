@@ -57,7 +57,7 @@ export default function AddConnectionModal({ color }) {
 
   return (
     <CommonModal open={showModal} onCancel={closeModal} width={540}>
-      <div className="common-modal-wrapper theme-text-main">
+      <div className="common-modal-wrapper theme-bg theme-text-main">
         <header className="common-modal-header">{t('add_connection')}</header>
         <main className="mb-12">
           <p className="pb-4">
@@ -67,7 +67,7 @@ export default function AddConnectionModal({ color }) {
           </p>
           <input
             type="text"
-            className="common-input theme-bg"
+            className="common-input theme-bg theme-border-color"
             placeholder="Address"
             ref={el => {
               inputRef = el;

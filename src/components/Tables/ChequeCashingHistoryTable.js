@@ -41,7 +41,7 @@ export default function ChequeCashingHistoryTable({ color }) {
       <div className="w-full overflow-x-auto" style={{ minHeight: 160 }}>
         <table className="w-full bg-transparent border-collapse">
           <thead className="theme-table-head-bg">
-            <tr className="common-table-head-tr theme-text-sub-info">
+            <tr className="common-table-head-tr theme-border-color theme-text-sub-info">
               <th className="common-table-head-th">{t('tx_hash')}</th>
               <th className="common-table-head-th">{t('host_id')}</th>
               <th className="common-table-head-th">{t('blockchain')}</th>
@@ -60,8 +60,10 @@ export default function ChequeCashingHistoryTable({ color }) {
             {cheques &&
               cheques.map((item, index) => {
                 return (
-                  <tr key={index} className="text-sm theme-text-main">
-                    <td className="common-table-body-td theme-table-row-hover">
+                  <tr
+                    key={index}
+                    className="common-table-body-tr theme-border-color theme-text-main theme-table-row-hover">
+                    <td className="common-table-body-td">
                       <div className="flex">
                         <a href={bttcScanLinkCheck() + '/tx/' + item['tx_hash']} target="_blank">
                           <Truncate>{item['tx_hash']}</Truncate>
@@ -69,7 +71,7 @@ export default function ChequeCashingHistoryTable({ color }) {
                         <ClipboardCopy value={item['tx_hash']} />
                       </div>
                     </td>
-                    <td className="common-table-body-td theme-table-row-hover">
+                    <td className="common-table-body-td">
                       <div className="flex">
                         <a href={btfsScanLinkCheck() + '/#/node/' + item['peer_id']} target="_blank">
                           <Truncate>{item['peer_id']}</Truncate>
@@ -77,10 +79,8 @@ export default function ChequeCashingHistoryTable({ color }) {
                         <ClipboardCopy value={item['peer_id']} />
                       </div>
                     </td>
-                    <td className="common-table-body-td theme-table-row-hover">
-                      BTTC
-                    </td>
-                    <td className="common-table-body-td theme-table-row-hover">
+                    <td className="common-table-body-td">BTTC</td>
+                    <td className="common-table-body-td">
                       <div className="flex">
                         <a href={bttcScanLinkCheck() + '/address/' + item['vault']} target="_blank">
                           <Truncate>{item['vault']}</Truncate>
@@ -88,19 +88,17 @@ export default function ChequeCashingHistoryTable({ color }) {
                         <ClipboardCopy value={item['vault']} />
                       </div>
                     </td>
-                    <td className="common-table-body-td theme-table-row-hover">
+                    <td className="common-table-body-td">
                       <img src={require(`assets/img/${item.icon}.svg`).default} alt="" className="mr-2" />
                       {item.unit}
                     </td>
-                    <td className="common-table-body-td theme-table-row-hover">
+                    <td className="common-table-body-td">
                       {switchBalanceUnit(item['amount'], item?.price?.rate)}
                     </td>
-                    <td className="common-table-body-td theme-table-row-hover">
+                    <td className="common-table-body-td">
                       {new Date(item['cash_time'] * 1000).toLocaleString()}
                     </td>
-                    <td className="common-table-body-td theme-table-row-hover">
-                      {item['status']}
-                    </td>
+                    <td className="common-table-body-td">{item['status']}</td>
                   </tr>
                 );
               })}
@@ -115,7 +113,9 @@ export default function ChequeCashingHistoryTable({ color }) {
             />
           </div>
         )}
-        {cheques && total === 0 && <div className="p-12 w-full flex justify-center theme-text-main">{t('no_data')}</div>}
+        {cheques && total === 0 && (
+          <div className="p-12 w-full flex justify-center theme-text-main">{t('no_data')}</div>
+        )}
       </div>
       <div className="flex justify-between items-center theme-text-main">
         <div className="p-4">Total: {total}</div>

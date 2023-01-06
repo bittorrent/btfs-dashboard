@@ -31,7 +31,7 @@ export default function ConfigConfirmModal({ color }) {
 
   return (
     <CommonModal width={520} open={showModal} onCancel={closeModal}>
-      <div className="common-modal-wrapper">
+      <div className="common-modal-wrapper theme-bg">
         <header className="common-modal-header theme-text-main">{t('reset_advance_config_title')}</header>
         <main className="mb-8 theme-text-main">{t('reset_advance_config_tips')}</main>
         <footer className="common-modal-footer">

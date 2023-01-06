@@ -31,7 +31,7 @@ export default function MessageModal() {
 
   return (
     <CommonModal width={620} open={showModal} onCancel={closeModal}>
-      <div className={'common-modal-wrapper'}>
+      <div className={'common-modal-wrapper theme-bg'}>
         <header className="common-modal-header theme-text-main">{t('private_key')}</header>
         <main className="mb-12">
           <div className="mb-2 p-2 rounded flex items-center theme-fill-error text-xs text-white font-semibold">
@@ -39,7 +39,7 @@ export default function MessageModal() {
             <span className="whitespace-nowrap font-normal text-white">{t('key_warning_1')}</span>.
             <span className="ml-2 whitespace-nowrap text-white">{t('key_warning_2')}</span>
           </div>
-          <div className="p-2 pl-4 h-10 border rounded-lg flex justify-between items-center">
+          <div className="p-2 pl-4 h-10 border rounded-lg flex justify-between items-center theme-border-color">
             <span className=" theme-text-main">{message.current}</span>
             <ClipboardCopy value={message.current} />
           </div>

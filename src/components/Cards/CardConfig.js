@@ -202,7 +202,7 @@ function CardConfig({ color }) {
           <div className="flex justify-between">
             <input
               type="text"
-              className="common-input theme-bg"
+              className="common-input theme-bg theme-border-color"
               defaultValue={rpcAddress}
               ref={rpcAddressRef}
             />

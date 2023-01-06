@@ -39,7 +39,7 @@ const BTTCWalletStats = ({
             </button>
             <ClipboardCopy value={BTTCAddress} />
           </div>
-          <div className='flex'>
+          <div className="flex">
             <a
               className="theme-link"
               href={bttcScanLinkCheck() + '/address/' + BTTCAddress}
@@ -100,7 +100,7 @@ const ChequebookStats = ({ showQR, chequeAddress, allCurrencyBalanceList, onWith
             </button>
             <ClipboardCopy value={chequeAddress} />
           </div>
-          <div className='flex'>
+          <div className="flex">
             <a
               className="theme-link"
               href={bttcScanLinkCheck() + '/address/' + chequeAddress}
@@ -265,7 +265,7 @@ export default function NodeWalletStats({ color }) {
 
   return (
     <div className="mb-4 flex flex-wrap items-stretch common-card shadow-none xl:shadow-md p-0">
-      <div className="mb-4 w-full common-card theme-bg xl:mb-0 xl:w-1/2 xl:border-r xl:shadow-none xl:rounded-none xl:rounded-l-2xl">
+      <div className="mb-4 w-full common-card theme-bg theme-border-color xl:mb-0 xl:w-1/2 xl:border-r xl:shadow-none xl:rounded-none xl:rounded-l-2xl">
         <BTTCWalletStats
           showQR={showQR}
           BTTCAddress={BTTCAddress}

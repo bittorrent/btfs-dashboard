@@ -6,7 +6,17 @@ import { getNodeRevenueStats } from 'services/dashboardService.js';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 
-const ChequeItem = ({ value, unit, percent, dotColor = '#848484', text, hasDetail, onDetail, disabled, tooltip }) => {
+const ChequeItem = ({
+  value,
+  unit,
+  percent,
+  dotColor = '#848484',
+  text,
+  hasDetail,
+  onDetail,
+  disabled,
+  tooltip,
+}) => {
   dotColor = disabled ? '#848484' : dotColor;
   const titleClassName = disabled ? ' theme-text-sub-main' : ' theme-text-main';
   return (
@@ -227,7 +237,7 @@ export default function NodeRevenueStats({ color }) {
   return (
     <div className="w-full h-full common-card shadow-none lg:shadow-md p-0">
       <div className="flex flex-wrap h-full">
-        <div className="mb-4 w-full common-card theme-bg lg:mb-0 lg:w-1/2 lg:border-r lg:shadow-none lg:rounded-none lg:rounded-l-2xl">
+        <div className="mb-4 w-full common-card theme-bg theme-border-color lg:mb-0 lg:w-1/2 lg:border-r lg:shadow-none lg:rounded-none lg:rounded-l-2xl">
           <TotalEarnings chequeEarning={chequeEarning} showChequeEarningTips={showChequeEarningTips} />
         </div>
         <div className="w-full common-card theme-bg lg:w-1/2 lg:shadow-none lg:rounded-none lg:rounded-r-2xl">

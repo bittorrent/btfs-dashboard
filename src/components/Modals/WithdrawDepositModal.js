@@ -164,7 +164,7 @@ export default function WithdrawDepositModal({ color }) {
 
   return (
     <CommonModal open={showModal} onCancel={closeModal} width={700}>
-      <div className={'common-modal-wrapper'}>
+      <div className={'common-modal-wrapper theme-bg'}>
         <header className="common-modal-header theme-text-main">{t(title)}</header>
         <main className="mb-12 theme-text-main">
           <div className="py-4">
@@ -189,16 +189,18 @@ export default function WithdrawDepositModal({ color }) {
                   // dropdownStyle={{ background: themeStyle.bg[color] }}
                 >
                   {MULTIPLE_CURRENY_LIST.map(item => {
-                    return <Option key={item.key} value={item.key}>{item.unit}</Option>;
+                    return (
+                      <Option key={item.key} value={item.key}>
+                        {item.unit}
+                      </Option>
+                    );
                   })}
                 </Select>
               )}
 
-              <div className="inputTransition flex-1">
+              <div className="inputTransition theme-border-color flex-1">
                 <input
-                  className={
-                    'p4 border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full theme-bg'
-                  }
+                  className={'px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full theme-bg'}
                   placeholder={
                     type === 'withdraw10'
                       ? intl.formatMessage({ id: 'available' }) + ' : ' + max

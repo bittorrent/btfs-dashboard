@@ -91,7 +91,7 @@ export default function CashConfirmModal() {
   return (
     <>
       <CommonModal open={showModal} onCancel={() => setShowModal(false)} width={540}>
-        <div className={'common-modal-wrapper'}>
+        <div className={'common-modal-wrapper theme-bg'}>
           <header className="common-modal-header mb-4">{t('cash_confirm')}</header>
           <main className="mb-8">
             <p className="mb-8 text-xs leading-none theme-text-sub-main">
@@ -136,7 +136,7 @@ export default function CashConfirmModal() {
         </div>
       </CommonModal>
       <CommonModal open={showResult} onCancel={close} width={400}>
-        <div className="common-modal-wrapper">
+        <div className="common-modal-wrapper theme-bg">
           <main className="flex flex-col justify-center items-center theme-bg theme-text-main">
             <div className="font-semibold mb-4"> {t('cashing_status')} </div>
             {!err && <Progress type="circle" percent={percentage} />}

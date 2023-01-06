@@ -67,7 +67,7 @@ export default function OnlineProofDetailModal() {
 
   return (
     <CommonModal open={showModal} onCancel={closeModal}>
-      <div className="common-modal-wrapper">
+      <div className="common-modal-wrapper theme-bg">
         <main className="flex flex-col justify-between theme-bg theme-text-main">
           <div className="flex flex-col">
             {cardConfig.map((item, index) => (

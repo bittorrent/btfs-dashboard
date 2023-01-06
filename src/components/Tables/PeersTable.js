@@ -48,7 +48,7 @@ export default function PeersTable({ color }) {
     return () => {
       didCancel = true;
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -59,7 +59,7 @@ export default function PeersTable({ color }) {
       <div className="w-full overflow-x-auto">
         <table className="w-full bg-transparent border-collapse">
           <thead className="theme-table-head-bg">
-            <tr className="common-table-head-tr theme-text-sub-info">
+            <tr className="common-table-head-tr theme-border-color theme-text-sub-info">
               <th className="common-table-head-th">{t('location')}</th>
               <th className="common-table-head-th">{t('latency')}</th>
               <th className="common-table-head-th">{t('peer')} ID</th>
@@ -70,10 +70,17 @@ export default function PeersTable({ color }) {
             {peers &&
               peers.map((items, index) => {
                 return (
-                  <tr key={index} className="text-sm theme-text-main theme-table-row-hover">
+                  <tr
+                    key={index}
+                    className="common-table-body-tr theme-border-color theme-text-main theme-table-row-hover">
                     <td className="common-table-body-td">
                       {items['CountryShort'] !== '-' && (
-                        <img src={mapFlag(items['CountryShort'])} alt="" className="inline mr-2 mb-1" width={22} />
+                        <img
+                          src={mapFlag(items['CountryShort'])}
+                          alt=""
+                          className="inline mr-2 mb-1"
+                          width={22}
+                        />
                       )}
                       <span>{items['CountryShort'] !== '-' ? items['CountryShort'] : '--'}</span>
                     </td>

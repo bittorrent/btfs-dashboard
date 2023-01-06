@@ -71,7 +71,7 @@ export default function ImportModal({ color }) {
 
   return (
     <CommonModal open={showModal} onCancel={closeModal}>
-      <div className="common-modal-wrapper theme-text-main">
+      <div className="common-modal-wrapper theme-bg theme-text-main">
         <header className="common-modal-header">
           {type === 'byPath' ? t('import_from_btfs') : t('new_folder')}
         </header>
@@ -86,7 +86,7 @@ export default function ImportModal({ color }) {
           </p>
           <input
             type="text"
-            className="common-input theme-bg theme-text-main"
+            className="common-input theme-bg theme-text-main theme-border-color"
             placeholder={type === 'byPath' ? 'CID' : intl.formatMessage({ id: 'folder_name' })}
             ref={el => {
               inputRef = el;

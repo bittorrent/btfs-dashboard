@@ -53,19 +53,18 @@ export default function CardChequeEarningList({ color }) {
   return (
     <div className="flex flex-col break-words common-card theme-bg theme-text-main">
       <div className="mb-5 flex justify-between items-center">
-        <div className='flex-1'>
+        <div className="flex-1">
           <Menu
             onClick={handleClick}
             selectedKeys={[current]}
             mode="horizontal"
+            className="theme-border-color"
             style={{ background: 'transparent' }}>
-            <Menu.Item key="cashList" className='-ml-4'>
+            <Menu.Item key="cashList" className="-ml-4">
               <h5 className={'font-bold theme-text-main'}>{t('cheque_cashing_list')}</h5>
             </Menu.Item>
             <Menu.Item key="cashHistory">
-              <h5 className={'font-bold theme-text-main'}>
-                {t('cheque_cashing_history')}
-              </h5>
+              <h5 className={'font-bold theme-text-main'}>{t('cheque_cashing_history')}</h5>
             </Menu.Item>
             <Menu.Item key="chequeDetail">
               <h5 className={'font-bold theme-text-main'}>{t('cheque_detail')}</h5>

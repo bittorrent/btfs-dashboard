@@ -30,7 +30,7 @@ export default function HostScoreRingChart({ color, data }) {
   return (
     <div className="py-8 px-6 h-full flex flex-col">
       <h5 className="text-base font-semibold theme-text-main">{t('host_score')}</h5>
-      <div className="py-5 flex-grow flex justify-center items-center border-b">
+      <div className="py-5 flex-grow flex justify-center items-center border-b theme-border-color">
         {!!(data.level && scoreLevelObj) && (
           <div
             className="flex justify-center items-center rounded-full"

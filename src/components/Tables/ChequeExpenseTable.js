@@ -49,7 +49,7 @@ export default function ChequeExpenseTable({ color }) {
       <div className="w-full overflow-x-auto" style={{ minHeight: 160 }}>
         <table className="w-full bg-transparent border-collapse">
           <thead className="theme-table-head-bg">
-            <tr className="common-table-head-tr theme-text-sub-info">
+            <tr className="common-table-head-tr theme-border-color theme-text-sub-info">
               <th className="common-table-head-th">{t('host_id')}</th>
               <th className="common-table-head-th">{t('blockchain')}</th>
               <th className="common-table-head-th">{t('chequebook')}</th>
@@ -61,8 +61,10 @@ export default function ChequeExpenseTable({ color }) {
             {cheques &&
               cheques.map((item, index) => {
                 return (
-                  <tr key={index} className="text-sm theme-text-main">
-                    <td className="common-table-body-td theme-table-row-hover">
+                  <tr
+                    key={index}
+                    className="common-table-body-tr theme-border-color theme-text-main theme-table-row-hover">
+                    <td className="common-table-body-td">
                       <div className="flex">
                         <a href={btfsScanLinkCheck() + '/#/node/' + item['PeerID']} target="_blank">
                           <Truncate>{item['PeerID']}</Truncate>
@@ -70,8 +72,8 @@ export default function ChequeExpenseTable({ color }) {
                         <ClipboardCopy value={item['PeerID']} />
                       </div>
                     </td>
-                    <td className="common-table-body-td theme-table-row-hover">BTTC</td>
-                    <td className="common-table-body-td theme-table-row-hover">
+                    <td className="common-table-body-td">BTTC</td>
+                    <td className="common-table-body-td">
                       <div className="flex">
                         <a href={bttcScanLinkCheck() + '/address/' + item['Vault']} target="_blank">
                           <Truncate>{item['Vault']}</Truncate>
@@ -79,11 +81,11 @@ export default function ChequeExpenseTable({ color }) {
                         <ClipboardCopy value={item['Vault']} />
                       </div>
                     </td>
-                    <td className="common-table-body-td theme-table-row-hover">
+                    <td className="common-table-body-td">
                       <img src={require(`assets/img/${item.icon}.svg`).default} alt="" className="mr-2" />
                       {item.unit}
                     </td>
-                    <td className="common-table-body-td theme-table-row-hover">
+                    <td className="common-table-body-td">
                       {switchBalanceUnit(item['Payout'], item?.price?.rate)}
                     </td>
                   </tr>

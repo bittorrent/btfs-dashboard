@@ -110,10 +110,10 @@ export default function NodeStorageStats({ color }) {
     <div className="mb-4 relative common-card p-0">
       <div className="mx-auto w-full">
         <div className="flex flex-wrap">
-          <div className="px-6 py-8 w-full border-b rounded-t-2xl theme-bg xl:w-1/3 xl:border-0 xl:border-r xl:rounded-none xl:rounded-l-2xl">
+          <div className="px-6 py-8 w-full border-b theme-border-color rounded-t-2xl theme-bg xl:w-1/3 xl:border-0 xl:border-r xl:rounded-none xl:rounded-l-2xl">
             <UncashedAmount uncashed={uncashed} uncashedChange={uncashedChange} />
           </div>
-          <div className="px-6 py-8 w-full border-b theme-bg xl:w-1/3 xl:border-0 xl:border-r">
+          <div className="px-6 py-8 w-full border-b theme-bg theme-border-color xl:w-1/3 xl:border-0 xl:border-r">
             <Contracts contracts={contracts} hostPrice={hostPrice} />
           </div>
           <div className="px-6 py-8 w-full rounded-b-2xl theme-bg xl:w-1/3 xl:rounded-none xl:rounded-r-2xl">

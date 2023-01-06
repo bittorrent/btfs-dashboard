@@ -13,25 +13,25 @@ const CurrencyIcon = ({ icon }) => (
 
 function SingleCurrency({ item, type, color, index }) {
   let { unit, cashed, unCashed, cashedValuePercent, icon } = item;
+
   if (type !== 'sentCheques') {
     const rate = item?.price?.rate ?? 1;
     cashed = switchBalanceUnit(cashed, rate);
     unCashed = switchBalanceUnit(unCashed, rate);
   }
-
   let style = {};
   if (index === 0) {
-    style = { borderRight: '1px solid #E6E9F4', borderBottom: '1px solid #E6E9F4' };
+    style = { borderRightWidth: 1, borderBottomWidth: 1 };
   } else if (index === 1) {
-    style = { borderBottom: '1px solid #E6E9F4' };
+    style = { borderBottomWidth: 1 };
   } else if (index === 2) {
-    style = { borderRight: '1px solid #E6E9F4' };
+    style = { borderRightWidth: 1 };
   } else if (index === 3) {
     style = {};
   }
 
   return type === 'sentCheques' ? (
-    <div className="w-1/2 p-3 pr-8 inline-flex justify-between items-center" style={style}>
+    <div className="w-1/2 p-3 pr-8 inline-flex justify-between items-center theme-border-color" style={style}>
       <div className="w-full">
         {/* title */}
         <div className="flex">
@@ -52,7 +52,7 @@ function SingleCurrency({ item, type, color, index }) {
       </div>
     </div>
   ) : (
-    <div className="w-1/2 p-3 pr-8 inline-flex justify-between items-center" style={style}>
+    <div className="w-1/2 p-3 pr-8 inline-flex justify-between items-center theme-border-color" style={style}>
       <div>
         {/* title */}
         <div className="flex">

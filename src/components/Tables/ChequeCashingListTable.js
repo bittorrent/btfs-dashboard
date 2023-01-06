@@ -30,7 +30,7 @@ export default function ChequeCashingListTable({ color, enableCash }) {
 
   const pageChange = useCallback(page => {
     updateTable(page);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const updateTable = async page => {
@@ -54,7 +54,7 @@ export default function ChequeCashingListTable({ color, enableCash }) {
     return () => {
       Emitter.removeListener('updateCashingList');
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -62,15 +62,15 @@ export default function ChequeCashingListTable({ color, enableCash }) {
     return () => {
       didCancel = true;
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="min-w-0 w-full flex flex-col shadow-lg rounded break-words theme-bg theme-text-main">
-      <div className="w-full overflow-x-auto" style={{minHeight: 160}}>
+      <div className="w-full overflow-x-auto" style={{ minHeight: 160 }}>
         <table className="w-full bg-transparent border-collapse">
-          <thead className='theme-table-head-bg'>
-            <tr className="common-table-head-tr theme-text-sub-info">
+          <thead className="theme-table-head-bg">
+            <tr className="common-table-head-tr theme-border-color theme-text-sub-info">
               <th className="common-table-head-th" style={{ width: '50px' }}></th>
               <th className="common-table-head-th">{t('host_id')}</th>
               <th className="common-table-head-th">{t('blockchain')}</th>
@@ -92,8 +92,10 @@ export default function ChequeCashingListTable({ color, enableCash }) {
             {cheques &&
               cheques.map((item, index) => {
                 return (
-                  <tr key={index} className="text-sm theme-text-main">
-                    <td className="common-table-body-td theme-table-row-hover">
+                  <tr
+                    key={index}
+                    className="common-table-body-tr theme-border-color theme-text-main theme-table-row-hover">
+                    <td className="common-table-body-td">
                       <input
                         type="checkbox"
                         name="checkbox"
@@ -103,7 +105,7 @@ export default function ChequeCashingListTable({ color, enableCash }) {
                         }}
                       />
                     </td>
-                    <td className="common-table-body-td theme-table-row-hover">
+                    <td className="common-table-body-td">
                       <div className="flex">
                         <a href={btfsScanLinkCheck() + '/#/node/' + item['PeerID']} target="_blank">
                           <Truncate>{item['PeerID']}</Truncate>
@@ -111,10 +113,8 @@ export default function ChequeCashingListTable({ color, enableCash }) {
                         <ClipboardCopy value={item['PeerID']} />
                       </div>
                     </td>
-                    <td className="common-table-body-td theme-table-row-hover">
-                      BTTC
-                    </td>
-                    <td className="common-table-body-td theme-table-row-hover">
+                    <td className="common-table-body-td">BTTC</td>
+                    <td className="common-table-body-td">
                       <div className="flex">
                         <a href={bttcScanLinkCheck() + '/address/' + item['Vault']} target="_blank">
                           <Truncate>{item['Vault']}</Truncate>
@@ -122,14 +122,14 @@ export default function ChequeCashingListTable({ color, enableCash }) {
                         <ClipboardCopy value={item['Vault']} />
                       </div>
                     </td>
-                    <td className="common-table-body-td theme-table-row-hover">
+                    <td className="common-table-body-td">
                       <img src={require(`assets/img/${item.icon}.svg`).default} alt="" className="mr-2" />
                       {item.unit}
                     </td>
-                    <td className="common-table-body-td theme-table-row-hover">
+                    <td className="common-table-body-td">
                       {switchBalanceUnit(item['Payout'] - item['CashedAmount'], item?.price?.rate)}
                     </td>
-                    <td className="common-table-body-td theme-table-row-hover">
+                    <td className="common-table-body-td">
                       {switchBalanceUnit(item['CashedAmount'], item?.price?.rate)}
                     </td>
                   </tr>
@@ -146,7 +146,9 @@ export default function ChequeCashingListTable({ color, enableCash }) {
             />
           </div>
         )}
-        {cheques && total === 0 && <div className="p-12 w-full flex justify-center theme-text-main">{t('no_data')}</div>}
+        {cheques && total === 0 && (
+          <div className="p-12 w-full flex justify-center theme-text-main">{t('no_data')}</div>
+        )}
       </div>
       <div className="flex justify-between items-center theme-text-main">
         <div className="p-4">Total: {total}</div>

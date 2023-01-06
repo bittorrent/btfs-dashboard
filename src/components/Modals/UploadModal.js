@@ -26,7 +26,7 @@ export default function UploadModal({ color }) {
       Emitter.removeListener('openUploadModal');
       window.body.style.overflow = '';
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onUploadProgress = function (label) {
@@ -65,7 +65,7 @@ export default function UploadModal({ color }) {
 
   return (
     <CommonModal open={showModal} onCancel={closeModal}>
-      <div className="common-modal-wrapper">
+      <div className="common-modal-wrapper theme-bg">
         <main className="flex flex-col justify-center items-center theme-bg theme-text-main">
           <div className="font-semibold mb-4"> {t('upload_status')} </div>
           {!err && <Progress type="circle" percent={percentage} />}

@@ -214,7 +214,7 @@ export default function LocalFilesTable({ color }) {
         <input
           type="text"
           placeholder={intl.formatMessage({ id: 'search_here' }) + '...'}
-          className={'common-input h-12 rounded-l-2xl theme-bg'}
+          className={'common-input h-12 rounded-l-2xl theme-border-color theme-bg'}
           ref={inputRef}
         />
         <button
@@ -253,7 +253,7 @@ export default function LocalFilesTable({ color }) {
         <div className="w-full overflow-x-auto">
           <table className="w-full bg-transparent border-collapse">
             <thead className="theme-table-head-bg">
-              <tr className="common-table-head-tr theme-text-sub-info">
+              <tr className="common-table-head-tr theme-border-color theme-text-sub-info">
                 <th className="common-table-head-th" style={{ width: '50px' }}>
                   <input
                     type="checkbox"
@@ -273,7 +273,9 @@ export default function LocalFilesTable({ color }) {
               {files &&
                 files.map((item, index) => {
                   return (
-                    <tr key={index} className="text-sm theme-text-main theme-table-row-hover">
+                    <tr
+                      key={index}
+                      className="common-table-body-tr theme-border-color theme-text-main theme-table-row-hover">
                       <td className="common-table-body-td">
                         <input
                           type="checkbox"

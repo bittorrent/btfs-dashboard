@@ -32,7 +32,7 @@ export default function CheckDetailModal() {
 
   return (
     <CommonModal open={showModal} onCancel={closeModal}>
-      <div className={'common-modal-wrapper'}>
+      <div className={'common-modal-wrapper theme-bg'}>
         <header className="common-modal-header theme-text-main">{CheckDetailData.current.title}</header>
         <main className="w-full flex flex-wrap">
           {CheckDetailData.current.dataList.map((item, index) => {
@@ -44,7 +44,7 @@ export default function CheckDetailModal() {
                     <div className="font-bold theme-text-main">
                       {item.value}&nbsp;&nbsp;{item.unit}
                     </div>
-                    <div>≈{item.bttValue} BTT</div>
+                    <div className="theme-text-main">≈{item.bttValue} BTT</div>
                   </div>
                 </div>
               </div>

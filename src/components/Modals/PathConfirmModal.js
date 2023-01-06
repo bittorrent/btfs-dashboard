@@ -47,7 +47,7 @@ export default function PWDModal() {
 
   return (
     <CommonModal width={520} open={showModal} onCancel={closeModal}>
-      <div className={'common-modal-wrapper'}>
+      <div className={'common-modal-wrapper theme-bg'}>
         <header className="common-modal-header theme-text-main">{t('storage_path_confirmation')}</header>
         <main className="mb-8">
           <div className="mb-4 theme-text-sub-main">{t('storage_path_info')}</div>

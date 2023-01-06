@@ -48,7 +48,7 @@ export default function OnlineProofTable({ color }) {
       <div className="w-full overflow-x-auto">
         <table className="w-full bg-transparent border-collapse">
           <thead className="theme-table-head-bg">
-            <tr className="common-table-head-tr theme-text-sub-info">
+            <tr className="common-table-head-tr theme-border-color theme-text-sub-info">
               <th className="common-table-head-th">{t('heart_th_time')}</th>
               <th className="common-table-head-th">{t('heart_th_txhash')}</th>
               <th className="common-table-head-th">{t('heart_th_from')}</th>
@@ -68,7 +68,9 @@ export default function OnlineProofTable({ color }) {
             {list &&
               list.map((items, index) => {
                 return (
-                  <tr key={index} className="text-sm theme-text-main theme-table-row-hover">
+                  <tr
+                    key={index}
+                    className="common-table-body-tr theme-border-color theme-text-main theme-table-row-hover">
                     <td className="common-table-body-td">
                       <span>{items['report_time']}</span>
                     </td>

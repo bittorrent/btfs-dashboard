@@ -5,7 +5,7 @@ import HostWarning from 'components/Warning/HostWarning.js';
 const ProgressItem = ({ item, list }) => {
   return (
     <div key={item.id} className="w-full">
-      <div className="flex justify-between fs-14 base-main-color">
+      <div className="flex justify-between fs-14 theme-text-main">
         <span>{t(item.text)}</span>
         <span>{item.level}/3</span>
       </div>

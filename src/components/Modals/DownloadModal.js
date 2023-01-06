@@ -61,7 +61,7 @@ export default function DownloadModal({ color }) {
 
   return (
     <CommonModal open={showModal} onCancel={closeModal}>
-      <div className="common-modal-wrapper">
+      <div className="common-modal-wrapper theme-bg">
         <main className="flex flex-col justify-center items-center theme-bg theme-text-main">
           <div className="font-semibold mb-4"> {t('download_status')} </div>
           {!err && percentage < 100 && <Progress type="circle" percent={percentage} />}

@@ -115,7 +115,7 @@ export default function CardSettings({ color }) {
         <div className="flex">
           <input
             type="text"
-            className="mr-2 common-input theme-bg"
+            className="mr-2 common-input theme-bg theme-border-color"
             defaultValue="http://localhost:5001"
             ref={inputRef}
             onChange={handleChange}
@@ -135,7 +135,12 @@ export default function CardSettings({ color }) {
           <h5 className="font-bold theme-text-main">{t('storage_path')}</h5>
         </div>
         <div className="flex justify-between">
-          <input type="text" className="common-input theme-bg" defaultValue={path} ref={pathRef} />
+          <input
+            type="text"
+            className="common-input theme-bg theme-border-color"
+            defaultValue={path}
+            ref={pathRef}
+          />
           <button className="ml-2 common-btn theme-common-btn" type="button" onClick={changePath}>
             {t('change')}
           </button>

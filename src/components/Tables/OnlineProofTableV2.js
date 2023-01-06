@@ -51,7 +51,7 @@ export default function OnlineProofTable({ color }) {
           <div className="mb-4 flex justify-between">
             <h3 className="text-base theme-text-main">{t('online_proof_detail')}</h3>
             {peerId && (
-              <a href={`https://scan.btfs.io/#/node/${peerId}`} target="_blank" className='theme-link'>
+              <a href={`https://scan.btfs.io/#/node/${peerId}`} target="_blank" className="theme-link">
                 {t('heart_to_scan')}
               </a>
             )}
@@ -61,7 +61,7 @@ export default function OnlineProofTable({ color }) {
         <div className="w-full overflow-x-auto">
           <table className="w-full bg-transparent border-collapse">
             <thead className="theme-table-head-bg">
-              <tr className="common-table-head-tr theme-text-sub-info">
+              <tr className="common-table-head-tr theme-border-color theme-text-sub-info">
                 <th className="common-table-head-th">{t('online_proof_node_id')}</th>
                 <th className="common-table-head-th">{t('online_proof_sign_time')}</th>
                 <th className="common-table-head-th">{t('online_proof_heart_beats')}</th>
@@ -72,7 +72,9 @@ export default function OnlineProofTable({ color }) {
               {list &&
                 list.map((items, index) => {
                   return (
-                    <tr key={index} className="text-sm theme-text-main theme-table-row-hover">
+                    <tr
+                      key={index}
+                      className="common-table-body-tr theme-border-color theme-text-main theme-table-row-hover">
                       <td className="common-table-body-td">
                         <span>{items.last_signed_info.peer}</span>
                       </td>
@@ -85,7 +87,9 @@ export default function OnlineProofTable({ color }) {
                         <span>{items.last_signed_info.nonce}</span>
                       </td>
                       <td className="common-table-body-td">
-                        <a className='theme-link' onClick={() => openDetailModal(items, bttcAddr)}>{t('check')}</a>
+                        <a className="theme-link" onClick={() => openDetailModal(items, bttcAddr)}>
+                          {t('check')}
+                        </a>
                       </td>
                     </tr>
                   );

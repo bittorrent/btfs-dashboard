@@ -21,6 +21,7 @@ export default function CardChequeExpenseList({ color }) {
             onClick={handleClick}
             selectedKeys={[current]}
             mode="horizontal"
+            className="theme-border-color"
             style={{ background: 'transparent' }}>
             <Menu.Item key="expenseList" className="-ml-4">
               <h5 className={'font-bold theme-text-main'}>{t('expense_list')}</h5>

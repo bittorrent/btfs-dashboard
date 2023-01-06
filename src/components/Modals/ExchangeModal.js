@@ -104,7 +104,7 @@ export default function ExchangeModal({ color }) {
 
   return (
     <CommonModal open={showModal} onCancel={closeModal} width={640}>
-      <div className={'common-modal-wrapper'}>
+      <div className={'common-modal-wrapper theme-bg'}>
         <header className="common-modal-header theme-text-main">BTT - WBTT {t('exchange')}</header>
         <main className="mb-12 theme-text-main">
           <div className="relative">
@@ -116,9 +116,9 @@ export default function ExchangeModal({ color }) {
                     <button className="common-btn theme-common-btn" onClick={setMaxBTTNum}>
                       MAX
                     </button>
-                    <div className="inputTransition">
+                    <div className="inputTransition theme-border-color">
                       <input
-                        className="border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full theme-bg"
+                        className="px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full theme-bg"
                         placeholder={intl.formatMessage({ id: 'max_available_amount' }) + ' : ' + maxBTT}
                         onChange={inputChange}
                         type="number"
@@ -137,9 +137,9 @@ export default function ExchangeModal({ color }) {
                 <div className="grow">
                   <div className="text-center font-semibold text-lg mb-4">WBTT</div>
                   <div className="flex">
-                    <div className="inputTransition">
+                    <div className="inputTransition theme-border-color">
                       <input
-                        className="border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full text-center theme-bg"
+                        className="border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full text-center theme-bg theme-border-color"
                         disabled="disabled"
                         value={value}
                       />
@@ -156,9 +156,9 @@ export default function ExchangeModal({ color }) {
                     <button className="common-btn theme-common-btn" onClick={setMaxWBTTNum}>
                       MAX
                     </button>
-                    <div className="inputTransition">
+                    <div className="inputTransition theme-border-color">
                       <input
-                        className="border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full theme-bg"
+                        className="border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full theme-bg theme-border-color"
                         placeholder={intl.formatMessage({ id: 'max_amount' }) + ' : ' + maxWBTT}
                         onChange={inputChange}
                         type="number"
@@ -177,9 +177,9 @@ export default function ExchangeModal({ color }) {
                 <div className="grow">
                   <div className="text-center font-semibold text-lg mb-4">BTT</div>
                   <div className="flex">
-                    <div className="inputTransition">
+                    <div className="inputTransition theme-border-color">
                       <input
-                        className="border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full text-center theme-bg"
+                        className="border-black px-3 py-3 placeholder-blueGray-300 text-sm focus:outline-none w-full text-center theme-bg theme-border-color"
                         disabled="disabled"
                         value={value}
                       />

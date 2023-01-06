@@ -42,10 +42,9 @@ export default function CardHostScore({ color }) {
   };
 
   return (
-    <div
-      className={'h-full common-card p-0 shadow-none lg:shadow-md'}>
+    <div className={'h-full common-card p-0 shadow-none lg:shadow-md'}>
       <div className="flex flex-wrap h-full">
-        <div className="mb-4 w-full common-card p-0 theme-bg lg:mb-0 lg:w-1/2 lg:border-r lg:shadow-none lg:rounded-none lg:rounded-l-2xl">
+        <div className="mb-4 w-full common-card p-0 theme-bg theme-border-color lg:mb-0 lg:w-1/2 lg:border-r lg:shadow-none lg:rounded-none lg:rounded-l-2xl">
           <HostScoreRingChart data={newRingChartData} color={color} />
         </div>
         <div className="w-full common-card p-0 theme-bg lg:w-1/2 lg:shadow-none lg:rounded-none lg:rounded-r-2xl">
