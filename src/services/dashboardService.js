@@ -387,7 +387,7 @@ export const getFilesStorage = async () => {
 };
 
 const formAmount = (amount) => {
-    let amount_str = new BigNumber(amount).multipliedBy(PRECISION).toFixed();
+    let amount_str = new BigNumber(amount).multipliedBy(PRECISION_RATE).toFixed();
     return amount_str;
 };
 
