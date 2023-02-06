@@ -105,3 +105,18 @@
     }
   }
 }
+
+.ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-item, .ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-submenu{
+    padding: 0 15px !important;
+}
+
+.ant-menu-item{
+    color:$text-color-menuItem !important;
+}
+
+.ant-menu-item-selected{
+    color:#000 !important;
+    font-weight: bold;
+}
+
+

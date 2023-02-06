@@ -186,9 +186,8 @@ export default function NodeWalletStats({ color }) {
             balance10,
             tronAddress,
             allCurrencyBalanceList,
-            getChequeBookAllBalanceData,
+            chequeMapBookAllBalanceData,
         } = await getNodeWalletStats();
-        console.log('getChequeBookAllBalanceData', getChequeBookAllBalanceData)
         if (!didCancel) {
             unstable_batchedUpdates(() => {
                 setBTTCAddress(BTTCAddress);
@@ -201,7 +200,7 @@ export default function NodeWalletStats({ color }) {
                 set_BTTCAddressWBTT(maxAvailableWBTT);
                 setBalance10(balance10);
                 setTronAddress(tronAddress);
-                setAllCurrencyBalanceList(() => allCurrencyBalanceList);
+                setAllCurrencyBalanceList(() => chequeMapBookAllBalanceData);
             });
         }
     };

@@ -68,6 +68,7 @@
   color: $error-color;
 }
 
+
 .nav-link-li {
   &:hover {
     color: $text-color-main;
@@ -250,6 +251,10 @@
   border-color: $border-color;
 }
 
+.theme-divider-color{
+    border-color: $line-color;
+}
+
 .theme-divider {
   background-color: $line-color;
 }
@@ -279,6 +284,10 @@ input.dark {
 
 .text-gray-900 {
   color: #5a607f;
+}
+
+.text-menu-item{
+    color:#A1A7C4
 }
 
 .locale_btn {

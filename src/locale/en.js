@@ -2,7 +2,7 @@ const en_US = {
     // common
     'close': 'Close',
     'check': 'Check',
-// sidebar
+    // sidebar
 
     'dashboard': 'Dashboard',
     'cheques': 'Cheques',
@@ -15,7 +15,7 @@ const en_US = {
     'contact_us': 'Contact Us',
     'heartbeats': 'Online Proof',
 
-// dashboard
+    // dashboard
 
     'host_id': 'Host ID',
     'host_version': 'Host Version',
@@ -69,21 +69,21 @@ const en_US = {
     'send': 'Send',
     'in': 'In',
     'out': 'Out',
-    'poor':'Poor',
-    'general':'Average',
-    'good':'Good',
-    'excellent':'Excellent',
-    'online_active':'Activity',
-    'switch_old_version':'Old version',
-    'switch_new_version':'New version',
-    'cheque_earnings_des':'According to the current exchange rate, other currencies are converted into BTT. The value is for reference only. Click to view the details',
+    'poor': 'Poor',
+    'general': 'Average',
+    'good': 'Good',
+    'excellent': 'Excellent',
+    'online_active': 'Activity',
+    'switch_old_version': 'Old version',
+    'switch_new_version': 'New version',
+    'cheque_earnings_des': 'According to the current exchange rate, other currencies are converted into BTT. The value is for reference only. Click to view the details',
     'cheque_earning_detail': 'Cheques Earning Detials',
     'checks_expense_detials': 'Cheques Expense Detials',
     'vault_contract_balance': 'Vault Balance',
     'vault_contract_address': 'Vault Contract Address',
     'address_balance': 'Balance',
 
-// cheques
+    // cheques
 
     'earning': 'Earning',
     'expense': 'Expense',
@@ -115,7 +115,7 @@ const en_US = {
     'cheques_amount': 'Cheques Amount',
     'cheques_amount_tooltip': 'The total amount is converted into BTT from other currencies at the current exchange rate, and the value is for reference only',
 
-// files
+    // files
 
     'import': 'Import',
     'file': 'File',
@@ -139,7 +139,7 @@ const en_US = {
     'occupied': 'Occupied',
     'search_here': 'Search here',
 
-// peers
+    // peers
 
     'location': 'Location',
     'latency': 'Latency',
@@ -147,41 +147,41 @@ const en_US = {
     'connection': 'Connection',
     'add_connection': 'Add Connection',
 
-// setting
+    // setting
 
     'system_config': 'System Config',
     'submit': 'Submit',
     'endpoint': 'Endpoint',
-    'storage_path':'Storage Path',
+    'storage_path': 'Storage Path',
     'change': 'Change',
     'security': 'Security',
     'reveal_key': 'Reveal Private Key',
     'private_key': 'Private Key',
-    'advance_config':'Advanced Settings',
-    'advance_config_tips':'Changes to the settings require the service to be restarted before they can take effect. Please do not change any item if you do not know what it is.',
-    'reset_default':'Reset',
-    'view_config_file':'Config File',
-    'enable_storage_host':'Miner Mode',
-    'enable_storage_host_tips':'The node stores the data uploaded by users only when Storage Host Mode is on. This mode is turned on by default.',
-    'enable_report_online':'Online Report',
-    'enable_report_online_tips':'Once it is turned on, a signature will be created every hour, and the data of all signatures will be reported to the contract.',
-    'enable_report_status_contract':'Status Contract Report',
-    'enable_report_status_contract_tips':`Once it is turned on, the node's uptime will be reported to the Online Proof Contract via a transaction every day. `,
-    'reset_advance_config_title':'Restore the default configuration',
-    'reset_advance_config_tips':'After restoring the default configuration, you need to restart the service to take effect',
-    'setting_breadcrumb':'SETTINGS',
-    'setting_file_config_breadcrumb':'View BTFS Configuration File',
-    'setting_file_config_breadcrumb_des':`BTFS's configuration file is a JSON file read by the BTFS daemon. `,
-    'rpc_address':'RPC Address',
-    'rpc_set_btn_name':'Set',
-    'copy_url':'Copy URL with API parameter',
-    'copy_url_tips':`Copy the URL with the API endpoint's parameters. You may configure the API endpoint quickly by accessing the URL.`,
+    'advance_config': 'Advanced Settings',
+    'advance_config_tips': 'Changes to the settings require the service to be restarted before they can take effect. Please do not change any item if you do not know what it is.',
+    'reset_default': 'Reset',
+    'view_config_file': 'Config File',
+    'enable_storage_host': 'Miner Mode',
+    'enable_storage_host_tips': 'The node stores the data uploaded by users only when Storage Host Mode is on. This mode is turned on by default.',
+    'enable_report_online': 'Online Report',
+    'enable_report_online_tips': 'Once it is turned on, a signature will be created every hour, and the data of all signatures will be reported to the contract.',
+    'enable_report_status_contract': 'Status Contract Report',
+    'enable_report_status_contract_tips': `Once it is turned on, the node's uptime will be reported to the Online Proof Contract via a transaction every day. `,
+    'reset_advance_config_title': 'Restore the default configuration',
+    'reset_advance_config_tips': 'After restoring the default configuration, you need to restart the service to take effect',
+    'setting_breadcrumb': 'SETTINGS',
+    'setting_file_config_breadcrumb': 'View BTFS Configuration File',
+    'setting_file_config_breadcrumb_des': `BTFS's configuration file is a JSON file read by the BTFS daemon. `,
+    'rpc_address': 'RPC Address',
+    'rpc_set_btn_name': 'Set',
+    'copy_url': 'Copy URL with API parameter',
+    'copy_url_tips': `Copy the URL with the API endpoint's parameters. You may configure the API endpoint quickly by accessing the URL.`,
 
-// modal
+    // modal
     'transfer': 'Transfer',
     'exchange': 'Exchange',
     'BTFS_10_withdraw': 'BTFS 1.0 Withdraw',
-    'withdraw10':'Withdraw',
+    'withdraw10': 'Withdraw',
     '10_withdraw_description': 'The withdrawal will be sent to Node’s corresponding TRON address.',
     'node_tron_addr': 'Node TRON address',
     'available': 'Available',
@@ -203,7 +203,7 @@ const en_US = {
     'next': 'Next',
     'return': 'Return',
     'receive_account': 'Receive Account',
-    'send_to':'Send To',
+    'send_to': 'Send To',
     'send_amount': 'Send Amount',
     'enter_bttc_address': 'Please enter a valid BTTC address',
     'key_warning_1': 'Private key controls all your assets',
@@ -211,7 +211,7 @@ const en_US = {
     'storage_path_confirmation': "Storage Path Confirmation",
     'storage_path_info': "Are you sure you want to change BTFS storage to this path ?",
 
-//  warning
+    //  warning
 
     'no_preview': 'No Preview',
     'node_not_connected': 'Looks like your node is not connected',
@@ -225,7 +225,7 @@ const en_US = {
     'no_data': 'No Data',
     'setting_error': 'Setting failed, please check if you are using a valid API URL!',
     'setting_success': 'Setting Successful !',
-    'change_success':'Change Path Successful !',
+    'change_success': 'Change Path Successful !',
     'api_invalid': 'Invalid API URL Format !',
     'api_not_set': 'API ENDPOINT not set !',
     'withdraw_success': 'Withdraw Successful !',
@@ -245,9 +245,9 @@ const en_US = {
     'network_unstable_btfs': 'Can not connect to BTFS Network.',
     'check_network_request': 'Please check your network connection.',
     'estimate_transition_fee_tooltip': 'If the BTT balance is less than the estimated transaction fee, the transaction may not be sent successfully',
-    'copy_success':'Copy Sucessful !',
+    'copy_success': 'Copy Sucessful !',
 
-// heartBeats
+    // heartBeats
 
     'heart_contract': 'ONLINE PROOF CONTRACT',
     'heart_contract_des': 'The node will get online proof from the online signature service, and report it to the online proof contract. This contract is designed to store the latest online proof data for each node.',
@@ -264,19 +264,19 @@ const en_US = {
     'heart_th_contract': 'Online Proof Contract',
     'heart_th_nonce': 'Heartbeats Nonce',
     'bttc_addr': 'Node’s BTTC Address',
-    'heart_th_nonce_tips':'Heartbeat Nonce: A nonce used to prove the node is online. The nonce will increase by one as each hour passes. ',
+    'heart_th_nonce_tips': 'Heartbeat Nonce: A nonce used to prove the node is online. The nonce will increase by one as each hour passes. ',
     'switch_to_v1': 'Switch to V1',
     'switch_to_v2': 'Switch to V2',
     'switch_v1_v2_tootip': 'The V1 version of online proof proves the online status of the node by sending transactions to the contract, which is no longer used after BTFS 2.3',
-    'online_proof_data': 'ONLINE PROOF DATA',
-    'online_proof_nonce': 'CURRENT NONCE',
-    'online_proof_detail': 'ONLINE PROOF DETAILS',
+    'online_proof_data': 'Online Proof Data',
+    'online_proof_nonce': 'Current Nonce',
+    'online_proof_detail': 'Online Proof  Details',
     'online_proof_detail_des': 'The node proves the online status of the node by periodically sending status data to the online proof service',
     'online_proof_link_to_scan': 'View and verify on BTFS Scan',
-    'online_proof_node_id':'Node ID',
-    'online_proof_sign_time':'Sign Time',
-    'online_proof_heart_beats':'Heartbeats Nonce',
-    'online_proof_table_detail':'Detail',
+    'online_proof_node_id': 'Node ID',
+    'online_proof_sign_time': 'Sign Time',
+    'online_proof_heart_beats': 'Heartbeats Nonce',
+    'online_proof_table_detail': 'Detail',
     'online_proof_table_detail_last_signature': 'Last Singature',
     'online_proof_table_detail_peer_id': 'PeerID',
     'online_proof_table_detail_create_time': 'Create Time',

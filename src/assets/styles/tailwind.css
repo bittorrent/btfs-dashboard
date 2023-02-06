@@ -979,7 +979,8 @@ video {
 }
 
 .common-btn {
-  border-radius: 0.5rem;
+  border-radius: 4px;
+  width: 122px;
   font-weight: 700;
   height: 2.25rem;
   font-size: 0.75rem;
@@ -1158,7 +1159,6 @@ video {
 }
 
 .common-table-head-tr {
-  border-bottom-width: 1px;
   font-size: 0.875rem;
   line-height: 1.25rem;
   line-height: 1;
@@ -1172,6 +1172,7 @@ video {
   padding-left: 1rem;
   padding-right: 1rem;
   text-align: left;
+  color:#5A607F
 }
 
 .common-table-body-tr {
@@ -2041,8 +2042,8 @@ video {
   --tw-ring-offset-width: 0px;
   --tw-ring-offset-color: #fff;
   --tw-ring-color: rgba(59, 130, 246, 0.5);
-  --tw-ring-offset-shadow: 0 0 #0000;
-  --tw-ring-shadow: 0 0 #0000;
+  --tw-ring-offset-shadow: 0px 1px 4px 0px rgba(21,34,50,0.08);;
+  --tw-ring-shadow: 0px 1px 4px 0px rgba(21,34,50,0.08);;
 }
 
 .text-left {

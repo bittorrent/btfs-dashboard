@@ -301,6 +301,7 @@ export const getNodeWalletStats = async () => {
         const allBalanceData = result[5]
         const chequeBookAllBalanceData = result[6]
         const allCurrencyBalanceList = []
+        const chequeMapBookAllBalanceData = []
         MULTIPLE_CURRENY_LIST.forEach((item) => {
             const newItem = { ...item }
             newItem.addressValue = 0
@@ -325,6 +326,7 @@ export const getNodeWalletStats = async () => {
                     .toNumber()
             }
             allCurrencyBalanceList.push({ ...newItem })
+            chequeMapBookAllBalanceData.push({ ...newItem })
         })
 
         return {
@@ -339,7 +341,7 @@ export const getNodeWalletStats = async () => {
             balance10: balance10,
             tronAddress: tronAddress,
             allCurrencyBalanceList,
-            getChequeBookAllBalanceData,
+            chequeMapBookAllBalanceData,
         }
     })
 };
