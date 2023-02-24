@@ -185,7 +185,7 @@ export default function NodeWalletStats({ color }) {
             maxAvailableWBTT,
             balance10,
             tronAddress,
-            allCurrencyBalanceList,
+            // allCurrencyBalanceList,
             chequeMapBookAllBalanceData,
         } = await getNodeWalletStats();
         if (!didCancel) {

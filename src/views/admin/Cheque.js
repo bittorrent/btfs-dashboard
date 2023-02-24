@@ -4,7 +4,6 @@ import { mainContext } from 'reducer';
 import ChequeEarning from './ChequeEarning.js';
 import ChequeExpense from './ChequeExpense.js';
 import CashConfirmModal from 'components/Modals/CashConfirmModal.js';
-import themeStyle from 'utils/themeStyle.js';
 import { t } from 'utils/text.js';
 
 export default function Cheque() {
