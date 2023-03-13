@@ -30,6 +30,22 @@
   box-shadow: 0px 0px 5px;
 }
 
+.common-box-shadow {
+  box-shadow: 0px 1px 6px 0px rgba(21, 34, 50, 0.04);
+}
+
+.common-card {
+  box-shadow: 0px 1px 6px 0px rgba(21, 34, 50, 0.04);
+}
+
+.common-btn {
+  min-width: 105px;
+}
+
+.sidebar {
+  box-shadow: 0px 1px 6px 0px rgba(21, 34, 50, 0.04);
+}
+
 .inputTransition {
   position: relative;
   width: 100%;

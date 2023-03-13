@@ -6,7 +6,7 @@
 
 @layer components {
   .common-card {
-    @apply p-6 border-0 shadow-lg rounded-2xl transition-all;
+    @apply p-6 border-0 rounded-2xl transition-all;
   }
 
   .common-input {
@@ -14,7 +14,7 @@
   }
 
   .common-btn {
-    @apply h-9 px-4 py-2 rounded-lg hover:shadow outline-none focus:outline-none font-bold text-xs whitespace-nowrap transition-all;
+    @apply h-9 px-4 py-2 rounded hover:shadow outline-none focus:outline-none font-bold text-xs whitespace-nowrap transition-all;
   }
 
   .setting-header {
@@ -22,7 +22,7 @@
   }
 
   .sidebar {
-    @apply relative z-10 py-4 px-6 flex flex-wrap items-center justify-between shadow-xl md:fixed md:left-0 md:top-0 md:bottom-0 md:block md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden;
+    @apply relative z-10 py-4 px-6 flex flex-wrap items-center justify-between md:fixed md:left-0 md:top-0 md:bottom-0 md:block md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden;
   }
 
   .round-btn {

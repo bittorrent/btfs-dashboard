@@ -129,7 +129,7 @@ export default function ChequeCashingListTable({ color, enableCash }) {
                                         </td>
                                         <td className="common-table-body-td">
                                             <div className='flex items-center'>
-                                                <img src={require(`assets/img/${item.icon}.svg`).default} alt="" className="mr-2" />
+                                                <img src={require(`assets/img/${item.icon}.svg`).default} width={20} height={20} alt="" className="mr-2" />
                                                 {item.unit}
                                             </div>
                                         </td>

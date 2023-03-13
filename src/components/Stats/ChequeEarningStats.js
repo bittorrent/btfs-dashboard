@@ -25,9 +25,9 @@ const ReceivedCheques = ({ chequesStats, earningCountAllStatsData, color }) => {
     return (
         <div
             className={
-                'relative break-words rounded-2xl mb-2 xl:mb-0 theme-bg theme-text-main'
+                'relative break-words rounded-2xl mb-2 xl:mb-0 theme-bg theme-text-main common-box-shadow'
             }>
-            <div className="flex flex-col justify-between" style={{ height: 425 }}>
+            <div className="flex flex-col justify-between" style={{ height: 467 }}>
                 <ReceivedChequesMain chequesStats={chequesStats} color={color} />
                 <MultipleCurrenyList type="recievedCheques" color={color} dataList={earningCountAllStatsData} />
             </div>
@@ -65,8 +65,8 @@ const ReceivedAmountMain = ({ chequesStats, color }) => {
 
 const ReceivedAmount = ({ chequesStats, earningValueAllStatsData, color }) => {
     return (
-        <div className={'relative break-words rounded-2xl theme-bg theme-text-main'}>
-            <div className="flex flex-col justify-between" style={{ height: 425 }}>
+        <div className={'relative break-words rounded-2xl theme-bg theme-text-main common-box-shadow'}>
+            <div className="flex flex-col justify-between" style={{ height: 467 }}>
                 <ReceivedAmountMain color={color} chequesStats={chequesStats} />
                 <MultipleCurrenyList color={color} dataList={earningValueAllStatsData} />
             </div>
@@ -107,7 +107,7 @@ export default function ChequeEarningStats({ color }) {
     return (
         <div className="relative pt-4 pb-4">
             <div className="mx-auto w-full">
-                <div className="flex flex-wrap common-card p-0">
+                <div className="flex flex-wrap common-card p-0" style={{boxShadow: 'none'}}>
                     <div className="w-full xl:w-6/12 xl:pr-2">
                         <ReceivedCheques
                             chequesStats={chequesStats}

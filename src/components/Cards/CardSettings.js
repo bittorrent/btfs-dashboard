@@ -159,7 +159,7 @@ export default function CardSettings({ color }) {
             </span>
             <span>{t('private_key')}</span>
           </div>
-          <button className="ml-2 common-btn theme-danger-btn" type="button" onClick={reveal}>
+          <button className="ml-2 common-btn theme-danger-btn" type="button" onClick={reveal} style={{minWidth: 'auto'}}>
             {t('reveal_key')}
           </button>
         </div>

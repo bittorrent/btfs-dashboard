@@ -4,6 +4,10 @@ import BigNumber from 'bignumber.js';
 import { switchStorageUnit2, switchBalanceUnit, toThousands, getTimes } from "utils/BTFSUtil.js";
 import { PRECISION, PRECISION_RATE, PRECISION_OLD, FEE, NEW_SCORE_VERSION, INIT_MULTI_CURRENCY_DATA, MULTIPLE_CURRENY_LIST } from "utils/constants.js";
 
+export const getHostInfo = () => {
+  return Client10.getHostInfo();
+}
+
 export const getNodeBasicStats = async () => {
     let data1 = Client10.getHostInfo();
     let data2 = Client10.getHostScore(NEW_SCORE_VERSION);

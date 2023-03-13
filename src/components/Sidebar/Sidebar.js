@@ -1,10 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { mainContext } from 'reducer';
 import LangDropdown from 'components/Dropdowns/LangDropdown.js';
 import ThemeToggle from 'components/Toggles/ThemeToggle';
-import Divider from 'components/Divider/Divider';
+import { getHostInfo } from 'services/dashboardService.js';
+import HostID from './HostID';
 import { t } from 'utils/text.js';
 
 const NavLinksConfig = [
@@ -36,6 +37,15 @@ export default function Sidebar() {
     const { dispatch, state } = useContext(mainContext);
     const { sidebarShow, theme } = state;
     const [collapseShow, setCollapseShow] = useState('hidden');
+    const [ID, setID] = useState('');
+
+    useEffect(() => {
+      const fetchData = async () => {
+        const res = await getHostInfo();
+        setID(res?.ID || '');
+      };
+      fetchData();
+    }, []);
 
     const sidebarToggle = () => {
         dispatch({
@@ -112,11 +122,10 @@ export default function Sidebar() {
                             </div>
                         </div>
                     </div>
-                    <Divider className="my-4 md:min-w-full block md:hidden" />
                     {/* Search */}
                     <div>
-                        {/* Divider */}
-                        <Divider className="my-4 md:min-w-full hidden md:block" />
+                        {/* HostID */}
+                        {ID && ID !== '' && <HostID ID={ID} />}
                         {/* Navigation */}
                         <ul
                             className="md:flex-col md:min-w-full flex flex-col list-none  text-xs font-bold"

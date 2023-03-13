@@ -18,21 +18,23 @@ const ButtonSwitch = ({ current: currentProp, leftButtonProps, rightButtonProps 
   };
 
   return (
-    <div className={'p-0.5 rounded whitespace-nowrap theme-fill-gray'}>
+    <div className={'rounded whitespace-nowrap theme-fill-gray'} style={{ padding: 3 }}>
       <button
         onClick={handleClickLeft}
         className={
-          'mr-1 common-btn h-6 px-1 py-1 shadow-none hover:shadow-none theme-switch-btn' +
+          'mr-1 common-btn h-6 px-2 py-1 shadow-none hover:shadow-none theme-switch-btn' +
           (current === 'left' ? ' switch-btn-focused' : '')
-        }>
+        }
+        style={{ borderRadius: 3 }}>
         {textLeft}
       </button>
       <button
         onClick={handleClickRight}
         className={
-          'common-btn h-6 px-1 py-1  theme-switch-btn shadow-none hover:shadow-none' +
+          'common-btn h-6 px-2 py-1 theme-switch-btn shadow-none hover:shadow-none' +
           (current === 'right' ? ' switch-btn-focused' : '')
-        }>
+        }
+        style={{ borderRadius: 3 }}>
         {textRight}
       </button>
     </div>

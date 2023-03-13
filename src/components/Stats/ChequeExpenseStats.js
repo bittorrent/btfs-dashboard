@@ -25,7 +25,7 @@ const ExpenseChequesMain = ({ chequesStats }) => {
 const ExpenseCheques = ({ chequesStats, expenseCountAllStatsData, color }) => {
     return (
         <div className={'relative break-words mb-2 xl:mb-0 rounded-2xl theme-bg theme-text-main'}>
-            <div className="flex flex-col  justify-between" style={{ height: 425 }}>
+            <div className="flex flex-col  justify-between" style={{ height: 467 }}>
                 <ExpenseChequesMain color={color} chequesStats={chequesStats} />
                 <MultipleCurrenyList color={color} type={'sentCheques'} dataList={expenseCountAllStatsData} />
             </div>
@@ -63,7 +63,7 @@ const ExpenseAmountMain = ({ chequesStats, color }) => {
 const ExpenseAmount = ({ chequesStats, expenseValueAllStatsData, color }) => {
     return (
         <div className={'relative break-words mb-2 xl:mb-0 rounded-2xl theme-bg theme-text-main'}>
-            <div className="flex flex-col  justify-between" style={{ height: 425 }}>
+            <div className="flex flex-col  justify-between" style={{ height: 467 }}>
                 <ExpenseAmountMain color={color} chequesStats={chequesStats} />
                 <MultipleCurrenyList color={color} dataList={expenseValueAllStatsData} />
             </div>

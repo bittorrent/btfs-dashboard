@@ -21,13 +21,13 @@ function SingleCurrency({ item, type, color, index }) {
     }
     let style = {};
     if (index === 0) {
-        style = { borderRightWidth: 1, borderBottomWidth: 1, paddingBottom: 32 };
+        style = { borderRightWidth: 1, borderBottomWidth: 1, paddingBottom: 24 };
     } else if (index === 1) {
-        style = { borderBottomWidth: 1, paddingBottom: 32 };
+        style = { borderBottomWidth: 1, paddingBottom: 24};
     } else if (index === 2) {
-        style = { borderRightWidth: 1, paddingTop: 32 };
+        style = { borderRightWidth: 1, paddingTop: 24 };
     } else if (index === 3) {
-        style = { paddingTop: 32 };
+        style = { paddingBoTop: 24 };
     }
     console.log(item.width)
     return type === 'sentCheques' ? (
@@ -55,7 +55,7 @@ function SingleCurrency({ item, type, color, index }) {
         <div className="w-1/2 p-3 pr-8 inline-flex justify-between items-center theme-divider-color" style={style}>
             <div>
                 {/* title */}
-                <div className="flex items-center">
+                <div className="flex items-center mb-3">
                     <CurrencyIcon icon={icon} />
                     <div className="font-bold">{unit}</div>
                 </div>
@@ -89,7 +89,7 @@ export default function MultipleCurrenyList({ color, type, dataList = [] }) {
             className="w-full p-4 rounded-b-2xl"
             style={{ backgroundColor: theme === 'light' ? '#ECF2FF4B' : '#130D00' }}>
             {dataList.map((item, index) => {
-                return <SingleCurrency item={item} type={type} color={color} index={index} />;
+                return <SingleCurrency key={item.key} item={item} type={type} color={color} index={index} />;
             })}
         </div>
     );

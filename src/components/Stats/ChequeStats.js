@@ -6,8 +6,9 @@ const { TRAIL_COLOR, STROKE_COLOR } = PROGRESS_COLORS;
 const CashedUnCashedItem = ({ type, value, unit, percent, fontSize = "14px" }) => {
     const color = type === 'cashed' ? '#06A561' : '#F99600';
     const text = type === 'cashed' ? 'Cashed: ' : 'Uncashed: ';
+    const marginBottom = type === 'cashed' ? 6 : 0;
     return (
-        <div className="flex items-center unit_color" style={{ fontSize }}>
+        <div className="flex items-center unit_color" style={{ fontSize, marginBottom }}>
             <div className="mr-2 rounded" style={{ width: 6, height: 6, backgroundColor: color }}></div>
             <span className="mr-1">{text}</span>
             <span className="mr-1">{value}</span>

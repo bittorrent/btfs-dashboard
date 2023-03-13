@@ -115,8 +115,10 @@ export default function ChequeDetailTable({ color, type }) {
                       )}
                     </td>
                     <td className="common-table-body-td">
-                      <img src={require(`assets/img/${item.icon}.svg`).default} alt="" className="mr-2" />
-                      {item.unit}
+                      <div className="flex items-center">
+                        <img src={require(`assets/img/${item.icon}.svg`).default} width={20} height={20} alt="" className="mr-2" />
+                        {item.unit}
+                      </div>
                     </td>
                     <td className="common-table-body-td">
                       {switchBalanceUnit(item['Amount'], item?.price?.rate)}
