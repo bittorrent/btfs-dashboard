@@ -45,7 +45,7 @@ export default function CardNetworkFlow({ color }) {
             format={() => (
               <div className="mt-6 theme-text-sub-main">
                 <div className="font-bold text-3xl leading-none">{receive}</div>
-                <div className="text-xs leading-none">M/s</div>
+                <div className="text-xs leading-none">KB/s</div>
                 <div className="mt-3 text-xs">In</div>
               </div>
             )}
@@ -63,7 +63,7 @@ export default function CardNetworkFlow({ color }) {
             format={() => (
               <div className="mt-6 theme-text-sub-main">
                 <div className="font-bold text-3xl leading-none">{send}</div>
-                <div className="text-xs leading-none">M/s</div>
+                <div className="text-xs leading-none">KB/s</div>
                 <div className="mt-3 text-xs">Out</div>
               </div>
             )}

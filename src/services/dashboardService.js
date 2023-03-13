@@ -376,11 +376,19 @@ export const getNodeStorageStats = async () => {
 
 
 export const getNetworkFlow = async () => {
+  try {
     let data = await Client10.getNetworkFlow();
     return {
-        receive: (data['RateIn'] / (8 * 1024)).toFixed(2),
-        send: (data['RateOut'] / (8 * 1024)).toFixed(2),
-    }
+      receive: (data['RateIn'] / (8 * 1024)).toFixed(2),
+      send: (data['RateOut'] / (8 * 1024)).toFixed(2),
+    };
+  } catch (e) {
+    console.log('getNetworkFlow Error: ', e);
+    return {
+      receive: (0).toFixed(2),
+      send: (0).toFixed(2),
+    };
+  }
 };
 
 export const getFilesStorage = async () => {

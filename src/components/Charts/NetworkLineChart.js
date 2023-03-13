@@ -62,7 +62,7 @@ function NetworkLineChart({ color }) {
               label: function (context) {
                 var label = context.dataset.label || '';
                 if (label) {
-                  label += ' : ' + context.parsed.y + ' M/s ';
+                  label += ' : ' + context.parsed.y + ' KB/s ';
                 }
                 return label;
               },
@@ -94,7 +94,7 @@ function NetworkLineChart({ color }) {
             display: true,
             title: {
               display: true,
-              text: 'M / s',
+              text: 'KB / s',
               color: color === 'light' ? 'black' : 'white',
             },
             ticks: {
