@@ -39,7 +39,7 @@ export default function CardNetworkFlow({ color }) {
             gapDegree={90}
             strokeWidth={10}
             width={120}
-            percent={parseFloat(receive) < 10 ? receive / 10 : 100}
+            percent={parseFloat(receive) < 10000 ? receive / 10000 : 100}
             trailColor="#ECF2FF"
             strokeColor="#06A561"
             format={() => (
@@ -57,7 +57,7 @@ export default function CardNetworkFlow({ color }) {
             gapDegree={90}
             strokeWidth={10}
             width={120}
-            percent={parseFloat(send) < 10 ? send / 10 : 100}
+            percent={parseFloat(send) < 10000 ? send / 10000 : 100}
             trailColor="#ECF2FF"
             strokeColor="#F99600"
             format={() => (

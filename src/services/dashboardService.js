@@ -379,8 +379,8 @@ export const getNetworkFlow = async () => {
   try {
     let data = await Client10.getNetworkFlow();
     return {
-      receive: (data['RateIn'] / (8 * 1024)).toFixed(2),
-      send: (data['RateOut'] / (8 * 1024)).toFixed(2),
+      receive: (data['RateIn'] / 1000).toFixed(2),
+      send: (data['RateOut'] / 1000).toFixed(2),
     };
   } catch (e) {
     console.log('getNetworkFlow Error: ', e);
