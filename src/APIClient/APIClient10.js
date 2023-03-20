@@ -297,7 +297,9 @@ class APIClient10 {
     }
 
     getBTFS10Balance() {
-        return this.request('/api/v1/wallet/balance');
+        // deprecated
+        return null;
+        // return this.request('/api/v1/wallet/balance');
     }
 
     withdraw10(amount) {

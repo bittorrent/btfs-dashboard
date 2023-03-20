@@ -296,11 +296,12 @@ export const getNodeWalletStats = async () => {
             .dividedBy(PRECISION)
             .toNumber()
         let base = new BigNumber(maxBTT).minus(FEE).toNumber()
-        let balance10 = result[3]['BtfsWalletBalance']
-            ? new BigNumber(result[3]['BtfsWalletBalance'])
-                .dividedBy(PRECISION_OLD)
-                .toNumber()
-            : 0
+        let balance10 = 0;
+        // let balance10 = result[3]['BtfsWalletBalance']
+        //     ? new BigNumber(result[3]['BtfsWalletBalance'])
+        //         .dividedBy(PRECISION_OLD)
+        //         .toNumber()
+        //     : 0
         let tronAddress = result[4]['TronAddress']
         const allBalanceData = result[5]
         const chequeBookAllBalanceData = result[6]

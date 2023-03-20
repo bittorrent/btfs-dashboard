@@ -69,6 +69,8 @@ export default function CardSettings({ color }) {
   const save = async () => {
     const node_url = getNodeUrl();
     if (!node_url) return;
+    const copyUrl = getCopyUrl(node_url);
+    setCopyUrl(copyUrl);
     let result = await nodeStatusCheck(node_url);
     if (result) {
       window.nodeStatus = true;
@@ -90,10 +92,10 @@ export default function CardSettings({ color }) {
   };
 
   const handleChange = () => {
-    const node_url = getNodeUrl();
-    if (!node_url) return;
-    const copyUrl = getCopyUrl(node_url);
-    setCopyUrl(copyUrl);
+    // const node_url = getNodeUrl();
+    // if (!node_url) return;
+    // const copyUrl = getCopyUrl(node_url);
+    // setCopyUrl(copyUrl);
   };
 
   return (
