@@ -78,7 +78,7 @@ const zh_CN = {
     'switch_new_version':'切换新版分数',
     'cheque_earnings_des':'按照当前汇率其他货币转换为BTT，数值仅供参考，点击可查看详情',
     'cheque_earning_detail': '支票收益详情',
-    'checks_expense_detials': '支票支出详情',
+    'checks_expense_details': '支票支出详情',
     'vault_contract_balance': '金库合约余额',
     'vault_contract_address': '金库合约地址',
     'address_balance': '地址余额',

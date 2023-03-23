@@ -175,7 +175,7 @@ export default function NodeRevenueStats({ color }) {
     const [gasFee, setGasFee] = useState(0);
     const [gasFeePercent, setGasFeePercent] = useState(0);
     const [chequeExpensePercent, setChequeExpensePercent] = useState(0);
-    const [checksExpenseDetialList, setChecksExpenseDetialList] = useState([]);
+    const [checksExpenseDetailList, setChecksExpenseDetailList] = useState([]);
     const [chequeEarningDetailList, setChequeEarningDetailData] = useState([]);
 
     useEffect(() => {
@@ -190,7 +190,7 @@ export default function NodeRevenueStats({ color }) {
                 gasFee,
                 gasFeePercent,
                 chequeExpensePercent,
-                checksExpenseDetialsData,
+                checksExpenseDetailsData,
                 chequeEarningDetailData,
             } = await getNodeRevenueStats();
             if (!didCancel) {
@@ -204,8 +204,8 @@ export default function NodeRevenueStats({ color }) {
                     setGasFee(gasFee);
                     setGasFeePercent(gasFeePercent);
                     setChequeExpensePercent(chequeExpensePercent);
-                    setChecksExpenseDetialList(() => {
-                        return checksExpenseDetialsData;
+                    setChecksExpenseDetailList(() => {
+                        return checksExpenseDetailsData;
                     });
                     setChequeEarningDetailData(() => {
                         return chequeEarningDetailData;
@@ -221,8 +221,8 @@ export default function NodeRevenueStats({ color }) {
 
     const showChequeExpenseTips = () => {
         Emitter.emit('openCheckDetailModal', {
-            title: t('checks_expense_detials'),
-            dataList: checksExpenseDetialList,
+            title: t('checks_expense_details'),
+            dataList: checksExpenseDetailList,
         });
     };
 

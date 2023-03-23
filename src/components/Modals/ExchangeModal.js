@@ -40,10 +40,10 @@ export default function ExchangeModal({ color }) {
         closeModal();
         let result;
         if (target === 'BTT') {
-            result = await BTT2WBTT(value);
+            result = await BTT2WBTT(value, target);
         }
         if (target === 'WBTT') {
-            result = await WBTT2BTT(value);
+            result = await WBTT2BTT(value, target);
         }
 
         if (result['Type'] === 'error') {

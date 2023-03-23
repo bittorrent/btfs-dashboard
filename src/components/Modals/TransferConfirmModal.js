@@ -6,7 +6,7 @@ import ButtonConfirm from 'components/Buttons/ButtonConfirm.js';
 import { BTTTransfer, WBTTTransfer, currencyTransfer } from 'services/dashboardService.js';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
-import { FEE, MULTIPLE_CURRENY_LIST } from 'utils/constants.js';
+import { FEE, MULTIPLE_CURRENCY_LIST } from 'utils/constants.js';
 import { inputAddressCheck, inputNumberCheck } from 'utils/checks.js';
 import CommonModal from './CommonModal';
 
@@ -56,10 +56,18 @@ export default function TransferConfirmModal({ color }) {
 
         let result;
         if (tokenRef.current === 'BTT') {
-            result = await BTTTransfer(inputAddressRef.current.value.trim(), inputAmountRef.current.value);
+            result = await BTTTransfer(
+                inputAddressRef.current.value.trim(),
+                inputAmountRef.current.value,
+                tokenRef.current
+            );
         }
         if (tokenRef.current === 'WBTT') {
-            result = await WBTTTransfer(inputAddressRef.current.value.trim(), inputAmountRef.current.value);
+            result = await WBTTTransfer(
+                inputAddressRef.current.value.trim(),
+                inputAmountRef.current.value,
+                tokenRef.current
+            );
         } else {
             result = await currencyTransfer(
                 inputAddressRef.current.value.trim(),
@@ -166,7 +174,7 @@ export default function TransferConfirmModal({ color }) {
                                     // dropdownStyle={{ background: themeStyle.bg[color] }}
                                     >
                                         <Option value="BTT">BTT</Option>
-                                        {MULTIPLE_CURRENY_LIST.map(item => {
+                                        {MULTIPLE_CURRENCY_LIST.map(item => {
                                             return (
                                                 <Option key={item.key} value={item.key}>
                                                     {item.unit}

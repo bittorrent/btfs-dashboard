@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Tooltip } from 'antd';
 import { getChequeExpenseAllStats } from 'services/chequeService.js';
-import { MULTIPLE_CURRENY_LIST } from 'utils/constants';
+import { MULTIPLE_CURRENCY_LIST } from 'utils/constants';
 import { t } from 'utils/text.js';
 import { switchBalanceUnit } from 'utils/BTFSUtil.js';
 import MultipleCurrenyList from './MultipleCurrenyList.js';
@@ -79,8 +79,8 @@ export default function ChequeExpenseStats({ color }) {
         cashedValue: 0,
         cashedValuePercent: 0,
     });
-    const [expenseValueAllStatsData, setExpenseValueAllStatsData] = useState(MULTIPLE_CURRENY_LIST);
-    const [expenseCountAllStatsData, setExpenseCountAllStatsData] = useState(MULTIPLE_CURRENY_LIST);
+    const [expenseValueAllStatsData, setExpenseValueAllStatsData] = useState(MULTIPLE_CURRENCY_LIST);
+    const [expenseCountAllStatsData, setExpenseCountAllStatsData] = useState(MULTIPLE_CURRENCY_LIST);
 
     useEffect(() => {
         let didCancel = false;

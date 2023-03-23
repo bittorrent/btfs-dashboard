@@ -7,7 +7,7 @@ import ButtonConfirm from 'components/Buttons/ButtonConfirm.js';
 import { withdraw, deposit, withdraw10 } from 'services/dashboardService.js';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
-import { FEE, MULTIPLE_CURRENY_LIST } from 'utils/constants.js';
+import { FEE, MULTIPLE_CURRENCY_LIST } from 'utils/constants.js';
 import { inputNumberCheck } from 'utils/checks.js';
 import CommonModal from './CommonModal';
 
@@ -31,14 +31,15 @@ export default function WithdrawDepositModal({ color }) {
             openModal();
             setType(params.type);
             let currentObj = {};
-            inputRef.current.value = null;
+            const token = tokenRef.current || 'WBTT';
+
             if (params.type === 'withdraw') {
                 setTitle('chequebook_withdraw');
                 setDescription('amount_to_withdraw');
                 params.allCurrencyBalanceList.forEach(item => {
                     currentObj[item.key] = item.maxBookBalanceCount;
                 });
-                setMax(currentObj.WBTT);
+                setMax(currentObj[token]);
             }
             if (params.type === 'deposit') {
                 setTitle('chequebook_deposit');
@@ -46,7 +47,7 @@ export default function WithdrawDepositModal({ color }) {
                 params.allCurrencyBalanceList.forEach(item => {
                     currentObj[item.key] = item.maxAddressCount;
                 });
-                setMax(currentObj.WBTT);
+                setMax(currentObj[token]);
             }
             if (params.type === 'withdraw10') {
                 setTitle('BTFS_10_withdraw');
@@ -60,7 +61,6 @@ export default function WithdrawDepositModal({ color }) {
                     // }, 100);
                 }
             }
-
             maxRef.current = currentObj;
         };
         Emitter.on('openWithdrawDepositModal', set);
@@ -148,6 +148,7 @@ export default function WithdrawDepositModal({ color }) {
     };
 
     const closeModal = () => {
+        inputRef.current && (inputRef.current.value = null);
         setValid(false);
         setShowModal(false);
         window.body.style.overflow = '';
@@ -188,7 +189,7 @@ export default function WithdrawDepositModal({ color }) {
                                     onChange={handleChange}
                                 // dropdownStyle={{ background: themeStyle.bg[color] }}
                                 >
-                                    {MULTIPLE_CURRENY_LIST.map(item => {
+                                    {MULTIPLE_CURRENCY_LIST.map(item => {
                                         return (
                                             <Option key={item.key} value={item.key}>
                                                 {item.unit}

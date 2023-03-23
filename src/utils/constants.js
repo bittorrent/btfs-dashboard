@@ -110,7 +110,7 @@ export const INIT_CHART_LINE_DATASETS = [
     tension: 0,
   },
 ];
-export const MULTIPLE_CURRENY_LIST = [
+export const MULTIPLE_CURRENCY_LIST = [
   {
     icon: 'wbtt',
     key: 'WBTT',

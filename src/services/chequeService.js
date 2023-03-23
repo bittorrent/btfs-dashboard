@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import Client10 from "APIClient/APIClient10.js";
 import { switchBalanceUnit, compareInt } from "utils/BTFSUtil.js";
-import { PRECISION, MULTIPLE_CURRENY_LIST, CURRENCY_CONFIG, INIT_MULTI_CURRENCY_DATA } from "utils/constants";
+import { PRECISION, MULTIPLE_CURRENCY_LIST, CURRENCY_CONFIG, INIT_MULTI_CURRENCY_DATA } from "utils/constants";
 
 export const getChequeEarningStats = async () => {
     let data = await Client10.getChequeStats();
@@ -48,8 +48,8 @@ export const getChequeEarningAllStats = async () => {
         promiseExchangeRates
     ])
 
-    const earningValueAllStatsData = JSON.parse(JSON.stringify(MULTIPLE_CURRENY_LIST));
-    const earningCountAllStatsData = JSON.parse(JSON.stringify(MULTIPLE_CURRENY_LIST));
+    const earningValueAllStatsData = JSON.parse(JSON.stringify(MULTIPLE_CURRENCY_LIST));
+    const earningCountAllStatsData = JSON.parse(JSON.stringify(MULTIPLE_CURRENCY_LIST));
     let currencyAllStatsData = [];
     const keysList = Object.keys(allData);
 
@@ -150,8 +150,8 @@ export const getChequeExpenseAllStats = async () => {
         promiseHostPriceAll,
         promiseExchangeRates,
     ])
-    const expenseValueAllStatsData = JSON.parse(JSON.stringify(MULTIPLE_CURRENY_LIST));
-    const expenseCountAllStatsData = JSON.parse(JSON.stringify(MULTIPLE_CURRENY_LIST));
+    const expenseValueAllStatsData = JSON.parse(JSON.stringify(MULTIPLE_CURRENCY_LIST));
+    const expenseCountAllStatsData = JSON.parse(JSON.stringify(MULTIPLE_CURRENCY_LIST));
     let currencyAllStatsData = [];
     const keysList = Object.keys(allData);
 

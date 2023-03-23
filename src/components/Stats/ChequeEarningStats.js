@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Tooltip } from 'antd';
 import { getChequeEarningAllStats } from 'services/chequeService.js';
 import { t } from 'utils/text.js';
-import { MULTIPLE_CURRENY_LIST } from 'utils/constants';
+import { MULTIPLE_CURRENCY_LIST } from 'utils/constants';
 import MultipleCurrenyList from './MultipleCurrenyList.js';
 import { switchBalanceUnit } from 'utils/BTFSUtil.js';
 import { ChequeMain } from './ChequeStats.js';
@@ -85,8 +85,8 @@ export default function ChequeEarningStats({ color }) {
         cashedCountPercent: 0,
         cashedValuePercent: 0,
     });
-    const [earningCountAllStatsData, setEarningCountAllStatsData] = useState(MULTIPLE_CURRENY_LIST);
-    const [earningValueAllStatsData, setEarningValueAllStatsData] = useState(MULTIPLE_CURRENY_LIST);
+    const [earningCountAllStatsData, setEarningCountAllStatsData] = useState(MULTIPLE_CURRENCY_LIST);
+    const [earningValueAllStatsData, setEarningValueAllStatsData] = useState(MULTIPLE_CURRENCY_LIST);
 
     useEffect(() => {
         let didCancel = false;
