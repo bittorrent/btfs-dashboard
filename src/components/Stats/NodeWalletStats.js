@@ -13,7 +13,7 @@ const CoinItem = ({ item, valueAttr }) => {
         <div key={item.unit} className="flex justify-start items-center w-1/2 mb-2">
             <img src={require(`assets/img/${item.icon}.svg`).default} alt="" className="mr-2 w-6 h-6" />
             <div className="font-bold theme-text-main">
-                <span className={'text-base mr-2'}>{item.addressValue}</span>
+                <span className={'text-base mr-2'}>{item?.[valueAttr] ?? '-'}</span>
                 <span className={'text-xs'}>{item.unit}</span>
             </div>
         </div>
@@ -88,7 +88,7 @@ const BTTCWalletStats = ({
     );
 };
 
-const ChequebookStats = ({ showQR, chequeAddress, allCurrencyBalanceList, onWithdraw, onDeposit }) => {
+const ChequeBookStats = ({ showQR, chequeAddress, allCurrencyBalanceList, onWithdraw, onDeposit }) => {
     return (
         <div className="h-full">
             <header className="mb-5 flex justify-between items-center">
@@ -119,7 +119,7 @@ const ChequebookStats = ({ showQR, chequeAddress, allCurrencyBalanceList, onWith
             <main
                 className="p-6 rounded-xl flex flex-col justify-between vault-balance theme-text-main"
                 style={{ height: '15.125rem' }}>
-                <h5 className="mb-4 font-bold theme-text-main">BTTC {t('address_balance')}</h5>
+                <h5 className="mb-4 font-bold theme-text-main">BTTC {t('vault_contract_balance')}</h5>
                 <div>
                     <div className="mb-4 flex flex-wrap" style={{ width: 'calc(100% - 60px)' }}>
                         {allCurrencyBalanceList.map(item => (
@@ -277,7 +277,7 @@ export default function NodeWalletStats({ color }) {
                 />
             </div>
             <div className="w-full common-card theme-bg xl:w-1/2 xl:shadow-none xl:rounded-none xl:rounded-r-2xl">
-                <ChequebookStats
+                <ChequeBookStats
                     showQR={showQR}
                     chequeAddress={chequeAddress}
                     allCurrencyBalanceList={allCurrencyBalanceList}

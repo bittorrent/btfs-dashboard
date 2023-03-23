@@ -31,7 +31,7 @@ export default function WithdrawDepositModal({ color }) {
             openModal();
             setType(params.type);
             let currentObj = {};
-
+            inputRef.current.value = null;
             if (params.type === 'withdraw') {
                 setTitle('chequebook_withdraw');
                 setDescription('amount_to_withdraw');
