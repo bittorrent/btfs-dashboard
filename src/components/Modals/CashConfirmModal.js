@@ -4,7 +4,7 @@ import ButtonConfirm from 'components/Buttons/ButtonConfirm.js';
 import { cash } from 'services/chequeService.js';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
-import { PRECISION } from 'utils/constants.js';
+import { PRECISION_RATE } from 'utils/constants.js';
 import { toNonExponential } from 'utils/BTFSUtil';
 import CommonModal from './CommonModal';
 
@@ -24,31 +24,26 @@ export default function CashConfirmModal() {
             params.data.forEach(item => {
                 const { amount } = item;
                 const { key, unit, icon } = item.selectItemData;
+                const rate = item.selectItemData?.price?.rate ?? PRECISION_RATE;
                 if (!currencyData[key]) {
                     currencyData[key] = {};
                     currencyData[key].total = 0;
                     currencyData[key].len = 0;
                     currencyData[key].unit = unit;
                     currencyData[key].icon = icon;
+                    currencyData[key].rate = rate;
                 }
                 currencyData[key].amount = amount;
                 currencyData[key].total += amount;
                 currencyData[key].len++;
             });
             Object.keys(currencyData).forEach(key => {
-                currencyData[key].total = currencyData[key].total / PRECISION;
+                currencyData[key].total = currencyData[key].total / currencyData[key].rate;
                 currencyList.push(currencyData[key]);
             });
 
             cashList.current.currencyList = currencyList;
             cashList.current.list = params.data;
-            cashList.current.total = 0;
-
-            cashList.current.list.forEach(item => {
-                cashList.current.total = cashList.current.total + item.amount;
-            });
-
-            cashList.current.total = cashList.current.total / PRECISION;
 
             setShowModal(true);
         };
