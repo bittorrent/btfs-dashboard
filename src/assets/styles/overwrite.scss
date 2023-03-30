@@ -35,3 +35,29 @@
 .ant-tooltip {
   max-width: 500px !important;
 }
+
+.ant-modal-content,
+.ant-modal-body {
+  border-radius: 16px;
+}
+
+.ant-modal-body {
+  padding: 0;
+}
+
+.anticon-close-circle {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+}
+
+.ant-message-notice-content {
+  border-radius: 0.375rem;
+  .ant-message-custom-content {
+    display: flex;
+    align-items: center;
+    .anticon {
+      position: static;
+    }
+  }
+}

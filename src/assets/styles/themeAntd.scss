@@ -1,0 +1,122 @@
+@import 'color.scss';
+// antd theme light
+// button
+.ant-btn {
+  line-height: 1;
+  border-color: #d7dbec;
+  color: #5a607f;
+
+  &:hover {
+    color: $base-color;
+    border-color: $base-color;
+  }
+}
+
+// switch
+.ant-switch-checked {
+  background-color: $base-color;
+}
+
+// breadcrumb
+.ant-breadcrumb a {
+  color: $text-color-sub-main;
+}
+.ant-breadcrumb-separator {
+  color: $text-color-main;
+}
+.ant-breadcrumb a:hover,
+.ant-breadcrumb li:last-child,
+.ant-breadcrumb li:last-child a {
+  color: $text-color-main;
+}
+
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  background-color: $white;
+  border-color: $border-color;
+  color: $text-color-main;
+}
+
+// antd theme dark
+.dark {
+  .ant-btn {
+    color: #fff;
+    border-color: #fff;
+    background-color: transparent;
+  }
+
+  .ant-progress-outer {
+    .ant-progress-inner {
+      background-color: lightblue;
+    }
+  }
+  .ant-progress-text {
+    color: lightblue !important;
+  }
+
+  .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    background-color: $dark-bg-color;
+    border-color: $dark-border-color;
+    color: $dark-text-color-main;
+  }
+
+  .ant-pagination-simple-pager,
+  .anticon {
+    color: white;
+  }
+  .ant-pagination-simple-pager input {
+    color: black;
+  }
+  .anticon:hover {
+    color: #1890ff !important;
+  }
+  .ant-pagination-disabled .anticon {
+    color: gray !important;
+  }
+
+  .ant-progress-outer {
+    .ant-progress-inner {
+      background-color: lightblue;
+    }
+  }
+
+  // modal
+  .ant-modal-body {
+    background-color: $dark-bg-color;
+  }
+
+  // breadcrumb
+  .ant-breadcrumb a {
+    color: $dark-text-color-sub-main;
+  }
+  .ant-breadcrumb-separator {
+    color: $dark-text-color-main;
+  }
+  .ant-breadcrumb a:hover,
+  .ant-breadcrumb li:last-child,
+  .ant-breadcrumb li:last-child a {
+    color: $dark-text-color-main;
+  }
+
+  .ant-pagination-options-quick-jumper {
+    color: #d0d6f1;
+    input {
+      background-color: #1c284e;
+      color: #fff;
+    }
+  }
+}
+
+.ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-item, .ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-submenu{
+    padding: 0 15px !important;
+}
+
+.ant-menu-item{
+    color:$text-color-menuItem !important;
+}
+
+.ant-menu-item-selected{
+    color:#000 !important;
+    font-weight: bold;
+}
+
+

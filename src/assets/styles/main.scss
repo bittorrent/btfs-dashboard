@@ -30,6 +30,22 @@
   box-shadow: 0px 0px 5px;
 }
 
+.common-box-shadow {
+  box-shadow: 0px 1px 6px 0px rgba(21, 34, 50, 0.04);
+}
+
+.common-card {
+  box-shadow: 0px 1px 6px 0px rgba(21, 34, 50, 0.04);
+}
+
+.common-btn {
+  min-width: 105px;
+}
+
+.sidebar {
+  box-shadow: 0px 1px 6px 0px rgba(21, 34, 50, 0.04);
+}
+
 .inputTransition {
   position: relative;
   width: 100%;
@@ -40,7 +56,8 @@
   border-bottom: 1px solid lightgrey;
 }
 
-.inputTransition:after, .inputTransition:before {
+.inputTransition:after,
+.inputTransition:before {
   content: '';
   position: absolute;
   left: 0;
@@ -62,7 +79,8 @@
   z-index: -1;
 }
 
-.inputTransition:hover:after, .inputTransition:hover:before {
+.inputTransition:hover:after,
+.inputTransition:hover:before {
   width: 100%;
 }
 
@@ -72,7 +90,6 @@
   justify-content: space-between;
   max-width: 200px;
   margin-bottom: 2px;
-
 }
 
 .truncate_left {
@@ -104,7 +121,11 @@
   background-color: blue;
 }
 
-.edit, .change, .cash, .withdraw_deposit, .transfer_exchange {
+.edit,
+.change,
+.cash,
+.withdraw_deposit,
+.transfer_exchange {
   button {
     line-height: 15px;
   }
@@ -123,7 +144,7 @@
 }
 
 .unit_color {
-  color: #5A607F;
+  color: #5a607f;
 }
 
 #fileControl {
@@ -134,11 +155,19 @@
   -webkit-transition: bottom 1s; /* Safari and Chrome */
   -o-transition: bottom 1s; /* Opera */
 }
-.cheques-tab-item{
+.cheques-tab-item {
   min-width: 100px;
 }
 @media (max-width: 768px) {
   .modal_center {
     width: calc(100% - 2rem);
   }
+}
+
+.helvetica {
+  font-family: Helvetica;
+}
+
+.helvetica-b {
+  font-family: Helvetica-Bold, Helvetica;
 }

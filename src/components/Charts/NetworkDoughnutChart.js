@@ -38,7 +38,7 @@ function NetworkDoughnutChart({color, id, text, data}) {
                 },
 
                 options: {
-                    responsive: false,
+                    maintainAspectRatio: false,
                     cutoutPercentage: 90,
                     circumference: 300,
                     cutout: '80%',

@@ -1,71 +1,55 @@
-import React, {useEffect, useContext, useRef} from "react";
-import {mainContext} from "reducer";
-import ClipboardCopy from "components/Utils/ClipboardCopy";
-import Emitter from "utils/eventBus";
-import themeStyle from "utils/themeStyle.js";
-import {t} from "utils/text.js";
+import React, { useEffect, useRef } from 'react';
+import { WarningFilled } from '@ant-design/icons';
+import CommonModal from './CommonModal';
+import ClipboardCopy from 'components/Utils/ClipboardCopy';
+import Emitter from 'utils/eventBus';
+import { t } from 'utils/text.js';
 
-export default function MessageModal({color}) {
-
-    const {state} = useContext(mainContext);
-    const {sidebarShow} = state;
+export default function MessageModal() {
     const [showModal, setShowModal] = React.useState(false);
     const message = useRef(null);
 
     useEffect(() => {
         const set = function (params) {
-            console.log("openMessageModal event has occured");
+            console.log('openMessageModal event has occured');
             message.current = params.message;
             openModal();
         };
-        Emitter.on("openMessageModal", set);
+        Emitter.on('openMessageModal', set);
         return () => {
             Emitter.removeListener('openMessageModal');
-            window.body.style.overflow = '';
-        }
+        };
     }, []);
 
     const openModal = () => {
         setShowModal(true);
-        window.body.style.overflow= 'hidden';
     };
 
     const closeModal = () => {
         setShowModal(false);
-        window.body.style.overflow = '';
     };
 
     return (
-        <>
-            {showModal ? (
-                <>
-                    <div className={"fixed flex z-50 md:w-1/2 modal_center md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
-                        style={{height: '350px'}}>
-                        <button
-                            className="absolute right-0 bg-transparent text-2xl mr-2 font-semibold outline-none focus:outline-none text-blueGray-400"
-                            onClick={closeModal}
-                        >
-                            <span>×</span>
-                        </button>
-                        <div className="w-full ">
-                            {/*content*/}
-                            <div className={"h-full flex flex-col justify-center items-center border-0 rounded-lg shadow-lg " + themeStyle.bg[color] + themeStyle.text[color]}>
-                                <div className="p-4">
-                                    <img alt="" src={require('../../assets/img/key.png').default} width='50px' height='50px'/>
-                                </div>
-                                <div className="p-4">
-                                    {message.current} <ClipboardCopy value={message.current}/>
-                                </div>
-                                <div className="p-4 font-semibold text-red-500 text-center">
-                                    {t('key_warning_1')} <br/>
-                                    {t('key_warning_2')}
-                                </div>
-                            </div>
-                        </div>
+        <CommonModal width={620} visible={showModal} onCancel={closeModal}>
+            <div className={'common-modal-wrapper theme-bg'}>
+                <header className="common-modal-header theme-text-main">{t('private_key')}</header>
+                <main className="mb-12">
+                    <div className="mb-2 p-2 rounded flex items-center theme-fill-error text-xs text-white font-semibold">
+                        <WarningFilled className="mr-3 text-base leading-none text-white" />
+                        <span className="whitespace-nowrap font-normal text-white">{t('key_warning_1')}</span>.
+                        <span className="ml-2 whitespace-nowrap text-white">{t('key_warning_2')}</span>
                     </div>
-                    <div className="bg-opacity-50 bg-black absolute top-0 left-0 w-full h-full inset-0 z-40"></div>
-                </>
-            ) : null}
-        </>
+                    <div className="p-2 pl-4 h-10 border rounded-lg flex justify-between items-center theme-border-color">
+                        <span className=" theme-text-main">{message.current}</span>
+                        <ClipboardCopy value={message.current} />
+                    </div>
+                </main>
+                <footer className="common-modal-footer">
+                    <button className="w-25 common-btn theme-common-btn" onClick={closeModal}>
+                        {t('confirm')}
+                    </button>
+                </footer>
+            </div>
+        </CommonModal>
     );
 }

@@ -1,0 +1,317 @@
+@import './color.scss';
+
+.theme-text-base {
+  color: $base-color;
+}
+.theme-text-main {
+  color: $text-color-main;
+}
+.theme-text-sub-main {
+  color: $text-color-sub-main;
+}
+.theme-text-sub-info {
+  color: $text-color-sub-info;
+}
+.theme-text-gray-info {
+  color: $text-color-gray-info;
+}
+.theme-text-hover:hover {
+  color: $hover-color;
+}
+.theme-text-success {
+  color: $success-color;
+}
+.theme-text-warning {
+  color: $warning-color;
+}
+.theme-text-info {
+  color: $info-color;
+}
+.theme-text-error {
+  color: $error-color;
+}
+
+.theme-bg {
+  background-color: $white;
+}
+.theme-base-bg {
+  background-color: $bg-color;
+}
+.theme-table-head-bg {
+  background-color: #f2f5f7;
+}
+.theme-table-row-hover:hover {
+  background-color: #f7f8fb;
+}
+.theme-fill-base {
+  background-color: $fill-color-base;
+}
+.theme-fill-error {
+  background-color: $fill-color-error;
+}
+.theme-fill-gray {
+  background-color: $fill-color-gray;
+}
+.theme-fill-shallow {
+  background-color: $shallow-color;
+}
+.theme-fill-success {
+  background-color: $success-color;
+}
+.theme-fill-warning {
+  color: $warning-color;
+}
+.theme-fill-info {
+  color: $info-color;
+}
+.theme-fill-error {
+  color: $error-color;
+}
+
+
+.nav-link-li {
+  &:hover {
+    color: $text-color-main;
+  }
+}
+
+.theme-common-btn {
+  background-color: $base-color;
+  border-color: $base-color;
+  color: #fff;
+  &:focus {
+    background-color: $base-color;
+    border-color: $base-color;
+    color: #fff;
+  }
+  &:hover {
+    background-color: $hover-color;
+    border-color: $hover-color;
+    color: #fff;
+  }
+  &:active {
+    background-color: $active-color;
+    border-color: $active-color;
+    color: #fff;
+  }
+}
+
+.theme-white-btn {
+  background-color: $white;
+  border-color: $white;
+  color: $base-color;
+  &:focus {
+    background-color: $white;
+    border-color: $white;
+    color: $base-color;
+  }
+  &:hover {
+    background-color: $hover-color;
+    border-color: $hover-color;
+    color: #fff;
+  }
+  &:active {
+    background-color: $active-color;
+    border-color: $active-color;
+    color: #fff;
+  }
+}
+
+.theme-danger-btn {
+  background-color: $error-color;
+  border-color: $error-color;
+  color: #fff;
+  &:focus {
+    background-color: $error-color;
+    border-color: $error-color;
+    color: #fff;
+  }
+  &:hover {
+    background-color: $error-color;
+    border-color: $error-color;
+    color: #fff;
+  }
+  &:active {
+    background-color: $error-color;
+    border-color: $error-color;
+    color: #fff;
+  }
+}
+
+.theme-round-btn {
+  background-color: $white;
+  border-color: $border-color;
+  color: $text-color-sub-main;
+  &:focus {
+    background-color: $white;
+    border-color: $border-color;
+    color: $text-color-sub-main;
+  }
+  &:hover {
+    background-color: $hover-color;
+    border-color: $hover-color;
+    color: #fff;
+  }
+  &:active {
+    background-color: $active-color;
+    border-color: $active-color;
+    color: #fff;
+  }
+}
+
+.theme-toggle-btn {
+  background-color: transparent;
+  border-color: $border-color;
+  color: $text-color-sub-main;
+  &:focus {
+    background-color: transparent;
+    border-color: $border-color;
+    color: $text-color-sub-main;
+  }
+  &:hover {
+    background-color: transparent;
+    border-color: $hover-color;
+    color: $hover-color;
+  }
+  &:active {
+    background-color: transparent;
+    border-color: $active-color;
+    color: $active-color;
+  }
+}
+
+.theme-copy-btn {
+  background-color: transparent;
+  border-color: $border-color;
+  color: $text-color-sub-main;
+  &:focus {
+    background-color: transparent;
+    border-color: $border-color;
+    color: $text-color-sub-main;
+  }
+  &:hover {
+    background-color: $hover-color;
+    border-color: $hover-color;
+    color: $white;
+  }
+  &:active {
+    background-color: $active-color;
+    border-color: $active-color;
+    color: $white;
+  }
+}
+
+.theme-switch-btn {
+  background-color: $fill-color-gray;
+  border-color: $fill-color-gray;
+  color: $text-color-sub-info;
+  &:focus {
+    background-color: $fill-color-gray;
+    border-color: $fill-color-gray;
+    color: $text-color-sub-info;
+  }
+  &:hover {
+    background-color: $white;
+    border-color: $white;
+    color: $base-color;
+  }
+  &:active {
+    background-color: $active-color;
+    border-color: $active-color;
+    color: #fff;
+  }
+
+  &.switch-btn-focused {
+    background-color: $white;
+    border-color: $white;
+    color: $base-color;
+    &:focus {
+      background-color: $white;
+      border-color: $white;
+      color: $base-color;
+    }
+  }
+}
+
+.theme-sidebar-link {
+  color: $text-color-sub-main;
+  &:hover {
+    color: $base-color;
+  }
+}
+
+.theme-link {
+  color: $base-color;
+  &:hover {
+    color: $hover-color;
+  }
+}
+
+.theme-border-color{
+  border-color: $border-color;
+}
+
+.theme-divider-color{
+    border-color: $line-color;
+}
+
+.theme-divider {
+  background-color: $line-color;
+}
+
+.copied_light .ant-message-notice-content {
+  border-radius: 5px;
+  .anticon {
+    top: -2px !important;
+  }
+}
+
+.copied_dark .ant-message-notice-content {
+  background: lightblue;
+  border-radius: 5px;
+  .anticon {
+    top: -2px !important;
+  }
+}
+
+input.dark {
+  background: lightblue !important;
+}
+
+.text-black-900 {
+  color: #131523;
+}
+
+.text-gray-900 {
+  color: #5a607f;
+}
+
+.text-menu-item{
+    color:#A1A7C4
+}
+
+.locale_btn {
+  color: $dark-text-color-sub-info;
+}
+
+a {
+  &:hover {
+    color: $base-color;
+  }
+}
+
+svg {
+  fill: currentColor;
+}
+
+.bttc-balance {
+  background-image: url(../img/bttc-bg.svg), linear-gradient(180deg, #f2f5f7 0%, #fafbfc 100%);
+  background-repeat: no-repeat no-repeat;
+  background-position: bottom -9px right -12px, 0 0;
+}
+
+.vault-balance {
+  background-image: url(../img/vault-bg.svg), linear-gradient(180deg, #fff3e1 0%, #fafbfc 100%);
+  background-repeat: no-repeat no-repeat;
+  background-position: bottom -9px right -12px, 0 0;
+}

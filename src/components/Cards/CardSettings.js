@@ -1,198 +1,174 @@
-/*eslint-disable*/
-import React, {useState, useRef, useEffect, useContext} from "react";
-import {Tooltip} from 'antd';
-import {mainContext} from 'reducer';
-import Emitter from "utils/eventBus";
-import {nodeStatusCheck, getPrivateKey, getRepo, setApiUrl} from "services/otherService.js";
-import {t} from "utils/text.js";
-import themeStyle from "utils/themeStyle.js";
-import {urlCheck} from "utils/checks.js";
-import PathConfirmModal from "components/Modals/PathConfirmModal.js";
+import React, { useState, useRef, useEffect, useContext } from 'react';
+import { Tooltip } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import { mainContext } from 'reducer';
+import Emitter from 'utils/eventBus';
+import { nodeStatusCheck, getPrivateKey, getRepo, setApiUrl } from 'services/otherService.js';
+import { t } from 'utils/text.js';
+import { urlCheck } from 'utils/checks.js';
+import PathConfirmModal from 'components/Modals/PathConfirmModal.js';
 import CardConfig from './CardConfig';
 import ConfigConfirmModal from 'components/Modals/ConfigConfirmModal';
-import ClipboardCopy from "components/Utils/ClipboardCopy";
-import {getParameterByName} from  "utils/BTFSUtil.js";
+import ClipboardCopy from 'components/Utils/ClipboardCopy';
+import { getParameterByName } from 'utils/BTFSUtil.js';
 
-export default function CardSettings({color}) {
-    const apiUrl = getParameterByName("api",location.href);
-    let NODE_URL = localStorage.getItem('NODE_URL') ? localStorage.getItem('NODE_URL') : 'http://localhost:5001';
-    if(apiUrl && urlCheck(apiUrl) && NODE_URL!==apiUrl){
-        setApiUrl(apiUrl);
-        NODE_URL = apiUrl;
+export default function CardSettings({ color }) {
+  const apiUrl = getParameterByName('api', window.location.href);
+  let NODE_URL = localStorage.getItem('NODE_URL')
+    ? localStorage.getItem('NODE_URL')
+    : 'http://localhost:5001';
+  if (apiUrl && urlCheck(apiUrl) && NODE_URL !== apiUrl) {
+    setApiUrl(apiUrl);
+    NODE_URL = apiUrl;
+  }
+  const inputRef = useRef(null);
+  const { dispatch } = useContext(mainContext);
+  const pathRef = useRef(null);
+  const [path, setPath] = useState('');
+  const [volume, setVolume] = useState(0);
+
+  useEffect(() => {
+    if (apiUrl) {
+      nodeStatusCheck(apiUrl);
     }
-    const inputRef = useRef(null);
-    const {dispatch} = useContext(mainContext);
-    const pathRef = useRef(null);
-    const [path, setPath] = useState('');
-    const [volume, setVolume] = useState(0);
-
-    useEffect(() => {
-        if(apiUrl){
-          nodeStatusCheck(apiUrl);
-        }
-        inputRef.current.value = NODE_URL;
-        getPath();
-    }, []);
-    const getCopyUrl = (nodeUrl) => {
-        const curUrl = document.location.href;
-        const splitUrlList = curUrl.split('?')
-        const copyUrl = `${splitUrlList[0]}?api=${nodeUrl}`;
-        return copyUrl;
+    inputRef.current.value = NODE_URL;
+    getPath();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const getCopyUrl = nodeUrl => {
+    const curUrl = document.location.href;
+    const splitUrlList = curUrl.split('?');
+    const copyUrl = `${splitUrlList[0]}?api=${nodeUrl}`;
+    return copyUrl;
+  };
+  const [copyUrl, setCopyUrl] = useState(getCopyUrl(NODE_URL));
+  const reveal = async () => {
+    let { privateKey } = await getPrivateKey();
+    if (privateKey) {
+      Emitter.emit('openMessageModal', { message: privateKey });
+    } else {
+      Emitter.emit('showMessageAlert', { message: 'api_not_set', status: 'error', type: 'frontEnd' });
     }
-    const [copyUrl,setCopyUrl] = useState(getCopyUrl(NODE_URL));
-    const reveal = async () => {
-        let {privateKey} = await getPrivateKey();
-        if (privateKey) {
-            Emitter.emit("openMessageModal", {message: privateKey});
-        } else {
-            Emitter.emit('showMessageAlert', {message: 'api_not_set', status: 'error', type: 'frontEnd'});
-        }
-    };
+  };
 
-    const getPath = async () => {
-        let {path, size} = await getRepo();
-        setPath(path);
-        setVolume(size);
-    };
-    const getNodeUrl = () => {
-        let node_url = inputRef.current.value.replace(/\s*/g, "");
-        if (node_url.charAt(node_url.length - 1) === '/') {
-            node_url = node_url.substr(0, node_url.length - 1);
-        }
-        if (!urlCheck(node_url)) {
-            return null;
-        }
-        return node_url;
+  const getPath = async () => {
+    let { path, size } = await getRepo();
+    setPath(path);
+    setVolume(size);
+  };
+  const getNodeUrl = () => {
+    let node_url = inputRef.current.value.replace(/\s*/g, '');
+    if (node_url.charAt(node_url.length - 1) === '/') {
+      node_url = node_url.substr(0, node_url.length - 1);
     }
-    const save = async () => {
-        const node_url = getNodeUrl();
-        if(!node_url) return;
-        let result = await nodeStatusCheck(node_url);
-        if (result) {
-            window.nodeStatus = true;
-            dispatch({
-                type: 'SET_NODE_STATUS',
-                nodeStatus: true
-            });
-            getPath();
-            Emitter.emit('showMessageAlert', {message: 'setting_success', status: 'success', type: 'frontEnd'});
-        } else {
-            setPath('');
-            Emitter.emit('showMessageAlert', {message: 'setting_error', status: 'error', type: 'frontEnd'});
-        }
-    };
-
-    const changePath = async (e) => {
-        console.log('pathRef.current.value', pathRef.current.value)
-        Emitter.emit('openPathConfirmModal', {type: 'init', path: pathRef.current.value, volume: volume});
-        // let {Type, Message} = await changeRepo(pathRef.current.value.replace(/\s*/g, ""), volume);
-        // if (Type === 'error') {
-        //     Emitter.emit('showMessageAlert', {message: Message, status: 'error'});
-        // } else {
-        //     Emitter.emit('showMessageAlert', {message: 'change_success', status: 'success'});
-        // }
-    };
-
-    const handleResetDefault = () => {
-        Emitter.emit('openConfigConfirmModal', {});
+    if (!urlCheck(node_url)) {
+      return null;
     }
-    const handleChange = () => {
-        const node_url = getNodeUrl();
-        if(!node_url) return;
-        const copyUrl = getCopyUrl(node_url);
-        setCopyUrl(copyUrl)
+    return node_url;
+  };
+  const save = async () => {
+    const node_url = getNodeUrl();
+    if (!node_url) return;
+    const copyUrl = getCopyUrl(node_url);
+    setCopyUrl(copyUrl);
+    let result = await nodeStatusCheck(node_url);
+    if (result) {
+      window.nodeStatus = true;
+      dispatch({
+        type: 'SET_NODE_STATUS',
+        nodeStatus: true,
+      });
+      getPath();
+      Emitter.emit('showMessageAlert', { message: 'setting_success', status: 'success', type: 'frontEnd' });
+    } else {
+      setPath('');
+      Emitter.emit('showMessageAlert', { message: 'setting_error', status: 'error', type: 'frontEnd' });
     }
+  };
 
-    return (
-        <>
-            <div>
-                <div className={"mb-4 shadow-lg rounded-lg border-0 " + themeStyle.bg[color] + themeStyle.text[color]}>
-                    <div className="rounded-t mb-0 px-6 py-6 flex justify-between">
-                        <h5 className={"font-bold uppercase " + themeStyle.title[color]}>
-                            {t('system_config')}
-                        </h5>
-                        <button
-                            className="bg-indigo-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1"
-                            type="button"
-                            onClick={save}
-                        >
-                            {t('submit')}
-                        </button>
-                    </div>
-                    <div className="px-8 pb-6">
-                        <div className="flex justify-between">
-                            <label
-                            className="block uppercase text-xs font-bold mb-2"
-                            htmlFor="grid-password"
-                            >
-                                API {t('endpoint')}
-                            </label>
-                            
-                            <div className="input-group-append">
-                            <ClipboardCopy value={copyUrl} btnText={t('copy_url')}></ClipboardCopy>
-                            <Tooltip overlayInnerStyle={{width: '180px'}}  placement="top"
-                                title={<p>{t('copy_url_tips')}</p>}>
-                                <i className="fas fa-info-circle ml-1 text-xs"></i>
-                            </Tooltip>
-                            </div>
-                            
-                        </div>
-                        <input
-                            type="text"
-                            className={"border px-3 py-3 placeholder-blueGray-300 rounded text-sm shadow focus:outline-none focus:ring w-full " + themeStyle.bg[color]}
-                            defaultValue="http://localhost:5001"
-                            ref={inputRef}
-                            onChange={handleChange}
-                        />
-                    </div>
-                </div>
+  const changePath = async e => {
+    console.log('pathRef.current.value', pathRef.current.value);
+    Emitter.emit('openPathConfirmModal', { type: 'init', path: pathRef.current.value, volume: volume });
+  };
 
+  const handleChange = () => {
+    // const node_url = getNodeUrl();
+    // if (!node_url) return;
+    // const copyUrl = getCopyUrl(node_url);
+    // setCopyUrl(copyUrl);
+  };
 
-                <div
-                    className={"mb-4 shadow-lg rounded-lg border-0 " + themeStyle.bg[color] + themeStyle.text[color]}>
-                    <div className="rounded-t mb-0 px-6 py-6">
-                        <h5 className={"font-bold uppercase " + themeStyle.title[color]}>
-                            {t('storage_path')}
-                        </h5>
-                    </div>
-                    <div className="px-8 pb-6 flex justify-between">
-                        <input
-                            type="text"
-                            className={"border px-3 py-3 placeholder-blueGray-300 rounded text-sm shadow focus:outline-none focus:ring w-full " + themeStyle.bg[color]}
-                            defaultValue={path}
-                            ref={pathRef}
-                        />
-                        <button
-                            className="bg-indigo-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ml-2"
-                            type="button"
-                            onClick={changePath}
-                        >
-                            {t('change')}
-                        </button>
-                    </div>
-                </div>
-                <CardConfig color={color} />
-                <div className={"shadow-lg rounded-lg border-0 " + themeStyle.bg[color] + themeStyle.text[color]}>
-                    <div className="rounded-t mb-0 px-6 py-6">
-                        <h5 className={"font-bold uppercase " + themeStyle.title[color]}>
-                            {t('security')}
-                        </h5>
-                    </div>
-                    <div className="px-8 pb-6">
-                        <button
-                            className="bg-indigo-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1"
-                            type="button"
-                            onClick={reveal}
-                        >
-                            {t('reveal_key')}
-                        </button>
-                    </div>
-                </div>
+  return (
+    <div>
+      {/* api end point */}
+      <div className="mb-4 common-card theme-bg theme-text-main">
+        <div className="mb-2 setting-header">
+          <h5 className="font-bold theme-text-main" htmlFor="grid-password">
+            API {t('endpoint')}
+          </h5>
+          <div className="input-group-append">
+            <ClipboardCopy value={copyUrl} btnText={t('copy_url')}></ClipboardCopy>
+          </div>
+          <Tooltip overlayInnerStyle={{ width: '180px' }} placement="top" title={<p>{t('copy_url_tips')}</p>}>
+            {/* <i className="far fa-question-circle ml-1 text-xs"></i> */}
+            <QuestionCircleOutlined className="inline-flex items-center ml-1 text-xs" />
+          </Tooltip>
+        </div>
+        <div className="flex">
+          <input
+            type="text"
+            className="mr-2 common-input theme-bg theme-border-color"
+            defaultValue="http://localhost:5001"
+            ref={inputRef}
+            onChange={handleChange}
+          />
+          <button className="ml-2 common-btn theme-common-btn" type="button" onClick={save}>
+            {t('submit')}
+          </button>
+        </div>
+      </div>
 
-                <PathConfirmModal color={theme}/>
-                <ConfigConfirmModal color={theme}/>
-            </div>
+      {/* advanced settings */}
+      <CardConfig color={color} />
 
-        </>
-    );
+      {/* storage path */}
+      <div className="mb-4 common-card theme-bg theme-text-main">
+        <div className="mb-2 setting-header">
+          <h5 className="font-bold theme-text-main">{t('storage_path')}</h5>
+        </div>
+        <div className="flex justify-between">
+          <input
+            type="text"
+            className="common-input theme-bg theme-border-color"
+            defaultValue={path}
+            ref={pathRef}
+          />
+          <button className="ml-2 common-btn theme-common-btn" type="button" onClick={changePath}>
+            {t('change')}
+          </button>
+        </div>
+      </div>
+
+      {/* security */}
+      <div className="common-card theme-bg theme-text-main">
+        <div className="mb-2 setting-header">
+          <h5 className="font-bold theme-text-main">{t('security')}</h5>
+        </div>
+        <div className="flex justify-between">
+          <div className="px-3.5 w-full h-9 border rounded-lg flex items-center text-sm leading-none transition-all theme-border-color theme-bg theme-text-sub-info">
+            <span className='mr-2'>
+              <i className="fa-solid fa-lock"></i>
+            </span>
+            <span>{t('private_key')}</span>
+          </div>
+          <button className="ml-2 common-btn theme-danger-btn" type="button" onClick={reveal} style={{minWidth: 'auto'}}>
+            {t('reveal_key')}
+          </button>
+        </div>
+      </div>
+
+      <PathConfirmModal />
+      <ConfigConfirmModal />
+    </div>
+  );
 }

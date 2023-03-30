@@ -1,16 +1,12 @@
-/*eslint-disable*/
-import React, {useEffect, useState, useContext, useRef} from "react";
-import {mainContext} from "reducer";
-import {Progress} from 'antd';
-import {uploadFiles} from "services/filesService.js";
-import Emitter from "utils/eventBus";
-import themeStyle from "utils/themeStyle.js";
-import {t} from "utils/text.js";
+import React, { useEffect, useState, useRef } from 'react';
+import { Progress } from 'antd';
+import { uploadFiles } from 'services/filesService.js';
+import Emitter from 'utils/eventBus';
+import themeStyle from 'utils/themeStyle.js';
+import { t } from 'utils/text.js';
+import CommonModal from './CommonModal';
 
-export default function UploadModal({color}) {
-
-    const {state} = useContext(mainContext);
-    const {sidebarShow} = state;
+export default function UploadModal({ color }) {
     const name = useRef(null);
     const [showModal, setShowModal] = useState(false);
     const [percentage, setPercentage] = useState(0);
@@ -19,26 +15,27 @@ export default function UploadModal({color}) {
 
     useEffect(() => {
         const set = async function (params) {
-            console.log("openUploadModal event has occured");
+            console.log('openUploadModal event has occured');
             openModal();
             name.current = params.data[0].path.split('/')[0];
             await upload(params.data, params.path, name.current);
             Emitter.emit('updateFiles');
         };
-        Emitter.on("openUploadModal", set);
+        Emitter.on('openUploadModal', set);
         return () => {
             Emitter.removeListener('openUploadModal');
             window.body.style.overflow = '';
-        }
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const onUploadProgress = function (label) {
         return (progress, totalSize) => {
             if (label === name.current) {
-                let percentage = Math.round(progress / totalSize * 100);
+                let percentage = Math.round((progress / totalSize) * 100);
                 setPercentage(percentage);
             }
-        }
+        };
     };
 
     const upload = async (input, path, label) => {
@@ -67,37 +64,28 @@ export default function UploadModal({color}) {
     };
 
     return (
-        <>
-            {showModal ? (
-                <>
-                    <div className={"fixed flex z-50 modal_center md:w-1/2 md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
-                        style={{height: '350px'}}>
-                        <button className="absolute right-0 bg-transparent text-2xl mr-2 font-semibold outline-none focus:outline-none text-blueGray-400"
-                            onClick={closeModal}
-                        >
-                            <span>×</span>
-                        </button>
-                        <div className="w-full">
-                            <div className={"px-4 h-full border-0 rounded-lg shadow-lg flex flex-col justify-center items-center" + themeStyle.bg[color] + ' ' + themeStyle.text[color]}>
-                                <div className="font-semibold mb-4"> {t('upload_status')} </div>
-                                {!err && <Progress type="circle" percent={percentage}/>}
-                                {err && <Progress type="circle" percent={percentage} status="exception"/>}
-                                <div className="font-semibold mt-4 w-full overflow-auto text-center">
-                                    {t('uploading')} &nbsp;
-                                    <span className={themeStyle.title[color]}>
-                                        {name.current}
-                                    </span>
-                                </div>
-                                {message && <div className="font-semibold mt-4 w-full overflow-auto text-center"> {message} </div>}
-                                <div style={{height: '25px'}}>
-                                    {(!err && percentage === 0) && <img alt="" style={{height: '25px'}} src={require('../../assets/img/bar-loading.svg').default}/>}
-                                </div>
-                            </div>
-                        </div>
+        <CommonModal visible={showModal} onCancel={closeModal}>
+            <div className="common-modal-wrapper theme-bg">
+                <main className="flex flex-col justify-center items-center theme-bg theme-text-main">
+                    <div className="font-semibold mb-4"> {t('upload_status')} </div>
+                    {!err && <Progress type="circle" percent={percentage} />}
+                    {err && <Progress type="circle" percent={percentage} status="exception" />}
+                    <div className="font-semibold mt-4 w-full overflow-auto text-center">
+                        {t('uploading')} &nbsp;
+                        <span className={themeStyle.title[color]}>{name.current}</span>
                     </div>
-                    <div className="bg-opacity-50 bg-black absolute top-0 left-0 w-full h-full inset-0 z-40"></div>
-                </>
-            ) : null}
-        </>
+                    {message && <div className="font-semibold mt-4 w-full overflow-auto text-center"> {message} </div>}
+                    <div style={{ height: '25px' }}>
+                        {!err && percentage === 0 && (
+                            <img
+                                alt=""
+                                style={{ height: '25px' }}
+                                src={require('../../assets/img/bar-loading.svg').default}
+                            />
+                        )}
+                    </div>
+                </main>
+            </div>
+        </CommonModal>
     );
 }

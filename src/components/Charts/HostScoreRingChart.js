@@ -1,90 +1,57 @@
-import React from "react";
-import {Progress} from 'antd';
-import themeStyle from "utils/themeStyle.js";
-import {t} from "utils/text.js";
+import React from 'react';
+import { t } from 'utils/text.js';
 
-
-export default function HostScoreRingChart({color, data}) {
+export default function HostScoreRingChart({ color, data }) {
     const scoreConfig = {
         1: {
-            color: "#C33730",
-            icon: "bad-icon",
-            text: "poor",
-          },
+            color: '#dc4242',
+            icon: <i className="fa-solid fa-face-frown"></i>,
+            text: 'poor',
+        },
         2: {
-            color: "#F99600",
-            icon: "general-icon",
-            text: "general",
+            color: '#f99600',
+            icon: <i className="fa-solid fa-face-meh"></i>,
+            text: 'general',
         },
         3: {
-            color: "#2EBBB9",
-            icon: "good-icon",
-            text: "good",
+            color: '#2ebbb9',
+            icon: <i className="fa-solid fa-face-smile"></i>,
+            text: 'good',
         },
         4: {
-            color: "#06A561",
-            icon: "excellent-icon",
-            text: "excellent",
+            color: '#06a561',
+            icon: <i className="fa-solid fa-face-laugh-squint"></i>,
+            text: 'excellent',
         },
-      };
-      const level = data.level || 1;
-      const scoreLevelObj = scoreConfig[level] 
+    };
+    const level = data.level || 1;
+    const scoreLevelObj = scoreConfig[level];
+
     return (
-        <>
-            <div className='h-full'>
-                <div className="rounded-t mb-0 py-3 bg-transparent">
-                    <div className="flex flex-wrap items-center">
-                        <div className="relative w-full max-w-full flex-grow flex-1">
-                            <h6 className={"uppercase mb-1 text-xs font-semibold " + themeStyle.title[color]}>
-                                {t('host_score')}
-                            </h6>
+        <div className="py-8 px-6 h-full flex flex-col">
+            <h5 className="text-base font-semibold theme-text-main">{t('host_score')}</h5>
+            <div className="py-5 flex-grow flex justify-center items-center border-b theme-border-color">
+                {!!(data.level && scoreLevelObj) && (
+                    <div
+                        className="flex justify-center items-center rounded-full"
+                        style={{
+                            width: 163,
+                            height: 163,
+                            borderWidth: 12,
+                            borderColor: scoreLevelObj.color,
+                            color: scoreLevelObj.color,
+                        }}>
+                        <div className="flex flex-col items-center">
+                            <div style={{ fontSize: 60, lineHeight: 1 }}>{scoreLevelObj.icon}</div>
+                            <div className="mt-2 text-base font-bold leading-none">{t(scoreLevelObj['text'])}</div>
                         </div>
                     </div>
-                </div>
-                <div className="py-4 flex-auto">
-                    <div className="relative flex flex-col justify-between items-center h-300-px">
-                        <div className='mt-4'>
-                        { (
-                            data.level && scoreLevelObj?
-                            <Progress
-                            strokeColor={scoreLevelObj.color}
-                            type="circle"
-                            percent={100}
-                            format={() => (
-                                <div className="flex flex-col items-center">
-                                  <img
-                                    src={
-                                      require(`../../assets/img/${scoreLevelObj["icon"]}.png`)
-                                        .default
-                                    }
-                                    alt=""
-                                    style={{ width:'35px',height:'35px' }}
-                                  />
-                                  <div
-                                    className="mt-10-px font-bold"
-                                    style={{ color: scoreLevelObj.color,fontSize:'18px' }}
-                                  >
-                                    {t(scoreLevelObj["text"])}
-                                  </div>
-                                </div>
-                              )}
-                            />:''
-                        ) }
-                            
-                        </div>
-                        {/* Divider */}
-                        <hr className="my-4 md:min-w-full"/>
-                        <div className='w-full text-left'>
-                            <div>
-                                {t('last_updated')}
-                            </div>
-                            <div>
-                                { data.lastUpdated ? new Date(data.lastUpdated).toLocaleString() : '--' }
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                )}
             </div>
-        </>
+            <div className="px-1 pt-4 text-xs theme-text-sub-main">
+                <div className="mb-2">{t('last_updated')}</div>
+                <div>{data.lastUpdated ? new Date(data.lastUpdated).toISOString() : '--'}</div>
+            </div>
+        </div>
     );
 }

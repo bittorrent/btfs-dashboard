@@ -1,3 +1,6 @@
+button:focus {
+  outline: none;
+}
 
 .break-all {
   word-break: break-all;
@@ -114,6 +117,10 @@
   width: 25%;
 }
 
+.p-0 {
+  padding: 0;
+}
+
 .p-1 {
   padding: 0.25rem;
 }
@@ -213,6 +220,10 @@
 
 .bg-gray {
   background-color: lightgray;
+}
+
+.bg-blue{
+    background-color: #2E5EBB;
 }
 
 .bg-gray-500 {

@@ -1,19 +1,14 @@
-import React, {useEffect, useState, useContext, useRef} from "react";
-import {mainContext} from "reducer";
-import {Progress} from 'antd';
-import ButtonCancel from "components/Buttons/ButtonCancel.js";
-import ButtonConfirm from "components/Buttons/ButtonConfirm.js";
-import {cash} from "services/chequeService.js";
-import Emitter from "utils/eventBus";
-import themeStyle from "utils/themeStyle.js";
-import {t} from "utils/text.js";
-import {PRECISION} from "utils/constants.js";
-import { toNonExponential } from "utils/BTFSUtil";
+import React, { useEffect, useState, useRef } from 'react';
+import { Progress } from 'antd';
+import ButtonConfirm from 'components/Buttons/ButtonConfirm.js';
+import { cash } from 'services/chequeService.js';
+import Emitter from 'utils/eventBus';
+import { t } from 'utils/text.js';
+import { PRECISION_RATE } from 'utils/constants.js';
+import { toNonExponential } from 'utils/BTFSUtil';
+import CommonModal from './CommonModal';
 
-export default function CashConfirmModal({color}) {
-
-    const {state} = useContext(mainContext);
-    const {sidebarShow} = state;
+export default function CashConfirmModal() {
     const [showModal, setShowModal] = useState(false);
     const [showResult, setShowResult] = useState(false);
     const cashList = useRef([]);
@@ -23,50 +18,43 @@ export default function CashConfirmModal({color}) {
 
     useEffect(() => {
         const set = async function (params) {
-            console.log("openCashConfirmModal event has occured");
+            console.log('openCashConfirmModal event has occured');
             const currencyData = {};
             const currencyList = [];
-            params.data.forEach(item=>{
-                const {amount} = item;
-                const {key,unit,icon} = item.selectItemData;
-                if(!currencyData[key]){
+            params.data.forEach(item => {
+                const { amount } = item;
+                const { key, unit, icon } = item.selectItemData;
+                const rate = item.selectItemData?.price?.rate ?? PRECISION_RATE;
+                if (!currencyData[key]) {
                     currencyData[key] = {};
                     currencyData[key].total = 0;
                     currencyData[key].len = 0;
                     currencyData[key].unit = unit;
                     currencyData[key].icon = icon;
-
+                    currencyData[key].rate = rate;
                 }
-                currencyData[key].amount = amount
+                currencyData[key].amount = amount;
                 currencyData[key].total += amount;
                 currencyData[key].len++;
-            })
-            Object.keys(currencyData).forEach(key=>{
-                currencyData[key].total =  currencyData[key].total / PRECISION;
+            });
+            Object.keys(currencyData).forEach(key => {
+                currencyData[key].total = currencyData[key].total / currencyData[key].rate;
                 currencyList.push(currencyData[key]);
-            })
-            
+            });
 
             cashList.current.currencyList = currencyList;
             cashList.current.list = params.data;
-            cashList.current.total = 0;
-
-            cashList.current.list.forEach((item) => {
-                cashList.current.total = (cashList.current.total + item.amount);
-            });
-
-            cashList.current.total = cashList.current.total / PRECISION;
 
             setShowModal(true);
         };
-        Emitter.on("openCashConfirmModal", set);
+        Emitter.on('openCashConfirmModal', set);
         return () => {
             Emitter.removeListener('openCashConfirmModal');
-        }
+        };
     }, []);
 
     const onCashProgress = (progress, totalSize) => {
-        let percentage = Math.round(progress / totalSize * 100);
+        let percentage = Math.round((progress / totalSize) * 100);
         setPercentage(percentage);
     };
 
@@ -97,86 +85,63 @@ export default function CashConfirmModal({color}) {
 
     return (
         <>
-            {
-                showResult ? (
-                    <>
-                        <div className={"fixed flex z-50 modal_center md:w-1/2 md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
-                            style={{height: '350px'}}>
-                            <button
-                                className="absolute right-0 bg-transparent text-2xl mr-2 font-semibold outline-none focus:outline-none text-blueGray-400"
-                                onClick={close}
-                            >
-                                <span>×</span>
-                            </button>
-
-                            <div className="w-full ">
-                                <div
-                                    className={"px-4 h-full border-0 rounded-lg shadow-lg flex flex-col justify-center items-center" + themeStyle.bg[color] + ' ' + themeStyle.text[color]}>
-                                    <div className="font-semibold mb-4"> {t('cashing_status')} </div>
-                                    {!err && <Progress type="circle" percent={percentage}/>}
-                                    {err && <Progress type="circle" percent={percentage} status="exception"/>}
-                                    {message && <div className="font-semibold mt-4 w-full overflow-auto text-center"> {message} </div>}
+            <CommonModal visible={showModal} onCancel={() => setShowModal(false)} width={540}>
+                <div className={'common-modal-wrapper theme-bg'}>
+                    <header className="common-modal-header mb-4">{t('cash_confirm')}</header>
+                    <main className="mb-8">
+                        <p className="mb-8 text-xs leading-none theme-text-sub-main">
+                            {t('cashing')} {t('from')} {cashList.current?.list?.length} {t('vault')}
+                        </p>
+                        <div className={'px-3 py-4 border rounded flex flex-col theme-border-color'}>
+                            <div className="pb-4 border-b flex justify-between items-start theme-border-color">
+                                <div className="text-sm theme-text-sub-main">{t('total')}</div>
+                                <div className="text-xl font-semibold text-right">
+                                    {cashList.current?.currencyList?.map((item, index) => {
+                                        return (
+                                            <div
+                                                key={index}
+                                                className={
+                                                    'theme-text-main ' + cashList.current?.currencyList?.length - 1 === index
+                                                        ? ''
+                                                        : 'mb-3'
+                                                }>
+                                                <span className="mr-1.5 helvetica-b font-bold text-base">
+                                                    {toNonExponential(item.total)}
+                                                </span>
+                                                <span className="text-sm">{item.unit}</span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                            <div className="pt-4 flex justify-between items-center">
+                                <div className="text-sm theme-text-sub-main">{t('est_fee')}</div>
+                                <div className="theme-text-main">
+                                    <span className="mr-1.5 helvetica-b font-bold text-base">
+                                        {(25.2801 * cashList.current?.list?.length).toFixed(2)}
+                                    </span>
+                                    <span className="text-sm">BTT</span>
                                 </div>
                             </div>
                         </div>
-                        <div className="bg-opacity-50 bg-black absolute top-0 left-0 w-full h-full inset-0 z-40"></div>
-                    </>
-                ) : null
-            }
-            {
-                showModal ? (
-                    <>
-                        <div className={"fixed flex z-50 modal_center md:w-1/2 md:left-0 md:right-0 mx-auto my-auto md:top-0 md:bottom-0 " + (sidebarShow ? "md:left-64" : "")}
-                            style={{height: '350px'}}>
-                            <div className="w-full">
-                                {/*content*/}
-                                <div
-                                    className={"flex flex-col justify-between h-full border-0 rounded-lg shadow-lg " + themeStyle.bg[color] + themeStyle.text[color]}>
-                                    {/*header*/}
-                                    <div className="p-4">
-                                        <p className=" font-semibold">
-                                            {t('cash_confirm')}
-                                        </p>
-                                    </div>
-                                    {/*body*/}
-                                    <div className="relative p-4 flex-auto">
-                                        <p className="pb-2">
-                                            {t('cashing')} {t('from')} {cashList.current.list.length} {t('vault')}
-                                            <br/>
-                                        </p>
-                                        <div
-                                            className={" flex flex-col " + (color === 'light' ? 'bg-blueGray-100' : 'bg-blueGray-600')}>
-                                            <div className='flex justify-between p-3'>
-                                                <div>{t('total')}</div>
-                                                <div className='text-xl font-semibold text-right'>
-                                                {cashList.current.currencyList.map((item,index)=>{
-                                                    return (
-                                                        <div key={index}> {toNonExponential(item.total)} {item.unit}</div>
-                                                    )
-                                                })}
-                                                {/* <div >{cashList.current.total} WBTT</div> */}
-                                                </div>
-                                            </div>
-                                            <div className='flex justify-between p-3'>
-                                                <div>{t('est_fee')}</div>
-                                                <div className='text-xl font-semibold'>
-                                                    {(25.2801 * cashList.current.list.length).toFixed(2)} BTT
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/*footer*/}
-                                    <div className="flex items-center justify-end p-4 rounded-b">
-                                        <ButtonCancel event={setShowModal} text={t('cancel')}/>
-                                        <ButtonConfirm event={submit} valid={true} text={t('confirm')}/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="bg-opacity-50 bg-black absolute top-0 left-0 w-full h-full inset-0 z-40"></div>
-                    </>
-                ) : null
-            }
+                    </main>
+                    <footer className="common-modal-footer">
+                        <ButtonConfirm event={submit} valid={true} text={t('confirm')} />
+                    </footer>
+                </div>
+            </CommonModal>
+            <CommonModal visible={showResult} onCancel={close} width={400}>
+                <div className="common-modal-wrapper theme-bg">
+                    <main className="flex flex-col justify-center items-center theme-bg theme-text-main">
+                        <div className="font-semibold mb-4"> {t('cashing_status')} </div>
+                        {!err && <Progress type="circle" percent={percentage} />}
+                        {err && <Progress type="circle" percent={percentage} status="exception" />}
+                        {message && (
+                            <div className="font-semibold mt-4 w-full overflow-auto text-center"> {message} </div>
+                        )}
+                    </main>
+                </div>
+            </CommonModal>
         </>
     );
 }

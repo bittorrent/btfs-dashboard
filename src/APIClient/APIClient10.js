@@ -68,6 +68,9 @@ class APIClient10 {
                 item.rate = +item.rate * PRECISION_RATE;
             })
             return res;
+        }).catch(e => {
+          console.log(e);
+          return {};
         });
     }
 
@@ -131,7 +134,7 @@ class APIClient10 {
     getChequeAllStats() {
         return this.request('/api/v1/cheque/stats-all');
     }
-    
+
 
     getChequeTotalIncomeNumbers() {
         return this.request('/api/v1/cheque/receive-total-count');
@@ -294,7 +297,9 @@ class APIClient10 {
     }
 
     getBTFS10Balance() {
-        return this.request('/api/v1/wallet/balance');
+        // deprecated
+        return null;
+        // return this.request('/api/v1/wallet/balance');
     }
 
     withdraw10(amount) {

@@ -1,18 +1,22 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import {HashRouter, Route, Switch, Redirect} from "react-router-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import 'antd/dist/antd.css';
-import "assets/styles/tailwind.css";
+import '@fortawesome/fontawesome-free/css/all.css';
+import 'antd/dist/antd.min.css';
+import 'assets/icon/iconfont.css';
+import 'assets/styles/overwrite.scss';
+import 'assets/styles/tailwind.css';
 import 'assets/styles/tailwindAddition.scss';
 import 'assets/styles/main.scss';
-import 'assets/styles/overwrite.scss';
-import 'assets/styles/theme.scss';
+import 'assets/styles/themeLight.scss';
+import 'assets/styles/themeDark.scss';
+import 'assets/styles/themeAntd.scss';
+import 'assets/styles/index.css';
 
-import Admin from "layouts/Admin.js";
+import Admin from 'layouts/Admin.js';
 
-import {ContextProvider} from './reducer'
+import { ContextProvider } from './reducer';
 import Inter from './locale/intl';
 
 ReactDOM.render(
@@ -20,11 +24,11 @@ ReactDOM.render(
         <Inter>
             <HashRouter>
                 <Switch>
-                    <Route path="/admin" component={Admin}/>
-                    <Redirect from="*" to="/admin"/>
+                    <Route path="/admin" component={Admin} />
+                    <Redirect from="*" to="/admin" />
                 </Switch>
             </HashRouter>
         </Inter>
     </ContextProvider>,
-    document.getElementById("root")
+    document.getElementById('root')
 );

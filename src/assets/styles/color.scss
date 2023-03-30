@@ -1,0 +1,60 @@
+$white: #fff;
+$black: #000;
+
+// theme light colors
+// brand-color
+$base-color: #3257f6;
+$hover-color: #5b78f7;
+$active-color: #2845c4;
+$shallow-color: #ecf2ff;
+$bg-color: #f5f6fa;
+
+// neutral color
+$line-color: #e6e9f4;
+$border-color: #d7dbec;
+
+$fill-color-base: $base-color;
+$fill-color-error: #dc4242;
+$fill-color-gray: #F2F5F7;
+$fill-color-white: $white;
+
+$text-color-main: #131523;
+$text-color-sub-main: #5a607f;
+$text-color-sub-info: #a1a7c4;
+$text-color-gray-info: #424242;
+$text-color-white: $white;
+$text-color-menuItem:#989CB0;
+//functional color
+$success-color: #06a561;
+$warning-color: #f99600;
+$info-color: #2ebbb9;
+$error-color: #dc4242;
+
+// theme dark colors
+// brand-color
+$dark-base-color: #3257f6;
+$dark-hover-color: #5b78f7;
+$dark-active-color: #2845c4;
+$dark-shallow-color: #ecf2ff;
+$dark-bg-color: #161921;
+
+// neutral color
+$dark-line-color: #21242c;
+$dark-border-color: #21242c;
+
+$dark-fill-color-base: $base-color;
+$dark-fill-color-error: #dc4242;
+$dark-fill-color-gray: #21242c;
+$dark-fill-color-black: #161921;
+
+$dark-text-color-main: $white;
+$dark-text-color-sub-main: #a1a7c4;
+$dark-text-color-sub-info: #5a607f;
+$dark-text-color-gray-info: #424242;
+$dark-text-color-white: #000000;
+
+//functional color
+$dark-success-color: #06a561;
+$dark-warning-color: #f99600;
+$dark-info-color: #2ebbb9;
+$dark-error-color: #dc4242;

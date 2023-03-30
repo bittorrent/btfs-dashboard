@@ -81,25 +81,30 @@ export async function fileArrayBuffer(file) {
 // format a balance number which is between 0 and 1
 function formatDecimalBalance(balance) {
     const balanceStr = String(balance);
-    // if(balanceStr.indexOf('e') !== -1) {
-    //     let [precision, exp] = balanceStr.split('e');
-    //     let rateDecimal = (precision * 10).toFixed(0);
-    //     exp = exp.slice(1);
-    //     return `0.${'0'.repeat(parseInt(exp))}${rateDecimal}`
-    // } else {
-    const [integer, decimal] = balanceStr.split('.');
-    let lastZeroIndex = 0;
-    for(let i = 0; i < decimal.length; i++) {
-        if(decimal[i] !== '0') {
-            lastZeroIndex = i;
-            break;
-        } 
+    try {
+        if(balanceStr.indexOf('e') !== -1) {
+            let [precision, exp = '-1'] = balanceStr.split('e');
+            let rateDecimal = (precision * 10).toFixed(0);
+            exp = exp.slice(1);
+            return `0.${'0'.repeat(parseInt(exp - 1))}${rateDecimal}`
+        } else {
+            const [integer, decimal] = balanceStr.split('.');
+            let lastZeroIndex = 0;
+            for(let i = 0; i < decimal?.length; i++) {
+                if(decimal[i] !== '0') {
+                    lastZeroIndex = i;
+                    break;
+                }
+            }
+            const rate = lastZeroIndex;
+            const significantDecimal = decimal.slice(lastZeroIndex);
+            const rateDecimal = parseFloat('0.'+significantDecimal) * 100;
+            return `${integer}.${'0'.repeat(rate)}${rateDecimal.toFixed(0) }`
+        }
+    } catch (e) {
+        console.log(e);
+        return '0';
     }
-    const rate = lastZeroIndex;
-    const significantDecimal = decimal.slice(lastZeroIndex);
-    const rateDecimal = parseFloat('0.'+significantDecimal) * 100;
-    return `${integer}.${'0'.repeat(rate)}${rateDecimal.toFixed(0) }`
-    // }
 }
 
 export function switchBalanceUnit(balance, precision = PRECISION) {
@@ -119,7 +124,7 @@ export function switchBalanceUnit(balance, precision = PRECISION) {
 
     // handle small number
     if(balance === 0) {
-        return '0 ';
+        return '0';
     }
 
     if (balance < 1) {
@@ -168,7 +173,7 @@ export function versionStringCompare (curVersion='', lastVersion='2.2.1'){
     const dests = lastVersion.split('.');
     const maxL = Math.max(sources.length, dests.length);
     let result = 0;
-    for (let i = 0; i < maxL; i++) {  
+    for (let i = 0; i < maxL; i++) {
         const preValue = sources.length>i ? sources[i]:0;
         const preNum = isNaN(Number(preValue)) ? preValue.charCodeAt() : Number(preValue);
         const lastValue = dests.length>i ? dests[i]:0;
@@ -176,7 +181,7 @@ export function versionStringCompare (curVersion='', lastVersion='2.2.1'){
         if (preNum < lastNum) {
             result = -1;
             break;
-        } else if (preNum > lastNum) { 
+        } else if (preNum > lastNum) {
             result = 1;
             break;
         }

@@ -3,3 +3,69 @@
 @tailwind components;
 
 @tailwind utilities;
+
+@layer components {
+  .common-card {
+    @apply p-6 border-0 rounded-2xl transition-all;
+  }
+
+  .common-input {
+    @apply px-3.5 w-full h-9 border rounded-lg focus:outline-none focus:ring text-sm leading-none placeholder-blueGray-300 transition-all;
+  }
+
+  .common-btn {
+    @apply h-9 px-4 py-2 rounded hover:shadow outline-none focus:outline-none font-bold text-xs whitespace-nowrap transition-all;
+  }
+
+  .setting-header {
+    @apply flex items-center transition-all;
+  }
+
+  .sidebar {
+    @apply relative z-10 py-4 px-6 flex flex-wrap items-center justify-between md:fixed md:left-0 md:top-0 md:bottom-0 md:block md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden;
+  }
+
+  .round-btn {
+    @apply h-10 w-10 p-0 inline-flex justify-center items-center border rounded-full outline-none focus:outline-none font-bold;
+  }
+
+  .round-rect-btn {
+    @apply h-7 px-2 py-1 inline-flex justify-center items-center border rounded-full outline-none focus:outline-none font-bold text-xs;
+  }
+
+  .copy-btn {
+    @apply h-6 p-1 inline-flex items-center border rounded-sm outline-none text-xs leading-none;
+  }
+
+  .sidebar-link {
+    @apply px-2 py-3 block text-xs;
+  }
+
+  .common-modal-wrapper {
+    @apply h-full p-6 rounded-2xl;
+  }
+
+  .common-modal-header {
+    @apply mb-9 text-base font-bold;
+  }
+
+  .common-modal-footer {
+    @apply flex justify-end;
+  }
+
+  .common-table-head-tr {
+    @apply border-b text-sm leading-none whitespace-nowrap;
+  }
+
+  .common-table-head-th {
+    @apply px-4 py-2 text-left font-normal;
+  }
+
+  .common-table-body-tr {
+    @apply border-b text-sm;
+  }
+
+  .common-table-body-td {
+    @apply p-4 align-middle whitespace-nowrap text-sm;
+  }
+}

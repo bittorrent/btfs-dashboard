@@ -1,62 +1,75 @@
-import React, {useEffect, useState} from "react";
-import NetworkDoughnutChart from "components/Charts/NetworkDoughnutChart.js";
-import themeStyle from "utils/themeStyle.js";
-import {getNetworkFlow} from "services/dashboardService.js";
-import {t} from "utils/text.js";
+import React, { useEffect, useState } from 'react';
+import { Progress } from 'antd';
+import { getNetworkFlow } from 'services/dashboardService.js';
+import { t } from 'utils/text.js';
 
 let didCancel = false;
 
-export default function CardNetworkFlow({color}) {
+export default function CardNetworkFlow({ color }) {
+  const [receive, setReceive] = useState(0);
+  const [send, setSend] = useState(0);
 
-    const [receive, setReceive] = useState(0);
-    const [send, setSend] = useState(0);
+  useEffect(() => {
+    fetchData();
+    let interval = setInterval(() => {
+      fetchData();
+    }, 6000);
+    return () => {
+      didCancel = true;
+      clearInterval(interval);
+    };
+  }, []);
 
-    useEffect(() => {
-        fetchData();
-        let interval = setInterval(() => {
-            fetchData();
-        }, 6000);
-        return () => {
-            didCancel = true;
-            clearInterval(interval);
-        }
-
-    }, [])
-
-    const fetchData = async () => {
-        didCancel = false;
-        let data = await getNetworkFlow();
-        if (!didCancel) {
-            setReceive(data['receive']);
-            setSend(data['send']);
-        }
+  const fetchData = async () => {
+    didCancel = false;
+    let data = await getNetworkFlow();
+    if (!didCancel) {
+      setReceive(data['receive']);
+      setSend(data['send']);
     }
+  };
 
-    return (
-        <>
-            <div className={"relative flex flex-col h-400-px justify-center p-4" + themeStyle.bg[color]}>
-                <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
-                    <div className="flex flex-wrap items-center">
-                        <div className="relative w-full max-w-full flex-grow flex-1">
-                            <h6 className={"uppercase mb-1 text-xs font-semibold " + themeStyle.title[color]}>
-                                {t('network_traffic')}
-                            </h6>
-                        </div>
-                    </div>
-                </div>
-                <div className='p-4 flex-auto'>
-                    <div className='flex flex-col relative h-300-px'>
-                        <div className='w-full'>
-                            <NetworkDoughnutChart data={receive} id={'network-flow-doughnut-chart-upper'}
-                                                  color={color} text={'in'}/>
-                        </div>
-                        <div className='w-full mt-2'>
-                            <NetworkDoughnutChart data={send} id={'network-flow-doughnut-chart-lower'}
-                                                  color={color} text={'out'}/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
+  return (
+    <div className="h-full common-card theme-bg">
+      <h5 className="mb-4 font-bold text-base theme-text-main">{t('network_traffic')}</h5>
+      <div className="flex justify-around xl:flex-col xl:items-center">
+        <div className="">
+          <Progress
+            type="dashboard"
+            gapDegree={90}
+            strokeWidth={10}
+            width={120}
+            percent={parseFloat(receive) < 10000 ? receive / 10000 : 100}
+            trailColor="#ECF2FF"
+            strokeColor="#06A561"
+            format={() => (
+              <div className="mt-6 theme-text-sub-main">
+                <div className="font-bold text-3xl leading-none">{receive}</div>
+                <div className="text-xs leading-none">KB/s</div>
+                <div className="mt-3 text-xs">In</div>
+              </div>
+            )}
+          />
+        </div>
+        <div className="xl:mt-2">
+          <Progress
+            type="dashboard"
+            gapDegree={90}
+            strokeWidth={10}
+            width={120}
+            percent={parseFloat(send) < 10000 ? send / 10000 : 100}
+            trailColor="#ECF2FF"
+            strokeColor="#F99600"
+            format={() => (
+              <div className="mt-6 theme-text-sub-main">
+                <div className="font-bold text-3xl leading-none">{send}</div>
+                <div className="text-xs leading-none">KB/s</div>
+                <div className="mt-3 text-xs">Out</div>
+              </div>
+            )}
+          />
+        </div>
+      </div>
+    </div>
+  );
 }
