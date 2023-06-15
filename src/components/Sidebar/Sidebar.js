@@ -58,6 +58,7 @@ export default function Sidebar() {
     const { sidebarShow, theme, pageMode } = state;
     const [collapseShow, setCollapseShow] = useState('hidden');
     const [ID, setID] = useState('');
+    const isSimpleMode = pageMode === SAMPLE_PAGE_MODE;
 
     useEffect(() => {
       const fetchData = async () => {
@@ -91,15 +92,33 @@ export default function Sidebar() {
                 {/* Brand */}
                 <div className={'flex justify-between'}>
                     <div className="items-center">
-                        <Link className={'text-left mr-0 inline-block whitespace-nowrap text-sm font-bold px-0'} to="/">
+                        <Link className={`${isSimpleMode ? 'flex' : 'inline-block'} text-left mr-0  whitespace-nowrap text-sm font-bold px-0`} to="/">
                             <img
                                 className="inline-block"
                                 src={require('assets/img/btfs_logo.png').default}
                                 style={{ width: '37px', height: '40px' }}
                                 alt="btfs_logo"
                             />
-                            <span className="theme-text-main">BTFS Dashboard</span>
-                            <span className="theme-text-base"> 2.0</span>
+                            { isSimpleMode ? 
+                                <div className="flex flex-col justify-end">
+                                    <div>
+                                        <span className="theme-text-main">BTFS Dashboard</span>
+                                        <span className="theme-text-base"> 2.0</span>
+                                    </div>
+                                    <img
+                                        className="inline-block"
+                                        src={require('assets/img/simple-mode-icon.png').default}
+                                        style={{ width: '65px', height: '15px' }}
+                                        alt="btfs_logo"
+                                    />
+                                </div> : 
+                                <>
+                                    <span className="theme-text-main">BTFS Dashboard</span>
+                                    <span className="theme-text-base"> 2.0</span>
+                                </>
+                            }
+                            
+                            
                         </Link>
                     </div>
                     <button

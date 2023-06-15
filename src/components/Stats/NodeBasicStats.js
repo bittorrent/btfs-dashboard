@@ -163,11 +163,8 @@ export default function NodeBasicStats({ isMainMode }) {
             </div>
           </div> :
           <div className="flex flex-wrap">
-            <div className="px-6 py-8 w-full border-b rounded-t-2xl theme-bg theme-border-color xl:w-1/2 xl:border-0 xl:border-r xl:rounded-none xl:rounded-l-2xl">
+            <div className="px-6 py-8 w-full rounded-2xl theme-bg theme-border-color xl:w-1/1  xl:rounded-none xl:rounded-l-2xl xl:rounded-r-2xl">
               <HostID ID={ID} />
-            </div>
-            <div className="px-6 py-8 w-full border-b theme-bg theme-border-color xl:w-1/2 xl:border-0 xl:border-r">
-              <Status status={status} peers={peers} message={message} />
             </div>
           </div>
          }
