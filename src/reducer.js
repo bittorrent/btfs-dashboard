@@ -11,6 +11,7 @@ const SET_PAGE_MODE = 'SET_PAGE_MODE';
 
 const mainContext = React.createContext();
 const theme = localStorage.getItem('theme');
+const pageMode = localStorage.getItem('pageMode');
 
 window.theme = theme ? theme : "light";
 window.nodeStatus = false;
@@ -22,7 +23,7 @@ const initState = {
     nodeStatus: false,
     account: null,
     node: null,
-    pageMode: MAIN_PAGE_MODE,
+    pageMode: pageMode ? pageMode : MAIN_PAGE_MODE,
 };
 
 const reducer = (state, action) => {

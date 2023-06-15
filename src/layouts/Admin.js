@@ -76,9 +76,11 @@ export default function Admin() {
     const data = await getHostConfigData();
     if (data) {
       const { SimpleMode } = data;
+      const pageMode = SimpleMode ? SAMPLE_PAGE_MODE : MAIN_PAGE_MODE;
+      localStorage.setItem('pageMode', pageMode);
       dispatch({
         type: 'SET_PAGE_MODE',
-        pageMode: SimpleMode ? SAMPLE_PAGE_MODE : MAIN_PAGE_MODE,
+        pageMode: pageMode,
       });
     }
   };
