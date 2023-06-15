@@ -40,7 +40,7 @@ const reducer = (state, action) => {
         case SET_NODE:
             return {...state, node: action.node || false};
         case SET_PAGE_MODE:
-                return {...state, node: action.pageMode || MAIN_PAGE_MODE};
+                return {...state, pageMode: action.pageMode};
         default:
             return state
     }
