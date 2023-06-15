@@ -1,4 +1,5 @@
 import React, {useReducer} from 'react'
+import { MAIN_PAGE_MODE } from 'utils/constants';
 
 const CHANGE_LOCALE = 'CHANGE_LOCALE';
 const CHANGE_THEME = 'CHANGE_THEME';
@@ -6,6 +7,7 @@ const CHANGE_SIDEBAR = 'CHANGE_SIDEBAR';
 const SET_NODE_STATUS = 'SET_NODE_STATUS';
 const SET_ACCOUNT = 'SET_ACCOUNT';
 const SET_NODE = 'SET_NODE';
+const SET_PAGE_MODE = 'SET_PAGE_MODE';
 
 const mainContext = React.createContext();
 const theme = localStorage.getItem('theme');
@@ -20,6 +22,7 @@ const initState = {
     nodeStatus: false,
     account: null,
     node: null,
+    pageMode: MAIN_PAGE_MODE,
 };
 
 const reducer = (state, action) => {
@@ -36,6 +39,8 @@ const reducer = (state, action) => {
             return {...state, account: action.account || false};
         case SET_NODE:
             return {...state, node: action.node || false};
+        case SET_PAGE_MODE:
+                return {...state, node: action.pageMode || MAIN_PAGE_MODE};
         default:
             return state
     }

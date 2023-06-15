@@ -118,7 +118,7 @@ const Uptime = ({ uptime }) => {
   );
 };
 
-export default function NodeBasicStats() {
+export default function NodeBasicStats({ isMainMode }) {
   const [ID, setID] = useState('--');
   const [uptime, setUptime] = useState('--');
   const [peers, setPeers] = useState('--');
@@ -150,17 +150,28 @@ export default function NodeBasicStats() {
   return (
     <div className="relative mb-4 common-card p-0">
       <div className="mx-auto w-full">
-        <div className="flex flex-wrap">
-          <div className="px-6 py-8 w-full border-b rounded-t-2xl theme-bg theme-border-color xl:w-1/3 xl:border-0 xl:border-r xl:rounded-none xl:rounded-l-2xl">
-            <HostID ID={ID} />
+        {isMainMode ? 
+          <div className="flex flex-wrap">
+            <div className="px-6 py-8 w-full border-b rounded-t-2xl theme-bg theme-border-color xl:w-1/3 xl:border-0 xl:border-r xl:rounded-none xl:rounded-l-2xl">
+              <HostID ID={ID} />
+            </div>
+            <div className="px-6 py-8 w-full border-b theme-bg theme-border-color xl:w-1/3 xl:border-0 xl:border-r">
+              <Status status={status} peers={peers} message={message} />
+            </div>
+            <div className="px-6 py-8 w-full rounded-b-2xl theme-bg xl:w-1/3 xl:rounded-none xl:rounded-r-2xl">
+              <Uptime uptime={uptime} />
+            </div>
+          </div> :
+          <div className="flex flex-wrap">
+            <div className="px-6 py-8 w-full border-b rounded-t-2xl theme-bg theme-border-color xl:w-1/2 xl:border-0 xl:border-r xl:rounded-none xl:rounded-l-2xl">
+              <HostID ID={ID} />
+            </div>
+            <div className="px-6 py-8 w-full border-b theme-bg theme-border-color xl:w-1/2 xl:border-0 xl:border-r">
+              <Status status={status} peers={peers} message={message} />
+            </div>
           </div>
-          <div className="px-6 py-8 w-full border-b theme-bg theme-border-color xl:w-1/3 xl:border-0 xl:border-r">
-            <Status status={status} peers={peers} message={message} />
-          </div>
-          <div className="px-6 py-8 w-full rounded-b-2xl theme-bg xl:w-1/3 xl:rounded-none xl:rounded-r-2xl">
-            <Uptime uptime={uptime} />
-          </div>
-        </div>
+         }
+        
       </div>
     </div>
   );

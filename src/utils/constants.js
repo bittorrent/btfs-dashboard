@@ -157,3 +157,7 @@ export const PROGRESS_COLORS = {
   TRAIL_COLOR: '#F99600',
   STROKE_COLOR: '#06A561',
 };
+
+export const MAIN_PAGE_MODE = 'MainMode';
+
+export const SAMPLE_PAGE_MODE = 'SimpleMode';

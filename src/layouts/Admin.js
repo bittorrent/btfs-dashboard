@@ -5,8 +5,9 @@ import MessageAlert from 'components/Alerts/MessageAlert';
 import MessageModal from 'components/Modals/MessageModal';
 import AdminNavbar from 'components/Navbars/AdminNavbar.js';
 import Sidebar from 'components/Sidebar/Sidebar.js';
-import { AsyncComponent } from 'asyncComponent.js';
-import { nodeStatusCheck } from 'services/otherService.js';
+import { nodeStatusCheck, getHostConfigData } from 'services/otherService.js';
+import { SimpleRoutes, MainRoutes } from 'routes/index';
+import { MAIN_PAGE_MODE, SAMPLE_PAGE_MODE } from 'utils/constants';
 
 import {
   ArcElement,
@@ -61,20 +62,30 @@ Chart.register(
   Tooltip
 );
 
-const asyncDashboard = AsyncComponent(() => import(/* webpackChunkName: "dashboard" */ 'views/admin/Dashboard.js'));
-const asyncPeers = AsyncComponent(() => import(/*  webpackChunkName: "peers" */ 'views/admin/Peers.js'));
-const asyncSettings = AsyncComponent(() => import(/*  webpackChunkName: "settings" */ 'views/admin/Settings.js'));
-const asyncFiles = AsyncComponent(() => import(/*  webpackChunkName: "files" */ 'views/admin/Files.js'));
-const asyncCheque = AsyncComponent(() => import(/*  webpackChunkName: "cheque" */ 'views/admin/Cheque.js'));
-const asyncHeartBeats = AsyncComponent(() => import(/*  webpackChunkName: "cheque" */ 'views/admin/HeartBeats.js'));
+const routeConfig = {};
+routeConfig[MAIN_PAGE_MODE] = MainRoutes;
+routeConfig[SAMPLE_PAGE_MODE] = SimpleRoutes;
 
 export default function Admin() {
   const { dispatch, state } = useContext(mainContext);
-  const { theme, sidebarShow } = state;
+  const { theme, sidebarShow, pageMode } = state;
   const history = useHistory();
 
+
+  const getPageMode = async () => {
+    const data = await getHostConfigData();
+    if (data) {
+      const { SimpleMode } = data;
+      dispatch({
+        type: 'SET_PAGE_MODE',
+        pageMode: SimpleMode ? SAMPLE_PAGE_MODE : MAIN_PAGE_MODE,
+      });
+    }
+  };
+  
   const init = async () => {
     const NODE_URL = localStorage.getItem('NODE_URL');
+    getPageMode();
     if (!NODE_URL && !window.location.href.includes('/admin/settings')) {
       history.push('/admin/settings');
     } else {
@@ -114,12 +125,11 @@ export default function Admin() {
         <AdminNavbar />
         <div className="p-4 pb-6 md:px-8 mx-auto w-full">
           <Switch>
-            <Route path="/admin/dashboard" exact component={asyncDashboard} />
-            <Route path="/admin/peers" exact component={asyncPeers} />
-            <Route path="/admin/settings" exact component={asyncSettings} />
-            <Route path="/admin/files" exact component={asyncFiles} />
-            <Route path="/admin/cheque" exact component={asyncCheque} />
-            <Route path="/admin/onlineproof" exact component={asyncHeartBeats} />
+            {routeConfig[pageMode].map(item=>{
+              return(
+                <Route key={item.path} path={item.path} exact component={item.component} />
+              )
+            })}
             <Redirect from="/admin" to="/admin/dashboard" />
           </Switch>
         </div>
