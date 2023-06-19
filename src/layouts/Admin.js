@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import { mainContext } from 'reducer';
 import MessageAlert from 'components/Alerts/MessageAlert';
@@ -69,31 +69,37 @@ routeConfig[SAMPLE_PAGE_MODE] = SimpleRoutes;
 export default function Admin() {
   const { dispatch, state } = useContext(mainContext);
   const { theme, sidebarShow, pageMode } = state;
+  const [isGetSimpleMode, setIsGetSimpleMode] = useState(false);
   const history = useHistory();
 
 
   const getPageMode = async () => {
     const data = await getHostConfigData();
     if (data) {
-      const { SimpleMode } = data;
+      // const { SimpleMode } = data;
+      const SimpleMode = true;
       const pageMode = SimpleMode ? SAMPLE_PAGE_MODE : MAIN_PAGE_MODE;
+      
       localStorage.setItem('pageMode', pageMode);
       dispatch({
         type: 'SET_PAGE_MODE',
         pageMode: pageMode,
       });
     }
+    setIsGetSimpleMode(true);
+    const isMainMode = MAIN_PAGE_MODE === pageMode;
+    return isMainMode;
   };
   
   const init = async () => {
     const NODE_URL = localStorage.getItem('NODE_URL');
-    getPageMode();
+   const isMainMode =  await getPageMode();
     if (!NODE_URL && !window.location.href.includes('/admin/settings')) {
       history.push('/admin/settings');
     } else {
       // check node status
       window.loading = true;
-      let result = await nodeStatusCheck(NODE_URL);
+      let result = await nodeStatusCheck(NODE_URL, isMainMode);
       if (result) {
         window.loading = false;
         window.nodeStatus = true;
@@ -119,6 +125,7 @@ export default function Admin() {
   }, []);
 
   return (
+    isGetSimpleMode && 
     <>
       <Sidebar />
       <div

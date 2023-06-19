@@ -46,17 +46,24 @@ export const getPrivateKey = async () => {
     }
 };
 
-export const nodeStatusCheck = async (url) => {
+export const nodeStatusCheck = async (url, isMainMode) => {
     try {
         if (url) {
-            Client10.syncContracts();
+            if(isMainMode){
+                Client10.syncContracts();
+            }
             let {data} = await xhr.post(url + '/api/v1/id');
             if (data['ID']) {
                 setApiUrl(url);
                 setClient(url);
-                let {chain_id} = await Client10.getChainInfo();
+
+                if(isMainMode){
+                    let {chain_id} = await Client10.getChainInfo();
+                    localStorage.setItem('CHAIN_ID', chain_id);
+                }
+                
                 localStorage.setItem('NODE_URL', url);
-                localStorage.setItem('CHAIN_ID', chain_id);
+                
                 return true
             } else {
                 return false
@@ -64,8 +71,10 @@ export const nodeStatusCheck = async (url) => {
         } else {
             let {ID} = await Client10.getHostInfo();
             if (ID) {
-                let {chain_id} = await Client10.getChainInfo();
-                localStorage.setItem('CHAIN_ID', chain_id);
+                if(isMainMode){
+                    let {chain_id} = await Client10.getChainInfo();
+                    localStorage.setItem('CHAIN_ID', chain_id);
+                }
                 return true
             } else {
                 return false

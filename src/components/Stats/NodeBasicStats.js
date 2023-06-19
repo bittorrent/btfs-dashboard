@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { Progress, Tooltip } from 'antd';
 import { ReactComponent as OnlineIcon } from 'assets/img/online.svg';
 import ClipboardCopy from 'components/Utils/ClipboardCopy';
-import { getNodeBasicStats } from 'services/dashboardService.js';
+import { getNodeBasicStats, getSimpleNodeBasicStats } from 'services/dashboardService.js';
 import { t, Truncate } from 'utils/text.js';
 import { btfsScanLinkCheck } from 'utils/checks.js';
 
@@ -128,18 +128,27 @@ export default function NodeBasicStats({ isMainMode }) {
   useEffect(() => {
     let didCancel = false;
     const fetchData = async () => {
-      let { ID, uptime, peers, status, message } = await getNodeBasicStats();
-      if (!didCancel) {
-        unstable_batchedUpdates(() => {
-          setID(ID);
-          setUptime(uptime);
-          setPeers(peers);
-          // setVersion(version);
-          // setChain(CHAIN_NAME[localStorage.getItem('CHAIN_ID')]);
-          setStatus(status);
-          setMessage(message);
-        });
-      }
+      if(isMainMode){
+        let { ID, uptime, peers, status, message } = await getNodeBasicStats();
+        if (!didCancel) {
+          unstable_batchedUpdates(() => {
+            setID(ID);
+            setUptime(uptime);
+            setPeers(peers);
+            // setVersion(version);
+            // setChain(CHAIN_NAME[localStorage.getItem('CHAIN_ID')]);
+            setStatus(status);
+            setMessage(message);
+          });
+        }
+      }else{
+        let { ID } = await getSimpleNodeBasicStats();
+        if (!didCancel) {
+          unstable_batchedUpdates(() => {
+            setID(ID);
+          });
+        }
+        }
     };
     fetchData();
     return () => {

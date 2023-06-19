@@ -32,7 +32,7 @@ export default function CardSettings({ color }) {
 
   useEffect(() => {
     if (apiUrl) {
-      nodeStatusCheck(apiUrl);
+      nodeStatusCheck(apiUrl, isMainMode);
     }
     inputRef.current.value = NODE_URL;
     getPath();
