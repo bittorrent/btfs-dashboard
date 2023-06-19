@@ -76,8 +76,7 @@ export default function Admin() {
   const getPageMode = async () => {
     const data = await getHostConfigData();
     if (data) {
-      // const { SimpleMode } = data;
-      const SimpleMode = true;
+      const { SimpleMode } = data;
       const pageMode = SimpleMode ? SAMPLE_PAGE_MODE : MAIN_PAGE_MODE;
       
       localStorage.setItem('pageMode', pageMode);
