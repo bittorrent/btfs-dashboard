@@ -154,6 +154,7 @@ export default function NodeBasicStats({ isMainMode }) {
     return () => {
       didCancel = true;
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
