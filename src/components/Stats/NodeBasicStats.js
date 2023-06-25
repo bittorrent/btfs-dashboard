@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { Progress, Tooltip } from 'antd';
 import { ReactComponent as OnlineIcon } from 'assets/img/online.svg';
 import ClipboardCopy from 'components/Utils/ClipboardCopy';
-import { getNodeBasicStats } from 'services/dashboardService.js';
+import { getNodeBasicStats, getSimpleNodeBasicStats } from 'services/dashboardService.js';
 import { t, Truncate } from 'utils/text.js';
 import { btfsScanLinkCheck } from 'utils/checks.js';
 
@@ -118,7 +118,7 @@ const Uptime = ({ uptime }) => {
   );
 };
 
-export default function NodeBasicStats() {
+export default function NodeBasicStats({ isMainMode }) {
   const [ID, setID] = useState('--');
   const [uptime, setUptime] = useState('--');
   const [peers, setPeers] = useState('--');
@@ -128,39 +128,57 @@ export default function NodeBasicStats() {
   useEffect(() => {
     let didCancel = false;
     const fetchData = async () => {
-      let { ID, uptime, peers, status, message } = await getNodeBasicStats();
-      if (!didCancel) {
-        unstable_batchedUpdates(() => {
-          setID(ID);
-          setUptime(uptime);
-          setPeers(peers);
-          // setVersion(version);
-          // setChain(CHAIN_NAME[localStorage.getItem('CHAIN_ID')]);
-          setStatus(status);
-          setMessage(message);
-        });
-      }
+      if(isMainMode){
+        let { ID, uptime, peers, status, message } = await getNodeBasicStats();
+        if (!didCancel) {
+          unstable_batchedUpdates(() => {
+            setID(ID);
+            setUptime(uptime);
+            setPeers(peers);
+            // setVersion(version);
+            // setChain(CHAIN_NAME[localStorage.getItem('CHAIN_ID')]);
+            setStatus(status);
+            setMessage(message);
+          });
+        }
+      }else{
+        let { ID } = await getSimpleNodeBasicStats();
+        if (!didCancel) {
+          unstable_batchedUpdates(() => {
+            setID(ID);
+          });
+        }
+        }
     };
     fetchData();
     return () => {
       didCancel = true;
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="relative mb-4 common-card p-0">
       <div className="mx-auto w-full">
-        <div className="flex flex-wrap">
-          <div className="px-6 py-8 w-full border-b rounded-t-2xl theme-bg theme-border-color xl:w-1/3 xl:border-0 xl:border-r xl:rounded-none xl:rounded-l-2xl">
-            <HostID ID={ID} />
+        {isMainMode ? 
+          <div className="flex flex-wrap">
+            <div className="px-6 py-8 w-full border-b rounded-t-2xl theme-bg theme-border-color xl:w-1/3 xl:border-0 xl:border-r xl:rounded-none xl:rounded-l-2xl">
+              <HostID ID={ID} />
+            </div>
+            <div className="px-6 py-8 w-full border-b theme-bg theme-border-color xl:w-1/3 xl:border-0 xl:border-r">
+              <Status status={status} peers={peers} message={message} />
+            </div>
+            <div className="px-6 py-8 w-full rounded-b-2xl theme-bg xl:w-1/3 xl:rounded-none xl:rounded-r-2xl">
+              <Uptime uptime={uptime} />
+            </div>
+          </div> :
+          <div className="flex flex-wrap">
+            <div className="px-6 py-8 w-full rounded-2xl theme-bg theme-border-color xl:w-1/1  xl:rounded-none xl:rounded-l-2xl xl:rounded-r-2xl">
+              <HostID ID={ID} />
+            </div>
           </div>
-          <div className="px-6 py-8 w-full border-b theme-bg theme-border-color xl:w-1/3 xl:border-0 xl:border-r">
-            <Status status={status} peers={peers} message={message} />
-          </div>
-          <div className="px-6 py-8 w-full rounded-b-2xl theme-bg xl:w-1/3 xl:rounded-none xl:rounded-r-2xl">
-            <Uptime uptime={uptime} />
-          </div>
-        </div>
+         }
+        
       </div>
     </div>
   );

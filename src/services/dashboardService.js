@@ -46,6 +46,16 @@ export const getNodeBasicStats = async () => {
         }
     })
 };
+
+export const getSimpleNodeBasicStats = async () => {
+    let data1 = Client10.getHostInfo();
+    return Promise.all([data1]).then((result) => {
+        return {
+            ID: result[0]['ID'] ? result[0]['ID'] : '--',
+        }
+    })
+};
+
 export const getHostAllScore = async () => {
     const data2 = getHostScore(NEW_SCORE_VERSION);
     return Promise.all([data2]).then((result) => {

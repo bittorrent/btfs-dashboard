@@ -5,17 +5,37 @@ import { mainContext } from 'reducer';
 import LangDropdown from 'components/Dropdowns/LangDropdown.js';
 import ThemeToggle from 'components/Toggles/ThemeToggle';
 import { getHostInfo } from 'services/dashboardService.js';
+import { MAIN_PAGE_MODE, SAMPLE_PAGE_MODE } from 'utils/constants';
 import HostID from './HostID';
 import { t } from 'utils/text.js';
 
-const NavLinksConfig = [
-    { path: '/admin/dashboard', text: t('dashboard'), iconClass: ' iconfont BTFS_icon_Dashboard ' },
-    { path: '/admin/cheque', text: t('cheques'), iconClass: ' iconfont BTFS_icon_Cheques ' },
-    { path: '/admin/onlineproof', text: t('heartbeats'), iconClass: ' iconfont BTFS_icon_a-OnlineProof ' },
-    { path: '/admin/peers', text: t('peers'), iconClass: ' iconfont BTFS_icon_Peers ' },
-    { path: '/admin/files', text: t('files'), iconClass: ' iconfont BTFS_icon_Files ' },
-    { path: '/admin/settings', text: t('settings'), iconClass: ' iconfont BTFS_icon_Settings ' },
+const dashboardLink = { path: '/admin/dashboard', text: t('dashboard'), iconClass: ' iconfont BTFS_icon_Dashboard ' };
+const chequeLink = { path: '/admin/cheque', text: t('cheques'), iconClass: ' iconfont BTFS_icon_Cheques ' };
+const onlineProofLink = { path: '/admin/onlineproof', text: t('heartbeats'), iconClass: ' iconfont BTFS_icon_a-OnlineProof ' };
+const peersLink = { path: '/admin/peers', text: t('peers'), iconClass: ' iconfont BTFS_icon_Peers ' };
+const filesLink = { path: '/admin/files', text: t('files'), iconClass: ' iconfont BTFS_icon_Files ' };
+const settingsLink =  { path: '/admin/settings', text: t('settings'), iconClass: ' iconfont BTFS_icon_Settings ' };
+
+const MainNavLinksConfig = [
+    dashboardLink,
+    chequeLink,
+    onlineProofLink,
+    peersLink,
+    filesLink,
+    settingsLink,
 ];
+
+const SimpleNavLinksConfig = [
+    dashboardLink,
+    peersLink,
+    filesLink,
+    settingsLink,
+];
+
+const NavLinksConfig = {};
+NavLinksConfig[MAIN_PAGE_MODE] = MainNavLinksConfig;
+NavLinksConfig[SAMPLE_PAGE_MODE] = SimpleNavLinksConfig;
+
 const LinkLi = ({ path, text, iconClass }) => {
     const isFocused = window.location.href.indexOf(path) !== -1;
 
@@ -35,9 +55,10 @@ const LinkLi = ({ path, text, iconClass }) => {
 
 export default function Sidebar() {
     const { dispatch, state } = useContext(mainContext);
-    const { sidebarShow, theme } = state;
+    const { sidebarShow, theme, pageMode } = state;
     const [collapseShow, setCollapseShow] = useState('hidden');
     const [ID, setID] = useState('');
+    const isSimpleMode = pageMode === SAMPLE_PAGE_MODE;
 
     useEffect(() => {
       const fetchData = async () => {
@@ -71,15 +92,33 @@ export default function Sidebar() {
                 {/* Brand */}
                 <div className={'flex justify-between'}>
                     <div className="items-center">
-                        <Link className={'text-left mr-0 inline-block whitespace-nowrap text-sm font-bold px-0'} to="/">
+                        <Link className={`${isSimpleMode ? 'flex' : 'inline-block'} text-left mr-0  whitespace-nowrap text-sm font-bold px-0`} to="/">
                             <img
                                 className="inline-block"
                                 src={require('assets/img/btfs_logo.png').default}
                                 style={{ width: '37px', height: '40px' }}
                                 alt="btfs_logo"
                             />
-                            <span className="theme-text-main">BTFS Dashboard</span>
-                            <span className="theme-text-base"> 2.0</span>
+                            { isSimpleMode ? 
+                                <div className="flex flex-col justify-end">
+                                    <div>
+                                        <span className="theme-text-main">BTFS Dashboard</span>
+                                        <span className="theme-text-base"> 2.0</span>
+                                    </div>
+                                    <img
+                                        className="inline-block"
+                                        src={require('assets/img/simple-mode-icon.png').default}
+                                        style={{ width: '65px', height: '15px' }}
+                                        alt="btfs_logo"
+                                    />
+                                </div> : 
+                                <>
+                                    <span className="theme-text-main">BTFS Dashboard</span>
+                                    <span className="theme-text-base"> 2.0</span>
+                                </>
+                            }
+                            
+                            
                         </Link>
                     </div>
                     <button
@@ -109,7 +148,7 @@ export default function Sidebar() {
                                         'theme-sidebar-link md:block text-left md:pb-2 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0'
                                     }
                                     to="/">
-                                    BTFS 2.3
+                                    BTFS 2.3.2
                                 </Link>
                             </div>
                             <div className="w-4/12 flex flex-row-reverse">
@@ -130,7 +169,7 @@ export default function Sidebar() {
                         <ul
                             className="md:flex-col md:min-w-full flex flex-col list-none  text-xs font-bold"
                             onClick={collapse}>
-                            {NavLinksConfig.map(({ path, text, iconClass }) => (
+                            {NavLinksConfig[pageMode].map(({ path, text, iconClass }) => (
                                 <LinkLi key={path} path={path} text={text} iconClass={iconClass} />
                             ))}
                         </ul>
@@ -140,7 +179,7 @@ export default function Sidebar() {
                         {/* Navigation */}
                         <ul className="md:flex-col md:min-w-full flex flex-col list-none mb-4">
                             <li className="items-center">
-                                <a className={'sidebar-link theme-sidebar-link'}>{t('version')} 2.3</a>
+                                <a className={'sidebar-link theme-sidebar-link'}>{t('version')} 2.3.2</a>
                             </li>
 
                             <li className="items-center">

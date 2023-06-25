@@ -11,6 +11,7 @@ import CardConfig from './CardConfig';
 import ConfigConfirmModal from 'components/Modals/ConfigConfirmModal';
 import ClipboardCopy from 'components/Utils/ClipboardCopy';
 import { getParameterByName } from 'utils/BTFSUtil.js';
+import { MAIN_PAGE_MODE } from 'utils/constants';
 
 export default function CardSettings({ color }) {
   const apiUrl = getParameterByName('api', window.location.href);
@@ -22,14 +23,16 @@ export default function CardSettings({ color }) {
     NODE_URL = apiUrl;
   }
   const inputRef = useRef(null);
-  const { dispatch } = useContext(mainContext);
+  const { dispatch, state } = useContext(mainContext);
+  const { pageMode } = state;
   const pathRef = useRef(null);
   const [path, setPath] = useState('');
   const [volume, setVolume] = useState(0);
+  const isMainMode = MAIN_PAGE_MODE === pageMode;
 
   useEffect(() => {
     if (apiUrl) {
-      nodeStatusCheck(apiUrl);
+      nodeStatusCheck(apiUrl, isMainMode);
     }
     inputRef.current.value = NODE_URL;
     getPath();
@@ -129,7 +132,7 @@ export default function CardSettings({ color }) {
       </div>
 
       {/* advanced settings */}
-      <CardConfig color={color} />
+      { isMainMode && <CardConfig color={color} /> }
 
       {/* storage path */}
       <div className="mb-4 common-card theme-bg theme-text-main">
