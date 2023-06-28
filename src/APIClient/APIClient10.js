@@ -340,7 +340,7 @@ class APIClient10 {
     }
     async getExchangeRate(currency) {
         try {
-            let {data} = await xhr.get(`https://scan-backend-dev.btfs.io/api/v1/exchange_rate?from_symbol=BTT&to_symbol=${currency}`);
+            let {data} = await xhr.get(`https://scan-backend.btfs.io/api/v1/exchange_rate?from_symbol=BTT&to_symbol=${currency}`);
             return data;
         } catch (e) {
             return {data: {}}

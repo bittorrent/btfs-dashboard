@@ -31,7 +31,7 @@ const HostID = ({ ID }) => {
         <div className="w-14 h-14 rounded-full flex justify-center items-center theme-fill-shallow">
           <OnlineIcon />
         </div>
-        <div className="-mt-2 px-2 py-0.5 rounded-full text-xs text-white theme-fill-base">V2.3.1-BTTC</div>
+        <div className="-mt-2 px-2 py-0.5 rounded-full text-xs text-white theme-fill-base">V2.3.2-BTTC</div>
       </div>
     </div>
   );
