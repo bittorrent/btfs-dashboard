@@ -7,13 +7,14 @@ import ClipboardCopy from 'components/Utils/ClipboardCopy';
 import { getNodeBasicStats, getSimpleNodeBasicStats } from 'services/dashboardService.js';
 import { t, Truncate } from 'utils/text.js';
 import { btfsScanLinkCheck } from 'utils/checks.js';
+import { CHAIN_NAME } from 'utils/constants';
 
 const UPTIME_PROGRESS = {
   STROKE_COLOR: '#06A561',
   TRAIL_COLOR: '#C5F1D5',
 };
 
-const HostID = ({ ID }) => {
+const HostID = ({ ID,version, chain}) => {
   return (
     <div className="w-full h-full flex justify-between">
       <div className="flex flex-col justify-between">
@@ -31,7 +32,7 @@ const HostID = ({ ID }) => {
         <div className="w-14 h-14 rounded-full flex justify-center items-center theme-fill-shallow">
           <OnlineIcon />
         </div>
-        <div className="-mt-2 px-2 py-0.5 rounded-full text-xs text-white theme-fill-base">V2.3.2-BTTC</div>
+        <div className="-mt-2 px-2 py-0.5 rounded-full text-xs text-white theme-fill-base">V{version}-{chain}</div>
       </div>
     </div>
   );
@@ -124,19 +125,21 @@ export default function NodeBasicStats({ isMainMode }) {
   const [peers, setPeers] = useState('--');
   const [status, setStatus] = useState(null);
   const [message, setMessage] = useState('online');
+  const [version, setVersion] = useState('');
+  const [chain, setChain] = useState('');
 
   useEffect(() => {
     let didCancel = false;
     const fetchData = async () => {
       if(isMainMode){
-        let { ID, uptime, peers, status, message } = await getNodeBasicStats();
+        let { ID, uptime, peers, status, message,version } = await getNodeBasicStats();
         if (!didCancel) {
           unstable_batchedUpdates(() => {
             setID(ID);
             setUptime(uptime);
             setPeers(peers);
-            // setVersion(version);
-            // setChain(CHAIN_NAME[localStorage.getItem('CHAIN_ID')]);
+            setVersion(version);
+            setChain(CHAIN_NAME[localStorage.getItem('CHAIN_ID')]);
             setStatus(status);
             setMessage(message);
           });
@@ -160,10 +163,10 @@ export default function NodeBasicStats({ isMainMode }) {
   return (
     <div className="relative mb-4 common-card p-0">
       <div className="mx-auto w-full">
-        {isMainMode ? 
+        {isMainMode ?
           <div className="flex flex-wrap">
             <div className="px-6 py-8 w-full border-b rounded-t-2xl theme-bg theme-border-color xl:w-1/3 xl:border-0 xl:border-r xl:rounded-none xl:rounded-l-2xl">
-              <HostID ID={ID} />
+              <HostID ID={ID}  version={version} chain={chain}/>
             </div>
             <div className="px-6 py-8 w-full border-b theme-bg theme-border-color xl:w-1/3 xl:border-0 xl:border-r">
               <Status status={status} peers={peers} message={message} />
@@ -178,7 +181,7 @@ export default function NodeBasicStats({ isMainMode }) {
             </div>
           </div>
          }
-        
+
       </div>
     </div>
   );
