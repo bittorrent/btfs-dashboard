@@ -83,6 +83,7 @@ export default function CardSettings({ color }) {
       });
       getPath();
       Emitter.emit('showMessageAlert', { message: 'setting_success', status: 'success', type: 'frontEnd' });
+      Emitter.emit('getHostId')
     } else {
       setPath('');
       Emitter.emit('showMessageAlert', { message: 'setting_error', status: 'error', type: 'frontEnd' });

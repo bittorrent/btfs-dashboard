@@ -121,9 +121,9 @@ export const getChequeEarningAllStats = async () => {
             earningValueAllStatsData[index].exchangecashedValue = childData.exchangecashedValue;
         }
     })
-    console.log("earningCountAllStatsData", earningCountAllStatsData)
-    console.log("earningValueAllStatsData", earningValueAllStatsData)
-    console.log("wbttData", WBTTData)
+    // console.log("earningCountAllStatsData", earningCountAllStatsData)
+    // console.log("earningValueAllStatsData", earningValueAllStatsData)
+    // console.log("wbttData", WBTTData)
     return {
         earningCountAllStatsData,
         earningValueAllStatsData,
@@ -214,8 +214,8 @@ export const getChequeExpenseAllStats = async () => {
         const index = expenseValueAllStatsData.findIndex((item) => item.key === childData.key);
 
         if (index > -1) {
-            expenseCountAllStatsData[index].cashed = childData.chequeReceiveCount;
-            expenseCountAllStatsData[index].width = `${((childData.chequeReceiveCount / (WBTTData.chequeReceiveCount || 1)) * 100).toFixed()}%`;
+            expenseCountAllStatsData[index].cashed = childData.chequeSentCount;
+            expenseCountAllStatsData[index].width = `${((childData.chequeSentCount / (WBTTData.chequeSentCount || 1)) * 100).toFixed()}%`;
 
             expenseValueAllStatsData[index].cashed = childData.cashedValue;
             expenseValueAllStatsData[index].unCashed = childData.uncashedValue;
@@ -229,7 +229,6 @@ export const getChequeExpenseAllStats = async () => {
 
     })
 
-    console.log(WBTTData, expenseCountAllStatsData, expenseValueAllStatsData);
     return {
         WBTTData,
         expenseCountAllStatsData,
@@ -266,6 +265,8 @@ export const getChequeCashingHistoryList = async (offset, limit) => {
         // cheques.forEach(item => {
         //     item.amount /= PRECISION_RATE;
         // })
+        console.log(priceList,'priceList')
+        console.log(tokenList)
         cheques = formatCurrencyTokenDataWithPrices(cheques, tokenList, 'token', priceList);
         return {
             cheques: cheques,
@@ -275,7 +276,6 @@ export const getChequeCashingHistoryList = async (offset, limit) => {
 };
 
 const formatCurrencyTokenDataWithPrices = (cheques, tokenList, tokenName, priceList) => {
-    console.log(priceList)
     cheques.forEach(item => {
         const keyList = Object.keys(tokenList);
         let itemKey = "WBTT";

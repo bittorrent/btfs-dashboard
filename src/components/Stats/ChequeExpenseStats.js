@@ -8,15 +8,16 @@ import MultipleCurrenyList from './MultipleCurrenyList.js';
 import { ChequeMain } from './ChequeStats.js';
 
 const ExpenseChequesMain = ({ chequesStats }) => {
-    const { chequeReceiveCount, receiveCashedValue, receiveUncashValue, receiveCashedValuePercent } = chequesStats;
-    const title = <h5 className={'text-base font-bold theme-text-main'}>{t('received_cheques')}</h5>;
+    const { chequeSentCount } = chequesStats;
+    const title = <h5 className={'text-base font-bold theme-text-main'}>{t('sent_cheques')}</h5>;
     return (
         <ChequeMain
             title={title}
-            total={chequeReceiveCount}
-            cashed={receiveCashedValue}
-            uncashed={receiveUncashValue}
-            percent={receiveCashedValuePercent}
+            total={chequeSentCount}
+            // cashed={0}
+            // uncashed={0}
+            showCashedList={false}
+            percent={100}
             unit="BTT"
         />
     );
@@ -27,7 +28,7 @@ const ExpenseCheques = ({ chequesStats, expenseCountAllStatsData, color }) => {
         <div className={'relative break-words mb-2 xl:mb-0 rounded-2xl theme-bg theme-text-main common-box-shadow'}>
             <div className="flex flex-col  justify-between" style={{ height: 467 }}>
                 <ExpenseChequesMain color={color} chequesStats={chequesStats} />
-                <MultipleCurrenyList color={color} type={'sentCheques'} dataList={expenseCountAllStatsData} />
+                <MultipleCurrenyList color={color} type='sentCheques' dataList={expenseCountAllStatsData} />
             </div>
         </div>
     );
@@ -77,7 +78,7 @@ export default function ChequeExpenseStats({ color }) {
         chequeSentValue: 0,
         uncashedValue: 0,
         cashedValue: 0,
-        cashedValuePercent: 0,
+        cashedpValuePercent: 0,
     });
     const [expenseValueAllStatsData, setExpenseValueAllStatsData] = useState(MULTIPLE_CURRENCY_LIST);
     const [expenseCountAllStatsData, setExpenseCountAllStatsData] = useState(MULTIPLE_CURRENCY_LIST);

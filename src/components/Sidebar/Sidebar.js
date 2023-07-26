@@ -7,6 +7,7 @@ import ThemeToggle from 'components/Toggles/ThemeToggle';
 import { getHostInfo } from 'services/dashboardService.js';
 import { MAIN_PAGE_MODE, SAMPLE_PAGE_MODE } from 'utils/constants';
 import HostID from './HostID';
+import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 
 const dashboardLink = { path: '/admin/dashboard', text: t('dashboard'), iconClass: ' iconfont BTFS_icon_Dashboard ' };
@@ -66,6 +67,10 @@ export default function Sidebar() {
         setID(res?.ID || '');
       };
       fetchData();
+      Emitter.on('getHostId', fetchData);
+      return () => {
+        Emitter.removeListener('getHostId');
+      };
     }, []);
 
     const sidebarToggle = () => {
@@ -99,7 +104,7 @@ export default function Sidebar() {
                                 style={{ width: '37px', height: '40px' }}
                                 alt="btfs_logo"
                             />
-                            { isSimpleMode ? 
+                            { isSimpleMode ?
                                 <div className="flex flex-col justify-end">
                                     <div>
                                         <span className="theme-text-main">BTFS Dashboard</span>
@@ -111,14 +116,14 @@ export default function Sidebar() {
                                         style={{ width: '65px', height: '15px' }}
                                         alt="btfs_logo"
                                     />
-                                </div> : 
+                                </div> :
                                 <>
                                     <span className="theme-text-main">BTFS Dashboard</span>
                                     <span className="theme-text-base"> 2.0</span>
                                 </>
                             }
-                            
-                            
+
+
                         </Link>
                     </div>
                     <button
