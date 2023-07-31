@@ -5,7 +5,7 @@ import { cash } from 'services/chequeService.js';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import { PRECISION_RATE } from 'utils/constants.js';
-import { toNonExponential } from 'utils/BTFSUtil';
+import { toNonExponential,formatNumber } from 'utils/BTFSUtil';
 import CommonModal from './CommonModal';
 
 export default function CashConfirmModal() {
@@ -118,7 +118,7 @@ export default function CashConfirmModal() {
                                 <div className="text-sm theme-text-sub-main">{t('est_fee')}</div>
                                 <div className="theme-text-main">
                                     <span className="mr-1.5 helvetica-b font-bold text-base">
-                                        {(25.2801 * cashList.current?.list?.length).toFixed(2)}
+                                        {formatNumber((25.2801 * cashList.current?.list?.length),2)}
                                     </span>
                                     <span className="text-sm">BTT</span>
                                 </div>

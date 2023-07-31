@@ -1,7 +1,7 @@
 /*eslint-disable*/
 import Client10 from "APIClient/APIClient10.js";
 import BigNumber from 'bignumber.js';
-import { switchStorageUnit2, switchBalanceUnit, toThousands, getTimes } from "utils/BTFSUtil.js";
+import { switchStorageUnit2, switchBalanceUnit, toThousands, getTimes,formatNumber } from "utils/BTFSUtil.js";
 import { PRECISION, PRECISION_RATE, PRECISION_OLD, FEE, NEW_SCORE_VERSION, INIT_MULTI_CURRENCY_DATA, MULTIPLE_CURRENCY_LIST } from "utils/constants.js";
 
 export const getHostInfo = () => {
@@ -200,13 +200,13 @@ export const getNodeRevenueStats = async () => {
                 chequeEarningTotalBTT += Number(item.bttValue);
             }))
             if (chequeEarningTotalBTT > 0) {
-                chequeEarningTotalBTT = chequeEarningTotalBTT.toFixed(2);
+                chequeEarningTotalBTT = formatNumber(chequeEarningTotalBTT,2);
             }
             checksExpenseDetailsData.forEach((item => {
                 checksExpenseTotalBTT += Number(item.bttValue);
             }))
             if (checksExpenseTotalBTT > 0) {
-                checksExpenseTotalBTT = checksExpenseTotalBTT.toFixed(2);
+                checksExpenseTotalBTT = formatNumber(checksExpenseTotalBTT,2);
             }
 
             const gasFeeShow = switchBalanceUnit(gasFee);
@@ -371,7 +371,7 @@ export const getNodeStorageStats = async () => {
                 capacity: switchStorageUnit2(result[1]['StorageMax']),
                 storageUsed: switchStorageUnit2(result[1]['RepoSize']),
                 percentage: new BigNumber(result[1]['RepoSize']).dividedBy(result[1]['StorageMax']).multipliedBy(100).toFixed(2),
-                hostPrice: (result[0]['price'] * 30 / PRECISION).toFixed(2),
+                hostPrice: formatNumber((result[0]['price'] * 30 / PRECISION),2),
                 contracts: result[2]['active_contract_num'],
                 uncashed: switchBalanceUnit(result[3]['total_received_uncashed']),
                 uncashedChange: switchBalanceUnit(result[3]['total_received_daily_uncashed']),
@@ -387,8 +387,8 @@ export const getNetworkFlow = async () => {
   try {
     let data = await Client10.getNetworkFlow();
     return {
-      receive: (data['RateIn'] / 1000).toFixed(2),
-      send: (data['RateOut'] / 1000).toFixed(2),
+      receive: formatNumber((data['RateIn'] / 1000),2),
+      send: formatNumber((data['RateOut'] / 1000),2),
     };
   } catch (e) {
     console.log('getNetworkFlow Error: ', e);
