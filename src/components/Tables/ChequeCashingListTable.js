@@ -7,6 +7,7 @@ import { getChequeCashingList } from 'services/chequeService.js';
 import { Truncate, t } from 'utils/text.js';
 import Emitter from 'utils/eventBus';
 import { switchBalanceUnit } from 'utils/BTFSUtil.js';
+import { MULTIPLE_CURRENCY_RATE } from 'utils/constants';
 import { btfsScanLinkCheck, bttcScanLinkCheck } from 'utils/checks.js';
 
 let didCancel = false;
@@ -134,10 +135,10 @@ export default function ChequeCashingListTable({ color, enableCash }) {
                                             </div>
                                         </td>
                                         <td className="common-table-body-td">
-                                            {switchBalanceUnit(item['Payout'] - item['CashedAmount'], item?.price?.rate)}
+                                            {switchBalanceUnit(item['Payout'] - item['CashedAmount'], MULTIPLE_CURRENCY_RATE[item?.key])}
                                         </td>
                                         <td className="common-table-body-td">
-                                            {switchBalanceUnit(item['CashedAmount'], item?.price?.rate)}
+                                            {switchBalanceUnit(item['CashedAmount'], MULTIPLE_CURRENCY_RATE[item?.key])}
                                         </td>
                                     </tr>
                                 );

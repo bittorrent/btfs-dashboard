@@ -161,3 +161,10 @@ export const PROGRESS_COLORS = {
 export const MAIN_PAGE_MODE = 'MainMode';
 
 export const SAMPLE_PAGE_MODE = 'SimpleMode';
+
+export const MULTIPLE_CURRENCY_RATE = {
+    WBTT:1000000000000000000 ,
+    USDD:1000000000000000000,
+    TRX:1000000,
+    USDT:1000000,
+  };

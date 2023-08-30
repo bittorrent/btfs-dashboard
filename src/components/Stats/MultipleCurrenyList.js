@@ -11,13 +11,15 @@ const CurrencyIcon = ({ icon }) => (
     <img src={require(`assets/img/${icon}.svg`).default} width={18} height={18} alt="" className="mr-2" />
 );
 
-function SingleCurrency({ item, type, color, index }) {
+function SingleCurrency({ item, type, color, index,showUnit=true}) {
     let { unit, cashed, unCashed, cashedValuePercent, icon } = item;
-
-    if (type !== 'sentCheques') {
+    if (type !== 'sentCheques') { //&& type !== 'recievedCheques'
         const rate = item?.price?.rate ?? 1;
         cashed = switchBalanceUnit(cashed, rate);
         unCashed = switchBalanceUnit(unCashed, rate);
+    }
+    if(!showUnit){
+        unit=''
     }
     let style = {};
     if (index === 0) {
@@ -29,7 +31,7 @@ function SingleCurrency({ item, type, color, index }) {
     } else if (index === 3) {
         style = { paddingBoTop: 24 };
     }
-    console.log(item.width)
+
     return type === 'sentCheques' ? (
         <div className="w-1/2 p-3 pr-8 inline-flex justify-between items-center theme-divider-color" style={style}>
             <div className="w-full">
@@ -39,7 +41,6 @@ function SingleCurrency({ item, type, color, index }) {
                     <div className="font-bold">{unit}</div>
                 </div>
                 <div>{cashed}</div>
-                {/* cash */}
                 <div className="w-full" style={{ width: item.width === '0%' ? "4%" : item.width }}>
                     <Progress
                         className={color}
@@ -62,7 +63,7 @@ function SingleCurrency({ item, type, color, index }) {
                 {/* cash */}
                 <div>
                     <CashedItem value={cashed} unit={unit} fontSize="12px" />
-                    <UnCashedItem value={unCashed} unit={unit} fontSize="12px" />
+                    <UnCashedItem value={unCashed} unit={unit}  fontSize="12px" />
                 </div>
             </div>
             {/* progress */}
@@ -81,7 +82,7 @@ function SingleCurrency({ item, type, color, index }) {
     );
 }
 
-export default function MultipleCurrenyList({ color, type, dataList = [] }) {
+export default function MultipleCurrenyList({ color, type, dataList = [],showUnit=true }) {
     const { state } = useContext(mainContext);
     const { theme } = state;
     return (
@@ -89,7 +90,7 @@ export default function MultipleCurrenyList({ color, type, dataList = [] }) {
             className="w-full p-4 rounded-b-2xl"
             style={{ backgroundColor: theme === 'light' ? '#ECF2FF4B' : '#130D00' }}>
             {dataList.map((item, index) => {
-                return <SingleCurrency key={item.key} item={item} type={type} color={color} index={index} />;
+                return <SingleCurrency key={item.key} showUnit={showUnit} item={item} type={type} color={color} index={index} />;
             })}
         </div>
     );

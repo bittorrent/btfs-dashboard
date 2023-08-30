@@ -29,7 +29,7 @@ const ReceivedCheques = ({ chequesStats, earningCountAllStatsData, color }) => {
             }>
             <div className="flex flex-col justify-between" style={{ height: 467 }}>
                 <ReceivedChequesMain chequesStats={chequesStats} color={color} />
-                <MultipleCurrenyList type="recievedCheques" color={color} dataList={earningCountAllStatsData} />
+                <MultipleCurrenyList type="recievedCheques" showUnit={false} color={color} dataList={earningCountAllStatsData} />
             </div>
         </div>
     );
