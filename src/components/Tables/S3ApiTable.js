@@ -99,9 +99,9 @@ export default function S3ApiTable({ color }) {
     }
 
     const fetchData = async () => {
-        const data = await getS3AccessKeyList();
-        console.log("getS3AccessKeyList", data);
+        let data = await getS3AccessKeyList();
         if (data && data.length) {
+            data = data.filter((item)=>item.enable)
             setAccessKeyList(data);
             setAccessData(data[0]);
             fetchBucketList(data[0]);

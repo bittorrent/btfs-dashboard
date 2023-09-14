@@ -1,14 +1,48 @@
-import React, { memo, useContext } from 'react';
+import React, { memo, useEffect, useContext } from 'react';
 import { mainContext } from 'reducer';
 import { Tooltip } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import ClipboardCopy from 'components/Utils/ClipboardCopy';
 import { t } from 'utils/text.js';
+import { getHostConfigData, } from 'services/otherService.js';
+import { getUrl } from 'utils/BTFSUtil';
 
 function S3CardConfig({ color }) {
-  const { state } = useContext(mainContext);
+  const { dispatch, state } = useContext(mainContext);
   const { s3ApiUrl } = state;
+  const  nodeUrl = localStorage.getItem('NODE_URL')
+
+  const fetchData = async () => {
+    const data = await getHostConfigData();
+    let s3ApiUrl = '';
+    let addressConfig = null;
+
+    if (data && data.Experimental) {
+      const { S3CompatibleAPI, Addresses } = data;
+      s3ApiUrl = S3CompatibleAPI?.Address;
+      addressConfig = Addresses;
+      if (addressConfig) {
+        addressConfig.Gateway = getUrl(addressConfig.Gateway, true);
+      }
+    }
+
+    dispatch({
+      type: 'SET_S3_API_URL',
+      s3ApiUrl: getUrl(s3ApiUrl),
+    });
+    dispatch({
+      type: 'SET_ADDRESS_CONFIG',
+      addressConfig: addressConfig,
+    });
+  };
+
+
+  useEffect(() => {
+    fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nodeUrl]);
+
 
   return (
     <div className="mb-4 common-card theme-bg theme-text-main">
@@ -41,7 +75,7 @@ function S3CardConfig({ color }) {
             <label className="block text-xs font-bold" htmlFor="grid-password">
               {t('s3_access_keys')}
             </label>
-            <Link  to={{pathname:'/admin/settings', search: '?s3Detail=1' }}>
+            <Link to={{ pathname: '/admin/settings', search: '?s3Detail=1' }}>
               <button className="ml-2 common-btn theme-common-btn" type="button"> {t('s3_manager')}</button>
             </Link>
           </div>
