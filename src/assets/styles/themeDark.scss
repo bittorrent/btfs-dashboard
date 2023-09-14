@@ -220,4 +220,22 @@
     background-repeat: no-repeat no-repeat;
     background-position: bottom -9px right -12px, 0 0;
   }
+  .file-tab-content{
+    .ant-tabs-tab.ant-tabs-tab-active{
+      .ant-tabs-tab-btn{
+        color: $dark-text-color-main;
+      }
+    }
+    .ant-tabs-tab-btn{
+      &:hover, &:active, &:focus, :focus-visible, :focus-within{
+        color: $dark-text-color-main;
+      }
+    }
+    .ant-tabs-ink-bar{
+      background: $dark-text-color-main;
+    }
+    .ant-tabs-nav::before{
+      border-color: $dark-line-color;
+    }
+  }
 }

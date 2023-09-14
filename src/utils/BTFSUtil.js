@@ -213,3 +213,26 @@ export function toNonExponential(num) {
     var m = num.toExponential().match(/\d(?:\.(\d*))?e([+-]\d+)/);
     return formatNumber(num,(Math.max(0, (m[1] || '').length - m[2])))
 }
+
+export function getUrl(url, isSlice) {
+    if(!url) return url;
+    const apiUrl = localStorage.getItem('NODE_URL') ? localStorage.getItem('NODE_URL') : "http://localhost:5001";
+    const urlFormat = new URL(apiUrl);
+    const baseUrl = urlFormat.protocol + '//' + urlFormat.hostname;
+    if(isSlice){
+        const list = url.split('/')
+        let ip = list[2];
+        const port = list[4];
+        if(ip === '0.0.0.0'){
+            ip = urlFormat.hostname;
+        }
+        return urlFormat.protocol + '//' + ip + ':' + port;
+    }else{
+        if(url.includes('0.0.0.0')){
+            return url.replace('0.0.0.0', baseUrl);
+        }else{
+            return urlFormat.protocol + '//' + url;
+        }
+        
+    }
+}

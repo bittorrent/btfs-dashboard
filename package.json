@@ -7,6 +7,7 @@
   "homepage": ".",
   "dependencies": {
     "@ant-design/icons": "^4.8.0",
+    "@aws-sdk/client-s3": "^3.405.0",
     "@fortawesome/fontawesome-free": "^6.2.1",
     "@popperjs/core": "2.9.1",
     "antd": "^4.16.2",
@@ -107,18 +108,11 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
   "optionalDependencies": {
     "typescript": "4.2.3"
   },

@@ -10,6 +10,7 @@ import PathConfirmModal from 'components/Modals/PathConfirmModal.js';
 import CardConfig from './CardConfig';
 import ConfigConfirmModal from 'components/Modals/ConfigConfirmModal';
 import ClipboardCopy from 'components/Utils/ClipboardCopy';
+import S3CardConfig from './S3CardConfig';
 import { getParameterByName } from 'utils/BTFSUtil.js';
 import { MAIN_PAGE_MODE } from 'utils/constants';
 
@@ -154,7 +155,7 @@ export default function CardSettings({ color }) {
       </div>
 
       {/* security */}
-      <div className="common-card theme-bg theme-text-main">
+      <div className="mb-4 common-card theme-bg theme-text-main">
         <div className="mb-2 setting-header">
           <h5 className="font-bold theme-text-main">{t('security')}</h5>
         </div>
@@ -170,6 +171,9 @@ export default function CardSettings({ color }) {
           </button>
         </div>
       </div>
+
+      {/* s3 api config */}
+      <S3CardConfig />
 
       <PathConfirmModal />
       <ConfigConfirmModal />

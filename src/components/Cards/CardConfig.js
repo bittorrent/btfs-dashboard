@@ -1,13 +1,16 @@
-import React, { useState, useEffect, useRef, memo } from 'react';
+import React, { useState, useEffect, useRef, memo, useContext } from 'react';
 import { Switch, Tooltip } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import ButtonRoundRect from 'components/Buttons/ButtonRoundRect';
 import Emitter from 'utils/eventBus';
+import { getUrl } from 'utils/BTFSUtil';
 import { t } from 'utils/text.js';
+import { mainContext } from 'reducer';
 
 import { getHostConfigData, resetHostConfigData, editHostConfig } from 'services/otherService.js';
 function CardConfig({ color }) {
+  const { dispatch } = useContext(mainContext);
   const [configList, setConfigList] = useState([]);
   const [rpcAddress, setRpcAddress] = useState('');
   const rpcAddressRef = useRef(null);
@@ -63,7 +66,17 @@ function CardConfig({ color }) {
     const data = await getHostConfigData();
     let configList = [];
     let rpcAddress = '';
+    let s3ApiUrl = '';
+    let addressConfig = null;
+
     if (data && data.Experimental) {
+      const { S3CompatibleAPI, Addresses } = data;
+      console.log('S3CompatibleAPI', S3CompatibleAPI);
+      s3ApiUrl = S3CompatibleAPI?.Address;
+      addressConfig = Addresses;
+      if(addressConfig){
+        addressConfig.Gateway = getUrl(addressConfig.Gateway, true);
+      }
       const { Experimental, ChainInfo } = data;
       if (Experimental) {
         configList = handleExperimentalData(Experimental);
@@ -76,6 +89,16 @@ function CardConfig({ color }) {
       return configList;
     });
     setRpcAddress(rpcAddress);
+    dispatch({
+      type: 'SET_S3_API_URL',
+      s3ApiUrl: getUrl(s3ApiUrl),
+    });
+    dispatch({
+      type: 'SET_ADDRESS_CONFIG',
+      addressConfig: addressConfig,
+    });
+
+    
   };
   const handleExperimentalData = experimental => {
     if (!experimental) return [];
