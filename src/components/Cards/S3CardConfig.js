@@ -5,7 +5,6 @@ import { InfoCircleOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import ClipboardCopy from 'components/Utils/ClipboardCopy';
 import { t } from 'utils/text.js';
-import ButtonSwitch from 'components/Buttons/ButtonSwitch';
 
 function S3CardConfig({ color }) {
   const { state } = useContext(mainContext);
