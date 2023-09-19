@@ -11,7 +11,8 @@ const { CreateBucketCommand } = AWS;
 const MAX_COUNT = 63;
 let globalS3 = null;
 let callbackFn = null;
-const bucketNameReg = new RegExp('(?!(^((2(5[0-5]|[0-4][0-9])|[01]?[0-9]{1,2})\.){3}(2(5[0-5]|[0-4][0-9])|[01]?[0-9]{1,2})$|^xn--|.+-s3alias$))^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$');
+// ref: https://www.appsloveworld.com/amazon-s3/2/regex-for-s3-bucket-name?expand_article=1
+const bucketNameReg = new RegExp('(?!(^((2(5[0-5]|[0-4][0-9])|[01]?[0-9]{1,2})\\.){3}(2(5[0-5]|[0-4][0-9])|[01]?[0-9]{1,2})$|^xn--|.+-s3alias$))^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$');
 
 export default function S3NewBucketModal() {
     const [showModal, setShowModal] = useState(false);
