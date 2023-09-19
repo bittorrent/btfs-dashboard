@@ -24,7 +24,6 @@ export default function Files(props) {
   const bucketName = query.get('bucketName');
   const accessKeyId = query.get('accessKeyId');
   const secretAccessKey = query.get('secretAccessKey');
-  console.log("bucketDetail", bucketDetail);
 
 
   return (

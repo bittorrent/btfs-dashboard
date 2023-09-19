@@ -213,25 +213,25 @@ export default function LocalFilesTable({ color }) {
 
     return (
         <>
-            <div className="mb-4 flex rounded-2xl">
-                <input
-                    type="text"
-                    placeholder={intl.formatMessage({ id: 'search_here' }) + '...'}
-                    className={'common-input h-12 rounded-l-2xl theme-border-color theme-bg'}
-                    ref={inputRef}
-                />
-                <button
-                    className="ml-2 common-btn w-120-px h-12 rounded-r-2xl theme-white-btn"
-                    type="button"
-                    onClick={search}>
-                    {t('browse')}
-                </button>
-            </div>
             <Tabs defaultActiveKey="1" className="mb-4 common-card theme-bg theme-text-main file-tab-content">
                 <Tabs.TabPane tab={t('s3_api')} key="1">
                     <S3ApiTable color={color} />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab={t('native_api')} key="2">
+                    <div className="mb-4 flex rounded-2xl">
+                        <input
+                            type="text"
+                            placeholder={intl.formatMessage({ id: 'search_here' }) + '...'}
+                            className={'common-input h-12 rounded-l-2xl theme-border-color theme-bg'}
+                            ref={inputRef}
+                        />
+                        <button
+                            className="ml-2 common-btn w-120-px h-12 rounded-r-2xl theme-white-btn"
+                            type="button"
+                            onClick={search}>
+                            {t('browse')}
+                        </button>
+                    </div>
                     {/* <div className={'relative flex flex-col common-card theme-bg theme-text-main'}> */}
                     <div className={'relative flex flex-col'}>
                         <div className="mb-4 flex flex-wrap items-center">
@@ -364,7 +364,7 @@ export default function LocalFilesTable({ color }) {
                         <FileControl itemSelected={itemSelected} unSelect={unSelect} color={color} data={batch} />
                     </div>
                 </Tabs.TabPane>
-                
+
             </Tabs>
 
         </>

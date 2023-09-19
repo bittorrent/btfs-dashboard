@@ -74,7 +74,7 @@
 
   .theme-white-btn {
     background-color: $dark-bg-color;
-    border-color: $dark-bg-color;
+    border:  1px solid $base-color;
     color: $base-color;
     &:focus {
       background-color: $dark-bg-color;

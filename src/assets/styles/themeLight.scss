@@ -101,7 +101,7 @@
 
 .theme-white-btn {
   background-color: $white;
-  border-color: $white;
+  border:  1px solid $base-color;
   color: $base-color;
   &:focus {
     background-color: $white;

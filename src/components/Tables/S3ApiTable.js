@@ -115,7 +115,6 @@ export default function S3ApiTable({ color }) {
     }, []);
 
     const handleChange = value => {
-        console.log("value", value, accessKeyList);
         const item = accessKeyList.find(item => item.key === value);
         setAccessData(() => { return { ...item } });
         fetchBucketList(item);
@@ -149,14 +148,14 @@ export default function S3ApiTable({ color }) {
                             <Select
                                 className={'mr-2 theme-border-color ' + color}
                                 defaultValue={accessKeyList[0].key}
-                                style={{ width: 300 }}
+                                style={{ width: 330 }}
                                 onChange={handleChange}
                             // dropdownStyle={{ background: themeStyle.bg[color] }}
                             >
                                 {accessKeyList.map(item => {
                                     return (
                                         <Option key={item.key} value={item.key}>
-                                            {item.secret}
+                                            {item.key}
                                         </Option>
                                     );
                                 })}
@@ -165,7 +164,7 @@ export default function S3ApiTable({ color }) {
 
                     }
 
-                    <button className="common-btn theme-common-btn" onClick={handleAccessManager}>
+                    <button className="common-btn theme-common-btn theme-white-btn" onClick={handleAccessManager}>
                         {t('s3_access_keys_manager')}
                     </button>
                 </div>

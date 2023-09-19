@@ -6,12 +6,14 @@ import { s3NewAccessKey } from 'services/s3Service.js';
 
 
 let callbackFn = null;
+let isSubmit = false;
 export default function S3NewAccessKeyModal() {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const set = function (params) {
       callbackFn = params.callbackFn;
+      isSubmit = false;
       openModal();
     };
     Emitter.on('openS3NewKeyModal', set);
@@ -32,12 +34,15 @@ export default function S3NewAccessKeyModal() {
   };
 
   const handleNewKey = async () => {
-   console.log("handleNewKey")
-   const data = await s3NewAccessKey();
-   callbackFn();
-   Emitter.emit('showMessageAlert', { message: 's3_new_access_key_success', status: 'success', type: 'frontEnd' });
-   console.log("handleNewKey", data);
-    closeModal();
+    if (isSubmit) return;
+    isSubmit = true;
+    const data = await s3NewAccessKey();
+    if (data) {
+      callbackFn();
+      Emitter.emit('showMessageAlert', { message: 's3_new_access_key_success', status: 'success', type: 'frontEnd' });
+      closeModal();
+    }
+    isSubmit = false;
   };
 
   return (
