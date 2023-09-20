@@ -8,6 +8,7 @@ import { t } from 'utils/text.js';
 let callBackFn = null;
 
 const nameReg = new RegExp(`^[a-zA-Z0-9!_.*'()-]{1,60}$`);
+let isSubmit = false;
 
 export default function S3RenameFileModal({ color }) {
     const intl = useIntl();
@@ -18,6 +19,7 @@ export default function S3RenameFileModal({ color }) {
     useEffect(() => {
         const set = function (params) {
             callBackFn = params.callBackFn;
+            isSubmit = false;
             setIsValid(false);
             setValue("");
             openModal();
@@ -30,10 +32,13 @@ export default function S3RenameFileModal({ color }) {
     }, []);
 
     const handleRename = async () => {
+        if(isSubmit) return;
+        isSubmit = true;
         const res = await callBackFn(value);
         if (res) {
             closeModal();
         }
+        isSubmit = false;
     }
     const handleChange = (e) => {
         const value = e.target.value;

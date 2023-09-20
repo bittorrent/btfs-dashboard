@@ -129,6 +129,7 @@ const S3BucketFileTableDropdown = ({ color, item, globalS3, bucketName }) => {
 
     } catch (e) {
       console.log("error", e)
+      Emitter.emit('showMessageAlert', { message: 's3_rename_fail', status: 'error', type: 'frontEnd' });
       return false;
     }
 
@@ -136,7 +137,6 @@ const S3BucketFileTableDropdown = ({ color, item, globalS3, bucketName }) => {
 
   const rename = async () => {
     console.log("globalS3", item);
-    // await renameObject("切sss图备份 (1).webp")
     Emitter.emit('openS3RenameFileModal', {callBackFn: renameObject });
   };
 
@@ -179,7 +179,7 @@ const S3BucketFileTableDropdown = ({ color, item, globalS3, bucketName }) => {
             onClick={e => {
               rename();
             }}>
-            <i class="w-5 mr-3 fa-regular fa-pen-to-square"></i>
+            <i className="w-5 mr-3 fa-regular fa-pen-to-square"></i>
             {t('s3_rename')}
           </a>
 

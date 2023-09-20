@@ -143,7 +143,7 @@ export default function S3ApiTable({ color }) {
 
                     {accessKeyList && accessKeyList.length > 0 &&
                         <>
-                            <i class="fa-solid fa-key mr-1"></i>
+                            <i className="fa-solid fa-key mr-1"></i>
                             <div className="mr-2">{t('s3_access_key')}</div>
                             <Select
                                 className={'mr-2 theme-border-color ' + color}

@@ -5,11 +5,14 @@ import { t } from 'utils/text.js';
 
 
 let callbackFn = null;
+let isSubmit = false;
+
 export default function S3ResetAccessKeyModal() {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const set = function (params) {
+      isSubmit = false;
       callbackFn = params.callbackFn;
       openModal();
     };
@@ -31,8 +34,11 @@ export default function S3ResetAccessKeyModal() {
   };
 
   const handleSubmit = async () => {
+    if(isSubmit) return;
+    isSubmit = true;
    await callbackFn();
     closeModal();
+    isSubmit = false;
   };
 
   return (

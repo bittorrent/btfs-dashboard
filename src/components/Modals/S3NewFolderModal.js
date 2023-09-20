@@ -13,6 +13,7 @@ let s3PlaceholderKey = '';
 let globalS3 = null;
 let prefix = '';
 let bucketName = '';
+let isSubmit = false;
 
 const nameReg = new RegExp(`^[a-zA-Z0-9!_.*'()-]{1,40}$`);
 
@@ -28,6 +29,7 @@ export default function S3NewFolderModal({ color }) {
             s3PlaceholderKey = params.s3PlaceholderKey;
             prefix = params.prefix;
             bucketName = params.bucketName;
+            isSubmit = false;
             setIsValid(false);
             setValue("");
             console.log('openS3NewFolderModal event has occured');
@@ -44,6 +46,8 @@ export default function S3NewFolderModal({ color }) {
 
     const newFolder = async () => {
         try {
+            if(isSubmit) return;
+            isSubmit = true;
             const command = new PutObjectCommand({
                 Bucket: bucketName,
                 Key: prefix + value + '/',
@@ -58,6 +62,7 @@ export default function S3NewFolderModal({ color }) {
                     status: 'success',
                     type: 'frontEnd',
                 });
+                closeModal();
             } else {
                 Emitter.emit('showMessageAlert', { message: 'create_folder_fail', status: 'error', type: 'frontEnd' });
             }
@@ -66,7 +71,7 @@ export default function S3NewFolderModal({ color }) {
             Emitter.emit('showMessageAlert', { message: 'create_folder_fail', status: 'error', type: 'frontEnd' });
 
         }
-        closeModal();
+        isSubmit = false;
     };
     const handleChange = (e) => {
         const value = e.target.value;

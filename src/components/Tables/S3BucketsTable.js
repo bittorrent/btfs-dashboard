@@ -219,7 +219,6 @@ export default function S3BucketsTable({ color, bucketName, accessKeyId, secretA
     const updateFiles = async () => {
         didCancel = false;
         await listFilesInBucket({ bucketName, prefix: prefix });
-        // await getFolerSize(files);
         if (!didCancel) {
             unSelect();
             nameArray.shift();
@@ -340,7 +339,7 @@ export default function S3BucketsTable({ color, bucketName, accessKeyId, secretA
                                                     }}
                                                 />
                                             </td>
-                                            <td className="common-table-body-td" style={{ minWidth: '200px' }}>
+                                            <td className="common-table-body-td" style={{ minWidth: '200px', textWrap: 'wrap' }}>
                                                 <div className="flex">
                                                     <a
                                                         className="flex items-center"

@@ -81,7 +81,7 @@ const S3AccessKeyDropdown = ({ color, item, updateListFn }) => {
                         handleReset();
                     }}>
                     {/* <img className="mr-3" alt="" style={{ height: '15px' }} src={require('../../assets/img/s3/s3-reset.svg').default} /> */}
-                    <i class="w-5 mr-3 fa-solid fa-rotate"></i>
+                    <i className="w-5 mr-3 fa-solid fa-rotate"></i>
                     {t('s3_btn_reset')}
                 </a>
                 <a

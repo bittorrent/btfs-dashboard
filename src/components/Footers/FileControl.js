@@ -10,6 +10,8 @@ import { downloadFile } from 'services/s3Service';
 const { DeleteObjectsCommand, GetObjectCommand, CopyObjectCommand, ListObjectsCommand } = AWS;
 const s3FileType = 's3File';
 
+let isDelete = false;
+
 export default function FileControl({ itemSelected, unSelect, color, data, type, bucketName, globalS3, prefix }) {
 
     const hideDownload = type === s3FileType && data.filter(item => item.Type === 1).length > 0;
@@ -23,6 +25,8 @@ export default function FileControl({ itemSelected, unSelect, color, data, type,
     };
 
     const handleS3Remove = async () => {
+        if(isDelete) return;
+        isDelete = true;
         let keys = [];
         if (data.length) {
             for (let i = 0; i < data.length; i++) {
@@ -37,7 +41,7 @@ export default function FileControl({ itemSelected, unSelect, color, data, type,
             const result = await s3Remove(keys);
 
             Emitter.emit('updateS3Files');
-            
+
             if (result) {
                 Emitter.emit('showMessageAlert', { message: 'delete_success', status: 'success', type: 'frontEnd' });
             } else {
@@ -45,6 +49,7 @@ export default function FileControl({ itemSelected, unSelect, color, data, type,
             }
             unSelect();
         }
+        isDelete = false;
     }
 
     const s3Remove = async (keys) => {
@@ -100,7 +105,7 @@ export default function FileControl({ itemSelected, unSelect, color, data, type,
 
     const remove = async () => {
         if (type === s3FileType) {
-            handleS3Remove();
+            await handleS3Remove();
             return;
         }
         if (data.length) {

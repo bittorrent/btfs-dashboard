@@ -6,12 +6,15 @@ import { t } from 'utils/text.js';
 
 
 let callbackFn = null;
+let isSubmit = false;
+
 export default function S3DeleteAccessKeyModal() {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const set = function (params) {
       callbackFn = params.callbackFn;
+      isSubmit = false;
       openModal();
     };
     Emitter.on('openS3DeleteAccessKeyModal', set);
@@ -32,8 +35,11 @@ export default function S3DeleteAccessKeyModal() {
   };
 
   const handleSubmit = async () => {
-   await callbackFn();
-  closeModal();
+    if (isSubmit) return
+    isSubmit = true;
+    await callbackFn();
+    closeModal();
+    isSubmit = false;
   };
 
   return (

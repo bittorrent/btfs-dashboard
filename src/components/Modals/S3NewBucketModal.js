@@ -13,6 +13,7 @@ let globalS3 = null;
 let callbackFn = null;
 // ref: https://www.appsloveworld.com/amazon-s3/2/regex-for-s3-bucket-name?expand_article=1
 const bucketNameReg = new RegExp('(?!(^((2(5[0-5]|[0-4][0-9])|[01]?[0-9]{1,2})\\.){3}(2(5[0-5]|[0-4][0-9])|[01]?[0-9]{1,2})$|^xn--|.+-s3alias$))^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$');
+let isSubmit = false;
 
 export default function S3NewBucketModal() {
     const [showModal, setShowModal] = useState(false);
@@ -23,6 +24,7 @@ export default function S3NewBucketModal() {
         const set = function (params) {
             globalS3 = params.globalS3;
             callbackFn = params.callbackFn;
+            isSubmit = false;
             setBucketName('');
             setIsValid(false);
             openModal();
@@ -45,6 +47,8 @@ export default function S3NewBucketModal() {
     };
 
     const handleNewBucket = async () => {
+        if(isSubmit) return;
+        isSubmit = true;
         try {
             const input = {
                 Bucket: bucketName
@@ -66,6 +70,7 @@ export default function S3NewBucketModal() {
             console.log("error", e);
             Emitter.emit('showMessageAlert', { message: 's3_new_bucket_error', status: 'error', type: 'frontEnd' });
         }
+        isSubmit = false;
 
     };
 
