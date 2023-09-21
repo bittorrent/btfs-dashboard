@@ -18,8 +18,18 @@ export default function S3CardConfigDetail({ color }) {
   const fetchData = async () => {
     const data = await getS3AccessKeyList();
     if (data && data.length) {
-      setAccessKeyList(data);
-    }else{
+
+      let list = data.map(item => {
+        item.created_at_time = moment(item.created_at, "YYYY-MM-DD HH:mm:ss");
+        return item;
+      })
+
+      list.sort(function (a, b) {
+        return b.created_at_time - a.created_at_time;
+      });
+
+      setAccessKeyList(list);
+    } else {
       setAccessKeyList([]);
     }
   }
@@ -96,7 +106,7 @@ export default function S3CardConfigDetail({ color }) {
 
                       <td className="common-table-body-td monospaced-font">{item.key}</td>
                       <td className="common-table-body-td monospaced-font">{item.secret}</td>
-                      <td className="common-table-body-td">{item.updated_at ? moment(item.updated_at).format('YYYY-MM-DD HH:mm:ss') : '--'}</td>
+                      <td className="common-table-body-td">{item.created_at ? moment(item.created_at).format('YYYY-MM-DD HH:mm:ss') : '--'}</td>
                       <td className="common-table-body-td"><Switch size="small" checked={item.enable} onChange={() => handleItemChange(item)} /></td>
                       <td className="common-table-body-td"> <S3AccessKeyDropdown color={color} item={item} updateListFn={fetchData} /></td>
 
