@@ -153,7 +153,8 @@ export default function S3ApiTable({ color }) {
                                 style={{ width: 350 }}
                                 onChange={handleChange}
                                 listHeight={250}
-                                dropdownStyle={{ background: themeStyle.bg[color], overflow:'auto'}}
+                                popupClassName="select-dropdown-body"
+                                dropdownStyle={{ background: themeStyle.bg[color]}}
                             >
                                 {accessKeyList.map(item => {
                                     return (

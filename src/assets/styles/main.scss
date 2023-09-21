@@ -172,6 +172,30 @@
   font-family: Helvetica-Bold, Helvetica;
 }
 
-.monospaced-font{
+.monospaced-font {
   font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+}
+
+.select-dropdown-body {
+  .rc-virtual-list-holder {
+    overflow: auto !important;
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px !important;
+    height: 3px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #f6f6f8;
+    background-clip: content-box;
+    border-radius: 1em;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    box-sizing: border-box;
+    border-radius: 1em;
+    background-color: #a1a7c4;
+  }
+
 }
