@@ -82,7 +82,7 @@ export default function S3BucketsTable({ color, bucketName, accessKeyId, secretA
 
         } catch (e) {
             console.log('error', e)
-            goFile();
+            // goFile();
         }
 
     };
@@ -203,7 +203,8 @@ export default function S3BucketsTable({ color, bucketName, accessKeyId, secretA
         let breadName = breadcrumbName.slice(0, index);
         let pathName = [...breadName];
         let prefix = pathName.join("/").slice(4);
-        if (prefix.length > 0) {
+        if (prefix.length > 0 ) {
+            prefix = prefix.slice(1);
             prefix = prefix + "/";
         }
         setPrefix(prefix);
