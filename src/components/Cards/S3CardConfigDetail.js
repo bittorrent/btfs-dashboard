@@ -94,8 +94,8 @@ export default function S3CardConfigDetail({ color }) {
                       key={index}
                       className="common-table-body-tr theme-border-color theme-text-main theme-table-row-hover">
 
-                      <td className="common-table-body-td">{item.key}</td>
-                      <td className="common-table-body-td">{item.secret}</td>
+                      <td className="common-table-body-td monospaced-font">{item.key}</td>
+                      <td className="common-table-body-td monospaced-font">{item.secret}</td>
                       <td className="common-table-body-td">{item.updated_at ? moment(item.updated_at).format('YYYY-MM-DD HH:mm:ss') : '--'}</td>
                       <td className="common-table-body-td"><Switch size="small" checked={item.enable} onChange={() => handleItemChange(item)} /></td>
                       <td className="common-table-body-td"> <S3AccessKeyDropdown color={color} item={item} updateListFn={fetchData} /></td>

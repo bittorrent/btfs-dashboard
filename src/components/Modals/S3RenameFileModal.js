@@ -5,10 +5,11 @@ import CommonModal from './CommonModal';
 import ButtonConfirm from 'components/Buttons/ButtonConfirm.js';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
-let callBackFn = null;
+import { getIsValidFolder } from 'utils/BTFSUtil';
+import { debounce } from 'lodash';
 
-const nameReg = new RegExp(`^[a-zA-Z0-9!_.*'()-]{1,60}$`);
-let isSubmit = false;
+let callBackFn = null;
+const ruleUrl = 'https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-keys.html?icmpid=docs_amazons3_console';
 
 export default function S3RenameFileModal({ color }) {
     const intl = useIntl();
@@ -19,7 +20,6 @@ export default function S3RenameFileModal({ color }) {
     useEffect(() => {
         const set = function (params) {
             callBackFn = params.callBackFn;
-            isSubmit = false;
             setIsValid(false);
             setValue("");
             openModal();
@@ -31,18 +31,15 @@ export default function S3RenameFileModal({ color }) {
         };
     }, []);
 
-    const handleRename = async () => {
-        if(isSubmit) return;
-        isSubmit = true;
+    const handleRename = debounce(async () => {
         const res = await callBackFn(value);
         if (res) {
             closeModal();
         }
-        isSubmit = false;
-    }
+    }, 1000)
     const handleChange = (e) => {
         const value = e.target.value;
-        const isValid = nameReg.test(value);
+        const isValid = getIsValidFolder(value);
         setIsValid(isValid);
         setValue(value);
     }
@@ -75,6 +72,10 @@ export default function S3RenameFileModal({ color }) {
                         value={value}
                         onChange={handleChange}
                     />
+                       <div className='mt-1 flex flex-wrap'>
+                        <span>{t('s3_add_folder_rule_1')}</span>
+                        <a className="theme-link" target="_blank" rel="noreferrer" href={ruleUrl}><span>&nbsp;{t('s3_add_folder_rule_2')}&nbsp;</span></a>
+                    </div>
 
                 </main>
                 <footer className="flex items-center justify-end common-modal-footer">

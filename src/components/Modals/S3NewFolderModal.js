@@ -6,16 +6,17 @@ import ButtonConfirm from 'components/Buttons/ButtonConfirm.js';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import * as AWS from "@aws-sdk/client-s3";
+import { getIsValidFolder } from 'utils/BTFSUtil';
+import { debounce } from 'lodash';
 
-const { PutObjectCommand, } = AWS;
+const { PutObjectCommand, HeadObjectCommand } = AWS;
 
 let s3PlaceholderKey = '';
 let globalS3 = null;
 let prefix = '';
 let bucketName = '';
-let isSubmit = false;
+const ruleUrl = 'https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-keys.html?icmpid=docs_amazons3_console';
 
-const nameReg = new RegExp(`^[a-zA-Z0-9!_.*'()-]{1,40}$`);
 
 export default function S3NewFolderModal({ color }) {
     const intl = useIntl();
@@ -29,7 +30,6 @@ export default function S3NewFolderModal({ color }) {
             s3PlaceholderKey = params.s3PlaceholderKey;
             prefix = params.prefix;
             bucketName = params.bucketName;
-            isSubmit = false;
             setIsValid(false);
             setValue("");
             console.log('openS3NewFolderModal event has occured');
@@ -42,12 +42,27 @@ export default function S3NewFolderModal({ color }) {
         };
     }, []);
 
+    const getIsExit = async() =>{
+        try{
+            const command = new HeadObjectCommand({
+                Bucket: bucketName,
+                Key: prefix + value + '/',
+            });
+            await globalS3.send(command);
+            return true;
+        }catch(e){
+            console.log('error', e);
+            return false;
+        }
+    }
 
-
-    const newFolder = async () => {
+    const newFolder = debounce(async () => {
         try {
-            if(isSubmit) return;
-            isSubmit = true;
+            const isExit = await getIsExit();
+            if(isExit){
+                Emitter.emit('showMessageAlert', { message: 's3_new_folder_already_exists_error', status: 'error', type: 'frontEnd' });
+                return;
+            }
             const command = new PutObjectCommand({
                 Bucket: bucketName,
                 Key: prefix + value + '/',
@@ -71,13 +86,11 @@ export default function S3NewFolderModal({ color }) {
             Emitter.emit('showMessageAlert', { message: 'create_folder_fail', status: 'error', type: 'frontEnd' });
 
         }
-        isSubmit = false;
-    };
+    }, 1000);
     const handleChange = (e) => {
         const value = e.target.value;
         console.log("onChange", value);
-        const isValid = nameReg.test(value);
-        console.log("isValid", isValid)
+        const isValid = getIsValidFolder(value);
         setIsValid(isValid);
         setValue(value);
     }
@@ -113,6 +126,10 @@ export default function S3NewFolderModal({ color }) {
                         value={value}
                         onChange={handleChange}
                     />
+                     <div className='mt-1 flex flex-wrap'>
+                        <span>{t('s3_add_folder_rule_1')}</span>
+                        <a className="theme-link" target="_blank" rel="noreferrer" href={ruleUrl}><span>&nbsp;{t('s3_add_folder_rule_2')}&nbsp;</span></a>
+                    </div>
                     {/* {
             showError && <p className="error">
               {t('s3_new_folder_error_tips')}

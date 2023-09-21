@@ -3,17 +3,16 @@ import CommonModal from './CommonModal';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import { s3NewAccessKey } from 'services/s3Service.js';
+import { debounce } from 'lodash';
 
 
 let callbackFn = null;
-let isSubmit = false;
 export default function S3NewAccessKeyModal() {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const set = function (params) {
       callbackFn = params.callbackFn;
-      isSubmit = false;
       openModal();
     };
     Emitter.on('openS3NewKeyModal', set);
@@ -33,17 +32,15 @@ export default function S3NewAccessKeyModal() {
     window.body.style.overflow = '';
   };
 
-  const handleNewKey = async () => {
-    if (isSubmit) return;
-    isSubmit = true;
+  
+  const handleNewKey = debounce(async () => {
     const data = await s3NewAccessKey();
     if (data) {
       callbackFn();
       Emitter.emit('showMessageAlert', { message: 's3_new_access_key_success', status: 'success', type: 'frontEnd' });
       closeModal();
     }
-    isSubmit = false;
-  };
+  }, 1000);
 
   return (
     <CommonModal width={540} open={showModal} onCancel={closeModal}>

@@ -2,17 +2,16 @@ import React, { useState, useEffect } from 'react';
 import CommonModal from './CommonModal';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
+import { debounce } from 'lodash';
 
 
 let callbackFn = null;
-let isSubmit = false;
 
 export default function S3ResetAccessKeyModal() {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const set = function (params) {
-      isSubmit = false;
       callbackFn = params.callbackFn;
       openModal();
     };
@@ -33,13 +32,10 @@ export default function S3ResetAccessKeyModal() {
     window.body.style.overflow = '';
   };
 
-  const handleSubmit = async () => {
-    if(isSubmit) return;
-    isSubmit = true;
-   await callbackFn();
+  const handleSubmit = debounce(async () => {
+    await callbackFn();
     closeModal();
-    isSubmit = false;
-  };
+  }, 1000);
 
   return (
     <CommonModal width={540} open={showModal} onCancel={closeModal}>

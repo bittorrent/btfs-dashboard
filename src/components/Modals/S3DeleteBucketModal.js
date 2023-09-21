@@ -3,10 +3,10 @@ import CommonModal from './CommonModal';
 import ButtonCancel from 'components/Buttons/ButtonCancel.js';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
+import { debounce } from 'lodash';
 
 
 let callbackFn = null;
-let isSubmit = false;
 
 export default function S3DeleteBucketModal() {
   const [showModal, setShowModal] = useState(false);
@@ -14,7 +14,6 @@ export default function S3DeleteBucketModal() {
   useEffect(() => {
     const set = function (params) {
       callbackFn = params.callbackFn;
-      isSubmit = false;
       openModal();
     };
     Emitter.on('openS3DeleteBucketModal', set);
@@ -34,16 +33,13 @@ export default function S3DeleteBucketModal() {
     window.body.style.overflow = '';
   };
 
-  const handleSubmit = async () => {
-    if (isSubmit) return;
-    isSubmit = true;
+
+  const handleSubmit = debounce(async () => {
     const res = await callbackFn();
     if (res) {
       closeModal();
     }
-    isSubmit = false;
-
-  };
+  }, 1000);
 
   return (
     <CommonModal width={540} open={showModal} onCancel={closeModal}>

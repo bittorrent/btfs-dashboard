@@ -236,3 +236,16 @@ export function getUrl(url, isSlice) {
         
     }
 }
+
+export function getIsValidFolder(value) {
+    if(!value) return false;
+
+    if(value.includes('/')) return false;
+
+    const len =  str2bytes(value);
+
+    if(len>1024) return false;
+
+    return true;
+    
+}

@@ -10,8 +10,10 @@ import moment from 'moment';
 import { t } from 'utils/text.js';
 import Emitter from 'utils/eventBus';
 import * as AWS from "@aws-sdk/client-s3";
+import themeStyle from "utils/themeStyle.js";
 const { ListBucketsCommand, S3Client } = AWS;
 let globalS3 = null;
+
 
 
 const AWS_CLI_LINK = 'https://aws.amazon.com/cn/cli/';
@@ -146,15 +148,16 @@ export default function S3ApiTable({ color }) {
                             <i className="fa-solid fa-key mr-1"></i>
                             <div className="mr-2">{t('s3_access_key')}</div>
                             <Select
-                                className={'mr-2 theme-border-color ' + color}
+                                className={'mr-2 theme-border-color monospaced-font select-body ' + color}
                                 defaultValue={accessKeyList[0].key}
-                                style={{ width: 330 }}
+                                style={{ width: 350 }}
                                 onChange={handleChange}
-                            // dropdownStyle={{ background: themeStyle.bg[color] }}
+                                listHeight={250}
+                                dropdownStyle={{ background: themeStyle.bg[color], overflow:'auto'}}
                             >
                                 {accessKeyList.map(item => {
                                     return (
-                                        <Option key={item.key} value={item.key}>
+                                        <Option className="monospaced-font" key={item.key} value={item.key}>
                                             {item.key}
                                         </Option>
                                     );

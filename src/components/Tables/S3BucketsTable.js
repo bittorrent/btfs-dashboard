@@ -3,6 +3,7 @@ import React, { useEffect, useState, useCallback, useRef, useContext } from 'rea
 import { mainContext } from 'reducer';
 import { Breadcrumb } from 'antd';
 import moment from 'moment';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import S3BucketFileTableDropdown from 'components/Dropdowns/S3BucketFileTableDropdown.js';
 import S3ImportFilesDropdown from 'components/Dropdowns/S3ImportFilesDropdown.js';
@@ -23,8 +24,8 @@ const s3PlaceholderKey = 's3-placeholder.txt';
 
 
 export default function S3BucketsTable({ color, bucketName, accessKeyId, secretAccessKey }) {
-    console.log("bucketName", bucketName);
 
+    const history = useHistory();
     const { state } = useContext(mainContext);
     const { s3ApiUrl, addressConfig } = state;
 
@@ -37,63 +38,59 @@ export default function S3BucketsTable({ color, bucketName, accessKeyId, secretA
     const [delimiter] = useState("/");
     const [prefix, setPrefix] = useState("");
 
-    console.log("prefix111", prefix);
     const listFilesInBucket = async ({ bucketName, prefix }) => {
+        try {
+            let CIDList = null;
+            const command = new ListObjectsCommand({ Bucket: bucketName, Delimiter: delimiter, Prefix: prefix });
+            command.middlewareStack.add(
+                (next, context) => async (args) => {
+                    const result = await next(args);
+                    // result.response contains data returned from next middleware.
+                    CIDList = result.response.headers['cid']?.split(", ");
+                    return result;
+                },
+                {
+                    name: "printResponseHeader",
+                }
+            );
+            const res = await globalS3.send(command);
+            const prefixLen = prefix.length;
+            let { Contents = [], CommonPrefixes = [] } = res;
+            CommonPrefixes.map(item => {
+                const prefixList = item.Prefix.split('/');
+                item.Name = prefixList[prefixList.length - 2];
+                item.Type = 1;
+                item.Key = item.Prefix;
+                return item;
+            })
 
-        let CIDList = null;
-        const command = new ListObjectsCommand({ Bucket: bucketName, Delimiter: delimiter, Prefix: prefix });
-        command.middlewareStack.add(
-            (next, context) => async (args) => {
-                const result = await next(args);
-                // result.response contains data returned from next middleware.
-                CIDList = result.response.headers['cid']?.split(", ");
-                return result;
-            },
-            {
-                name: "printResponseHeader",
-            }
-        );
-        const res = await globalS3.send(command);
-        const prefixLen = prefix.length;
-        console.log("res", res, CIDList);
-        let { Contents = [], CommonPrefixes = [] } = res;
-        CommonPrefixes.map(item => {
-            console.log("item.Prefix", item.Prefix.split('/'))
-            const prefixList = item.Prefix.split('/');
-            item.Name = prefixList[prefixList.length - 2];
-            item.Type = 1;
-            item.Key = item.Prefix;
-            return item;
-        })
+            Contents.map((item, index) => {
 
-        // Contents = Contents.filter(item=>!item.Key.includes(s3PlaceholderKey))
+                item.Name = item.Key.slice(prefixLen);
+                item.Type = 2;
+                item.CID = CIDList[index];
+                item.CIDAbbrValue = item.CID.slice(0, 2) + '...' + item.CID.slice(-2);
+                item.GatewayUrl = addressConfig.Gateway + '/btfs/' + CIDList[index];
+                item.GatewayUrlAbbrValue = addressConfig.Gateway + '/btfs/' + item.CIDAbbrValue;
+                return item;
+            })
 
+            Contents = Contents.filter(item => item.Name !== "");
 
-        Contents.map((item, index) => {
+            console.log("Contents", Contents, CommonPrefixes);
+            setFiles(() => [...CommonPrefixes, ...Contents]);
 
-            item.Name = item.Key.slice(prefixLen);
-            item.Type = 2;
-            item.CID = CIDList[index];
-            item.CIDAbbrValue = item.CID.slice(0, 2) + '...' + item.CID.slice(-2);
-            item.GatewayUrl = addressConfig.Gateway + '/btfs/' + CIDList[index];
-            item.GatewayUrlAbbrValue = addressConfig.Gateway + '/btfs/' + item.CIDAbbrValue;
-            return item;
-        })
+        } catch (e) {
+            console.log('error', e)
+            goFile();
+        }
 
-        Contents = Contents.filter(item => item.Name !== "");
-
-        console.log("Contents", Contents, CommonPrefixes);
-        setFiles(() => [...CommonPrefixes, ...Contents]);
-        // const contentsList = Contents.map((c) => ` • ${c.Name}`).join("\n");
-        // console.log("\nHere's a list of files in the bucket:");
-        // console.log(contentsList + "\n");
     };
 
     useEffect(() => {
         if (s3ApiUrl) {
             globalS3 = null;
             globalS3 = new S3Client({
-                // endpoint: s3ApiUrl,
                 endpoint: s3ApiUrl,
                 region: "us-east-1",
                 accessKeyId: accessKeyId,
@@ -255,7 +252,10 @@ export default function S3BucketsTable({ color, bucketName, accessKeyId, secretA
         Emitter.emit('openS3NewFolderModal', {
             bucketName, globalS3, prefix, s3PlaceholderKey
         })
+    }
 
+    const goFile = (item) => {
+        history.push(`/admin/files`);
     }
 
     return (
