@@ -82,7 +82,7 @@ export default function S3BucketsTable({ color, bucketName, accessKeyId, secretA
 
         } catch (e) {
             console.log('error', e)
-            // goFile();
+            goFile();
         }
 
     };
