@@ -23,7 +23,7 @@ const MessageAlert = () => {
             Emitter.removeListener('showMessageAlert');
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [intl]);
 
     return null;
 };
