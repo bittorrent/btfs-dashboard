@@ -14,6 +14,7 @@ import { t } from 'utils/text.js';
 import { Link } from 'react-router-dom';
 import Emitter from 'utils/eventBus';
 import * as AWS from "@aws-sdk/client-s3";
+import { XhrHttpHandler } from "@aws-sdk/xhr-http-handler";
 const { S3Client, ListObjectsCommand } = AWS;
 
 
@@ -100,8 +101,9 @@ export default function S3BucketsTable({ color, bucketName, accessKeyId, secretA
                     secretAccessKey: secretAccessKey,
                 },
                 s3ForcePathStyle: true,
+                requestHandler: new XhrHttpHandler({}),
             });
-            console.log("AWS", AWS);
+            console.log("globalS3", globalS3);
             setGlobalS3Obj(() => globalS3);
             // listFilesInBucket({ bucketName });
         } else {
