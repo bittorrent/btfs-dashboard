@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState, useCallback, useRef, useContext } from 'react';
 import { mainContext } from 'reducer';
-import { Breadcrumb } from 'antd';
+import { Breadcrumb, Tooltip } from 'antd';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -371,14 +371,16 @@ export default function S3BucketsTable({ color, bucketName, accessKeyId, secretA
                                                 </div>
                                             </td>
                                             <td className="common-table-body-td">{item.CID ?
-                                                <>
+                                                <Tooltip className="cursor-pointer" placement="top" title={item.CID}>
                                                     {item.CIDAbbrValue}
                                                     <ClipboardCopy value={item.CID} />
-                                                </> : '--'}</td>
+                                                </Tooltip> : '--'}</td>
                                             <td className="common-table-body-td">{item.GatewayUrl ?
                                                 <span className="h-full flex">
+                                                    <Tooltip className="flex" placement="top" title={item.GatewayUrl}>
                                                     <a className="flex items-center theme-link" target="_blank" rel="noreferrer" href={item.GatewayUrl}><span>{item.GatewayUrlAbbrValue}</span></a>
                                                     <ClipboardCopy value={item.GatewayUrl} />
+                                                    </Tooltip>
                                                 </span> : '--'}</td>
                                             <td className="common-table-body-td">{item['Size'] ? switchStorageUnit2(item['Size']) : '--'}</td>
                                             <td className="common-table-body-td">{item.LastModified ? moment(item.LastModified).format('YYYY-MM-DD HH:mm:ss') : '--'}</td>
