@@ -234,7 +234,7 @@ export function getUrl(url, isSlice) {
         }else{
             return urlFormat.protocol + '//' + url;
         }
-        
+
     }
 }
 
@@ -248,7 +248,7 @@ export function getIsValidFolder(value) {
     if(len>1024) return false;
 
     return true;
-    
+
 }
 
 export function sortListByDate(data, sortKey) {
