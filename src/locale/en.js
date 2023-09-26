@@ -293,7 +293,7 @@ const en_US = {
     's3_api_des_1': 'You can use',
     's3_api_des_2': 'AWS CLI',
     's3_api_des_3': `to interact with BTFS's S3-compatible API`,
-    's3_api_config': 'S3 API Config',
+    's3_api_config': 'S3 API Configuration',
     's3_api_config_tips': 'S3 API Config',
     's3_api_end_point': 'API End Point',
     's3_access_keys': 'S3 Access Keys',

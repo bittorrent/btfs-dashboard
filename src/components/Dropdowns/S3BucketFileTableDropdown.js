@@ -1,19 +1,23 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createPopper } from '@popperjs/core';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
-import { downloadFile } from 'services/s3Service';
+// import { downloadFile } from 'services/s3Service';
+import { downloadFile } from 'services/filesService.js';
 import * as AWS from "@aws-sdk/client-s3";
 
 
-const { DeleteObjectsCommand, GetObjectCommand, CopyObjectCommand, ListObjectsCommand } = AWS;
+const { DeleteObjectsCommand, CopyObjectCommand, ListObjectsCommand } = AWS;
 
 
 const S3BucketFileTableDropdown = ({ color, item, globalS3, bucketName }) => {
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
   const popoverDropdownRef = React.createRef();
+  // eslint-disable-next-line no-unused-vars
+  const [err, setErr] = useState(false);
+
   const openDropdownPopover = () => {
     createPopper(btnDropdownRef.current, popoverDropdownRef.current, {
       placement: 'left-start',
@@ -34,46 +38,45 @@ const S3BucketFileTableDropdown = ({ color, item, globalS3, bucketName }) => {
     };
   }, []);
 
-  const execDownload = async()=>{
-    const command = new GetObjectCommand({
-      Bucket: bucketName,
-      Key: item.Key,
-    });
-    const response = await globalS3.send(command);
-    const arrayBuffer = await response.Body.transformToByteArray();
-    downloadFile(arrayBuffer, item.Name);
+  const execDownload = async (setPercentage) => {
+    const onDownLoadProgress = progress => {
+      const percentage = Math.round((progress.loaded / item.Size) * 100);
+      setPercentage(percentage);
+    };
+    const result = await downloadFile(item.CID, item.Name, item.Size, onDownLoadProgress, setErr);
+    return result;
   }
 
 
-  const download = async () => {
-    Emitter.emit('openS3DownloadModal', {  name: item.Name, execDownload: execDownload });
-  };
 
+  const download = async () => {
+    Emitter.emit('openS3DownloadModal', { name: item.Name, execDownload: execDownload });
+  };
 
   const listFilesInBucket = async () => {
     const command = new ListObjectsCommand({ Bucket: bucketName, Prefix: item.Key });
     const res = await globalS3.send(command);
     const { Contents = [] } = res;
-    const  keys = Contents.map((c) => c.Key);
+    const keys = Contents.map((c) => c.Key);
     return keys;
-   
-};
 
-  const handleRemove = async() => {
+  };
+
+  const handleRemove = async () => {
     let keys = [];
-    if(item.Type === 2){
+    if (item.Type === 2) {
       keys = [item.Key];
       await remove(keys);
-    }else{
+    } else {
       keys = await listFilesInBucket();
       await remove(keys);
     }
-   
-   }
+
+  }
 
   const remove = async (keys) => {
     try {
-      
+
       const deleteObjectsCommand = new DeleteObjectsCommand({
         Bucket: bucketName,
         Delete: { Objects: keys.map((key) => ({ Key: key })) },
@@ -137,7 +140,7 @@ const S3BucketFileTableDropdown = ({ color, item, globalS3, bucketName }) => {
 
   const rename = async () => {
     console.log("globalS3", item);
-    Emitter.emit('openS3RenameFileModal', {callBackFn: renameObject });
+    Emitter.emit('openS3RenameFileModal', { callBackFn: renameObject });
   };
 
   const trigger = e => {
