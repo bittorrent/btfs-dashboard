@@ -1,3 +1,4 @@
+import moment from 'moment';
 import {PRECISION} from 'utils/constants.js';
 
 export const PiB = 1024.0 * 1024.0 * 1024.0 * 1024.0 * 1024.0;
@@ -248,4 +249,16 @@ export function getIsValidFolder(value) {
 
     return true;
     
+}
+
+export function sortListByDate(data, sortKey) {
+    const list = data.map(item => {
+        item[sortKey + '_time'] = moment(item[sortKey], "YYYY-MM-DD HH:mm:ss");
+        return item;
+    })
+
+   const res =  list.sort(function (a, b) {
+        return b[sortKey + '_time'] - a[sortKey + '_time'];
+    });
+    return res;
 }

@@ -214,7 +214,7 @@ export default function LocalFilesTable({ color }) {
     return (
         <>
             <Tabs defaultActiveKey="1" className="mb-4 common-card theme-bg theme-text-main file-tab-content">
-                <Tabs.TabPane tab={t('s3_api')} key="1">
+                <Tabs.TabPane tab={t('s3_api')} key="1" className="w-full">
                     <S3ApiTable color={color} />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab={t('native_api')} key="2">

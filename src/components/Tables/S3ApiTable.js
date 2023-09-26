@@ -10,25 +10,27 @@ import moment from 'moment';
 import { t } from 'utils/text.js';
 import Emitter from 'utils/eventBus';
 import * as AWS from "@aws-sdk/client-s3";
-import themeStyle from "utils/themeStyle.js";
+import themeStyle from 'utils/themeStyle.js';
+import { sortListByDate } from 'utils/BTFSUtil';
+
 const { ListBucketsCommand, S3Client } = AWS;
 let globalS3 = null;
-
-
-
-const AWS_CLI_LINK = 'https://aws.amazon.com/cn/cli/';
+const AWS_CLI_LINK_EN = 'https://aws.amazon.com/cli/?nc1=h_ls';
+const AWS_CLI_LINK_ZH = 'https://aws.amazon.com/cn/cli/';
 const { Option } = Select;
-
+const linkConfig = {
+    'zh': AWS_CLI_LINK_ZH,
+    'en': AWS_CLI_LINK_EN
+};
 
 export default function S3ApiTable({ color }) {
     const { state } = useContext(mainContext);
-    const { s3ApiUrl } = state;
+    const { s3ApiUrl, locale } = state;
     const [globalS3Obj, setGlobalS3Obj] = useState(null);
     const history = useHistory();
     const [bucketList, setBucketList] = useState(null);
     const [accessKeyList, setAccessKeyList] = useState([]);
     const [curAccessData, setAccessData] = useState(null);
-
     const handleNewBucket = () => {
         Emitter.emit('openS3NewBucketModal', { globalS3, callbackFn: reFetchBucketList })
     }
@@ -92,7 +94,8 @@ export default function S3ApiTable({ color }) {
                 bucketList.forEach((item, index) => {
                     item.ACL = ACLList[index];
                 })
-                setBucketList(() => [...bucketList])
+                const list = sortListByDate(bucketList, 'CreationDate')
+                setBucketList(() => [...list])
             }
         } catch (e) {
             console.log("error", e)
@@ -132,23 +135,23 @@ export default function S3ApiTable({ color }) {
 
 
     return (
-        <div className="relative flex flex-col">
+        <div className="relative w-full flex flex-col">
             <div className="flex w-full items-center s3-des-content mb-4">
                 <img className="mr-1" alt="" style={{ height: '12px' }} src={require('../../assets/img/s3/s3-tips.svg').default} />
                 <span>{t('s3_api_des_1')}</span>
-                <a className="flex items-center theme-link" target="_blank" rel="noreferrer" href={AWS_CLI_LINK}><span>&nbsp;{t('s3_api_des_2')}&nbsp;</span></a>
+                <a className="flex items-center theme-link" target="_blank" rel="noreferrer" href={linkConfig[locale]}><span>&nbsp;{t('s3_api_des_2')}&nbsp;</span></a>
                 <span>{t('s3_api_des_3')}</span>
             </div>
-            <div className="mb-4 flex  items-center justify-between flex-wrap">
-                <div className="flex items-center flex-wrap">
+            <div className="flex w-full  items-center justify-between flex-wrap">
+                <div className="flex items-center flex-wrap s3-api-operate">
                     {/* <img className="mr-1" alt="" style={{ height: '15px' }} src={require('../../assets/img/s3/s3-key.svg').default} /> */}
 
                     {accessKeyList && accessKeyList.length > 0 &&
                         <>
-                            <i className="fa-solid fa-key mr-1"></i>
-                            <div className="mr-2">{t('s3_access_key')}</div>
+                            <i className="fa-solid fa-key mr-1 mb-4 "></i>
+                            <span className="mr-2 mb-4 ">{t('s3_access_key')}</span>
                             <Select
-                                className={'mr-2 theme-border-color monospaced-font select-body ' + color}
+                                className={'mr-2 mb-4  theme-border-color monospaced-font select-body ' + color}
                                 defaultValue={accessKeyList[0].key}
                                 style={{ width: 350 }}
                                 onChange={handleChange}
@@ -168,13 +171,13 @@ export default function S3ApiTable({ color }) {
 
                     }
 
-                    <button className="common-btn theme-common-btn theme-white-btn" onClick={handleAccessManager}>
+                    <button className=" mb-4  common-btn theme-common-btn theme-white-btn" onClick={handleAccessManager}>
                         {t('s3_access_keys_manager')}
                     </button>
                 </div>
 
                 {accessKeyList && accessKeyList.length > 0 && (
-                    <button className="common-btn theme-common-btn" onClick={handleNewBucket}>
+                    <button className="mb-4  common-btn theme-common-btn" onClick={handleNewBucket}>
                         {t('s3_new_bucket')}
                     </button>
                 )}

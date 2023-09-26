@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 import Emitter from 'utils/eventBus';
 import * as AWS from "@aws-sdk/client-s3";
 import { XhrHttpHandler } from "@aws-sdk/xhr-http-handler";
+import { sortListByDate } from 'utils/BTFSUtil';
 const { S3Client, ListObjectsCommand } = AWS;
 
 
@@ -29,7 +30,6 @@ export default function S3BucketsTable({ color, bucketName, accessKeyId, secretA
     const history = useHistory();
     const { state } = useContext(mainContext);
     const { s3ApiUrl, addressConfig } = state;
-
     const [globalS3Obj, setGlobalS3Obj] = useState(null);
     const batchList = useRef([]);
     const [itemSelected, setItemSelected] = useState(0);
@@ -77,9 +77,9 @@ export default function S3BucketsTable({ color, bucketName, accessKeyId, secretA
             })
 
             Contents = Contents.filter(item => item.Name !== "");
-
+            const list = sortListByDate(Contents, 'LastModified')
             console.log("Contents", Contents, CommonPrefixes);
-            setFiles(() => [...CommonPrefixes, ...Contents]);
+            setFiles(() => [...CommonPrefixes, ...list]);
 
         } catch (e) {
             console.log('error', e)

@@ -162,6 +162,14 @@
   .modal_center {
     width: calc(100% - 2rem);
   }
+  .s3-api-operate{
+    width: 100%;
+  }
+  .select-body{
+    width: 100% !important;
+    max-width: 100%;
+    margin-right: 0;
+  }
 }
 
 .helvetica {

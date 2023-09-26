@@ -9,6 +9,7 @@ import S3DeleteAccessKeyModal from 'components/Modals/S3DeleteAccessKeyModal.js'
 import S3ResetAccessKeyModal from 'components/Modals/S3ResetAccessKeyModal.js';
 import Emitter from 'utils/eventBus';
 import { getS3AccessKeyList, disableS3AccessKey, enableS3AccessKey } from 'services/s3Service';
+import { sortListByDate } from 'utils/BTFSUtil';
 import moment from 'moment';
 
 
@@ -18,17 +19,8 @@ export default function S3CardConfigDetail({ color }) {
   const fetchData = async () => {
     const data = await getS3AccessKeyList();
     if (data && data.length) {
-
-      let list = data.map(item => {
-        item.created_at_time = moment(item.created_at, "YYYY-MM-DD HH:mm:ss");
-        return item;
-      })
-
-      list.sort(function (a, b) {
-        return b.created_at_time - a.created_at_time;
-      });
-
-      setAccessKeyList(list);
+      const list = sortListByDate(data, 'created_at')
+      setAccessKeyList(() => [...list]);
     } else {
       setAccessKeyList([]);
     }
