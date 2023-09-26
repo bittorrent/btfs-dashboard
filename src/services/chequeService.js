@@ -265,8 +265,8 @@ export const getChequeCashingHistoryList = async (offset, limit) => {
         // cheques.forEach(item => {
         //     item.amount /= PRECISION_RATE;
         // })
-        console.log(priceList,'priceList')
-        console.log(tokenList)
+        // console.log(priceList,'priceList')
+        // console.log(tokenList)
         cheques = formatCurrencyTokenDataWithPrices(cheques, tokenList, 'token', priceList);
         return {
             cheques: cheques,
@@ -391,7 +391,7 @@ export const cash = async (cashList, onCashProgress, setErr, setMessage) => {
 export const getChequeEarningHistory = async () => {
     try {
         let data = await Client10.getChequeEarningHistory();
-        console.log("data-Client10.getChequeEarningHistory", data);
+        // console.log("data-Client10.getChequeEarningHistory", data);
         let x = [];
         let y1 = [];
         let y2 = [];

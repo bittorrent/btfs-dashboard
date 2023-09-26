@@ -135,7 +135,7 @@ export default function ChequeCashingListTable({ color, enableCash }) {
                                             </div>
                                         </td>
                                         <td className="common-table-body-td">
-                                            {switchBalanceUnit(item['Payout'] - item['CashedAmount'], MULTIPLE_CURRENCY_RATE[item?.key])}
+                                            {switchBalanceUnit(item['Payout'] - item['CashedAmount'], MULTIPLE_CURRENCY_RATE[item?.unit])}
                                         </td>
                                         <td className="common-table-body-td">
                                             {switchBalanceUnit(item['CashedAmount'], MULTIPLE_CURRENCY_RATE[item?.key])}
