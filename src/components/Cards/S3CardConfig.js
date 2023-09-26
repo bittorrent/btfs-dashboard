@@ -1,7 +1,5 @@
 import React, { memo, useEffect, useContext } from 'react';
 import { mainContext } from 'reducer';
-import { Tooltip } from 'antd';
-import { InfoCircleOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import ClipboardCopy from 'components/Utils/ClipboardCopy';
 import { t } from 'utils/text.js';
@@ -49,9 +47,6 @@ function S3CardConfig({ color }) {
       <div className="mb-2 justify-between setting-header">
         <div className="flex items-center">
           <h5 className="font-bold uppercase theme-text-main">{t('s3_api_config')}</h5>
-          <Tooltip placement="top" title={<p>{t('s3_api_config_tips')}</p>}>
-            <InfoCircleOutlined className="inline-flex items-center ml-1 text-xs" />
-          </Tooltip>
         </div>
       </div>
       <div>
