@@ -7,7 +7,6 @@ import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import * as AWS from "@aws-sdk/client-s3";
 import { getIsValidFolder } from 'utils/BTFSUtil';
-import { debounce } from 'lodash';
 
 const { PutObjectCommand, HeadObjectCommand } = AWS;
 
@@ -56,8 +55,9 @@ export default function S3NewFolderModal({ color }) {
         }
     }
 
-    const newFolder = debounce(async () => {
+    const newFolder = async () => {
         try {
+            closeModal();
             const isExit = await getIsExit();
             if(isExit){
                 Emitter.emit('showMessageAlert', { message: 's3_new_folder_already_exists_error', status: 'error', type: 'frontEnd' });
@@ -77,7 +77,6 @@ export default function S3NewFolderModal({ color }) {
                     status: 'success',
                     type: 'frontEnd',
                 });
-                closeModal();
             } else {
                 Emitter.emit('showMessageAlert', { message: 'create_folder_fail', status: 'error', type: 'frontEnd' });
             }
@@ -86,7 +85,7 @@ export default function S3NewFolderModal({ color }) {
             Emitter.emit('showMessageAlert', { message: 'create_folder_fail', status: 'error', type: 'frontEnd' });
 
         }
-    }, 1000);
+    };
     const handleChange = (e) => {
         const value = e.target.value;
         console.log("onChange", value);

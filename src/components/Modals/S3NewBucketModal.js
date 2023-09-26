@@ -5,7 +5,6 @@ import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import * as AWS from "@aws-sdk/client-s3";
 import { Input } from 'antd';
-import { debounce } from 'lodash';
 const { CreateBucketCommand } = AWS;
 
 
@@ -47,8 +46,9 @@ export default function S3NewBucketModal() {
     };
 
     
-    const handleNewBucket = debounce(async () => {
+    const handleNewBucket = async () => {
         try {
+            closeModal();
             const input = {
                 Bucket: bucketName
             };
@@ -62,7 +62,6 @@ export default function S3NewBucketModal() {
                     status: 'success',
                     type: 'frontEnd',
                 });
-                closeModal();
             }
         } catch (e) {
             const error = e.toString();
@@ -73,10 +72,9 @@ export default function S3NewBucketModal() {
                 errorMsg = 's3_new_bucket_invalid_key_error'
             }
             Emitter.emit('showMessageAlert', { message: errorMsg, status: 'error', type: 'frontEnd' });
-
             console.log("error", e);
         }
-    }, 1000);
+    };
 
     const handleChange = (e) => {
 

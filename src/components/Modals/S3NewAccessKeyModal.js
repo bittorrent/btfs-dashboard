@@ -3,7 +3,6 @@ import CommonModal from './CommonModal';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import { s3NewAccessKey } from 'services/s3Service.js';
-import { debounce } from 'lodash';
 
 
 let callbackFn = null;
@@ -33,14 +32,14 @@ export default function S3NewAccessKeyModal() {
   };
 
   
-  const handleNewKey = debounce(async () => {
+  const handleNewKey = async () => {
+    closeModal();
     const data = await s3NewAccessKey();
     if (data) {
       callbackFn();
       Emitter.emit('showMessageAlert', { message: 's3_new_access_key_success', status: 'success', type: 'frontEnd' });
-      closeModal();
     }
-  }, 1000);
+  };
 
   return (
     <CommonModal width={540} open={showModal} onCancel={closeModal}>

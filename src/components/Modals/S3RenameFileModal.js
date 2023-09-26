@@ -6,7 +6,6 @@ import ButtonConfirm from 'components/Buttons/ButtonConfirm.js';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import { getIsValidFolder } from 'utils/BTFSUtil';
-import { debounce } from 'lodash';
 
 let callBackFn = null;
 const ruleUrl = 'https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-keys.html?icmpid=docs_amazons3_console';
@@ -31,12 +30,11 @@ export default function S3RenameFileModal({ color }) {
         };
     }, []);
 
-    const handleRename = debounce(async () => {
-        const res = await callBackFn(value);
-        if (res) {
-            closeModal();
-        }
-    }, 1000)
+    const handleRename = async () => {
+        closeModal();
+        await callBackFn(value);
+    }
+
     const handleChange = (e) => {
         const value = e.target.value;
         const isValid = getIsValidFolder(value);
