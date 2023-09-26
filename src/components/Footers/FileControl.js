@@ -1,19 +1,19 @@
 /*eslint-disable*/
-import React from 'react';
+import React, { useState } from 'react';
 import { removeFiles } from "services/filesService.js";
 import themeStyle from "utils/themeStyle.js";
 import Emitter from "utils/eventBus";
 import { t } from "utils/text.js";
 import * as AWS from "@aws-sdk/client-s3";
-import { downloadFile } from 'services/s3Service';
+import { downloadFile } from 'services/filesService.js';
 
-const { DeleteObjectsCommand, GetObjectCommand, CopyObjectCommand, ListObjectsCommand } = AWS;
+const { DeleteObjectsCommand, CopyObjectCommand, ListObjectsCommand } = AWS;
 const s3FileType = 's3File';
-
 let isDelete = false;
 
 export default function FileControl({ itemSelected, unSelect, color, data, type, bucketName, globalS3, prefix }) {
-
+    // eslint-disable-next-line no-unused-vars
+    const [err, setErr] = useState(false);
     const hideDownload = type === s3FileType && data.filter(item => item.Type === 1).length > 0;
 
     const listFilesInBucket = async (item) => {
@@ -25,7 +25,7 @@ export default function FileControl({ itemSelected, unSelect, color, data, type,
     };
 
     const handleS3Remove = async () => {
-        if(isDelete) return;
+        if (isDelete) return;
         isDelete = true;
         let keys = [];
         if (data.length) {
@@ -65,16 +65,24 @@ export default function FileControl({ itemSelected, unSelect, color, data, type,
         }
     };
 
-    const execDownload = async () => {
+
+    const execDownload = async (setPercentage) => {
         const item = data[0];
-        const command = new GetObjectCommand({
-            Bucket: bucketName,
-            Key: item.Key,
-        });
-        const response = await globalS3.send(command);
-        const arrayBuffer = await response.Body.transformToByteArray();
-        await downloadFile(arrayBuffer, item.Name);
+        // const command = new GetObjectCommand({
+        //     Bucket: bucketName,
+        //     Key: item.Key,
+        // });
+        // const response = await globalS3.send(command);
+        // const arrayBuffer = await response.Body.transformToByteArray();
+        // await downloadFile(arrayBuffer, item.Name);
+
+        const onDownLoadProgress = progress => {
+            const percentage = Math.round((progress.loaded / item.Size) * 100);
+            setPercentage(percentage);
+        };
+        const result = await downloadFile(item.CID, item.Name, item.Size, onDownLoadProgress, setErr);
         unSelect();
+        return result;
     }
 
     const handleS3Download = () => {

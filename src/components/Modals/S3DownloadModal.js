@@ -16,10 +16,11 @@ export default function S3DownloadModal({ color }) {
     useEffect(() => {
         const set = async function (params) {
             console.log('openS3DownloadModal event has occured');
+            reset();
             openModal();
             name.current = params.name;
             execDownload = params.execDownload;
-            let result = await execDownload();
+            let result = await execDownload(setPercentage);
             setPercentage(100);
             console.log(result);
         };
