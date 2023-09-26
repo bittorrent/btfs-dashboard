@@ -11,6 +11,7 @@ import { throttle } from 'lodash';
 
 let globalS3Obj = null;
 let bucketName = null;
+let storagePercentage = 0;
 export default function S3UploadModal({ color }) {
     const name = useRef(null);
     const [showModal, setShowModal] = useState(false);
@@ -23,6 +24,7 @@ export default function S3UploadModal({ color }) {
             console.log("globalS3Obj", params.globalS3Obj);
             globalS3Obj = params.globalS3Obj;
             bucketName = params.bucketName;
+            storagePercentage = 0;
             openModal();
             name.current = params.data[0].path.split('/')[0];
             await upload(params.data, params.path, name.current);
@@ -37,6 +39,7 @@ export default function S3UploadModal({ color }) {
     }, []);
 
     const onUploadProgress = (size, totalSize, progress, progressStorage) => {
+        let curPercentage = 0;
         if (progress && progressStorage) {
             if (!progressStorage[progress.part]) {
                 progressStorage[progress.part] = {};
@@ -48,10 +51,19 @@ export default function S3UploadModal({ color }) {
             }
             loadedSizeList.sort((a, b) => b - a);
             size += loadedSizeList[0];
+            curPercentage = Math.round((size / totalSize) * 100);
+            if (curPercentage > 98) {
+                curPercentage = 98;
+            }
+        } else {
+            curPercentage = Math.round((size / totalSize) * 100);
         }
 
-        let percentage = Math.round((size / totalSize) * 100);
-        setPercentage(percentage);
+        if (storagePercentage !== 100) {
+            setPercentage(curPercentage);
+            storagePercentage = curPercentage;
+        }
+
     }
 
 
@@ -80,11 +92,11 @@ export default function S3UploadModal({ color }) {
             upload.on("httpUploadProgress", throttle((progress) => {
                 onUploadProgress(size, totalSize, progress, progressStorage)
                 // console.log("PROGRESS: ", progress);
-            }, 300));
+            }, 400));
             await upload.done();
             size += file.size;
             onUploadProgress(size, totalSize);
-            console.log("UPLOAD COMPLETE");
+            // console.log("UPLOAD COMPLETE");
             // const response = await globalS3Obj.send(
             //     new PutObjectCommand({
             //         Bucket: bucketName,
