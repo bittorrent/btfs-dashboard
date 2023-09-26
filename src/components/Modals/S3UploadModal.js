@@ -83,7 +83,7 @@ export default function S3UploadModal({ color }) {
                     Bucket: bucketName,
                     Body: file.content,
                     Key: encodeURIComponent(path + file.path),
-                    queueSize: 4, // optional concurrency configuration
+                    // queueSize: 4, // optional concurrency configuration
                     partSize: 1024 * 1024 * 5, // optional size of each part, in bytes, at least 5MB
                     leavePartsOnError: false,
                 },
