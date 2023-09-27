@@ -95,12 +95,11 @@ export default function FileControl({ itemSelected, unSelect, color, data, type,
 
 
     const download = async () => {
-        if (type === s3FileType) {
-            handleS3Download();
-            return;
-        }
-
         if (data.length === 1) {
+            if (type === s3FileType) {
+                handleS3Download();
+                return;
+            }
             Emitter.emit('openDownloadModal', {
                 hash: data[0].hash,
                 name: data[0].name,
