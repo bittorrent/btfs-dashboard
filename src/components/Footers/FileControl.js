@@ -88,6 +88,7 @@ export default function FileControl({ itemSelected, unSelect, color, data, type,
     const handleS3Download = () => {
         if (data.length) {
             const item = data[0];
+            if(item.Type === 1) return;
             Emitter.emit('openS3DownloadModal', { name: item.Name, execDownload: execDownload });
         }
     }
