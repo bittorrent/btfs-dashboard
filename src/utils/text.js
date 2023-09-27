@@ -2,6 +2,7 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 export function Truncate({children, className = '', style = {}}) {
+  if(!children) return '';
   if (children.length <= 14) {
     return (
         <div className={"theme-text-main "+ className} style={style}>

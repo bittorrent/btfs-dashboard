@@ -29,6 +29,9 @@
 }
 .theme-text-error {
   color: $error-color;
+  &:hover{
+    color: $error-color;
+  }
 }
 
 .theme-bg {
@@ -98,7 +101,7 @@
 
 .theme-white-btn {
   background-color: $white;
-  border-color: $white;
+  border:  1px solid $base-color;
   color: $base-color;
   &:focus {
     background-color: $white;
@@ -113,6 +116,17 @@
   &:active {
     background-color: $active-color;
     border-color: $active-color;
+    color: #fff;
+  }
+}
+
+.theme-grey-btn {
+  background-color: $grey-color;
+  border-color: $grey-color;
+  color: #fff;
+  &:focus,&:hover,&:active  {
+    background-color: $grey-color;
+    border-color: $grey-color;
     color: #fff;
   }
 }
@@ -314,4 +328,34 @@ svg {
   background-image: url(../img/vault-bg.svg), linear-gradient(180deg, #fff3e1 0%, #fafbfc 100%);
   background-repeat: no-repeat no-repeat;
   background-position: bottom -9px right -12px, 0 0;
+}
+
+.file-tab-content{
+  .ant-tabs-tab.ant-tabs-tab-active{
+    .ant-tabs-tab-btn{
+      color: $text-color-main;
+      font-weight: bold;
+    }
+  }
+  .ant-tabs-tab-btn{
+    &:hover, &:active, &:focus, :focus-visible, :focus-within{
+      color: $text-color-main;
+    }
+  }
+  .ant-tabs-ink-bar{
+    background: $text-color-main;
+  }
+  .ant-tabs-nav::before{
+    border-color: $line-color;
+  }
+}
+
+.s3-des-content{
+  width: 100%;
+  min-height: 34px;
+  background: #F1F1F1;
+  border-radius: 8px;
+  padding: 10px 10px;
+  color: #5E6364;
+  flex-wrap: wrap;
 }

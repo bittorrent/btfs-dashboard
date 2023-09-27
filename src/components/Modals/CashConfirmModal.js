@@ -5,8 +5,10 @@ import { cash } from 'services/chequeService.js';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import { PRECISION_RATE } from 'utils/constants.js';
-import { toNonExponential } from 'utils/BTFSUtil';
+import { formatNumber,switchBalanceUnit } from 'utils/BTFSUtil';
 import CommonModal from './CommonModal';
+import { MULTIPLE_CURRENCY_RATE } from 'utils/constants';
+
 
 export default function CashConfirmModal() {
     const [showModal, setShowModal] = useState(false);
@@ -18,7 +20,7 @@ export default function CashConfirmModal() {
 
     useEffect(() => {
         const set = async function (params) {
-            console.log('openCashConfirmModal event has occured');
+            // console.log('openCashConfirmModal event has occured',params);
             const currencyData = {};
             const currencyList = [];
             params.data.forEach(item => {
@@ -38,13 +40,13 @@ export default function CashConfirmModal() {
                 currencyData[key].len++;
             });
             Object.keys(currencyData).forEach(key => {
-                currencyData[key].total = currencyData[key].total / currencyData[key].rate;
+                currencyData[key].total = switchBalanceUnit(currencyData[key].total, MULTIPLE_CURRENCY_RATE[currencyData[key].unit])
                 currencyList.push(currencyData[key]);
             });
 
             cashList.current.currencyList = currencyList;
             cashList.current.list = params.data;
-
+            // console.log(cashList.current.currencyList,'---list')
             setShowModal(true);
         };
         Emitter.on('openCashConfirmModal', set);
@@ -106,7 +108,7 @@ export default function CashConfirmModal() {
                                                         : 'mb-3'
                                                 }>
                                                 <span className="mr-1.5 helvetica-b font-bold text-base">
-                                                    {toNonExponential(item.total)}
+                                                    {item.total}
                                                 </span>
                                                 <span className="text-sm">{item.unit}</span>
                                             </div>
@@ -118,7 +120,7 @@ export default function CashConfirmModal() {
                                 <div className="text-sm theme-text-sub-main">{t('est_fee')}</div>
                                 <div className="theme-text-main">
                                     <span className="mr-1.5 helvetica-b font-bold text-base">
-                                        {(25.2801 * cashList.current?.list?.length).toFixed(2)}
+                                        {formatNumber((25.2801 * cashList.current?.list?.length),2)}
                                     </span>
                                     <span className="text-sm">BTT</span>
                                 </div>

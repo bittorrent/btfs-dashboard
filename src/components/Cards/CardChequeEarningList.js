@@ -25,13 +25,15 @@ export default function CardChequeEarningList({ color }) {
                     amount: amount,
                     selectItemData,
                     currencyType: selectItemData.key,
+                    unit:selectItemData.unit
                 });
                 setCashStatus(flag);
             }
         } else {
-            cashList.current = cashList.current.filter(ele => {
-                return id !== ele.id;
+            cashList.current  = cashList.current.filter(ele => {
+                return !(id === ele.id && selectItemData.unit === ele.unit) ;
             });
+
             if (cashList.current.length) {
                 setCashStatus(true);
             } else {
@@ -49,6 +51,7 @@ export default function CardChequeEarningList({ color }) {
             Emitter.emit('openCashConfirmModal', { data: cashList.current });
         }
     };
+
 
     return (
         <div className="flex flex-col break-words common-card theme-bg theme-text-main pt-4">
