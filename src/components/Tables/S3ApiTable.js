@@ -107,9 +107,10 @@ export default function S3ApiTable({ color }) {
         let data = await getS3AccessKeyList();
         if (data && data.length) {
             data = data.filter((item)=>item.enable)
-            setAccessKeyList(data);
-            setAccessData(data[0]);
-            fetchBucketList(data[0]);
+            const list = sortListByDate(data, 'created_at')
+            setAccessKeyList(() => [...list]);
+            setAccessData(list[0]);
+            fetchBucketList(list[0]);
         } else {
             setBucketList(() => [])
         }
