@@ -1,10 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { mainContext } from 'reducer';
 
 const ThemeToggle = () => {
     const { dispatch, state } = useContext(mainContext);
     const { theme } = state;
-
     const changeTheme = e => {
         e.preventDefault();
         e.stopPropagation();
@@ -16,12 +15,15 @@ const ThemeToggle = () => {
             type: 'CHANGE_THEME',
             theme: _theme,
         });
-        if (_theme === 'dark') {
+    };
+
+    useEffect(()=>{
+        if (theme === 'dark') {
             document.documentElement.classList.add('dark');
         } else {
             document.documentElement.classList.remove('dark');
         }
-    };
+    },[theme])
 
     return (
         <button onClick={changeTheme} className="round-btn theme-round-btn">
