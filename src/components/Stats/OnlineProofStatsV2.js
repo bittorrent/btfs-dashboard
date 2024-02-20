@@ -20,7 +20,7 @@ export default function HeartBeatsStats({ color }) {
             didCancel = false;
             const result = await getHeartBeatsStatsV2();
             const { total_count, last_signed_info } = result;
-            console.log(result);
+            // console.log(result);
             if (!didCancel) {
                 setTotal(total_count ?? 0);
                 setNonce(last_signed_info?.nonce ?? 0);
