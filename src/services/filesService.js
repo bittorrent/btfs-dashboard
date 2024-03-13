@@ -124,6 +124,7 @@ export const uploadFiles = async (input, path, onUploadProgress, setErr, setMess
         let totalSize = 0;
         if (input.length === 1) {
             totalSize = input[0].size;
+            console.log(input[0],'------addd')
             let file = await client.add(input[0], {
                 pin: true,
                 progress: (size) => {
@@ -273,5 +274,35 @@ export const removeFiles = async (hash, name, path, type) => {
 
 
 
+export const encryptUploadFiles = async (file,hostId) => {
+    try {
+            const formData = new FormData();
+            formData.append("file", file);
+            let res = await Client10.encrypt(formData,hostId);
+            if (res?.Type === 'error') {
+                // setMessage(res?.Message);
+                return Promise.reject(res);
+            }else{
+                return res
+            }
+    } catch (e) {
+        console.log(e);
+        return false
+    }
+};
 
 
+export const decryptUploadFiles = async (cid) => {
+    console.log(cid,'11')
+    try {
+            let res = await Client10.decrypt(cid);
+            if (res?.Type === 'error') {
+                return Promise.reject(res);
+            }else{
+                return res
+            }
+    } catch (e) {
+        console.log(e);
+        return false
+    }
+};

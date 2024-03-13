@@ -40,6 +40,7 @@ export default function UploadModal({ color }) {
 
     const upload = async (input, path, label) => {
         reset();
+
         let result = await uploadFiles(input, path, onUploadProgress(name.current), setErr, setMessage);
         if (result && label === name.current) {
             setPercentage(100);

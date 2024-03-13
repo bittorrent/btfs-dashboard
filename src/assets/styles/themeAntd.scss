@@ -36,6 +36,10 @@
   color: $text-color-main;
 }
 
+
+.border-color-active{
+    border-style: $active-color;
+}
 // antd theme dark
 .dark {
   .ant-btn {

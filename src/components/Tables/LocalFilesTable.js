@@ -5,6 +5,7 @@ import { Breadcrumb, Pagination } from 'antd';
 import PropTypes from 'prop-types';
 import FileTableDropdown from 'components/Dropdowns/FileTableDropdown.js';
 import ImportFilesDropdown from 'components/Dropdowns/ImportFilesDropdown.js';
+import ImportFilesEncryptDropdown from 'components/Dropdowns/ImportFilesEncryptDropdown.js';
 import FileControl from 'components/Footers/FileControl.js';
 import { getRootFiles, getHashByPath, getFolerSize, getFiles, searchFiles } from 'services/filesService.js';
 import { switchStorageUnit2 } from 'utils/BTFSUtil.js';
@@ -247,6 +248,7 @@ export default function LocalFilesTable({ color }) {
                         </div>
                     </div>
                     <div className="flex">
+                        <ImportFilesEncryptDropdown color={color} path={breadcrumbName} />
                         <ImportFilesDropdown color={color} path={breadcrumbName} />
                     </div>
                 </div>

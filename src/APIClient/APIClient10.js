@@ -5,10 +5,13 @@ class APIClient10 {
     constructor() {
         this.apiUrl = localStorage.getItem('NODE_URL') ? localStorage.getItem('NODE_URL') : "http://localhost:5001";
         this.request = async (url, body, config) => {
+            const isFormData = body instanceof FormData
             return new Promise(async (resolve, reject) => {
                 try {
+
                     let {data} = await xhr.post(
                         this.apiUrl + url,
+                        isFormData?body:
                         {
                             ...body
                         },
@@ -346,6 +349,19 @@ class APIClient10 {
             return {data: {}}
         }
     }
+
+    encrypt(formData,to) {
+        return this.request(`/api/v1/encrypt?${to?'to='+to:''}`,formData,{
+            'headers':{
+                'Content-Type':'application/x-www-form-urlencoded',
+            }
+        });
+    }
+
+    decrypt(cid) {
+        return this.request(`/api/v1/decrypt?arg=${cid}`);
+    }
+
 }
 
 const Client10 = new APIClient10();

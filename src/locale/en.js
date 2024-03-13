@@ -284,6 +284,35 @@ const en_US = {
     'online_proof_table_detail_nonce': 'Heartbeats Nonce',
     'online_proof_table_detail_bttc_address': 'BTTC Address',
     'online_proof_table_detail_signed_time': 'Signed Time',
+
+
+    //encrypt-decrypt
+    'encrypt_decrypt':'Encrypt/Decrypt',
+    'encrypt_file':'Encrypt file and upload',
+    'decrypt_file':'Decrypt file with CID',
+    'encrypt_upload_file':'Encrypt And Upload File',
+    'encrypt_upload_file_desc':'加密并上传文件说明',
+    'select_encrypt_file':'Select File',
+    'select_encrypt_file_btn':'点击按钮选择文件',
+    'cancel_encrypt_file_btn':'Cancel',
+    'encrypt_file_btn':'Encrypt and upload',
+    'encrypt_file_hostid_title':'指定其他节点可以解密该文件',
+    'encrypt_file_hostid_desc':'将使用该节点的公钥对文件进行加密，如关闭则使用本节点公钥对文件进行加密',
+    'decrypt_upload_file':'从CID解密文件',
+    'decrypt_upload_file_desc':'从CID解密文件说明',
+    'dncrypt_file_cid':'输入文件CID查找并解密文件',
+    'decrypt_file_btn':'获取并解密',
+    'encrypt_import_success': 'Encrypt Import Successful !',
+    'encrypt_file_cid':'加密文件CID',
+    'encrypt_file_cid_title':'加密文件上传成功',
+    'encrypt_file_cid_desc':'加密文件上传成功说明',
+    'encrypt_file_cid_copy':"复制cid",
+    'encrypt_file_select_validate':'请选择文件',
+    'encrypt_file_hostId_validate':'HostId格式错误',
+    'encrypt_file_hostId_null_validate':'请输入HostId',
+    'decrypt_file_cid_validate':'文件cId格式错误',
+    'decrypt_file_cid_null_validate':'请输入文件cId',
+
 };
 
 export default en_US
