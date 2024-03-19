@@ -48,11 +48,12 @@ export default function EncryptFileModal({ color }) {
         let reg =  /^[A-Za-z0-9]+$/
         if (!val || reg.test(val)) {
             setValidateMsg('')
-            return
+            return true;
         }
         if(!reg.test(val)){
             setValidateMsg(t('decrypt_file_cid_validate'))
         }
+        return false;
     };
 
     const cidChange = (vals) => {
@@ -62,7 +63,9 @@ export default function EncryptFileModal({ color }) {
     };
 
     const DecryptFile = async () => {
-        if(!!validateMsg ){
+
+        if(cId && !validateHostId(cId)){
+            setValidateMsg(t('decrypt_file_cid_validate'))
             return;
         }
 

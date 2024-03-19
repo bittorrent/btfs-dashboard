@@ -34,8 +34,6 @@ export default function EncryptFileModal({ color }) {
     const [loading, setLoadign] = useState(false);
     const [validateFileMsg, setValidateFileMsg] = useState('');
 
-
-
     const [path, setPath] = useState('');
 
     useEffect(() => {
@@ -56,21 +54,31 @@ export default function EncryptFileModal({ color }) {
         };
     }, []);
 
+    const submitValidate = () => {
+        if (!currentFile) {
+            setValidateFileMsg(t('encrypt_file_select_validate'));
+            return false;
+        }
+
+        if (checkHostId && !hostId) {
+            setValidateMsg(t('encrypt_file_hostId_null_validate'));
+            return false;
+        }
+
+        if (checkHostId && !validateHostId(hostId)) {
+            return false;
+        }
+
+        return true;
+    };
+
     const EncryptFile = async () => {
-        if(!currentFile){
-            setValidateFileMsg(t('encrypt_file_select_validate'))
-            return;
-        }
-        if(!!validateMsg ){
-            return;
-        }
-        if(checkHostId && !hostId){
-            setValidateMsg(t('encrypt_file_hostId_null_validate'))
+        if (!submitValidate()) {
             return;
         }
 
         try {
-            setLoadign(true)
+            setLoadign(true);
             let result = await encryptUploadFiles(currentFile, hostId);
             // Emitter.emit('showMessageAlert', {
             //     message: 'encrypt_import_success',
@@ -81,7 +89,7 @@ export default function EncryptFileModal({ color }) {
         } catch (e) {
             Emitter.emit('showMessageAlert', { message: e.Message, status: 'error' });
         }
-        setLoadign(false)
+        setLoadign(false);
         closeModal();
     };
 
@@ -101,21 +109,23 @@ export default function EncryptFileModal({ color }) {
     };
 
     const onInputChange = e => {
-        let file = e.target.files[0] || {};
-        let curFile = normalizeFiles(e.target.files);
+        let file = e.target.files[0];
+        // let curFile = normalizeFiles(e.target.files);
         setFileName(file?.name);
-        setCurrentFile(curFile[0]);
+        setCurrentFile(file);
+        e.target.value = null
     };
 
     const validateHostId = val => {
-        let reg =  /^[A-Za-z0-9]+$/
+        let reg = /^[A-Za-z0-9]+$/;
         if (!val || reg.test(val)) {
-            setValidateMsg('')
-            return
+            setValidateMsg('');
+            return true;
         }
-        if(!reg.test(val)){
-            setValidateMsg(t('encrypt_file_hostId_validate'))
+        if (!reg.test(val)) {
+            setValidateMsg(t('encrypt_file_hostId_validate'));
         }
+        return false;
     };
     const onAddFile = async e => {
         e.preventDefault();
@@ -129,7 +139,7 @@ export default function EncryptFileModal({ color }) {
     };
 
     const onChangeCheck = val => {
-        setHostId('')
+        setHostId('');
         setCheckHostId(val);
     };
 
@@ -199,14 +209,16 @@ export default function EncryptFileModal({ color }) {
                             {t('cancel_encrypt_file_btn')}
                         </button>
                         <div className="ml-2 inline-block">
-                        <Spin  spinning={loading} indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}>
-                            <button
-                                type="primary"
-                                className="ml-2 common-btn theme-common-btn"
-                                onClick={EncryptFile}>
-                                {t('encrypt_file_btn')}
-                            </button>
-                        </Spin>
+                            <Spin
+                                spinning={loading}
+                                indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}>
+                                <button
+                                    type="primary"
+                                    className="ml-2 common-btn theme-common-btn"
+                                    onClick={EncryptFile}>
+                                    {t('encrypt_file_btn')}
+                                </button>
+                            </Spin>
                         </div>
                     </div>
                 </main>

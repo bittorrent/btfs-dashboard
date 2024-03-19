@@ -70,14 +70,22 @@ const ImportFilesEncryptDropdown = ({ color, path }) => {
           href="#addFile"
           className={'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent'}
           onClick={onAddEncryptFile}>
-          <i className="far fa-file-alt mr-2"></i>
+          <img
+              alt=""
+              src={require('../../assets/img/encrypt-icon.svg').default}
+              className="far fa-file-alt mr-2 align-top"
+            />
           {t('encrypt_file')}
         </a>
         <a
           href="#addFolder"
-          className={'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent'}
+          className={' text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent'}
           onClick={onDecryptFile}>
-          <i className="far fa-folder mr-2"></i>
+          <img
+              alt=""
+              src={require('../../assets/img/decrypt-icon.svg').default}
+              className="far fa-file-alt mr-2 align-top"
+            />
           {t('decrypt_file')}
         </a>
       </div>

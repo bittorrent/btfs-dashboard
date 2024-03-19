@@ -358,8 +358,8 @@ class APIClient10 {
         });
     }
 
-    decrypt(cid) {
-        return this.request(`/api/v1/decrypt?arg=${cid}`);
+    decrypt(hash, body, config) {
+        return this.request('/api/v1/decrypt?arg=' + hash, body, config);
     }
 
 }
