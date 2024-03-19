@@ -3,7 +3,6 @@ import { message } from 'antd';
 import { t, } from 'utils/text.js';
 import Emitter from 'utils/eventBus';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import themeStyle from 'utils/themeStyle.js';
 import CommonModal from './CommonModal';
 import { useIntl } from 'react-intl';
 import { mainContext } from 'reducer';

@@ -3,27 +3,13 @@ import { encryptUploadFiles } from 'services/filesService.js';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Switch, Spin } from 'antd';
 import Emitter from 'utils/eventBus';
-import themeStyle from 'utils/themeStyle.js';
 import { t } from 'utils/text.js';
 import CommonModal from './CommonModal';
 
 let filesInput = null;
 let inputMaxLength = 100;
 
-const normalizeFiles = files => {
-    const streams = [];
-    for (const file of files) {
-        streams.push({
-            path: file.filepath || file.webkitRelativePath || file.name,
-            content: file,
-            size: file.size,
-        });
-    }
-    return streams;
-};
-
 export default function EncryptFileModal({ color }) {
-    const name = useRef(null);
     const [showModal, setShowModal] = useState(false);
     const [fileName, setFileName] = useState('');
     const [hostId, setHostId] = useState('');
@@ -34,7 +20,6 @@ export default function EncryptFileModal({ color }) {
     const [loading, setLoadign] = useState(false);
     const [validateFileMsg, setValidateFileMsg] = useState('');
 
-    const [path, setPath] = useState('');
 
     useEffect(() => {
         const set = async function (params) {
@@ -45,7 +30,6 @@ export default function EncryptFileModal({ color }) {
             setValidateMsg('');
             setValidateFileMsg('');
             openModal();
-            setPath(params.path);
         };
         Emitter.on('openEncryptFileModal', set);
         return () => {

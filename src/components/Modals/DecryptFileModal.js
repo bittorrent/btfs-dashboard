@@ -1,15 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { decryptUploadFiles } from 'services/filesService.js';
-// import {  Spin } from 'antd';
 import Emitter from 'utils/eventBus';
-import themeStyle from 'utils/themeStyle.js';
 import { t } from 'utils/text.js';
 import CommonModal from './CommonModal';
 
 let inputMaxLength = 80;
 
 export default function EncryptFileModal({ color }) {
-    const name = useRef(null);
     const [showModal, setShowModal] = useState(false);
     const [cId, setCId] = useState('');
     const [validateMsg, setValidateMsg] = useState('');
@@ -74,7 +71,7 @@ export default function EncryptFileModal({ color }) {
             return;
         }
         try{
-            let result = await decryptUploadFiles(cId);
+            await decryptUploadFiles(cId);
             Emitter.emit('showMessageAlert', { message: 'encrypt_import_success' , status: 'success',type: 'frontEnd'  });
         }catch(e){
             Emitter.emit('showMessageAlert', { message: e.Message, status: 'error' });

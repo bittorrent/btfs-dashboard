@@ -5,6 +5,10 @@ import { t } from 'utils/text.js';
 
 // let folderInput = null;
 
+
+
+
+
 const ImportFilesEncryptDropdown = ({ color, path }) => {
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
@@ -72,8 +76,8 @@ const ImportFilesEncryptDropdown = ({ color, path }) => {
           onClick={onAddEncryptFile}>
           <img
               alt=""
-              src={require('../../assets/img/encrypt-icon.svg').default}
-              className="far fa-file-alt mr-2 align-top"
+              src={require(`../../assets/img/encrypt-icon_${color}.svg`).default}
+              className="far mr-2 align-top "
             />
           {t('encrypt_file')}
         </a>
@@ -83,8 +87,8 @@ const ImportFilesEncryptDropdown = ({ color, path }) => {
           onClick={onDecryptFile}>
           <img
               alt=""
-              src={require('../../assets/img/decrypt-icon.svg').default}
-              className="far fa-file-alt mr-2 align-top"
+              src={require(`../../assets/img/decrypt-icon_${color}.svg`).default}
+              className="far mr-2 align-top"
             />
           {t('decrypt_file')}
         </a>
