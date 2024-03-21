@@ -370,7 +370,8 @@ class APIClient10 {
         return this.request(`/api/v1/encrypt?${to?'to='+to:''}`,formData,{
             'headers':{
                 'Content-Type':'application/x-www-form-urlencoded',
-            }
+            },
+            'timeout': 0,
         });
     }
 
