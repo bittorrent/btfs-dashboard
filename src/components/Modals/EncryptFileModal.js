@@ -22,19 +22,19 @@ export default function EncryptFileModal({ color }) {
     const [loading, setLoadign] = useState(false);
     const [validateFileMsg, setValidateFileMsg] = useState('');
 
-    const init = ()=>{
+    const init = () => {
         setHostId('');
         setFileName('');
         setCurrentFile('');
         setValidateMsg('');
         setValidateFileMsg('');
-        setLoadign(false)
-        setCheckHostId(false)
-    }
+        setLoadign(false);
+        setCheckHostId(false);
+    };
     useEffect(() => {
         const set = async function (params) {
             console.log('openEncryptFileModal event has occured');
-            init()
+            init();
             openModal();
         };
         Emitter.on('openEncryptFileModal', set);
@@ -89,7 +89,7 @@ export default function EncryptFileModal({ color }) {
     };
 
     const closeModal = () => {
-        init()
+        init();
         setShowModal(false);
         window.body.style.overflow = '';
     };
@@ -98,7 +98,7 @@ export default function EncryptFileModal({ color }) {
         let file = e.target.files[0];
         setFileName(file?.name);
         setCurrentFile(file);
-        e.target.value = null
+        e.target.value = null;
         if (file) {
             setValidateFileMsg('');
         }
@@ -168,7 +168,7 @@ export default function EncryptFileModal({ color }) {
                                 {t('encrypt_file_hostid_desc')}
                             </div>
                         </div>
-                        <Switch checked={checkHostId}  onChange={onChangeCheck} />
+                        <Switch checked={checkHostId} onChange={onChangeCheck} />
                     </div>
                     <div className={checkHostId ? 'w-full' : 'w-full hidden'}>
                         <input
@@ -185,9 +185,11 @@ export default function EncryptFileModal({ color }) {
 
                         <div className="flex justify-between text-xs  w-full  mb-4">
                             <span className="theme-text-error">{validateMsg}</span>
-                            <span>
-                                {hostId.length || 0}/{inputMaxLength}
-                            </span>
+                            {
+                                // <span>
+                                //     {hostId.length || 0}/{inputMaxLength}
+                                // </span>
+                            }
                         </div>
                     </div>
                     <div className="mt-2">

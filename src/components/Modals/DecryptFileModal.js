@@ -119,9 +119,11 @@ export default function EncryptFileModal({ color }) {
                     />
                     <div className="flex justify-between  w-full  mb-4">
                         <span className="theme-text-error text-xs pt-1">{validateMsg}</span>
-                        <span>
-                            {cId.length || 0}/{inputMaxLength}
-                        </span>
+                        {
+                            // <span>
+                            //     {cId.length || 0}/{inputMaxLength}
+                            // </span>
+                        }
                     </div>
                     <div className="mt-2">
                         <button
