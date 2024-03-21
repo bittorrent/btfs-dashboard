@@ -287,11 +287,11 @@ const en_US = {
 
 
     //encrypt-decrypt
-    'encrypt_decrypt':'Encryption and decryption',
-    'encrypt_file':'Encrypt and upload file',
-    'decrypt_file':'Download and decrypt file',
+    'encrypt_decrypt':'Encryption/Decryption',
+    'encrypt_file':'Encrypt file and upload',
+    'decrypt_file':'Download file and decrypt',
     'encrypt_upload_file':'Encrypt and upload',
-    'encrypt_upload_file_desc':'The client encrypts the file with the node public key and uploads it to the BTFS network',
+    'encrypt_upload_file_desc':"The client encrypts the file with the node's public key and uploads it to the BTFS network.",
     'select_encrypt_file':'Select file',
     'select_encrypt_file_btn':'Browse',
     'cancel_encrypt_file_btn':'Cancel',
@@ -300,8 +300,8 @@ const en_US = {
     'encrypt_file_hostid_desc':'Enter any node ID to encrypt the file using that node\'s public key. If turned off, the file will be encrypted using this node\'s public key by default',
     'decrypt_upload_file':'Get and decrypt the file by CID',
     'decrypt_upload_file_desc':'Enter the CID of the encrypted file, get the file from the BTFS network and decrypt it with the current node\'s private key',
-    'dncrypt_file_cid':'Enter the CID of the file to get and decrypt the file',
-    'decrypt_file_btn':'Get and decrypt',
+    'dncrypt_file_cid':'File CID',
+    'decrypt_file_btn':'Get File and Decrypt',
     'encrypt_import_success': 'Encrypt import successful',
     'encrypt_file_cid':'Encrypted file CID',
     'encrypt_file_cid_title':'Encrypted file uploaded successfully',
@@ -312,7 +312,7 @@ const en_US = {
     'encrypt_file_hostId_null_validate':'Please enter HostID',
     'decrypt_file_cid_validate':'File CID format error',
     'decrypt_file_cid_null_validate':'Please enter the file CID',
-
+    'decrypt_input_cid_placeholder':'Input the file CID'
 };
 
 export default en_US

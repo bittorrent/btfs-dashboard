@@ -288,21 +288,21 @@ const zh_CN = {
     'online_proof_table_detail_signed_time': '签名时间',
 
     //encrypt-decrypt
-    'encrypt_decrypt':'加密和解密',
-    'encrypt_file':'文件加密上传',
-    'decrypt_file':'文件下载解密',
-    'encrypt_upload_file':'加密并上传文件',
+    'encrypt_decrypt':'加密/解密',
+    'encrypt_file':'加密文件并上传',
+    'decrypt_file':'下载文件并解密',
+    'encrypt_upload_file':'加密文件并上传',
     'encrypt_upload_file_desc':'客户端通过节点公钥对文件进行加密并上传至BTFS网络',
     'select_encrypt_file':'选择文件',
     'select_encrypt_file_btn':'浏览',
     'cancel_encrypt_file_btn':'取消',
     'encrypt_file_btn':'加密并上传',
     'encrypt_file_hostid_title':'指定其他节点解密该文件',
-    'encrypt_file_hostid_desc':'输入任意节点ID，可使用该节点的公钥对文件进行加密。如关闭则默认使用本节点公钥对文件进行加密',
-    'decrypt_upload_file':'通过CID获取并解密文件',
-    'decrypt_upload_file_desc':'输入加密文件的CID，从BTFS网络获取文件并用当前节点私钥进行解密',
-    'dncrypt_file_cid':'输入文件CID获取并解密文件',
-    'decrypt_file_btn':'获取并解密',
+    'encrypt_file_hostid_desc':'输入任意节点ID以便使用该节点的公钥对文件进行加密。如关闭则默认使用本节点公钥对文件进行加密',
+    'decrypt_upload_file':'下载文件并解密',
+    'decrypt_upload_file_desc':'通过文件CID从BTFS网络获取加密文件并用当前节点私钥进行解密',
+    'dncrypt_file_cid':'文件CID',
+    'decrypt_file_btn':'下载文件并解密',
     'encrypt_import_success': '加密导入成功',
     'encrypt_file_cid':'加密文件CID',
     'encrypt_file_cid_title':'加密文件上传成功',
@@ -313,6 +313,8 @@ const zh_CN = {
     'encrypt_file_hostId_null_validate':'请输入HostID',
     'decrypt_file_cid_validate':'文件CID格式错误',
     'decrypt_file_cid_null_validate':'请输入文件CID',
+    'decrypt_input_cid_placeholder':'请输入文件CID',
+    'encrypt_input_host_id_placeholder':'请输入文件CID'
 };
 
 export default zh_CN

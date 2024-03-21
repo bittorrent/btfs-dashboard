@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useIntl } from 'react-intl';
 import { encryptUploadFiles } from 'services/filesService.js';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Switch, Spin } from 'antd';
@@ -10,26 +11,30 @@ let filesInput = null;
 let inputMaxLength = 100;
 
 export default function EncryptFileModal({ color }) {
+    const intl = useIntl();
     const [showModal, setShowModal] = useState(false);
     const [fileName, setFileName] = useState('');
     const [hostId, setHostId] = useState('');
     const [validateMsg, setValidateMsg] = useState('');
     const inputRef = useRef(null);
-    const [checkHostId, setCheckHostId] = useState(true);
+    const [checkHostId, setCheckHostId] = useState(false);
     const [currentFile, setCurrentFile] = useState('');
     const [loading, setLoadign] = useState(false);
     const [validateFileMsg, setValidateFileMsg] = useState('');
 
-
+    const init = ()=>{
+        setHostId('');
+        setFileName('');
+        setCurrentFile('');
+        setValidateMsg('');
+        setValidateFileMsg('');
+        setLoadign(false)
+        setCheckHostId(false)
+    }
     useEffect(() => {
         const set = async function (params) {
             console.log('openEncryptFileModal event has occured');
-            setHostId('');
-            setFileName('');
-            setCurrentFile('');
-            setValidateMsg('');
-            setValidateFileMsg('');
-            setLoadign(false)
+            init()
             openModal();
         };
         Emitter.on('openEncryptFileModal', set);
@@ -84,12 +89,7 @@ export default function EncryptFileModal({ color }) {
     };
 
     const closeModal = () => {
-        setHostId('');
-        setFileName('');
-        setCurrentFile('');
-        setValidateMsg('');
-        setValidateFileMsg('');
-        setLoadign(false)
+        init()
         setShowModal(false);
         window.body.style.overflow = '';
     };
@@ -168,7 +168,7 @@ export default function EncryptFileModal({ color }) {
                                 {t('encrypt_file_hostid_desc')}
                             </div>
                         </div>
-                        <Switch defaultChecked onChange={onChangeCheck} />
+                        <Switch checked={checkHostId}  onChange={onChangeCheck} />
                     </div>
                     <div className={checkHostId ? 'w-full' : 'w-full hidden'}>
                         <input
@@ -176,7 +176,7 @@ export default function EncryptFileModal({ color }) {
                             type="input"
                             className="w-full h-3 common-input  theme-bg theme-border-color"
                             single="true"
-                            placeholder="input Host ID"
+                            placeholder={intl.formatMessage({ id: 'encrypt_file_hostId_null_validate' })}
                             maxLength={inputMaxLength}
                             ref={inputRef}
                             onChange={hostIdChange}

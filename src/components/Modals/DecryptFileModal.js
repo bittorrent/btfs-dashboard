@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useIntl } from 'react-intl';
 import { decryptUploadFiles } from 'services/filesService.js';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
@@ -9,6 +10,7 @@ import CommonModal from './CommonModal';
 let inputMaxLength = 80;
 
 export default function EncryptFileModal({ color }) {
+    const intl = useIntl();
     const [showModal, setShowModal] = useState(false);
     const [cId, setCId] = useState('');
     const [validateMsg, setValidateMsg] = useState('');
@@ -109,7 +111,7 @@ export default function EncryptFileModal({ color }) {
                         type="input"
                         className="w-full h-3 common-input  theme-bg theme-border-color"
                         single="true"
-                        placeholder="input CID"
+                        placeholder={intl.formatMessage({ id: 'decrypt_input_cid_placeholder' })}
                         maxLength={inputMaxLength}
                         ref={inputRef}
                         onChange={cidChange}
