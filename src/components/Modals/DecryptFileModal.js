@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { decryptUploadFiles } from 'services/filesService.js';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import CommonModal from './CommonModal';
@@ -10,13 +12,15 @@ export default function EncryptFileModal({ color }) {
     const [showModal, setShowModal] = useState(false);
     const [cId, setCId] = useState('');
     const [validateMsg, setValidateMsg] = useState('');
+    const [loading, setLoadign] = useState(false);
     const inputRef = useRef(null);
 
     useEffect(() => {
         const set = async function (params) {
             console.log('openDecryptFileModal event has occured');
-            setCId('')
-            setValidateMsg('')
+            setCId('');
+            setValidateMsg('');
+            setLoadign(false);
             openModal();
         };
         Emitter.on('openDecryptFileModal', set);
@@ -27,56 +31,65 @@ export default function EncryptFileModal({ color }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-
-
     const openModal = () => {
         setShowModal(true);
         window.body.style.overflow = 'hidden';
     };
 
     const closeModal = () => {
-        setCId('')
-        setValidateMsg('')
+        setCId('');
+        setValidateMsg('');
+        setLoadign(false);
         setShowModal(false);
         window.body.style.overflow = '';
     };
 
     const validateHostId = val => {
-        let reg =  /^[A-Za-z0-9]+$/
+        let reg = /^[A-Za-z0-9]+$/;
         if (!val || reg.test(val)) {
-            setValidateMsg('')
+            setValidateMsg('');
             return true;
         }
-        if(!reg.test(val)){
-            setValidateMsg(t('decrypt_file_cid_validate'))
+        if (!reg.test(val)) {
+            setValidateMsg(t('decrypt_file_cid_validate'));
         }
         return false;
     };
 
-    const cidChange = (vals) => {
+    const cidChange = vals => {
         const val = inputRef.current.value;
         setCId(val);
         validateHostId(val);
     };
 
     const DecryptFile = async () => {
-
-        if(cId && !validateHostId(cId)){
-            setValidateMsg(t('decrypt_file_cid_validate'))
+        if (cId && !validateHostId(cId)) {
+            setValidateMsg(t('decrypt_file_cid_validate'));
             return;
         }
 
-        if(!cId){
-            setValidateMsg(t('decrypt_file_cid_null_validate'))
+        if (!cId) {
+            setValidateMsg(t('decrypt_file_cid_null_validate'));
             return;
         }
-        try{
-            await decryptUploadFiles(cId);
-            Emitter.emit('showMessageAlert', { message: 'encrypt_import_success' , status: 'success',type: 'frontEnd'  });
-        }catch(e){
+
+        setLoadign(true);
+        try {
+            let data = await decryptUploadFiles(cId);
+            setLoadign(false);
+            if (data.Type && data.Type === 'error') {
+                Emitter.emit('showMessageAlert', { message: data.Message, status: 'error' });
+                return;
+            }
+            Emitter.emit('showMessageAlert', {
+                message: 'encrypt_import_success',
+                status: 'success',
+                type: 'frontEnd',
+            });
+        } catch (e) {
             Emitter.emit('showMessageAlert', { message: e.Message, status: 'error' });
         }
-        closeModal()
+        closeModal();
     };
 
     return (
@@ -105,8 +118,8 @@ export default function EncryptFileModal({ color }) {
                     <div className="flex justify-between  w-full  mb-4">
                         <span className="theme-text-error text-xs pt-1">{validateMsg}</span>
                         <span>
-                        {cId.length || 0}/{inputMaxLength}
-                    </span>
+                            {cId.length || 0}/{inputMaxLength}
+                        </span>
                     </div>
                     <div className="mt-2">
                         <button
@@ -114,9 +127,19 @@ export default function EncryptFileModal({ color }) {
                             onClick={closeModal}>
                             {t('cancel_encrypt_file_btn')}
                         </button>
-                        <button className="ml-2 common-btn theme-common-btn" onClick={DecryptFile}>
-                            {t('decrypt_file_btn')}
-                        </button>
+
+                        <div className="ml-2 inline-block">
+                            <Spin
+                                spinning={loading}
+                                indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}>
+                                <button
+                                    type="primary"
+                                    className="ml-2 common-btn theme-common-btn"
+                                    onClick={DecryptFile}>
+                                    {t('decrypt_file_btn')}
+                                </button>
+                            </Spin>
+                        </div>
                     </div>
                 </main>
             </div>

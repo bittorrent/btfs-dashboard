@@ -29,6 +29,7 @@ export default function EncryptFileModal({ color }) {
             setCurrentFile('');
             setValidateMsg('');
             setValidateFileMsg('');
+            setLoadign(false)
             openModal();
         };
         Emitter.on('openEncryptFileModal', set);
@@ -88,16 +89,19 @@ export default function EncryptFileModal({ color }) {
         setCurrentFile('');
         setValidateMsg('');
         setValidateFileMsg('');
+        setLoadign(false)
         setShowModal(false);
         window.body.style.overflow = '';
     };
 
     const onInputChange = e => {
         let file = e.target.files[0];
-        // let curFile = normalizeFiles(e.target.files);
         setFileName(file?.name);
         setCurrentFile(file);
         e.target.value = null
+        if (file) {
+            setValidateFileMsg('');
+        }
     };
 
     const validateHostId = val => {
