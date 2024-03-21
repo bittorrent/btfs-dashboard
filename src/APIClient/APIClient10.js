@@ -19,6 +19,7 @@ class APIClient10 {
                     );
 
                     resolve(data);
+
                 }
                 catch (e) {
                     let message;
@@ -28,10 +29,25 @@ class APIClient10 {
                     if (e.response && e.response.status === 400) {
                         message = e.response['data'];
                     }
-                    resolve({
-                        Type: 'error',
-                        Message: message ? message : 'network error or host version not up to date'
-                    });
+
+                    if(!e.response.data?.success && e.response.data?.type === 'application/json'){
+                        const fileReader = new FileReader()
+                        fileReader.readAsText(e.response.data,'utf-8')
+                        fileReader.onload = function(){
+                          const result = JSON.parse(fileReader.result)
+                          message = result['Message']
+                            resolve({
+                                Type: 'error',
+                                Message: message ? message : 'network error or host version not up to date'
+                            });
+                            return;
+                        }
+                    }else{
+                        resolve({
+                            Type: 'error',
+                            Message: message ? message : 'network error or host version not up to date'
+                        });
+                    }
                 }
             }).catch(err => {
                 console.log(err)

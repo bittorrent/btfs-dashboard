@@ -295,7 +295,7 @@ export const decryptUploadFiles = async (cid) => {
     try {
             let data = await Client10.decrypt(cid, {}, {responseType: 'blob'});
             if(data.Type && data.Type === 'error' ){
-                return data
+                return Promise.reject(data);
             }
             createObjectURL(data, cid);
     } catch (e) {

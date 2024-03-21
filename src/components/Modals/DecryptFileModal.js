@@ -77,12 +77,8 @@ export default function EncryptFileModal({ color }) {
 
         setLoadign(true);
         try {
-            let data = await decryptUploadFiles(cId);
+            await decryptUploadFiles(cId);
             setLoadign(false);
-            if (data.Type && data.Type === 'error') {
-                Emitter.emit('showMessageAlert', { message: data.Message, status: 'error' });
-                return;
-            }
             Emitter.emit('showMessageAlert', {
                 message: 'encrypt_import_success',
                 status: 'success',
