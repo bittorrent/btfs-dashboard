@@ -30,7 +30,7 @@ class APIClient10 {
                         message = e.response['data'];
                     }
 
-                    if(!e.response.data?.success && e.response.data?.type === 'application/json'){
+                    if(e.response && e.response?.data && !e.response?.data?.success && e.response?.data?.type === 'application/json'){
                         const fileReader = new FileReader()
                         fileReader.readAsText(e.response.data,'utf-8')
                         fileReader.onload = function(){
