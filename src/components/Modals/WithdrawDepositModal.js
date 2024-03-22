@@ -187,6 +187,7 @@ export default function WithdrawDepositModal({ color }) {
                                     defaultValue="WBTT"
                                     style={{ width: 100 }}
                                     onChange={handleChange}
+                                    value={tokenRef.current}
                                 // dropdownStyle={{ background: themeStyle.bg[color] }}
                                 >
                                     {MULTIPLE_CURRENCY_LIST.map(item => {

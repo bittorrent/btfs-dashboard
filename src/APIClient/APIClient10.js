@@ -379,6 +379,33 @@ class APIClient10 {
         return this.request('/api/v1/decrypt?arg=' + hash, body, config);
     }
 
+    // s3 api
+
+    // generate key
+    s3NewAccessKey() {
+        return this.request('/api/v1/accesskey/generate');
+    }
+
+    getS3AccessKeyList() {
+        return this.request('/api/v1/accesskey/list');
+    }
+
+    enableS3AccessKey(key) {
+        return this.request(`/api/v1/accesskey/enable/${key}`);
+    }
+
+    disableS3AccessKey(key) {
+        return this.request(`/api/v1/accesskey/disable/${key}`);
+    }
+
+    resetS3AccessKey(key) {
+        return this.request(`/api/v1/accesskey/reset/${key}`);
+    }
+
+    deleteS3AccessKey(key) {
+        return this.request(`/api/v1/accesskey/delete/${key}`);
+    }
+
 }
 
 const Client10 = new APIClient10();

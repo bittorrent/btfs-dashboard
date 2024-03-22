@@ -74,7 +74,7 @@
 
   .theme-white-btn {
     background-color: $dark-bg-color;
-    border-color: $dark-bg-color;
+    border:  1px solid $base-color;
     color: $base-color;
     &:focus {
       background-color: $dark-bg-color;
@@ -219,5 +219,26 @@
     background-image: url(../img/vault-bg.svg), linear-gradient(180deg, #000b1e 0%, #050403 100%);
     background-repeat: no-repeat no-repeat;
     background-position: bottom -9px right -12px, 0 0;
+  }
+  .file-tab-content{
+    .ant-tabs-tab.ant-tabs-tab-active{
+      .ant-tabs-tab-btn{
+        color: $dark-text-color-main;
+      }
+    }
+    .ant-tabs-tab-btn{
+      &:hover, &:active, &:focus, :focus-visible, :focus-within{
+        color: $dark-text-color-main;
+      }
+    }
+    .ant-tabs-ink-bar{
+      background: $dark-text-color-main;
+    }
+    .ant-tabs-nav::before{
+      border-color: $dark-line-color;
+    }
+  }
+  ._box-shadow {
+    box-shadow: 0px 6px 16px 0px #21242c, 0px 3px 6px -4px #21242c;
   }
 }

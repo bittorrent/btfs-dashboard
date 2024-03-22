@@ -26,15 +26,21 @@ export const UnCashedItem = props => {
     return <CashedUnCashedItem type="uncashed" {...props} />;
 };
 
-export const ChequeMain = ({ title, total, cashed, uncashed, percent, unit, progressIcon }) => {
+export const ChequeMain = ({ title, total, cashed, uncashed, percent, unit, progressIcon,showCashedList=true }) => {
     return (
         <div className="p-8 flex justify-between items-center ">
             <div>
                 <div>{title}</div>
                 <div className="mt-6 mb-4 text-3xl font-bold">{total}</div>
                 <div>
-                    <CashedItem value={cashed} percent={percent} unit={unit} />
-                    <UnCashedItem value={uncashed} percent={100 - percent} unit={unit} />
+                {
+                    showCashedList && (
+                        <div>
+                        <CashedItem value={cashed} percent={percent} unit={unit} />
+                        <UnCashedItem value={uncashed} percent={100 - percent} unit={unit} />
+                        </div>
+                    )
+                }
                 </div>
             </div>
             <div>

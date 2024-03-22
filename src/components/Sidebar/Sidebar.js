@@ -7,6 +7,7 @@ import ThemeToggle from 'components/Toggles/ThemeToggle';
 import { getHostInfo } from 'services/dashboardService.js';
 import { MAIN_PAGE_MODE, SAMPLE_PAGE_MODE } from 'utils/constants';
 import HostID from './HostID';
+import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 
 
@@ -67,6 +68,10 @@ export default function Sidebar() {
         setID(res?.ID || '');
       };
       fetchData();
+      Emitter.on('getHostId', fetchData);
+      return () => {
+        Emitter.removeListener('getHostId');
+      };
     }, []);
 
     const sidebarToggle = () => {

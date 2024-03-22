@@ -61,9 +61,9 @@ export const nodeStatusCheck = async (url, isMainMode) => {
                     let {chain_id} = await Client10.getChainInfo();
                     localStorage.setItem('CHAIN_ID', chain_id);
                 }
-                
+
                 localStorage.setItem('NODE_URL', url);
-                
+
                 return true
             } else {
                 return false

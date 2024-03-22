@@ -170,6 +170,7 @@ export default function TransferConfirmModal({ color }) {
                                         className={'theme-border-color ' + color}
                                         defaultValue="BTT"
                                         style={{ width: 90 }}
+                                        value={tokenRef.current}
                                         onChange={handleChange}
                                     // dropdownStyle={{ background: themeStyle.bg[color] }}
                                     >
@@ -212,7 +213,7 @@ export default function TransferConfirmModal({ color }) {
                         </div>
                         <div>
                             <ButtonCancel className="mr-2" event={closeModal} text={t('cancel')} />
-                            <ButtonConfirm event={next} valid={!valid} text={t('next')} />
+                            <ButtonConfirm event={next} valid={valid} text={t('next')} />
                         </div>
                     </footer>
                 </div>

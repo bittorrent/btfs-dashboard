@@ -25,7 +25,7 @@ export default function Dashboard() {
   return (
     <div>
       <NodeBasicStats color={theme} isMainMode={isMainMode} />
-      { isMainMode  && 
+      { isMainMode  &&
         <>
           <div className="mb-4 flex flex-wrap">
             <div className="mb-4 w-full xl:w-1/2 xl:mb-0 xl:pr-2">

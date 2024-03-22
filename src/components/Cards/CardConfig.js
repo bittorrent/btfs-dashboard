@@ -76,6 +76,7 @@ function CardConfig({ color }) {
       return configList;
     });
     setRpcAddress(rpcAddress);
+
   };
   const handleExperimentalData = experimental => {
     if (!experimental) return [];

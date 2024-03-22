@@ -8,6 +8,7 @@ import Sidebar from 'components/Sidebar/Sidebar.js';
 import { nodeStatusCheck, getHostConfigData } from 'services/otherService.js';
 import { SimpleRoutes, MainRoutes } from 'routes/index';
 import { MAIN_PAGE_MODE, SAMPLE_PAGE_MODE } from 'utils/constants';
+import { getUrl } from 'utils/BTFSUtil';
 
 import {
   ArcElement,
@@ -76,23 +77,39 @@ export default function Admin() {
   const getPageMode = async () => {
     const data = await getHostConfigData();
     if (data) {
-      const { SimpleMode } = data;
+      const { SimpleMode, S3CompatibleAPI, Addresses } = data;
       const pageMode = SimpleMode ? SAMPLE_PAGE_MODE : MAIN_PAGE_MODE;
-      
+      const s3ApiUrl = S3CompatibleAPI?.Address;
+      const addressConfig = Addresses;
+      if(addressConfig){
+        addressConfig.Gateway = getUrl(addressConfig.Gateway, true);
+      }
       localStorage.setItem('pageMode', pageMode);
       dispatch({
         type: 'SET_PAGE_MODE',
         pageMode: pageMode,
       });
+
+      dispatch({
+        type: 'SET_S3_API_URL',
+        s3ApiUrl: getUrl(s3ApiUrl),
+      });
+      
+
+      dispatch({
+        type: 'SET_ADDRESS_CONFIG',
+        addressConfig: addressConfig,
+      });
+
     }
     setIsGetSimpleMode(true);
     const isMainMode = MAIN_PAGE_MODE === pageMode;
     return isMainMode;
   };
-  
+
   const init = async () => {
     const NODE_URL = localStorage.getItem('NODE_URL');
-   const isMainMode =  await getPageMode();
+    const isMainMode = await getPageMode();
     if (!NODE_URL && !window.location.href.includes('/admin/settings')) {
       history.push('/admin/settings');
     } else {
@@ -124,7 +141,7 @@ export default function Admin() {
   }, []);
 
   return (
-    isGetSimpleMode && 
+    isGetSimpleMode &&
     <>
       <Sidebar />
       <div
@@ -133,8 +150,8 @@ export default function Admin() {
         <AdminNavbar />
         <div className="p-4 pb-6 md:px-8 mx-auto w-full">
           <Switch>
-            {routeConfig[pageMode].map(item=>{
-              return(
+            {routeConfig[pageMode].map(item => {
+              return (
                 <Route key={item.path} path={item.path} exact component={item.component} />
               )
             })}

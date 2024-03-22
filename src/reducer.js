@@ -8,6 +8,8 @@ const SET_NODE_STATUS = 'SET_NODE_STATUS';
 const SET_ACCOUNT = 'SET_ACCOUNT';
 const SET_NODE = 'SET_NODE';
 const SET_PAGE_MODE = 'SET_PAGE_MODE';
+const SET_S3_API_URL = 'SET_S3_API_URL';
+const SET_ADDRESS_CONFIG = 'SET_ADDRESS_CONFIG';
 
 const mainContext = React.createContext();
 const theme = localStorage.getItem('theme');
@@ -24,6 +26,7 @@ const initState = {
     account: null,
     node: null,
     pageMode: pageMode ? pageMode : MAIN_PAGE_MODE,
+    s3ApiUrl: '',
 };
 
 const reducer = (state, action) => {
@@ -42,6 +45,10 @@ const reducer = (state, action) => {
             return {...state, node: action.node || false};
         case SET_PAGE_MODE:
                 return {...state, pageMode: action.pageMode};
+        case SET_S3_API_URL:
+            return {...state, s3ApiUrl: action.s3ApiUrl};
+        case SET_ADDRESS_CONFIG:
+                return {...state, addressConfig: action.addressConfig};
         default:
             return state
     }

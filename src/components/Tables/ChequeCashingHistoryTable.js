@@ -6,6 +6,7 @@ import ClipboardCopy from 'components/Utils/ClipboardCopy';
 import { getChequeCashingHistoryList } from 'services/chequeService.js';
 import { Truncate, t } from 'utils/text.js';
 import { switchBalanceUnit } from 'utils/BTFSUtil.js';
+import { MULTIPLE_CURRENCY_RATE } from 'utils/constants';
 import { btfsScanLinkCheck, bttcScanLinkCheck } from 'utils/checks.js';
 
 let didCancel = false;
@@ -95,7 +96,7 @@ export default function ChequeCashingHistoryTable({ color }) {
                       </div>
                     </td>
                     <td className="common-table-body-td">
-                      {switchBalanceUnit(item['amount'], item?.price?.rate)}
+                      {switchBalanceUnit(item['amount'], MULTIPLE_CURRENCY_RATE[item?.key])}
                     </td>
                     <td className="common-table-body-td">
                       {new Date(item['cash_time'] * 1000).toLocaleString()}
