@@ -14,7 +14,7 @@ export default function EncryptFileModal({ color }) {
     const [showModal, setShowModal] = useState(false);
     const [cId, setCId] = useState('');
     const [validateMsg, setValidateMsg] = useState('');
-    const [loading, setLoadign] = useState(false);
+    const [loading, setLoading] = useState(false);
     const inputRef = useRef(null);
 
 
@@ -23,7 +23,7 @@ export default function EncryptFileModal({ color }) {
             console.log('openDecryptFileModal event has occured');
             setCId('');
             setValidateMsg('');
-            setLoadign(false);
+            setLoading(false);
             openModal();
         };
         Emitter.on('openDecryptFileModal', set);
@@ -42,7 +42,7 @@ export default function EncryptFileModal({ color }) {
     const closeModal = () => {
         setCId('');
         setValidateMsg('');
-        setLoadign(false);
+        setLoading(false);
         setShowModal(false);
         window.body.style.overflow = '';
     };
@@ -77,10 +77,10 @@ export default function EncryptFileModal({ color }) {
             return;
         }
 
-        setLoadign(true);
+        setLoading(true);
         try {
             await decryptUploadFiles(cId);
-            setLoadign(false);
+            setLoading(false);
             Emitter.emit('showMessageAlert', {
                 message: 'decrypt_download_success',
                 status: 'success',

@@ -19,7 +19,7 @@ export default function EncryptFileModal({ color }) {
     const inputRef = useRef(null);
     const [checkHostId, setCheckHostId] = useState(false);
     const [currentFile, setCurrentFile] = useState('');
-    const [loading, setLoadign] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [validateFileMsg, setValidateFileMsg] = useState('');
     const [percentage, setPercentage] = useState(0);
 
@@ -30,7 +30,9 @@ export default function EncryptFileModal({ color }) {
         setCurrentFile('');
         setValidateMsg('');
         setValidateFileMsg('');
-        setLoadign(false);
+        setPercentage(0);
+        setLoading(false);
+
         setCheckHostId(false);
     };
     useEffect(() => {
@@ -80,13 +82,13 @@ export default function EncryptFileModal({ color }) {
         }
 
         try {
-            setLoadign(true);
+            setLoading(true);
             let result = await encryptUploadFiles(currentFile, hostId,onUploadProgress(fileName));
             Emitter.emit('openEncryptFileCidModal', result);
         } catch (e) {
             Emitter.emit('showMessageAlert', { message: e.Message, status: 'error' });
         }
-        setLoadign(false);
+        setLoading(false);
         closeModal();
     };
 
