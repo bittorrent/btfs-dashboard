@@ -241,4 +241,11 @@
   ._box-shadow {
     box-shadow: 0px 6px 16px 0px #21242c, 0px 3px 6px -4px #21242c;
   }
+
+
+.spin-percentage.ant-spin-nested-loading {
+    .ant-spin{
+    color: $white;
+    }
+}
 }

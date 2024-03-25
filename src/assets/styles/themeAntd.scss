@@ -124,3 +124,26 @@
 }
 
 
+.spin-percentage.ant-spin-nested-loading {
+    .ant-spin{
+    color: $base-color;
+    }
+    .ant-spin.ant-spin-show-text .ant-spin-dot{
+        margin-top: -10px;
+        left: 30%;
+
+    }
+    .ant-spin.ant-spin-show-text .ant-spin-text{
+        width: 60%;
+        padding-top: 0;
+        right: 0;
+        transform: translateY(-50%);
+        font-weight: 700;
+        font-size: 16px;
+        text-shadow: none;
+    }
+    .ant-spin-blur{
+        opacity:.3
+    }
+}
+

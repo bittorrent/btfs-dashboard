@@ -21,6 +21,8 @@ export default function EncryptFileModal({ color }) {
     const [currentFile, setCurrentFile] = useState('');
     const [loading, setLoadign] = useState(false);
     const [validateFileMsg, setValidateFileMsg] = useState('');
+    const [percentage, setPercentage] = useState(0);
+
 
     const init = () => {
         setHostId('');
@@ -62,6 +64,16 @@ export default function EncryptFileModal({ color }) {
         return true;
     };
 
+    const onUploadProgress = function (label) {
+        return (progress) => {
+            if (label === fileName) {
+                const { total,loaded} = progress
+                let percentage = Math.round((loaded / total) * 100);
+                setPercentage(percentage);
+            }
+        };
+    };
+
     const EncryptFile = async () => {
         if (!submitValidate()) {
             return;
@@ -69,12 +81,7 @@ export default function EncryptFileModal({ color }) {
 
         try {
             setLoadign(true);
-            let result = await encryptUploadFiles(currentFile, hostId);
-            // Emitter.emit('showMessageAlert', {
-            //     message: 'encrypt_import_success',
-            //     status: 'success',
-            //     type: 'frontEnd',
-            // });
+            let result = await encryptUploadFiles(currentFile, hostId,onUploadProgress(fileName));
             Emitter.emit('openEncryptFileCidModal', result);
         } catch (e) {
             Emitter.emit('showMessageAlert', { message: e.Message, status: 'error' });
@@ -201,10 +208,12 @@ export default function EncryptFileModal({ color }) {
                         <div className="ml-2 inline-block">
                             <Spin
                                 spinning={loading}
-                                indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}>
+                                tip={`${percentage}%`} //{<Progress percent={30} size="small" />}//
+                                wrapperClassName="spin-percentage"
+                                indicator={<LoadingOutlined style={{ fontSize: 20 }} spin />}>
                                 <button
                                     type="primary"
-                                    className="ml-2 common-btn theme-common-btn"
+                                    className="common-btn theme-common-btn"
                                     onClick={EncryptFile}>
                                     {t('encrypt_file_btn')}
                                 </button>

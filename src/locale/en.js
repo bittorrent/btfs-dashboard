@@ -378,7 +378,7 @@ const en_US = {
     'decrypt_file_cid_validate':'File CID format error',
     'decrypt_file_cid_null_validate':'Please enter the file CID',
     'decrypt_input_cid_placeholder':'Input the file CID',
-
+    'decrypt_download_success':'File obtained successfully'
 
 };
 

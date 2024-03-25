@@ -17,6 +17,7 @@ export default function EncryptFileModal({ color }) {
     const [loading, setLoadign] = useState(false);
     const inputRef = useRef(null);
 
+
     useEffect(() => {
         const set = async function (params) {
             console.log('openDecryptFileModal event has occured');
@@ -64,6 +65,7 @@ export default function EncryptFileModal({ color }) {
         validateHostId(val);
     };
 
+
     const DecryptFile = async () => {
         if (cId && !validateHostId(cId)) {
             setValidateMsg(t('decrypt_file_cid_validate'));
@@ -80,7 +82,7 @@ export default function EncryptFileModal({ color }) {
             await decryptUploadFiles(cId);
             setLoadign(false);
             Emitter.emit('showMessageAlert', {
-                message: 'encrypt_import_success',
+                message: 'decrypt_download_success',
                 status: 'success',
                 type: 'frontEnd',
             });
@@ -134,7 +136,7 @@ export default function EncryptFileModal({ color }) {
                                 indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}>
                                 <button
                                     type="primary"
-                                    className="ml-2 common-btn theme-common-btn"
+                                    className="common-btn theme-common-btn"
                                     onClick={DecryptFile}>
                                     {t('decrypt_file_btn')}
                                 </button>

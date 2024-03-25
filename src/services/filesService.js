@@ -273,13 +273,12 @@ export const removeFiles = async (hash, name, path, type) => {
 
 
 
-export const encryptUploadFiles = async (file,hostId) => {
+export const encryptUploadFiles = async (file,hostId,onUploadProgress) => {
     try {
             const formData = new FormData();
             formData.append("file", file);
-            let res = await Client10.encrypt(formData,hostId);
+            let res = await Client10.encrypt(formData,hostId,onUploadProgress);
             if (res?.Type === 'error') {
-                // setMessage(res?.Message);
                 return Promise.reject(res);
             }else{
                 return res

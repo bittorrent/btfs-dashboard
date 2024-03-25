@@ -380,7 +380,7 @@ const zh_CN = {
      'decrypt_file_cid_null_validate':'请输入文件CID',
      'decrypt_input_cid_placeholder':'请输入文件CID',
      'encrypt_input_host_id_placeholder':'请输入文件CID',
-
+     'decrypt_download_success':'文件获取成功'
 
 };
 

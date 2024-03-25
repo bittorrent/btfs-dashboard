@@ -366,12 +366,13 @@ class APIClient10 {
         }
     }
 
-    encrypt(formData,to) {
+    encrypt(formData,to,onUploadProgress) {
         return this.request(`/api/v1/encrypt?${to?'to='+to:''}`,formData,{
             'headers':{
                 'Content-Type':'application/x-www-form-urlencoded',
             },
             'timeout': 0,
+            onUploadProgress:onUploadProgress
         });
     }
 
