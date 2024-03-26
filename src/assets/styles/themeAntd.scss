@@ -129,18 +129,19 @@
     color: $base-color;
     }
     .ant-spin.ant-spin-show-text .ant-spin-dot{
-        margin-top: -10px;
-        left: 30%;
+        margin-top: -9px;
+        left: 40%;
 
     }
     .ant-spin.ant-spin-show-text .ant-spin-text{
-        width: 60%;
+        width: 50%;
         padding-top: 0;
         right: 0;
         transform: translateY(-50%);
         font-weight: 700;
         font-size: 16px;
         text-shadow: none;
+        text-align: left;
     }
     .ant-spin-blur{
         opacity:.3

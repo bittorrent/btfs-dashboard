@@ -70,8 +70,11 @@ export default function EncryptFileModal({ color }) {
         return (progress) => {
             if (label === fileName) {
                 const { total,loaded} = progress
-                let percentage = Math.round((loaded / total) * 100);
-                setPercentage(percentage);
+                let percent = Math.round((loaded / total) * 100);
+                let curPercent = percent > 100? 100 :percent
+                if(curPercent > percentage){
+                    setPercentage(curPercent);
+                }
             }
         };
     };
@@ -212,7 +215,7 @@ export default function EncryptFileModal({ color }) {
                                 spinning={loading}
                                 tip={`${percentage}%`} //{<Progress percent={30} size="small" />}//
                                 wrapperClassName="spin-percentage"
-                                indicator={<LoadingOutlined style={{ fontSize: 20 }} spin />}>
+                                indicator={<LoadingOutlined style={{ fontSize: 18 }} spin />}>
                                 <button
                                     type="primary"
                                     className="common-btn theme-common-btn"
