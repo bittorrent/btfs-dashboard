@@ -273,5 +273,32 @@ export const removeFiles = async (hash, name, path, type) => {
 
 
 
+export const encryptUploadFiles = async (file,hostId,onUploadProgress) => {
+    try {
+            const formData = new FormData();
+            formData.append("file", file);
+            let res = await Client10.encrypt(formData,hostId,onUploadProgress);
+            if (res?.Type === 'error') {
+                return Promise.reject(res);
+            }else{
+                return res
+            }
+    } catch (e) {
+        console.log(e);
+        return false
+    }
+};
 
 
+export const decryptUploadFiles = async (cid) => {
+    try {
+            let data = await Client10.decrypt(cid, {}, {responseType: 'blob'});
+            if(data.Type && data.Type === 'error' ){
+                return Promise.reject(data);
+            }
+            createObjectURL(data, cid);
+    } catch (e) {
+        console.log(e);
+        return false
+    }
+};

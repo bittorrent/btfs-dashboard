@@ -10,6 +10,7 @@ import HostID from './HostID';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 
+
 const dashboardLink = { path: '/admin/dashboard', text: t('dashboard'), iconClass: ' iconfont BTFS_icon_Dashboard ' };
 const chequeLink = { path: '/admin/cheque', text: t('cheques'), iconClass: ' iconfont BTFS_icon_Cheques ' };
 const onlineProofLink = { path: '/admin/onlineproof', text: t('heartbeats'), iconClass: ' iconfont BTFS_icon_a-OnlineProof ' };
@@ -153,7 +154,7 @@ export default function Sidebar() {
                                         'theme-sidebar-link md:block text-left md:pb-2 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0'
                                     }
                                     to="/">
-                                    BTFS 2.3.3
+                                    BTFS 2.3.5
                                 </Link>
                             </div>
                             <div className="w-4/12 flex flex-row-reverse">
@@ -184,7 +185,7 @@ export default function Sidebar() {
                         {/* Navigation */}
                         <ul className="md:flex-col md:min-w-full flex flex-col list-none mb-4">
                             <li className="items-center">
-                                <a className={'sidebar-link theme-sidebar-link'}>{t('version')} 2.3.3</a>
+                                <a className={'sidebar-link theme-sidebar-link'}>{t('version')} 2.3.5</a>
                             </li>
 
                             <li className="items-center">

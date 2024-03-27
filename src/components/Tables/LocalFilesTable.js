@@ -5,6 +5,7 @@ import { Breadcrumb, Pagination, Tabs } from 'antd';
 import PropTypes from 'prop-types';
 import FileTableDropdown from 'components/Dropdowns/FileTableDropdown.js';
 import ImportFilesDropdown from 'components/Dropdowns/ImportFilesDropdown.js';
+import ImportFilesEncryptDropdown from 'components/Dropdowns/ImportFilesEncryptDropdown.js';
 import FileControl from 'components/Footers/FileControl.js';
 import S3ApiTable from './S3ApiTable';
 import { getRootFiles, getHashByPath, getFolerSize, getFiles, searchFiles } from 'services/filesService.js';
@@ -256,7 +257,9 @@ export default function LocalFilesTable({ color }) {
                                 </div>
                             </div>
                             <div className="flex">
+                                <ImportFilesEncryptDropdown color={color} path={breadcrumbName} />
                                 <ImportFilesDropdown color={color} path={breadcrumbName} />
+
                             </div>
                         </div>
                         <div className="w-full overflow-x-auto">

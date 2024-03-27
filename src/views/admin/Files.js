@@ -3,6 +3,9 @@ import { mainContext } from 'reducer';
 import FilesStats from 'components/Stats/FilesStats.js';
 import ImportModal from 'components/Modals/ImportModal.js';
 import UploadModal from 'components/Modals/UploadModal.js';
+import EncryptFileModal from 'components/Modals/EncryptFileModal.js';
+import DecryptFileModal from 'components/Modals/DecryptFileModal.js';
+import EncryptFileCidModal from 'components/Modals/EncryptFileCidModal.js';
 import S3UploadModal from 'components/Modals/S3UploadModal.js';
 import DownloadModal from 'components/Modals/DownloadModal.js';
 import PreviewModal from 'components/Modals/PreviewModal.js';
@@ -44,6 +47,9 @@ export default function Files(props) {
       }
       <ImportModal color={theme} />
       <UploadModal color={theme} />
+      <EncryptFileCidModal color={theme} />
+      <EncryptFileModal color={theme} />
+      <DecryptFileModal color={theme} />
       <DownloadModal color={theme} />
       <PreviewModal color={theme} />
       <S3NewBucketModal color={theme} />

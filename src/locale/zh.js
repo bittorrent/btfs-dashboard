@@ -287,6 +287,7 @@ const zh_CN = {
     'online_proof_table_detail_bttc_address': 'BTTC 地址',
     'online_proof_table_detail_signed_time': '签名时间',
 
+
     'native_api': 'BTFS原生 API',
     'file_breadcrumb': '文件',
 
@@ -350,6 +351,36 @@ const zh_CN = {
     's3_new_bucket_already_exists_error': '已存在同名存储桶',
     's3_new_bucket_invalid_key_error': '无法创建存储桶，请检查访问密钥设置',
     's3_new_folder_already_exists_error': '已存在同名文件夹',
+
+     //encrypt-decrypt
+     'encrypt_decrypt':'加密/解密',
+     'encrypt_file':'加密文件并上传',
+     'decrypt_file':'下载文件并解密',
+     'encrypt_upload_file':'加密文件并上传',
+     'encrypt_upload_file_desc':'客户端通过节点公钥对文件进行加密并上传至BTFS网络',
+     'select_encrypt_file':'选择文件',
+     'select_encrypt_file_btn':'浏览',
+     'cancel_encrypt_file_btn':'取消',
+     'encrypt_file_btn':'加密并上传',
+     'encrypt_file_hostid_title':'指定其他节点解密该文件',
+     'encrypt_file_hostid_desc':'输入任意节点ID以便使用该节点的公钥对文件进行加密。如关闭则默认使用本节点公钥对文件进行加密',
+     'decrypt_upload_file':'下载文件并解密',
+     'decrypt_upload_file_desc':'通过文件CID从BTFS网络获取加密文件并用当前节点私钥进行解密',
+     'dncrypt_file_cid':'文件CID',
+     'decrypt_file_btn':'下载文件并解密',
+     'encrypt_import_success': '加密导入成功',
+     'encrypt_file_cid':'加密文件CID',
+     'encrypt_file_cid_title':'加密文件上传成功',
+     'encrypt_file_cid_desc':'请妥善保存加密文件的CID以便从再次BTFS网络检索获取',
+     'encrypt_file_cid_copy':"复制文件CID",
+     'encrypt_file_select_validate':'请选择文件',
+     'encrypt_file_hostId_validate':'HostID格式错误',
+     'encrypt_file_hostId_null_validate':'请输入HostID',
+     'decrypt_file_cid_validate':'文件CID格式错误',
+     'decrypt_file_cid_null_validate':'请输入文件CID',
+     'decrypt_input_cid_placeholder':'请输入文件CID',
+     'encrypt_input_host_id_placeholder':'请输入文件CID',
+     'decrypt_download_success':'文件获取成功'
 
 };
 
