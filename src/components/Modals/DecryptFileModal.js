@@ -7,6 +7,7 @@ import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import CommonModal from './CommonModal';
 
+
 let inputMaxLength = 80;
 
 export default function EncryptFileModal({ color }) {

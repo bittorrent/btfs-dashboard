@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useIntl } from 'react-intl';
 import { encryptUploadFiles } from 'services/filesService.js';
 import { LoadingOutlined } from '@ant-design/icons';
-import { Switch, Spin } from 'antd';
+import { Switch, Spin, Progress } from 'antd';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import CommonModal from './CommonModal';
@@ -23,7 +23,6 @@ export default function EncryptFileModal({ color }) {
     const [validateFileMsg, setValidateFileMsg] = useState('');
     const [percentage, setPercentage] = useState(0);
 
-
     const init = () => {
         setHostId('');
         setFileName('');
@@ -32,7 +31,6 @@ export default function EncryptFileModal({ color }) {
         setValidateFileMsg('');
         setPercentage(0);
         setLoading(false);
-
         setCheckHostId(false);
     };
     useEffect(() => {
@@ -67,12 +65,12 @@ export default function EncryptFileModal({ color }) {
     };
 
     const onUploadProgress = function (label) {
-        return (progress) => {
+        return progress => {
             if (label === fileName) {
-                const { total,loaded} = progress
+                const { total, loaded } = progress;
                 let percent = Math.round((loaded / total) * 100);
-                let curPercent = percent > 100? 100 :percent
-                if(curPercent > percentage){
+                let curPercent = percent > 100 ? 100 : percent;
+                if (curPercent > percentage) {
                     setPercentage(curPercent);
                 }
             }
@@ -86,7 +84,7 @@ export default function EncryptFileModal({ color }) {
 
         try {
             setLoading(true);
-            let result = await encryptUploadFiles(currentFile, hostId,onUploadProgress(fileName));
+            let result = await encryptUploadFiles(currentFile, hostId, onUploadProgress(fileName));
             Emitter.emit('openEncryptFileCidModal', result);
         } catch (e) {
             Emitter.emit('showMessageAlert', { message: e.Message, status: 'error' });
@@ -144,7 +142,7 @@ export default function EncryptFileModal({ color }) {
     };
 
     return (
-        <CommonModal visible={showModal} onCancel={closeModal}>
+        <CommonModal visible={showModal} maskClosable={false} onCancel={closeModal}>
             <div className="common-modal-wrapper theme-bg">
                 <main className="flex flex-col justify-center items-center theme-bg theme-text-main">
                     <div className="font-semibold text-xl"> {t('encrypt_upload_file')} </div>
@@ -155,7 +153,7 @@ export default function EncryptFileModal({ color }) {
                         {t('select_encrypt_file')}
                     </div>
                     <button
-                        className="w-full h-3   common-input theme-bg theme-border-color  border-dashed border-[#243c5a] hover:border-color-active "
+                        className="w-full h-3   common-input theme-bg border-dashed border-[#243c5a] hover:border-color-active "
                         onClick={onAddFile}>
                         {fileName ? fileName : t('select_encrypt_file_btn')}
                     </button>
@@ -180,19 +178,20 @@ export default function EncryptFileModal({ color }) {
                                 {t('encrypt_file_hostid_desc')}
                             </div>
                         </div>
-                        <Switch checked={checkHostId} onChange={onChangeCheck} />
+                        <Switch checked={checkHostId}  disabled={loading} onChange={onChangeCheck} />
                     </div>
                     <div className={checkHostId ? 'w-full' : 'w-full hidden'}>
                         <input
                             id="file-input"
                             type="input"
-                            className="w-full h-3 common-input  theme-bg theme-border-color"
+                            className="w-full h-3 common-input  theme-bg "
                             single="true"
                             placeholder={intl.formatMessage({ id: 'encrypt_file_hostId_null_validate' })}
                             maxLength={inputMaxLength}
                             ref={inputRef}
                             onChange={hostIdChange}
                             value={hostId}
+                            readOnly={loading}
                         />
 
                         <div className="flex justify-between text-xs  w-full  mb-4">
@@ -204,6 +203,7 @@ export default function EncryptFileModal({ color }) {
                             }
                         </div>
                     </div>
+                    {loading && <Progress percent={percentage} status="active"  strokeWidth={3} strokeColor="#3257F6"/>}
                     <div className="mt-2">
                         <button
                             className="ml-2 common-btn theme-fill-gray text-gray-900 mr-6"
@@ -213,9 +213,7 @@ export default function EncryptFileModal({ color }) {
                         <div className="ml-2 inline-block">
                             <Spin
                                 spinning={loading}
-                                tip={`${percentage}%`} //{<Progress percent={30} size="small" />}//
-                                wrapperClassName="spin-percentage"
-                                indicator={<LoadingOutlined style={{ fontSize: 18 }} spin />}>
+                                indicator={<LoadingOutlined style={{ fontSize: 20 }} spin />}>
                                 <button
                                     type="primary"
                                     className="common-btn theme-common-btn"
