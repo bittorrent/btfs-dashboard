@@ -49,7 +49,7 @@ export default function EncryptFileModal({ color }) {
     }
 
     return (
-        <CommonModal visible={showModal} onCancel={closeModal}>
+        <CommonModal visible={showModal} maskClosable={false} onCancel={closeModal}>
             <div className="common-modal-wrapper theme-bg">
                 <main className="flex flex-col justify-center items-center theme-bg theme-text-main">
                     <div className="font-semibold text-xl"> {t('encrypt_file_cid_title')} </div>
