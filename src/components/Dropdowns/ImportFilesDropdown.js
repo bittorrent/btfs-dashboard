@@ -14,6 +14,7 @@ const ImportFilesDropdown = ({ color, path }) => {
     createPopper(btnDropdownRef.current, popoverDropdownRef.current, {
       placement: 'bottom-start',
     });
+    Emitter.emit('closeDropdownPopover');
     setDropdownPopoverShow(true);
   };
   const closeDropdownPopover = () => {
@@ -63,9 +64,11 @@ const ImportFilesDropdown = ({ color, path }) => {
     const t = function () {
       closeDropdownPopover();
     };
+    Emitter.on('closeDropdownPopover',closeDropdownPopover);
     document.addEventListener('click', t);
     return () => {
       document.removeEventListener('click', t);
+      Emitter.removeListener('closeDropdownPopover');
     };
   }, []);
 

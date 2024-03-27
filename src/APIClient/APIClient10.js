@@ -5,10 +5,13 @@ class APIClient10 {
     constructor() {
         this.apiUrl = localStorage.getItem('NODE_URL') ? localStorage.getItem('NODE_URL') : "http://localhost:5001";
         this.request = async (url, body, config) => {
+            const isFormData = body instanceof FormData
             return new Promise(async (resolve, reject) => {
                 try {
+
                     let {data} = await xhr.post(
                         this.apiUrl + url,
+                        isFormData?body:
                         {
                             ...body
                         },
@@ -16,6 +19,7 @@ class APIClient10 {
                     );
 
                     resolve(data);
+
                 }
                 catch (e) {
                     let message;
@@ -25,10 +29,25 @@ class APIClient10 {
                     if (e.response && e.response.status === 400) {
                         message = e.response['data'];
                     }
-                    resolve({
-                        Type: 'error',
-                        Message: message ? message : 'network error or host version not up to date'
-                    });
+
+                    if(e.response && e.response?.data && !e.response?.data?.success && e.response?.data?.type === 'application/json'){
+                        const fileReader = new FileReader()
+                        fileReader.readAsText(e.response.data,'utf-8')
+                        fileReader.onload = function(){
+                          const result = JSON.parse(fileReader.result)
+                          message = result['Message']
+                            resolve({
+                                Type: 'error',
+                                Message: message ? message : 'network error or host version not up to date'
+                            });
+                            return;
+                        }
+                    }else{
+                        resolve({
+                            Type: 'error',
+                            Message: message ? message : 'network error or host version not up to date'
+                        });
+                    }
                 }
             }).catch(err => {
                 console.log(err)
@@ -345,6 +364,20 @@ class APIClient10 {
         } catch (e) {
             return {data: {}}
         }
+    }
+
+    encrypt(formData,to,onUploadProgress) {
+        return this.request(`/api/v1/encrypt?${to?'to='+to:''}`,formData,{
+            'headers':{
+                'Content-Type':'application/x-www-form-urlencoded',
+            },
+            'timeout': 0,
+            onUploadProgress:onUploadProgress
+        });
+    }
+
+    decrypt(hash, body, config) {
+        return this.request('/api/v1/decrypt?arg=' + hash, body, config);
     }
 
     // s3 api
