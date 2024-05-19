@@ -380,7 +380,30 @@ const zh_CN = {
      'decrypt_file_cid_null_validate':'请输入文件CID',
      'decrypt_input_cid_placeholder':'请输入文件CID',
      'encrypt_input_host_id_placeholder':'请输入文件CID',
-     'decrypt_download_success':'文件获取成功'
+     'decrypt_download_success':'文件获取成功',
+
+
+       //v3.0
+    encrypt_file_password: '设置密码',
+    encrypt_file_password_desc:
+        '任可人获得该密钥后都可以解密该文件，BTFS不会保存该密钥，密钥丢失后文件无法找回，请妥善保存密钥.',
+    random_key: 'Random',
+    set_encrypt_key_placeholder: 'Setting the file encryption and decryption key',
+    validate_encryptkey_null: 'Please input Key ',
+    validate_encryptkey: 'Please enter the key, support letters and numbers within 6-20 characters',
+    encrypt_file_with_host:'通过节点公钥加密文件',
+    encrypt_file_with_password:'通过密码加密文件',
+    encrypt_file_with_cur_host:'通过本节点公钥加密文件',
+    encrypt_file_with_cur_host_desc:'使用本节点的公钥对选文件进行加密，本节点可解密该文件',
+    encrypt_file_with_other_host:'通过本节点公钥加密文件',
+    encrypt_file_with_other_host_desc:'通过本节点公钥加密文件',
+
+    decrypt_file_with_host:'通过节点公钥加密文件',
+    decrypt_file_with_password:'通过密码加密文件',
+    decrypt_file_password:'输入文件密码',
+    validate_decryptkey_null:'Please input Key ',
+    validate_decryptkey:'Please enter the key, support letters and numbers within 6-20 characters',
+    set_decrypt_key_placeholder:'输入文件密码',
 
 };
 

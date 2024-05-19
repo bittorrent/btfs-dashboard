@@ -215,3 +215,63 @@
   }
 
 }
+
+
+.encrypt_upload_select{
+    .ant-radio-button-wrapper{
+            width: 50%;
+            text-align: center;
+            height: 38px;
+            line-height: 36px;
+            border-color:#3257f6;
+            color: #3257f6;
+        }
+    .ant-radio-button-wrapper:first-child{
+        border-radius:0.5rem 0 0 0.5rem;
+    }
+    .ant-radio-button-wrapper:last-child{
+        border-radius:0 0.5rem  0.5rem 0;
+    }
+    &.ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){
+    background: #3257f6;
+    border-color: #3257f6;
+    }
+
+}
+
+    .common-input.random_key {
+        // height: 36px;
+        // background: #ffffff;
+        // box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.03);
+        // border-radius: 12px;
+        // opacity: 0.99;
+        // border: 1px solid #d7dbec;
+        // transition: all 0.5s;
+          padding: 4px 4px 4px 11px;
+        &:hover {
+            border-color: #d7dbec !important;
+        }
+
+        .get_key_btn.ant-btn {
+    // width: 239px;
+    height: 30px;
+    background: #888faf;
+    border-radius: 15px;
+    margin-top: 0;
+    line-height: 30px;
+    color: #fff;
+    .ant-btn-icon {
+        line-height: 30px;
+        vertical-align: text-bottom;
+    }
+    .key_img {
+        width: 14px;
+        height: 14px;
+        margin-right: 6px;
+    }
+    &:hover {
+        background: #3257f6 !important;
+    }
+}
+    }
+

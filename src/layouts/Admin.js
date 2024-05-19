@@ -94,7 +94,7 @@ export default function Admin() {
         type: 'SET_S3_API_URL',
         s3ApiUrl: getUrl(s3ApiUrl),
       });
-      
+
 
       dispatch({
         type: 'SET_ADDRESS_CONFIG',
@@ -125,7 +125,7 @@ export default function Admin() {
         });
       } else {
         window.loading = false;
-        window.nodeStatus = false;
+        window.nodeStatus = true; ///------
         dispatch({
           type: 'SET_NODE_STATUS',
           nodeStatus: false,

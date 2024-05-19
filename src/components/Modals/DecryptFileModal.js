@@ -2,12 +2,15 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useIntl } from 'react-intl';
 import { decryptUploadFiles } from 'services/filesService.js';
 import { LoadingOutlined } from '@ant-design/icons';
-import { Spin } from 'antd';
+import { Spin,Radio,Input } from 'antd';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import CommonModal from './CommonModal';
 
-
+const options = [
+    { label: 'decrypt_file_with_host', value: 'host' },
+    { label: 'decrypt_file_with_password', value: 'password' },
+];
 let inputMaxLength = 80;
 
 export default function EncryptFileModal({ color }) {
@@ -16,7 +19,12 @@ export default function EncryptFileModal({ color }) {
     const [cId, setCId] = useState('');
     const [validateMsg, setValidateMsg] = useState('');
     const [loading, setLoading] = useState(false);
+    const [decryptType, setDecryptType] = useState('host');
+    const [password, setPassword] = useState('');
+    const [validateKeyMsg, setValidateKeyMsg] = useState('');
     const inputRef = useRef(null);
+    const inputKeyRef = useRef(null);
+
 
 
     useEffect(() => {
@@ -60,12 +68,31 @@ export default function EncryptFileModal({ color }) {
         return false;
     };
 
+    const checkPassword = () => {
+        const reg = /^[0-9A-Za-z]{6,20}$/g;
+        if (!password) {
+            setValidateKeyMsg(t('validate_decryptkey_null'));
+            return false;
+        }
+        if (!reg.test(password)) {
+            setValidateKeyMsg(t('validate_decryptkey'));
+            return false;
+        }
+        setValidateKeyMsg('')
+        return true
+    };
+
     const cidChange = vals => {
         const val = inputRef.current.value;
         setCId(val);
         validateHostId(val);
     };
 
+    const passwordChange = (e) => {
+        const val = inputKeyRef.current.value;
+        setPassword(val);
+        checkPassword(val);
+    };
 
     const DecryptFile = async () => {
         if (cId && !validateHostId(cId)) {
@@ -75,6 +102,10 @@ export default function EncryptFileModal({ color }) {
 
         if (!cId) {
             setValidateMsg(t('decrypt_file_cid_null_validate'));
+            return;
+        }
+
+        if(decryptType==='password' && !checkPassword() ){
             return;
         }
 
@@ -92,7 +123,9 @@ export default function EncryptFileModal({ color }) {
         }
         closeModal();
     };
-
+    const onChange = e => {
+        setDecryptType(e.target.value);
+    };
     return (
         <CommonModal visible={showModal} onCancel={closeModal}>
             <div className="common-modal-wrapper theme-bg">
@@ -100,6 +133,25 @@ export default function EncryptFileModal({ color }) {
                     <div className="font-semibold  text-xl"> {t('decrypt_upload_file')} </div>
                     <div className="text-xs font-medium mb-6 theme-text-sub-info">
                         {t('decrypt_upload_file_desc')}
+                    </div>
+
+                    <div className="font-semibold  w-full mb-3">
+                        <Radio.Group
+                        onChange={onChange}
+                        optionType="button"
+                        buttonStyle="solid"
+                        className="flex justify-between w-full encrypt_upload_select"
+                        value={decryptType}>
+                        {options.map(v => {
+                            return (
+                                <Radio value={v.value}>
+                                    <div className=" w-full font-semibold mb-3">
+                                        <p>{t(`${v.label}`)}</p>
+                                    </div>
+                                </Radio>
+                            );
+                        })}
+                    </Radio.Group>
                     </div>
 
                     <div className="flex justify-between w-full font-semibold mb-3">
@@ -123,6 +175,30 @@ export default function EncryptFileModal({ color }) {
                             //     {cId.length || 0}/{inputMaxLength}
                             // </span>
                         }
+                    </div>
+
+                    <div className={decryptType === 'host' ? 'w-full hidden' : 'w-full '}>
+                        <div className="flex justify-between w-full font-semibold mb-3">
+                            {t('decrypt_file_password')}
+                        </div>
+                        <div>
+                            <Input
+                                placeholder={intl.formatMessage({ id: 'set_decrypt_key_placeholder' })}
+                                className="common-input random_key"
+                                maxLength={inputMaxLength}
+                                ref={inputKeyRef}
+                                onChange={passwordChange}
+                                value={password}
+                            />
+                            <div className="flex justify-between text-xs  w-full  mb-4">
+                                <span className="theme-text-error">{validateKeyMsg}</span>
+                                {
+                                    // <span>
+                                    //     {hostId.length || 0}/{inputMaxLength}
+                                    // </span>
+                                }
+                            </div>
+                        </div>
                     </div>
                     <div className="mt-2">
                         <button
