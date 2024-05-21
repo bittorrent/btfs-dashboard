@@ -6,6 +6,8 @@ import { Spin, Radio, Input } from 'antd';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import CommonModal from './CommonModal';
+import isIPFS from 'is-ipfs';
+
 
 const options = [
     { label: 'decrypt_file_with_host', value: 'host' },
@@ -60,12 +62,17 @@ export default function EncryptFileModal({ color }) {
     };
 
     const validateHostId = val => {
-        let reg = /^[A-Za-z0-9]+$/;
-        if (!val || reg.test(val)) {
+        // let reg = /^[A-Za-z0-9]+$/;
+        let res = isIPFS.cid(val)
+        console.log(val,res,'-----')
+        if (!val || res) {
             setValidateMsg('');
             return true;
         }
-        if (!reg.test(val)) {
+        // if (!reg.test(val)) {
+        //     setValidateMsg(t('decrypt_file_cid_validate'));
+        // }
+        if (!res) {
             setValidateMsg(t('decrypt_file_cid_validate'));
         }
         return false;
@@ -73,9 +80,9 @@ export default function EncryptFileModal({ color }) {
 
     const checkPassword = () => {
         const reg = /^[0-9A-Za-z]{6,20}$/g;
-        if (!password) {
-            setValidateKeyMsg(t('validate_decryptkey_null'));
-            return false;
+        if (!password || reg.test(password)) {
+            setValidateKeyMsg('');
+            return true;
         }
         if (!reg.test(password)) {
             setValidateKeyMsg(t('validate_decryptkey'));
@@ -109,13 +116,14 @@ export default function EncryptFileModal({ color }) {
         validateDecryptHostId(val);
     };
 
-    const passwordChange = e => {
+    const passwordChange = vals => {
         const val = inputKeyRef.current.value;
         setPassword(val);
         checkPassword(val);
     };
 
     const DecryptFile = async () => {
+
         if(!validateDecryptHostId(hostId)){
             return;
         }
@@ -129,13 +137,19 @@ export default function EncryptFileModal({ color }) {
             return;
         }
 
+
+        if (decryptType === 'password' && password ==='') {
+            setValidateKeyMsg(t('validate_decryptkey_null'));
+            return;
+        }
+
         if (decryptType === 'password' && !checkPassword()) {
             return;
         }
 
         setLoading(true);
         try {
-            await decryptUploadFiles(cId);
+            await decryptUploadFiles(cId,hostId,password);
             setLoading(false);
             Emitter.emit('showMessageAlert', {
                 message: 'decrypt_download_success',
@@ -227,7 +241,7 @@ export default function EncryptFileModal({ color }) {
                             {t('decrypt_file_password')}
                         </div>
                         <div>
-                            <Input
+                            <input
                                 placeholder={intl.formatMessage({ id: 'set_decrypt_key_placeholder' })}
                                 className="common-input random_key"
                                 maxLength={inputMaxLength}
