@@ -415,6 +415,9 @@ const en_US = {
     validate_decryptkey_null:'Please input Key ',
     validate_decryptkey:'Please enter the key, support letters and numbers within 6-20 characters',
     set_decrypt_key_placeholder:'输入文件密码',
+    dncrypt_file_hostid:'输入文件所在的节点ID(可选)',
+    dncrypt_file_hostid_desc:'输入文件所在的节点ID可大大加速文件获取速度',
+    decrypt_file_hostId_validate:'请输入正确的hostid'
 
 
 };
