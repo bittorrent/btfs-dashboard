@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useIntl } from 'react-intl';
 import { encryptUploadFiles } from 'services/filesService.js';
 import { LoadingOutlined } from '@ant-design/icons';
-import { Switch, Spin, Progress, Radio, Input, Button } from 'antd';
+import {  Spin, Progress, Radio, Input, Button } from 'antd';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import CommonModal from './CommonModal';
@@ -35,7 +35,7 @@ export default function EncryptFileModal({ color }) {
     const [hostId, setHostId] = useState('');
     const [validateMsg, setValidateMsg] = useState('');
     const inputRef = useRef(null);
-    const posswordRef = useRef(null);
+    // const posswordRef = useRef(null);
     const [checkHostId, setCheckHostId] = useState(false);
     const [currentFile, setCurrentFile] = useState('');
     const [loading, setLoading] = useState(false);
@@ -308,6 +308,7 @@ export default function EncryptFileModal({ color }) {
                                             <img
                                                 src={require('assets/img/key2.png').default}
                                                 className="key_img"
+                                                alt=""
                                             />
                                         }
                                         onClick={randomKey}>

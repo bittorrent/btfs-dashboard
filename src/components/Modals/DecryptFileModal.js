@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useIntl } from 'react-intl';
 import { decryptUploadFiles } from 'services/filesService.js';
 import { LoadingOutlined } from '@ant-design/icons';
-import { Spin, Radio, Input } from 'antd';
+import { Spin, Radio } from 'antd';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import CommonModal from './CommonModal';
