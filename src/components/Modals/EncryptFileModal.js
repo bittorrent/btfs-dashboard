@@ -51,6 +51,7 @@ export default function EncryptFileModal({ color }) {
         setFileName('');
         setCurrentFile('');
         setValidateMsg('');
+        setPassword('');
         setValidateFileMsg('');
         setValidateKeyMsg('');
         setPercentage(0);

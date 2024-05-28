@@ -35,6 +35,7 @@ export default function EncryptFileModal({ color }) {
             console.log('openDecryptFileModal event has occured');
             setCId('');
             setValidateMsg('');
+            setPassword('');
             setValidateHostIdMsg('');
             setLoading(false);
             openModal();
@@ -55,6 +56,7 @@ export default function EncryptFileModal({ color }) {
     const closeModal = () => {
         setCId('');
         setValidateMsg('');
+        setPassword('')
         setValidateHostIdMsg('');
         setLoading(false);
         setShowModal(false);
