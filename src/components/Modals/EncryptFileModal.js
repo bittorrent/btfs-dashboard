@@ -107,7 +107,12 @@ export default function EncryptFileModal({ color }) {
             return;
         }
 
-        if (encryptType !== 'host' && !checkPassword()) {
+        if (encryptType !== 'host' && password==='') {
+            setValidateKeyMsg(t('validate_encryptkey_null'));
+            return ;
+        }
+
+        if (encryptType !== 'host' && !checkPassword(password)) {
             return;
         }
 
@@ -167,13 +172,13 @@ export default function EncryptFileModal({ color }) {
         validateHostId(val);
     };
 
-    const checkPassword = () => {
+    const checkPassword = (val) => {
         const reg = /^[0-9A-Za-z]{6,20}$/g;
-        if (!password) {
-            setValidateKeyMsg(t('validate_encryptkey_null'));
-            return false;
+        if (!val || reg.test(val)) {
+            setValidateKeyMsg('');
+            return true;
         }
-        if (!reg.test(password)) {
+        if (!reg.test(val)) {
             setValidateKeyMsg(t('validate_encryptkey'));
             return false;
         }
