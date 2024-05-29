@@ -36,6 +36,7 @@ export default function EncryptFileModal({ color }) {
             setCId('');
             setValidateMsg('');
             setPassword('');
+            setHostId('');
             setValidateHostIdMsg('');
             setLoading(false);
             openModal();
@@ -58,6 +59,7 @@ export default function EncryptFileModal({ color }) {
         setValidateMsg('');
         setPassword('')
         setValidateHostIdMsg('');
+        setHostId('');
         setLoading(false);
         setShowModal(false);
         window.body.style.overflow = '';
@@ -66,7 +68,7 @@ export default function EncryptFileModal({ color }) {
     const validateHostId = val => {
         // let reg = /^[A-Za-z0-9]+$/;
         let res = isIPFS.cid(val)
-        console.log(val,res,'-----')
+        // console.log(val,res,'-----')
         if (!val || res) {
             setValidateMsg('');
             return true;

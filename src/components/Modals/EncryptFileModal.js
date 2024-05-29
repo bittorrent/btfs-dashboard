@@ -42,7 +42,7 @@ export default function EncryptFileModal({ color }) {
     const [validateFileMsg, setValidateFileMsg] = useState('');
     const [percentage, setPercentage] = useState(0);
     const [encryptType, setEncryptType] = useState('host');
-    const [isCurHost, setIsCurHost] = useState(false);
+    const [isCurHost, setIsCurHost] = useState(true);
     const [password, setPassword] = useState('');
     const [validateKeyMsg, setValidateKeyMsg] = useState('');
 
@@ -56,6 +56,7 @@ export default function EncryptFileModal({ color }) {
         setValidateKeyMsg('');
         setPercentage(0);
         setLoading(false);
+        setIsCurHost(true)
         setCheckHostId(false);
     };
     useEffect(() => {
@@ -77,12 +78,12 @@ export default function EncryptFileModal({ color }) {
             return false;
         }
 
-        if (checkHostId && !hostId) {
+        if (!isCurHost && !hostId) {
             setValidateMsg(t('encrypt_file_hostId_null_validate'));
             return false;
         }
 
-        if (checkHostId && !validateHostId(hostId)) {
+        if (!isCurHost && !validateHostId(hostId)) {
             return false;
         }
 
@@ -107,7 +108,7 @@ export default function EncryptFileModal({ color }) {
             return;
         }
 
-        if (!isCurHost && !checkPassword()) {
+        if (encryptType !== 'host' && !checkPassword()) {
             return;
         }
 
@@ -253,8 +254,8 @@ export default function EncryptFileModal({ color }) {
                                 {hostOptions.map(v => {
                                     return (
                                         <Radio value={v.value}>
-                                            <div className=" w-full font-semibold mb-3">
-                                                <p>{t(`${v.label}`)}</p>
+                                            <div className=" w-full mb-3">
+                                                <p className='font-semibold '>{t(`${v.label}`)}</p>
                                                 <span className="text-xs font-medium theme-text-sub-info">
                                                     {t(`${v.desc}`)}
                                                 </span>
