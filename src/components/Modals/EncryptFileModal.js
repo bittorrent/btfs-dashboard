@@ -36,7 +36,7 @@ export default function EncryptFileModal({ color }) {
     const [validateMsg, setValidateMsg] = useState('');
     const inputRef = useRef(null);
     // const posswordRef = useRef(null);
-    const [checkHostId, setCheckHostId] = useState(false);
+    // const [checkHostId, setCheckHostId] = useState(false);
     const [currentFile, setCurrentFile] = useState('');
     const [loading, setLoading] = useState(false);
     const [validateFileMsg, setValidateFileMsg] = useState('');
@@ -57,7 +57,6 @@ export default function EncryptFileModal({ color }) {
         setPercentage(0);
         setLoading(false);
         setIsCurHost(true)
-        setCheckHostId(false);
     };
     useEffect(() => {
         const set = async function (params) {
