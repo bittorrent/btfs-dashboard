@@ -82,14 +82,14 @@ export default function EncryptFileModal({ color }) {
         return false;
     };
 
-    const checkPassword = () => {
+    const checkPassword = (val) => {
         const reg = /^[0-9A-Za-z]{6,20}$/g;
-        if (!password || reg.test(password)) {
+        if (!val || reg.test(val)) {
             setValidateKeyMsg('');
             return true;
         }
-        if (!reg.test(password)) {
-            setValidateKeyMsg(t('validate_decryptkey'));
+        if (!reg.test(val)) {
+            setValidateKeyMsg(t('validate_encryptkey'));
             return false;
         }
         setValidateKeyMsg('');
@@ -141,13 +141,12 @@ export default function EncryptFileModal({ color }) {
             return;
         }
 
-
         if (decryptType === 'password' && password ==='') {
             setValidateKeyMsg(t('validate_decryptkey_null'));
             return;
         }
 
-        if (decryptType === 'password' && !checkPassword()) {
+        if (decryptType === 'password' && !checkPassword(password)) {
             return;
         }
 
