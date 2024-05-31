@@ -222,7 +222,7 @@ export default function EncryptFileModal({ color }) {
                             value={encryptType}>
                             {options.map(v => {
                                 return (
-                                    <Radio value={v.value}>
+                                    <Radio value={v.value}  key={v.value}>
                                         <div className=" w-full font-semibold mb-3">
                                             <p>{t(`${v.label}`)}</p>
                                         </div>
@@ -257,7 +257,7 @@ export default function EncryptFileModal({ color }) {
                             <Radio.Group onChange={hostChange} value={isCurHost}>
                                 {hostOptions.map(v => {
                                     return (
-                                        <Radio value={v.value}>
+                                        <Radio value={v.value} key={v.label}>
                                             <div className=" w-full mb-3">
                                                 <p className='font-semibold '>{t(`${v.label}`)}</p>
                                                 <span className="text-xs font-medium theme-text-sub-info">
