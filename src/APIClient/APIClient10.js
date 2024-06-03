@@ -366,18 +366,19 @@ class APIClient10 {
         }
     }
 
-    encrypt(formData,to,onUploadProgress) {
-        return this.request(`/api/v1/encrypt?${to?'to='+to:''}`,formData,{
+    encrypt(formData,to,password,onUploadProgress) {
+        return this.request(`/api/v1/encrypt?${to?'to='+to:''}${password?'p='+password:''}`,formData,{
             'headers':{
                 'Content-Type':'application/x-www-form-urlencoded',
             },
             'timeout': 0,
+            // signal: signal,
             onUploadProgress:onUploadProgress
         });
     }
 
-    decrypt(hash, body, config) {
-        return this.request('/api/v1/decrypt?arg=' + hash, body, config);
+    decrypt({cid,hostid,password}, body, config) {
+        return this.request(`/api/v1/decrypt?arg=${cid}&from=${hostid}&p=${password}`, body, config);
     }
 
     // s3 api

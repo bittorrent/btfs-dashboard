@@ -136,7 +136,8 @@ const zh_CN = {
     'upload_status': '上传状态',
     'browse': '查找',
     'occupied': '已占用',
-    'search_here': '在此输入',
+    'search_here': '通过 CID 转至目录',
+    'search_go':'跳转',
 
 // peers
 
@@ -357,7 +358,7 @@ const zh_CN = {
      'encrypt_file':'加密文件并上传',
      'decrypt_file':'下载文件并解密',
      'encrypt_upload_file':'加密文件并上传',
-     'encrypt_upload_file_desc':'客户端通过节点公钥对文件进行加密并上传至BTFS网络',
+     'encrypt_upload_file_desc':'通过指定节点公钥或自设密钥对原始文件进行加密并上传至BTFS网络',
      'select_encrypt_file':'选择文件',
      'select_encrypt_file_btn':'浏览',
      'cancel_encrypt_file_btn':'取消',
@@ -365,7 +366,7 @@ const zh_CN = {
      'encrypt_file_hostid_title':'指定其他节点解密该文件',
      'encrypt_file_hostid_desc':'输入任意节点ID以便使用该节点的公钥对文件进行加密。如关闭则默认使用本节点公钥对文件进行加密',
      'decrypt_upload_file':'下载文件并解密',
-     'decrypt_upload_file_desc':'通过文件CID从BTFS网络获取加密文件并用当前节点私钥进行解密',
+     'decrypt_upload_file_desc':'通过文件CID从BTFS网络获取加密文件并用当前节点私钥或指定密钥进行解密',
      'dncrypt_file_cid':'文件CID',
      'decrypt_file_btn':'下载文件并解密',
      'encrypt_import_success': '加密导入成功',
@@ -380,7 +381,33 @@ const zh_CN = {
      'decrypt_file_cid_null_validate':'请输入文件CID',
      'decrypt_input_cid_placeholder':'请输入文件CID',
      'encrypt_input_host_id_placeholder':'请输入文件CID',
-     'decrypt_download_success':'文件获取成功'
+     'decrypt_download_success':'文件获取成功',
+
+
+       //v3.0
+       encrypt_file_password: '设置密钥',
+        encrypt_file_password_desc:
+        '任可人获得此密钥都可以解密该文件，BTFS不会保存该密钥，密钥丢失后文件无法找回，请妥善保存密钥',
+        random_key: '随机生成',
+        set_encrypt_key_placeholder: '设置文件加解密的密钥',
+        validate_encryptkey_null: '请输入加密密钥 ',
+        validate_encryptkey: '请输入加密密钥，支持6-20个字符内的字母和数字',
+        encrypt_file_with_host:'通过节点公钥加密文件',
+        encrypt_file_with_password:'通过密钥加密文件',
+        encrypt_file_with_cur_host:'通过本节点公钥加密文件',
+        encrypt_file_with_cur_host_desc:'使用本节点的公钥对选文件进行加密，本节点可解密该文件',
+        encrypt_file_with_other_host:'通过其他节点公钥加密文件',
+        encrypt_file_with_other_host_desc:'使用指定节点的公钥对文件进行加密，该节点可解密该文件',
+
+        decrypt_file_with_host:'通过节点私钥解密文件',
+        decrypt_file_with_password:'通过密钥解密文件',
+        decrypt_file_password:'文件密钥',
+        validate_decryptkey_null:'请输入文件解密密钥 ',
+        validate_decryptkey:'请输入解密密钥，支持6-20个字符内的字母和数字',
+        set_decrypt_key_placeholder:'请输入该文件的解密密钥',
+        dncrypt_file_hostid:'文件所在节点ID(可选)',
+        dncrypt_file_hostid_desc:'提供文件所在的节点ID可大大提升文件获取速度',
+        decrypt_file_hostId_validate:'请输入正确的节点 ID',
 
 };
 

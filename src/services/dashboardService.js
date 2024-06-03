@@ -532,7 +532,7 @@ export const getHeartBeatsReportlistV2 = async (from) => {
     try {
         let { records, total, peer_id, bttc_addr } = await Client10.getHeartBeatsReportlistV2(from);
 
-        records.forEach(item => {
+         records.forEach(item => {
             let date = new Date(item.report_time)
             item.report_time = getTimes(date)
         });
@@ -544,7 +544,7 @@ export const getHeartBeatsReportlistV2 = async (from) => {
             bttc_addr
         };
     } catch (e) {
-        console.error(e)
+        // console.error(e)
         return {
             records: [],
             total: 0,
