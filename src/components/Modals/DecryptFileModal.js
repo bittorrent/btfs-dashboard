@@ -185,7 +185,7 @@ export default function EncryptFileModal({ color }) {
                             value={decryptType}>
                             {options.map(v => {
                                 return (
-                                    <Radio value={v.value}>
+                                    <Radio value={v.value} key={v.value}>
                                         <div className=" w-full font-semibold mb-3">
                                             <p>{t(`${v.label}`)}</p>
                                         </div>
@@ -211,6 +211,7 @@ export default function EncryptFileModal({ color }) {
                         ref={inputHostIdRef}
                         onChange={hostIdChange}
                         value={hostId}
+                        readOnly={loading}
                     />
                     <div className="flex justify-between  w-full  mb-4">
                         <span className="theme-text-error text-xs pt-1">{validateHostIdMsg}</span>
@@ -229,6 +230,7 @@ export default function EncryptFileModal({ color }) {
                         ref={inputRef}
                         onChange={cidChange}
                         value={cId}
+                        readOnly={loading}
                     />
                     <div className="flex justify-between  w-full  mb-4">
                         <span className="theme-text-error text-xs pt-1">{validateMsg}</span>
@@ -250,6 +252,7 @@ export default function EncryptFileModal({ color }) {
                                 maxLength={inputMaxLength}
                                 ref={inputKeyRef}
                                 onChange={passwordChange}
+                                readOnly={loading}
                                 value={password}
                             />
                             <div className="flex justify-between text-xs  w-full  mb-4">

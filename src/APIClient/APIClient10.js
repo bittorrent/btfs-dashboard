@@ -372,6 +372,7 @@ class APIClient10 {
                 'Content-Type':'application/x-www-form-urlencoded',
             },
             'timeout': 0,
+            // signal: signal,
             onUploadProgress:onUploadProgress
         });
     }

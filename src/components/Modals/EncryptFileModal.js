@@ -45,6 +45,8 @@ export default function EncryptFileModal({ color }) {
     const [isCurHost, setIsCurHost] = useState(true);
     const [password, setPassword] = useState('');
     const [validateKeyMsg, setValidateKeyMsg] = useState('');
+    // const controller = useRef<AbortController>(new AbortController());
+
 
     const init = () => {
         setHostId('');
@@ -136,6 +138,7 @@ export default function EncryptFileModal({ color }) {
 
     const closeModal = () => {
         init();
+        // controller.current.abort();
         setShowModal(false);
         window.body.style.overflow = '';
     };
@@ -306,6 +309,7 @@ export default function EncryptFileModal({ color }) {
                                 className="common-input random_key"
                                 value={password}
                                 onChange={passwordChange}
+                                readOnly={loading}
                                 suffix={
                                     <Button
                                         type="primary"
