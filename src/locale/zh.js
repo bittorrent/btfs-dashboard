@@ -136,7 +136,8 @@ const zh_CN = {
     'upload_status': '上传状态',
     'browse': '查找',
     'occupied': '已占用',
-    'search_here': '在此输入',
+    'search_here': '通过 CID 转至目录',
+    'search_go':'跳转',
 
 // peers
 

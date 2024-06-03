@@ -139,7 +139,8 @@ const en_US = {
     upload_status: 'Upload Status',
     browse: 'Browse',
     occupied: 'Occupied',
-    search_here: 'Search here',
+    search_here: 'Go to directory by CID',
+    search_go:'Go',
 
     // peers
 

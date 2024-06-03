@@ -230,7 +230,7 @@ export default function LocalFilesTable({ color }) {
                             className="ml-2 common-btn w-120-px h-12 rounded-r-2xl theme-white-btn"
                             type="button"
                             onClick={search}>
-                            {t('browse')}
+                            {t('search_go')}
                         </button>
                     </div>
                     {/* <div className={'relative flex flex-col common-card theme-bg theme-text-main'}> */}
