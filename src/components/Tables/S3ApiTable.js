@@ -29,6 +29,7 @@ export default function S3ApiTable({ color }) {
     const [globalS3Obj, setGlobalS3Obj] = useState(null);
     const history = useHistory();
     const [bucketList, setBucketList] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [accessKeyList, setAccessKeyList] = useState([]);
     const [curAccessData, setAccessData] = useState(null);
     const handleNewBucket = () => {
@@ -36,6 +37,7 @@ export default function S3ApiTable({ color }) {
     }
 
     const fetchBucketList = async (params) => {
+        if(!params)return;
         try {
             globalS3 = null;
             globalS3 = new S3Client({
@@ -57,6 +59,8 @@ export default function S3ApiTable({ color }) {
 
         } catch (e) {
             console.log("error", e)
+             setLoading(false)
+
         }
 
     }
@@ -73,6 +77,7 @@ export default function S3ApiTable({ color }) {
     }, [curAccessData]);
 
     const reFetchBucketList = async () => {
+        setLoading(true)
         try {
             const input = {};
             const command = new ListBucketsCommand(input);
@@ -97,8 +102,10 @@ export default function S3ApiTable({ color }) {
                 const list = sortListByDate(bucketList, 'CreationDate')
                 setBucketList(() => [...list])
             }
+            setLoading(false)
         } catch (e) {
             console.log("error", e)
+            setLoading(false)
         }
 
     }
@@ -226,7 +233,7 @@ export default function S3ApiTable({ color }) {
                             })}
                     </tbody>
                 </table>
-                {!bucketList && (
+                {loading && (
                     <div className="w-full flex justify-center pt-4">
                         <img
                             alt="loading"
