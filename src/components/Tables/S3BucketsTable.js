@@ -66,7 +66,6 @@ export default function S3BucketsTable({ color, bucketName, accessKeyId, secretA
             })
 
             Contents.map((item, index) => {
-
                 item.Name = item.Key.slice(prefixLen);
                 item.Type = 2;
                 item.CID = CIDList[index];

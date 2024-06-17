@@ -159,11 +159,11 @@ export function ceilLatency(str) {
             let unit = str.replace(/[^a-zA-Z]/g, '');
             return numInt + ' ' + unit;
         } else {
-            return 'n/a'
+            return '--'
         }
     } catch (e) {
         console.log(e);
-        return 'n/a'
+        return '--'
     }
 }
 
