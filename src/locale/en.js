@@ -420,6 +420,23 @@ const en_US = {
     "decrypt_file_hostId_validate": "Please enter a valid host ID",
 
 
+
+
+        //v3.1
+        dncrypt_file_time_out:'文件获取超时时间',
+        dncrypt_file_time_out_desc:'设置超时时间以避免长时间等待，更长的超时时间可以增加文件获取的成功率',
+        seconds_30:'30秒',
+        minutes_1:'1分钟',
+        minutes_3:'3分钟',
+        minutes_5:'5分钟',
+        minutes_10:'10分钟',
+
+        file_cid:'CID',
+        file_create:'Created',
+        file_isencrypted:'Is Encrypted',
+
+        file_encrypted:'Encrypted'
+
 };
 
 export default en_US;

@@ -125,7 +125,7 @@ export default function Admin() {
         });
       } else {
         window.loading = false;
-        window.nodeStatus = false;
+        window.nodeStatus = false;// true;// false;
         dispatch({
           type: 'SET_NODE_STATUS',
           nodeStatus: false,

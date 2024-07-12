@@ -2,11 +2,14 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useIntl } from 'react-intl';
 import { decryptUploadFiles } from 'services/filesService.js';
 import { LoadingOutlined } from '@ant-design/icons';
-import { Spin, Radio } from 'antd';
+import { Spin, Radio, Select } from 'antd';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import CommonModal from './CommonModal';
 import isIPFS from 'is-ipfs';
+import { DECRYPT_FILE_TIME_OUT_LIST } from 'utils/constants.js';
+
+const { Option } = Select;
 
 
 const options = [
@@ -23,6 +26,7 @@ export default function EncryptFileModal({ color }) {
     const [validateMsg, setValidateMsg] = useState('');
     const [validateHostIdMsg, setValidateHostIdMsg] = useState('');
     const [loading, setLoading] = useState(false);
+    const [filetimeout, setFiletimeout] = useState(30);
     const [decryptType, setDecryptType] = useState('host');
     const [password, setPassword] = useState('');
     const [validateKeyMsg, setValidateKeyMsg] = useState('');
@@ -57,7 +61,7 @@ export default function EncryptFileModal({ color }) {
     const closeModal = () => {
         setCId('');
         setValidateMsg('');
-        setPassword('')
+        setPassword('');
         setValidateHostIdMsg('');
         setHostId('');
         setLoading(false);
@@ -67,7 +71,7 @@ export default function EncryptFileModal({ color }) {
 
     const validateHostId = val => {
         // let reg = /^[A-Za-z0-9]+$/;
-        let res = isIPFS.cid(val)
+        let res = isIPFS.cid(val);
         // console.log(val,res,'-----')
         if (!val || res) {
             setValidateMsg('');
@@ -82,7 +86,7 @@ export default function EncryptFileModal({ color }) {
         return false;
     };
 
-    const checkPassword = (val) => {
+    const checkPassword = val => {
         const reg = /^[0-9A-Za-z]{6,20}$/g;
         if (!val || reg.test(val)) {
             setValidateKeyMsg('');
@@ -95,7 +99,7 @@ export default function EncryptFileModal({ color }) {
         setValidateKeyMsg('');
         return true;
     };
-    const validateDecryptHostId = (val)=>{
+    const validateDecryptHostId = val => {
         let reg = /^[A-Za-z0-9]+$/;
         if (!val || reg.test(val)) {
             setValidateHostIdMsg('');
@@ -106,7 +110,7 @@ export default function EncryptFileModal({ color }) {
             return false;
         }
         return true;
-    }
+    };
 
     const cidChange = vals => {
         const val = inputRef.current.value;
@@ -127,8 +131,7 @@ export default function EncryptFileModal({ color }) {
     };
 
     const DecryptFile = async () => {
-
-        if(!validateDecryptHostId(hostId)){
+        if (!validateDecryptHostId(hostId)) {
             return;
         }
         if (cId && !validateHostId(cId)) {
@@ -141,7 +144,7 @@ export default function EncryptFileModal({ color }) {
             return;
         }
 
-        if (decryptType === 'password' && password ==='') {
+        if (decryptType === 'password' && password === '') {
             setValidateKeyMsg(t('validate_decryptkey_null'));
             return;
         }
@@ -152,7 +155,7 @@ export default function EncryptFileModal({ color }) {
 
         setLoading(true);
         try {
-            await decryptUploadFiles(cId,hostId,password);
+            await decryptUploadFiles(cId, hostId, password);
             setLoading(false);
             Emitter.emit('showMessageAlert', {
                 message: 'decrypt_download_success',
@@ -167,6 +170,13 @@ export default function EncryptFileModal({ color }) {
     const onChange = e => {
         setDecryptType(e.target.value);
     };
+
+
+    const handleChange = value => {
+        setFiletimeout(value)
+    }
+
+
     return (
         <CommonModal visible={showModal} onCancel={closeModal}>
             <div className="common-modal-wrapper theme-bg">
@@ -217,11 +227,37 @@ export default function EncryptFileModal({ color }) {
                         <span className="theme-text-error text-xs pt-1">{validateHostIdMsg}</span>
                     </div>
 
+                    <div className="flex justify-between w-full font-semibold">
+                        <div>{t('dncrypt_file_time_out')}</div>
+                    </div>
+                    <div className="flex justify-between w-full text-xs font-medium  theme-text-sub-info mb-3">
+                        <div>{t('dncrypt_file_time_out_desc')}</div>
+                    </div>
+                    <Select
+                        className="common-select"
+                        popupClassName="theme-ant-select-popup"
+                        defaultValue={filetimeout}
+                        style={{ width: '100%' }}
+                        onChange={handleChange}
+                    >
+                        {DECRYPT_FILE_TIME_OUT_LIST.map(item => {
+                            return (
+                                <Option key={item.value} value={item.value}>
+                                {t(`${item.label}`)}
+                                </Option>
+                            );
+                        })}
+                    </Select>
+
+                    <div className="flex justify-between  w-full  mb-4">
+                        <span className="theme-text-error text-xs pt-1">{validateHostIdMsg}</span>
+                    </div>
+
                     <div className="flex justify-between w-full font-semibold mb-3">
                         <div>{t('dncrypt_file_cid')}</div>
                     </div>
                     <input
-                        id="file-input"
+                        // id="file-input"
                         type="input"
                         className="w-full h-3 common-input  theme-bg theme-border-color"
                         single="true"

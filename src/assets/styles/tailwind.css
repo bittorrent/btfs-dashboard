@@ -1009,6 +1009,13 @@ video {
   transition-duration: 150ms;
 }
 
+.common-select.ant-select .ant-select-selector{
+     border-radius: 0.5rem;
+
+}
+
+
+
 .setting-header {
   display: flex;
   align-items: center;

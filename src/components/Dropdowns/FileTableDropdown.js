@@ -5,7 +5,7 @@ import { removeFiles } from 'services/filesService.js';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 
-const FileTableDropdown = ({ color, hash, name, size, path, type }) => {
+const FileTableDropdown = ({ color, hash, name, size, path, type,isEncrypetd }) => {
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
   const popoverDropdownRef = React.createRef();
@@ -30,6 +30,10 @@ const FileTableDropdown = ({ color, hash, name, size, path, type }) => {
   }, []);
 
   const download = async () => {
+    if(isEncrypetd){
+        Emitter.emit('openDecryptFileModal',{ path: path });
+        return;
+    }
     if (type === 1) {
       Emitter.emit('openDownloadModal', { hash: hash, name: name, size: size, type: 1 });
     }
