@@ -1650,9 +1650,15 @@ video {
   margin-bottom: 1.25rem;
 }
 
+.mt-5 {
+    margin-top: 1.25rem;
+}
+
+
 .mt-6 {
   margin-top: 1.5rem;
 }
+
 
 .mr-6 {
   margin-right: 1.5rem;
@@ -1921,6 +1927,10 @@ video {
 .pr-8 {
   padding-right: 2rem;
 }
+
+.pr-12 {
+    padding-right: 3rem;
+ }
 
 .pb-12 {
   padding-bottom: 3rem;
@@ -2491,4 +2501,9 @@ video {
 }
 
 @media (min-width: 1536px) {
+}
+
+
+.min-h-screen{
+    min-height: 100vh;
 }

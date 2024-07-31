@@ -275,3 +275,49 @@
 }
     }
 
+
+.login-bg {
+    background: #F2F5F7;
+
+}
+
+.login-form{
+    padding-left: 5.5rem;
+}
+
+.login-title{
+    font-family: Gilroy, Gilroy;
+    font-weight: bold;
+    font-size: 36px;
+    color: #171418;
+    line-height: 43px;
+    text-align: left;
+    font-style: normal;
+    margin-bottom: 15px;
+}
+.login-desc {
+    font-family: PingFangSC, PingFang SC;
+    font-weight: 600;
+    font-size: 15px;
+    color: #232427;
+    line-height: 21px;
+    text-align: left;
+    font-style: normal;
+    margin-bottom: 55px;
+}
+.min-h-400 {
+    min-height: 400px;
+}
+.max-w-515px {
+    max-width: 515px;
+}
+.min-w-334px{
+    min-width: 334px;
+
+}
+
+.login-btn{
+    min-width: 155px;
+    font-size: 14px;
+    font-weight: bold;
+}

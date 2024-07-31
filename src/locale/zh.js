@@ -421,7 +421,26 @@ const zh_CN = {
         file_cid:'CID',
         file_create:'Created',
         file_isencrypted:'Is Encrypted',
-        file_encrypted:'Encrypted'
+        file_encrypted:'Encrypted',
+
+        login:'Login',
+        login_endpoint_desc:'Please set a login password when loghe node data and private key security',
+        set_login_password:'设置登录密码',
+        set_login_password_desc:'设置登录密码描述',
+        reset_login_password:'重置登录密码',
+        reset_login_password_desc:'重置登录密码描述',
+        enter_private_key:'请输入节点私钥',
+        login_password:'login password',
+        lost_password:'Lost password?',
+        enter_password:'Set a login password ',
+        enter_password_desc:'(a combination of letters and numbers larger than 8 characters)',
+        re_enter_password:'Re-enter password',
+
+        check_private_key:'查看私钥',
+        check_private_key_desc:'私钥提供了对您节点和资产的完整访问权限 请确保私钥不会泄露给其他人',
+        check_private_key_input:'输入登录密码以继续',
+        check_private_key_input_placeholder:'Enter your password'
+
 
 };
 

@@ -4,6 +4,8 @@ import CardSettings from "components/Cards/CardSettings.js";
 import CardConfigFileDetail from "components/Cards/CardConfigFileDetail.js";
 import S3CardConfigDetail from "components/Cards/S3CardConfigDetail.js"
 
+import CheckPrivateKeyModal from 'components/Modals/CheckPrivateKeyModal.js';
+
 export default function Settings(props) {
 
     const {state} = useContext(mainContext);
@@ -19,6 +21,7 @@ export default function Settings(props) {
                 {fileDetail>0 && <CardConfigFileDetail color={theme}/>}
                 {s3Detail>0 && <S3CardConfigDetail color={theme}/>}
                 {fileDetail<1 && s3Detail<1 && <CardSettings color={theme}/>}
+                <CheckPrivateKeyModal color={theme}/>
             </div>
         </>
     );

@@ -7,6 +7,13 @@ const asyncFiles = AsyncComponent(() => import(/*  webpackChunkName: "files" */ 
 const asyncCheque = AsyncComponent(() => import(/*  webpackChunkName: "cheque" */ 'views/admin/Cheque.js'));
 const asyncHeartBeats = AsyncComponent(() => import(/*  webpackChunkName: "cheque" */ 'views/admin/HeartBeats.js'));
 
+const asyncLogin = AsyncComponent(() => import(/*  webpackChunkName: "cheque" */ 'views/login/Login.js'));
+
+
+const LoginRoutes = [
+    { path: '/login', component: asyncLogin },
+  ];
+
 const SimpleRoutes = [
   { path: '/admin/dashboard', component: asyncDashboard },
   { path: '/admin/peers', component:asyncPeers },
@@ -21,7 +28,10 @@ const MainRoutes = [
 ];
 
 
+
+
 export {
     SimpleRoutes,
-    MainRoutes
+    MainRoutes,
+    LoginRoutes
 }

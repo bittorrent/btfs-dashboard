@@ -15,6 +15,8 @@ import 'assets/styles/themeAntd.scss';
 import 'assets/styles/index.css';
 
 import Admin from 'layouts/Admin.js';
+// import Login from 'layouts/Login.js';
+import Login from 'views/login/Login';
 
 import { ContextProvider } from './reducer';
 import Inter from './locale/intl';
@@ -25,6 +27,7 @@ ReactDOM.render(
             <HashRouter>
                 <Switch>
                     <Route path="/admin" component={Admin} />
+                    <Route path="/login" component={Login} />
                     <Redirect from="*" to="/admin" />
                 </Switch>
             </HashRouter>

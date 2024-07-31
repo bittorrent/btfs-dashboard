@@ -47,12 +47,15 @@ export default function CardSettings({ color }) {
   };
   const [copyUrl, setCopyUrl] = useState(getCopyUrl(NODE_URL));
   const reveal = async () => {
-    let { privateKey } = await getPrivateKey();
-    if (privateKey) {
-      Emitter.emit('openMessageModal', { message: privateKey });
-    } else {
-      Emitter.emit('showMessageAlert', { message: 'api_not_set', status: 'error', type: 'frontEnd' });
-    }
+    // e.preventDefault();
+    Emitter.emit('openCheckPrivateKeyModal');
+
+    // let { privateKey } = await getPrivateKey();
+    // if (privateKey) {
+    //   Emitter.emit('openMessageModal', { message: privateKey });
+    // } else {
+    //   Emitter.emit('showMessageAlert', { message: 'api_not_set', status: 'error', type: 'frontEnd' });
+    // }
   };
 
   const getPath = async () => {
