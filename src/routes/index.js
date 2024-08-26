@@ -11,7 +11,10 @@ const asyncLogin = AsyncComponent(() => import(/*  webpackChunkName: "cheque" */
 
 
 const LoginRoutes = [
+    // { path: '/login/endpoint', component: asyncLogin },
     { path: '/login', component: asyncLogin },
+    // { path: '/login/set', component: asyncLogin },
+    // { path: '/login/reset', component: asyncLogin },
   ];
 
 const SimpleRoutes = [

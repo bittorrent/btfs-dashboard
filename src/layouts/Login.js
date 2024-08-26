@@ -6,13 +6,15 @@ import Endpoint from 'components/Login/Endpoint.js';
 import SetPassword from 'components/Login/SetPassword.js';
 import PasswordLogin from 'components/Login/PasswordLogin.js';
 import { checkLoginPassword } from 'services/login.js';
+import { LoginRoutes } from 'routes/index';
+
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
+
 
 export default function Login(props) {
     const [isReset, setIsReset] = useState(false);
     const [endpoint, setEndpoint] = useState('');
     const [hasPassword, setHasPassword] = useState(true);
-
     // const { state } = useContext(mainContext);
     // const { theme } = state;
     // const query = new URLSearchParams(props.location.search);
@@ -36,20 +38,22 @@ export default function Login(props) {
         }
     };
 
-    const endpointChange = async val => {
+    const endpointChange = async (val) => {
         await checkLoginPassowrd();
         setEndpoint(val);
     };
 
-    const lostPassword = () => {
+    const lostPassword = ()=>{
         // setlostPassword
-        console.log('lostPassword', '----lostPassword');
-        setIsReset(true);
-    };
+         // {!endpoint && <Endpoint />}
+                // {endpoint && !hasPassword && <SetPassword endpoint={endpoint} isReset={isReset}/>}
+                // {endpoint && hasPassword && <PasswordLogin  endpoint={endpoint} />}
+
+    }
 
     useEffect(() => {
-        Emitter.on('handleEndpoint', endpointChange);
-        Emitter.on('handleLostPassword', lostPassword);
+        // Emitter.on('handleEndpoint', endpointChange);
+        // Emitter.on('handleLostPassword', lostPassword);
     }, []);
 
     return (
@@ -60,11 +64,14 @@ export default function Login(props) {
                 </div>
             </div>
             <div className="flex flex-1 min-h-screen login-form  ">
-                {!endpoint && <Endpoint />}
-                {((endpoint && !hasPassword) || isReset) && (
-                    <SetPassword endpoint={endpoint} isReset={isReset} />
-                )}
-                {endpoint && hasPassword && !isReset && <PasswordLogin endpoint={endpoint} />}
+                <Switch>
+                {LoginRoutes.map(item => {
+                  return (
+                    <Route key={item.path} path={item.path} exact component={item.component} />
+                  )
+                })}
+                <Redirect from="/login" to="/login/endpoint" />
+              </Switch>
             </div>
         </div>
     );

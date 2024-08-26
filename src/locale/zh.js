@@ -439,7 +439,22 @@ const zh_CN = {
         check_private_key:'查看私钥',
         check_private_key_desc:'私钥提供了对您节点和资产的完整访问权限 请确保私钥不会泄露给其他人',
         check_private_key_input:'输入登录密码以继续',
-        check_private_key_input_placeholder:'Enter your password'
+        check_private_key_input_placeholder:'Enter your password',
+
+
+        setting_login_password:'Login Password',
+        setting_login_password_btn:'修改密码',
+        change_password_modal:'修改登录密码',
+        enter_old_password:'输入旧密码',
+        enter_old_password_placeholder:'请输入旧密码',
+        // Validate
+
+        password_validate_required:'请输入密码',
+        password_validate_pattern:'至少8个字符，至少1个大写字母，1个小写字母和1个数字',
+        password_re_enter_validate_pattern:'输入密码不一致',
+        private_key_validate_required:'请输入私钥',
+
+        logout:'退出登录',
 
 
 };

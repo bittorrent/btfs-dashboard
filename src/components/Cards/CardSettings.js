@@ -3,6 +3,8 @@ import { Tooltip } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { mainContext } from 'reducer';
 import Emitter from 'utils/eventBus';
+import {useHistory } from 'react-router-dom';
+
 import { nodeStatusCheck, getPrivateKey, getRepo, setApiUrl } from 'services/otherService.js';
 import { t } from 'utils/text.js';
 import { urlCheck } from 'utils/checks.js';
@@ -14,6 +16,9 @@ import S3CardConfig from './S3CardConfig';
 import { getParameterByName } from 'utils/BTFSUtil.js';
 import { MAIN_PAGE_MODE } from 'utils/constants';
 
+import { logout } from 'services/login.js';
+
+
 export default function CardSettings({ color }) {
   const apiUrl = getParameterByName('api', window.location.href);
   let NODE_URL = localStorage.getItem('NODE_URL')
@@ -23,6 +28,7 @@ export default function CardSettings({ color }) {
     setApiUrl(apiUrl);
     NODE_URL = apiUrl;
   }
+  const history = useHistory();
   const inputRef = useRef(null);
   const { dispatch, state } = useContext(mainContext);
   const { pageMode } = state;
@@ -50,13 +56,13 @@ export default function CardSettings({ color }) {
     // e.preventDefault();
     Emitter.emit('openCheckPrivateKeyModal');
 
-    // let { privateKey } = await getPrivateKey();
-    // if (privateKey) {
-    //   Emitter.emit('openMessageModal', { message: privateKey });
-    // } else {
-    //   Emitter.emit('showMessageAlert', { message: 'api_not_set', status: 'error', type: 'frontEnd' });
-    // }
+
   };
+  const changePassowrd = async () => {
+    // e.preventDefault();
+    Emitter.emit('openChangePasswordModal');
+  };
+
 
   const getPath = async () => {
     let { path, size } = await getRepo();
@@ -94,6 +100,11 @@ export default function CardSettings({ color }) {
     }
   };
 
+  const logout = async ()=>{
+        await logout()
+        history.push('/login');
+  }
+
   const changePath = async e => {
     console.log('pathRef.current.value', pathRef.current.value);
     Emitter.emit('openPathConfirmModal', { type: 'init', path: pathRef.current.value, volume: volume });
@@ -129,9 +140,10 @@ export default function CardSettings({ color }) {
             defaultValue="http://localhost:5001"
             ref={inputRef}
             onChange={handleChange}
+            disabled
           />
-          <button className="ml-2 common-btn theme-common-btn" type="button" onClick={save}>
-            {t('submit')}
+          <button className="ml-2 common-btn theme-common-btn" type="button" onClick={logout}>
+            {t('logout')}
           </button>
         </div>
       </div>
@@ -162,11 +174,16 @@ export default function CardSettings({ color }) {
         <div className="mb-2 setting-header">
           <h5 className="font-bold theme-text-main">{t('security')}</h5>
         </div>
+        <div className="flex justify-between mb-2">
+          <div className="px-3.5 w-full h-9  rounded-lg flex items-center block text-xs font-bold leading-none transition-all  theme-bg ">
+            <span>{t('setting_login_password')}</span>
+          </div>
+          <button className="ml-2 common-btn theme-common-btn" type="button" onClick={changePassowrd} style={{minWidth: 'auto'}}>
+            {t('setting_login_password_btn')}
+          </button>
+        </div>
         <div className="flex justify-between">
-          <div className="px-3.5 w-full h-9 border rounded-lg flex items-center text-sm leading-none transition-all theme-border-color theme-bg theme-text-sub-info">
-            <span className='mr-2'>
-              <i className="fa-solid fa-lock"></i>
-            </span>
+          <div className="px-3.5 w-full h-9  rounded-lg flex items-center block text-xs font-bold leading-none transition-all  theme-bg ">
             <span>{t('private_key')}</span>
           </div>
           <button className="ml-2 common-btn theme-danger-btn" type="button" onClick={reveal} style={{minWidth: 'auto'}}>

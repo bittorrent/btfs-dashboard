@@ -1,47 +1,29 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useIntl } from 'react-intl';
-import { decryptUploadFiles } from 'services/filesService.js';
+import { loginValidate } from 'services/login';
 import { LoadingOutlined } from '@ant-design/icons';
-import { Spin, Radio, Select } from 'antd';
+import { Spin, } from 'antd';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import CommonModal from './CommonModal';
-import isIPFS from 'is-ipfs';
-import { DECRYPT_FILE_TIME_OUT_LIST } from 'utils/constants.js';
+import { getPrivateKey } from 'services/otherService.js';
 
-const { Option } = Select;
-
-
-const options = [
-    { label: 'decrypt_file_with_host', value: 'host' },
-    { label: 'decrypt_file_with_password', value: 'password' },
-];
+import { aseEncode } from 'utils/BTFSUtil';
 let inputMaxLength = 100;
 
 export default function CheckPrivateKeyModal({ color }) {
     const intl = useIntl();
     const [showModal, setShowModal] = useState(false);
-    const [cId, setCId] = useState('');
-    const [hostId, setHostId] = useState('');
     const [validateMsg, setValidateMsg] = useState('');
-    const [validateHostIdMsg, setValidateHostIdMsg] = useState('');
     const [loading, setLoading] = useState(false);
-    const [filetimeout, setFiletimeout] = useState(30);
-    const [decryptType, setDecryptType] = useState('host');
     const [password, setPassword] = useState('');
-    const [validateKeyMsg, setValidateKeyMsg] = useState('');
     const inputRef = useRef(null);
-    const inputHostIdRef = useRef(null);
-    const inputKeyRef = useRef(null);
 
     useEffect(() => {
         const set = async function (params) {
             console.log('openDecryptFileModal event has occured');
-            setCId('');
             setValidateMsg('');
             setPassword('');
-            setHostId('');
-            setValidateHostIdMsg('');
             setLoading(false);
             openModal();
         };
@@ -59,123 +41,65 @@ export default function CheckPrivateKeyModal({ color }) {
     };
 
     const closeModal = () => {
-        setCId('');
         setValidateMsg('');
         setPassword('');
-        setValidateHostIdMsg('');
-        setHostId('');
         setLoading(false);
         setShowModal(false);
         window.body.style.overflow = '';
     };
 
-    const validateHostId = val => {
-        // let reg = /^[A-Za-z0-9]+$/;
-        let res = isIPFS.cid(val);
-        // console.log(val,res,'-----')
-        if (!val || res) {
+    const checkPassword = val => {
+        const reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/g;
+        if (!val || reg.test(val)) {
             setValidateMsg('');
             return true;
         }
-        // if (!reg.test(val)) {
-        //     setValidateMsg(t('decrypt_file_cid_validate'));
-        // }
-        if (!res) {
-            setValidateMsg(t('decrypt_file_cid_validate'));
-        }
-        return false;
-    };
-
-    const checkPassword = val => {
-        const reg = /^[0-9A-Za-z]{6,20}$/g;
-        if (!val || reg.test(val)) {
-            setValidateKeyMsg('');
-            return true;
-        }
         if (!reg.test(val)) {
-            setValidateKeyMsg(t('validate_encryptkey'));
+            setValidateMsg(t('password_validate_pattern'));
             return false;
         }
-        setValidateKeyMsg('');
+        setValidateMsg('');
         return true;
-    };
-    const validateDecryptHostId = val => {
-        let reg = /^[A-Za-z0-9]+$/;
-        if (!val || reg.test(val)) {
-            setValidateHostIdMsg('');
-            return true;
-        }
-        if (!reg.test(val)) {
-            setValidateHostIdMsg(t('decrypt_file_hostId_validate'));
-            return false;
-        }
-        return true;
-    };
-
-    const cidChange = vals => {
-        const val = inputRef.current.value;
-        setCId(val);
-        validateHostId(val);
-    };
-
-    const hostIdChange = vals => {
-        const val = inputHostIdRef.current.value;
-        setHostId(val);
-        validateDecryptHostId(val);
     };
 
     const passwordChange = vals => {
-        const val = inputKeyRef.current.value;
+        const val = inputRef.current.value;
         setPassword(val);
         checkPassword(val);
     };
 
-    const DecryptFile = async () => {
-        if (!validateDecryptHostId(hostId)) {
+    const handleSubmit = async () => {
+        if (!password) {
+            setValidateMsg(t('password_validate_required'));
+        }
+        if (password && !checkPassword(password)) {
+            setValidateMsg(t('password_validate_pattern'));
             return;
         }
-        if (cId && !validateHostId(cId)) {
-            setValidateMsg(t('decrypt_file_cid_validate'));
-            return;
-        }
-
-        if (!cId) {
-            setValidateMsg(t('decrypt_file_cid_null_validate'));
-            return;
-        }
-
-        if (decryptType === 'password' && password === '') {
-            setValidateKeyMsg(t('validate_decryptkey_null'));
-            return;
-        }
-
-        if (decryptType === 'password' && !checkPassword(password)) {
-            return;
-        }
-
         setLoading(true);
+        let NODE_URL = localStorage.getItem('NODE_URL')
+            ? localStorage.getItem('NODE_URL')
+            : 'http://localhost:5001';
+        let asePassowrd = aseEncode(password, NODE_URL);
         try {
-            await decryptUploadFiles(cId, hostId, password);
+            let res = await loginValidate(asePassowrd);
             setLoading(false);
-            Emitter.emit('showMessageAlert', {
-                message: 'decrypt_download_success',
-                status: 'success',
-                type: 'frontEnd',
-            });
+            if (res) {
+                getPrivateKeyFn()
+            }
         } catch (e) {
             Emitter.emit('showMessageAlert', { message: e.Message, status: 'error' });
         }
-        closeModal();
-    };
-    const onChange = e => {
-        setDecryptType(e.target.value);
     };
 
-
-    const handleChange = value => {
-        setFiletimeout(value)
-    }
-
+    const getPrivateKeyFn = async () => {
+        let { privateKey } = await getPrivateKey();
+        if (privateKey) {
+          Emitter.emit('openMessageModal', { message: privateKey });
+        } else {
+          Emitter.emit('showMessageAlert', { message: 'api_not_set', status: 'error', type: 'frontEnd' });
+        }
+    };
 
     return (
         <CommonModal visible={showModal} onCancel={closeModal}>
@@ -190,24 +114,18 @@ export default function CheckPrivateKeyModal({ color }) {
                         <div>{t('check_private_key_input')}</div>
                     </div>
                     <input
-                        // id="file-input"
-                        type="input"
+                        type="password"
                         className="w-full h-3 common-input  theme-bg theme-border-color"
                         single="true"
                         placeholder={intl.formatMessage({ id: 'check_private_key_input_placeholder' })}
                         maxLength={inputMaxLength}
                         ref={inputRef}
-                        onChange={cidChange}
-                        value={cId}
+                        onChange={passwordChange}
+                        value={password}
                         readOnly={loading}
                     />
-                    <div className="flex justify-between  w-full  mb-4">
+                    <div className="flex justify-between  w-full mt-2 ml-1 mb-4">
                         <span className="theme-text-error text-xs pt-1">{validateMsg}</span>
-                        {
-                            // <span>
-                            //     {cId.length || 0}/{inputMaxLength}
-                            // </span>
-                        }
                     </div>
 
                     <div className="mt-2 flex justify-end">
@@ -224,7 +142,7 @@ export default function CheckPrivateKeyModal({ color }) {
                                 <button
                                     type="primary"
                                     className="common-btn theme-common-btn"
-                                    onClick={DecryptFile}>
+                                    onClick={handleSubmit}>
                                     {t('next')}
                                 </button>
                             </Spin>

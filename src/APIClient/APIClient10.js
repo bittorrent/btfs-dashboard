@@ -408,6 +408,29 @@ class APIClient10 {
         return this.request(`/api/v1/accesskey/delete/${key}`);
     }
 
+    //login
+    checkLoginPassword() {
+        return this.request(`/api/v1/dashboard/check`);
+    }
+    setLoginPassword(arg){
+        return this.request(`/api/v1/dashboard/set?arg=${arg}`);
+    }
+    login(){
+        return this.request(`/api/v1/dashboard/login`);
+    }
+    loginValidate(){
+        return this.request(`/api/v1/dashboard/validate`);
+    }
+    changePassword(){
+        return this.request(`/api/v1/dashboard/change`);
+    }
+    resetLoginPassword(){
+        return this.request(`/api/v1/dashboard/reset`);
+    }
+    logout(){
+        return this.request(`/api/v1/dashboard/logout`);
+    }
+
 }
 
 const Client10 = new APIClient10();

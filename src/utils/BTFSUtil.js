@@ -1,5 +1,6 @@
 import moment from 'moment';
 import {PRECISION} from 'utils/constants.js';
+const crypto = require('crypto');
 
 export const PiB = 1024.0 * 1024.0 * 1024.0 * 1024.0 * 1024.0;
 export const TiB = 1024.0 * 1024.0 * 1024.0 * 1024.0;
@@ -262,3 +263,10 @@ export function sortListByDate(data, sortKey) {
     });
     return res;
 }
+
+export  function aseEncode(data, password) {
+    const cipher = crypto.createCipher('aes-256-cbc', password);
+    let crypted = cipher.update(data, 'utf-8', 'hex');
+    crypted += cipher.final('hex');
+    return crypted;
+};

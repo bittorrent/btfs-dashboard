@@ -135,7 +135,9 @@ export default function Admin() {
     window.body = document.getElementsByTagName('body')[0];
   };
 
+
   useEffect(() => {
+    // 检查登录状态
     init();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

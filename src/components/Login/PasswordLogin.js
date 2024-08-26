@@ -7,14 +7,30 @@ import { Tooltip, Form, Input, Button } from 'antd';
 import { Truncate } from 'utils/text.js';
 import { t } from 'utils/text.js';
 import ClipboardCopy from 'components/Utils/ClipboardCopy';
+import { aseEncode } from 'utils/BTFSUtil';
+import Emitter from 'utils/eventBus';
 
-const Endpoint = ({ color }) => {
+
+
+import { login } from 'services/login.js';
+
+const PasswordLogin = ({ color,endpoint }) => {
     // const { dispatch, state } = useContext(mainContext);
     // const { account } = state;
 
-    const onFinish = (values: any) => {
-        console.log(values, '-------aaaa');
+    const onFinish =async (values: any) => {
+        let password = values.password
+        let psw = aseEncode(password,endpoint)
+        let res = await login(psw)
+        if(res){
+
+        }
+
     };
+
+    const LostPassword = ()=>{
+        Emitter.emit('handleLostPassword')
+    }
 
     return (
         <div className="flex flex-col justify-center max-w-515px  min-w-334px">
@@ -29,7 +45,7 @@ const Endpoint = ({ color }) => {
                     // labelWrap={true}
                     labelCol={{ span: 24 }}
                     // wrapperCol={{ span: 16 }}
-                    // initialValues={{ remember: true }}
+                    initialValues={{endpoint }}
                     onFinish={onFinish}
                     // onFinishFailed={onFinishFailed}
                     autoComplete="off">
@@ -49,20 +65,26 @@ const Endpoint = ({ color }) => {
                                 <h5 className="font-bold theme-text-main shrink-0" htmlFor="grid-password">
                                     {t('login_password')}
                                 </h5>
-                                <span className="text-sm font-medium  theme-text-base">
+                                <span className="text-sm font-medium  theme-text-base cursor-pointer" onClick={LostPassword}>
                                     {t('lost_password')}
                                 </span>
                             </div>
                         }
                         name="password"
-                        rules={[{ required: true, message: 'Please input your password!' }]}>
+                        rules={[
+                            { required: true, message: t('password_validate_required') },
+                            {
+                                pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+                                message: t('password_validate_pattern'),
+                            },
+                        ]}>
                         <Input.Password className="mr-2 common-input theme-bg theme-border-color" />
                     </Form.Item>
                     <Form.Item>
                         <button
                             className="mt-5 common-btn theme-common-btn login-btn"
                             type="primary"
-                            htmlType="submit">
+                            >
                             {t('next')}
                         </button>
                     </Form.Item>
@@ -72,4 +94,4 @@ const Endpoint = ({ color }) => {
     );
 };
 
-export default Endpoint;
+export default PasswordLogin;

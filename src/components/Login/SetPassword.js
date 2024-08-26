@@ -1,21 +1,56 @@
 import React, { useContext } from 'react';
 import { mainContext } from 'reducer';
-import { Dropdown, Menu } from 'antd';
+import { useIntl } from 'react-intl';
 import themeStyle from 'utils/themeStyle.js';
-import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Tooltip, Form, Input, Button } from 'antd';
-import { Truncate } from 'utils/text.js';
 import { t } from 'utils/text.js';
-import ClipboardCopy from 'components/Utils/ClipboardCopy';
+import { aseEncode } from 'utils/BTFSUtil';
 
-const Endpoint = ({ color }) => {
+import { setLoginPassword,resetLoginPassword } from 'services/login.js';
+
+const Endpoint = ({ endpoint, isReset }) => {
     // const { dispatch, state } = useContext(mainContext);
     // const { account } = state;
+    const intl = useIntl();
+    const [form] = Form.useForm();
 
+    const onFinish = async (values: any) => {
+        const password = values.password;
+        let psw = aseEncode(password, endpoint);
+        if (isReset) {
+            const privateKey = values.privateKey;
+            resetPassword(privateKey, psw);
+        } else {
+            setPassoword(psw);
+        }
+    };
 
+    const resetPassword = async (password,privateKey ) => {
+        try {
+            let res = await resetLoginPassword(privateKey,password);
+            if (res) {
+            }
+        } catch (error) {}
+    };
 
-    const onFinish = (values: any) => {
-        console.log(values,'-------aaaa');
+    const setPassoword = async password => {
+        try {
+            let res = await setLoginPassword(password);
+            if (res) {
+            }
+        } catch (error) {}
+    };
+
+    const validatePwd = (rules, value, callback) => {
+        let loginpass = form.getFieldValue('password');
+        if (!loginpass) {
+            callback(new Error(intl.formatMessage({ id: 'password_validate_required' })));
+        }
+        if (loginpass && loginpass !== value) {
+            callback(new Error(intl.formatMessage({ id: 'password_re_enter_validate_pattern' })));
+        } else {
+            callback();
+        }
     };
 
     return (
@@ -28,33 +63,31 @@ const Endpoint = ({ color }) => {
                     name="basic"
                     layout="vertical"
                     requiredMark={false}
+                    form={form}
                     // labelCol={{ span: 8 }}
                     // wrapperCol={{ span: 16 }}
-                    // initialValues={{ remember: true }}
+                    initialValues={{ endpoint }}
                     onFinish={onFinish}
                     // onFinishFailed={onFinishFailed}
                     autoComplete="off">
                     <Form.Item
                         label={<div className="font-bold theme-text-main">API {t('endpoint')}</div>}
-                        name="endpoint"
-                        >
-                        <Input
-                            defaultValue="http://localhost:5001"
-                            className="mr-2 common-input theme-bg theme-border-color"
-                            disabled
-                        />
+                        name="endpoint">
+                        <Input className="mr-2 common-input theme-bg theme-border-color" disabled />
                     </Form.Item>
-                    <Form.Item
-                        label={<div className="font-bold theme-text-main">{t('enter_private_key')}</div>}
-                        name="enter_private_key"
-                        rules={[{ required: true, message: 'Please input your username!' }]}>
-                        <Input.TextArea
-                            rows={4}
-                            placeholder="maxLength is 6"
-                            className="mr-2 common-input theme-bg theme-border-color"
-                            maxLength={6}
-                        />
-                    </Form.Item>
+                    {isReset && (
+                        <Form.Item
+                            label={<div className="font-bold theme-text-main">{t('enter_private_key')}</div>}
+                            name="privateKey"
+                            rules={[{ required: true, message: t('private_key_validate_required') }]}>
+                            <Input.TextArea
+                                rows={4}
+                                placeholder="maxLength is 6"
+                                className="mr-2 common-input theme-bg theme-border-color"
+                                maxLength={6}
+                            />
+                        </Form.Item>
+                    )}
 
                     <Form.Item
                         label={
@@ -62,25 +95,39 @@ const Endpoint = ({ color }) => {
                                 <h5 className="font-bold theme-text-main" htmlFor="grid-password">
                                     {t('enter_password')}
                                 </h5>
-                                <span className='text-sm font-medium theme-text-sub-info'>{t('enter_password_desc')}</span>
+                                <span className="text-sm font-medium theme-text-sub-info">
+                                    {t('enter_password_desc')}
+                                </span>
                             </div>
                         }
                         name="password"
-                        rules={[{ required: true, message: 'Please input your password!' }]}>
+                        rules={[
+                            { required: true, message: t('password_validate_required') },
+                            {
+                                pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+                                message: t('password_validate_pattern'),
+                            },
+                        ]}>
                         <Input.Password className="mr-2 common-input theme-bg theme-border-color" />
                     </Form.Item>
                     <Form.Item
                         label={<div className="font-bold theme-text-main">{t('re_enter_password')}</div>}
                         name="repassword"
-                        rules={[{ required: true, message: 'Please input your password!' }]}>
+                        rules={[
+                            {
+                                validator: (rules, value, callback) => {
+                                    validatePwd(rules, value, callback);
+                                },
+                            },
+                        ]}>
                         <Input.Password className="mr-2 common-input theme-bg theme-border-color" />
                     </Form.Item>
                     <Form.Item>
                         <button
                             className="mt-5 common-btn theme-common-btn login-btn"
                             type="primary"
-                             htmlType="submit"
-                            >
+                            // htmlType="submit"
+                        >
                             {t('next')}
                         </button>
                     </Form.Item>
