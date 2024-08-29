@@ -277,7 +277,9 @@
 
 
 .login-bg {
-    background: #F2F5F7;
+    // background:;
+  background:  #F2F5F7 url(../img/background.png)  no-repeat right;
+  background-size: contain;
 
 }
 
@@ -320,4 +322,9 @@
     min-width: 155px;
     font-size: 14px;
     font-weight: bold;
+}
+
+
+.ant-form-item .ant-input{
+    background-color: transparent
 }

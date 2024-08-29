@@ -3,12 +3,14 @@ import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import { mainContext } from 'reducer';
 import MessageAlert from 'components/Alerts/MessageAlert';
 import MessageModal from 'components/Modals/MessageModal';
+import PasswordVerifyModal from 'components/Modals/PasswordVerifyModal';
 import AdminNavbar from 'components/Navbars/AdminNavbar.js';
 import Sidebar from 'components/Sidebar/Sidebar.js';
 import { nodeStatusCheck, getHostConfigData } from 'services/otherService.js';
 import { SimpleRoutes, MainRoutes } from 'routes/index';
 import { MAIN_PAGE_MODE, SAMPLE_PAGE_MODE } from 'utils/constants';
 import { getUrl } from 'utils/BTFSUtil';
+import Cookies from 'js-cookie';
 
 import {
   ArcElement,
@@ -109,6 +111,11 @@ export default function Admin() {
 
   const init = async () => {
     const NODE_URL = localStorage.getItem('NODE_URL');
+    const token = Cookies.get(NODE_URL)
+    if(!token){
+      history.push('/login');
+      return;
+    }
     const isMainMode = await getPageMode();
     if (!NODE_URL && !window.location.href.includes('/admin/settings')) {
       history.push('/admin/settings');
@@ -125,7 +132,7 @@ export default function Admin() {
         });
       } else {
         window.loading = false;
-        window.nodeStatus = true;//  false;// false;
+        window.nodeStatus = false;//  false;// false;
         dispatch({
           type: 'SET_NODE_STATUS',
           nodeStatus: false,
@@ -134,7 +141,6 @@ export default function Admin() {
     }
     window.body = document.getElementsByTagName('body')[0];
   };
-
 
   useEffect(() => {
     // 检查登录状态
@@ -162,6 +168,7 @@ export default function Admin() {
         </div>
       </div>
       <MessageModal color={theme} />
+      <PasswordVerifyModal color={theme} />
       <MessageAlert />
     </>
   );

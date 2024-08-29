@@ -72,7 +72,6 @@ export default function EncryptFileModal({ color }) {
     const validateHostId = val => {
         // let reg = /^[A-Za-z0-9]+$/;
         let res = isIPFS.cid(val);
-        // console.log(val,res,'-----')
         if (!val || res) {
             setValidateMsg('');
             return true;
@@ -155,7 +154,7 @@ export default function EncryptFileModal({ color }) {
 
         setLoading(true);
         try {
-            await decryptUploadFiles(cId, hostId, password);
+            await decryptUploadFiles(cId, hostId, password,filetimeout);
             setLoading(false);
             Emitter.emit('showMessageAlert', {
                 message: 'decrypt_download_success',

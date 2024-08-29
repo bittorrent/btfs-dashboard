@@ -1,5 +1,6 @@
 import moment from 'moment';
-import {PRECISION} from 'utils/constants.js';
+import Cookies from 'js-cookie';
+import { PRECISION } from 'utils/constants.js';
 const crypto = require('crypto');
 
 export const PiB = 1024.0 * 1024.0 * 1024.0 * 1024.0 * 1024.0;
@@ -11,57 +12,55 @@ export const KiB = 1024.0;
 export const M = 1000000;
 export const B = 1000000000;
 
-
-export  function formatNumber(number,n) {
-    if(!number) return number
-    if(n === 0){
-        return Math.trunc(number)
+export function formatNumber(number, n) {
+    if (!number) return number;
+    if (n === 0) {
+        return Math.trunc(number);
     }
-    let num = Math.trunc(number * (10 ** n ))
-    return num/(10 ** n )
+    let num = Math.trunc(number * 10 ** n);
+    return num / 10 ** n;
 }
 
 export function switchStorageUnit2(storage) {
-    if (storage === null)
-        return '--';
+    if (storage === null) return '--';
     let num = 0;
     if (storage / PiB > 1) {
-        num = formatNumber((storage / PiB),2);
-        return num + ' PiB'
+        num = formatNumber(storage / PiB, 2);
+        return num + ' PiB';
     }
     if (storage / TiB > 1) {
-        num = formatNumber((storage / TiB),2);
-        return num + ' TiB'
+        num = formatNumber(storage / TiB, 2);
+        return num + ' TiB';
     }
 
     if (storage / GiB > 1) {
-        num = formatNumber((storage / GiB),2);
-        return num + ' GiB'
+        num = formatNumber(storage / GiB, 2);
+        return num + ' GiB';
     }
 
     if (storage / MiB > 1) {
-        num = formatNumber((storage / MiB),2);
-        return num + ' MiB'
+        num = formatNumber(storage / MiB, 2);
+        return num + ' MiB';
     }
 
     if (storage / KiB > 1) {
-        num = formatNumber((storage / KiB),2);
-        return num + ' KiB'
+        num = formatNumber(storage / KiB, 2);
+        return num + ' KiB';
     }
 
-    return storage + ' Byte'
+    return storage + ' Byte';
 }
 
 export function switchStorageUnit(storage) {
-    return storage / PiB
+    return storage / PiB;
 }
 
 export function compareStr(prop) {
     return function (obj1, obj2) {
         var val1 = obj1[prop];
         var val2 = obj2[prop];
-        return val1.localeCompare(val2)
-    }
+        return val1.localeCompare(val2);
+    };
 }
 
 export function compareInt(prop) {
@@ -69,7 +68,7 @@ export function compareInt(prop) {
         var val1 = obj1[prop];
         var val2 = obj2[prop];
         return val1 - val2;
-    }
+    };
 }
 
 export function str2bytes(str) {
@@ -87,32 +86,31 @@ export async function fileArrayBuffer(file) {
             resolve(fr.result);
         };
         fr.readAsArrayBuffer(file);
-    })
+    });
 }
-
 
 // format a balance number which is between 0 and 1
 function formatDecimalBalance(balance) {
     const balanceStr = String(balance);
     try {
-        if(balanceStr.indexOf('e') !== -1) {
+        if (balanceStr.indexOf('e') !== -1) {
             let [precision, exp = '-1'] = balanceStr.split('e');
-            let rateDecimal = Math.trunc(precision * 10)
+            let rateDecimal = Math.trunc(precision * 10);
             exp = exp.slice(1);
-            return `0.${'0'.repeat(parseInt(exp - 1))}${rateDecimal}`
+            return `0.${'0'.repeat(parseInt(exp - 1))}${rateDecimal}`;
         } else {
             const [integer, decimal] = balanceStr.split('.');
             let lastZeroIndex = 0;
-            for(let i = 0; i < decimal?.length; i++) {
-                if(decimal[i] !== '0') {
+            for (let i = 0; i < decimal?.length; i++) {
+                if (decimal[i] !== '0') {
                     lastZeroIndex = i;
                     break;
                 }
             }
             const rate = lastZeroIndex;
             const significantDecimal = decimal.slice(lastZeroIndex);
-            const rateDecimal = parseFloat('0.'+significantDecimal) * 100;
-            return `${integer}.${'0'.repeat(rate)}${Math.trunc(rateDecimal)}`
+            const rateDecimal = parseFloat('0.' + significantDecimal) * 100;
+            return `${integer}.${'0'.repeat(rate)}${Math.trunc(rateDecimal)}`;
         }
     } catch (e) {
         console.log(e);
@@ -127,16 +125,16 @@ export function switchBalanceUnit(balance, precision = PRECISION) {
 
     // handle big number
     if (balance / B > 1) {
-        num =formatNumber((balance / B),2)
-        return num + ' B '
+        num = formatNumber(balance / B, 2);
+        return num + ' B ';
     }
     if (balance / M > 1) {
-        num = formatNumber((balance / M),2)
-        return num + ' M '
+        num = formatNumber(balance / M, 2);
+        return num + ' M ';
     }
 
     // handle small number
-    if(balance === 0) {
+    if (balance === 0) {
         return '0';
     }
 
@@ -144,7 +142,7 @@ export function switchBalanceUnit(balance, precision = PRECISION) {
         return formatDecimalBalance(balance);
     }
 
-    return formatNumber(balance,2) + ' ';
+    return formatNumber(balance, 2) + ' ';
 }
 
 export function ceilLatency(str) {
@@ -160,37 +158,48 @@ export function ceilLatency(str) {
             let unit = str.replace(/[^a-zA-Z]/g, '');
             return numInt + ' ' + unit;
         } else {
-            return '--'
+            return '--';
         }
     } catch (e) {
         console.log(e);
-        return '--'
+        return '--';
     }
 }
 
 export function toThousands(num) {
-    if(num === null)
-        return '--';
+    if (num === null) return '--';
     return (num || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
 }
 
 export function getTimes(date) {
-    return appendZero(date.getUTCFullYear()) + '/' + appendZero((date.getUTCMonth() + 1)) + '/' + appendZero(date.getUTCDate()) + ' ' + appendZero(date.getUTCHours()) + ':' + appendZero(date.getUTCMinutes()) + ':' + appendZero(date.getUTCSeconds())
+    return (
+        appendZero(date.getUTCFullYear()) +
+        '/' +
+        appendZero(date.getUTCMonth() + 1) +
+        '/' +
+        appendZero(date.getUTCDate()) +
+        ' ' +
+        appendZero(date.getUTCHours()) +
+        ':' +
+        appendZero(date.getUTCMinutes()) +
+        ':' +
+        appendZero(date.getUTCSeconds())
+    );
 }
 
 export function appendZero(num) {
-    return num < 10 ? '0' + num : num
+    return num < 10 ? '0' + num : num;
 }
-export function versionStringCompare (curVersion='', lastVersion='2.2.1'){
+export function versionStringCompare(curVersion = '', lastVersion = '2.2.1') {
     const sources = curVersion.split('.');
     const dests = lastVersion.split('.');
     const maxL = Math.max(sources.length, dests.length);
     let result = 0;
     for (let i = 0; i < maxL; i++) {
-        const preValue = sources.length>i ? sources[i]:0;
+        const preValue = sources.length > i ? sources[i] : 0;
         const preNum = isNaN(Number(preValue)) ? preValue.charCodeAt() : Number(preValue);
-        const lastValue = dests.length>i ? dests[i]:0;
-        const lastNum =  isNaN(Number(lastValue)) ? lastValue.charCodeAt() : Number(lastValue);
+        const lastValue = dests.length > i ? dests[i] : 0;
+        const lastNum = isNaN(Number(lastValue)) ? lastValue.charCodeAt() : Number(lastValue);
         if (preNum < lastNum) {
             result = -1;
             break;
@@ -201,7 +210,7 @@ export function versionStringCompare (curVersion='', lastVersion='2.2.1'){
     }
     return result;
 }
-  export function getParameterByName(name, url = window.location.href) {
+export function getParameterByName(name, url = window.location.href) {
     // eslint-disable-next-line no-useless-escape
     name = name.replace(/[\[\]]/g, '\\$&');
     var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
@@ -213,60 +222,66 @@ export function versionStringCompare (curVersion='', lastVersion='2.2.1'){
 
 export function toNonExponential(num) {
     var m = num.toExponential().match(/\d(?:\.(\d*))?e([+-]\d+)/);
-    return formatNumber(num,(Math.max(0, (m[1] || '').length - m[2])))
+    return formatNumber(num, Math.max(0, (m[1] || '').length - m[2]));
 }
 
 export function getUrl(url, isSlice) {
-    if(!url) return url;
-    const apiUrl = localStorage.getItem('NODE_URL') ? localStorage.getItem('NODE_URL') : "http://localhost:5001";
+    if (!url) return url;
+    const apiUrl = localStorage.getItem('NODE_URL')
+        ? localStorage.getItem('NODE_URL')
+        : 'http://localhost:5001';
     const urlFormat = new URL(apiUrl);
     const baseUrl = urlFormat.protocol + '//' + urlFormat.hostname;
-    if(isSlice){
-        const list = url.split('/')
+    if (isSlice) {
+        const list = url.split('/');
         let ip = list[2];
         const port = list[4];
-        if(ip === '0.0.0.0'){
+        if (ip === '0.0.0.0') {
             ip = urlFormat.hostname;
         }
         return urlFormat.protocol + '//' + ip + ':' + port;
-    }else{
-        if(url.includes('0.0.0.0')){
+    } else {
+        if (url.includes('0.0.0.0')) {
             return url.replace('0.0.0.0', baseUrl);
-        }else{
+        } else {
             return urlFormat.protocol + '//' + url;
         }
-
     }
 }
 
 export function getIsValidFolder(value) {
-    if(!value) return false;
+    if (!value) return false;
 
-    if(value.includes('/')) return false;
+    if (value.includes('/')) return false;
 
-    const len =  str2bytes(value);
+    const len = str2bytes(value);
 
-    if(len>1024) return false;
+    if (len > 1024) return false;
 
     return true;
-
 }
 
 export function sortListByDate(data, sortKey) {
     const list = data.map(item => {
-        item[sortKey + '_time'] = moment(item[sortKey], "YYYY-MM-DD HH:mm:ss");
+        item[sortKey + '_time'] = moment(item[sortKey], 'YYYY-MM-DD HH:mm:ss');
         return item;
-    })
+    });
 
-   const res =  list.sort(function (a, b) {
+    const res = list.sort(function (a, b) {
         return b[sortKey + '_time'] - a[sortKey + '_time'];
     });
     return res;
 }
 
-export  function aseEncode(data, password) {
+export function aseEncode(data, password) {
     const cipher = crypto.createCipher('aes-256-cbc', password);
     let crypted = cipher.update(data, 'utf-8', 'hex');
     crypted += cipher.final('hex');
     return crypted;
-};
+}
+
+export function setCookies(key, value, expiresTime) {
+    let seconds = expiresTime;
+    let expires = new Date(new Date() * 1 + seconds * 1000);
+    return Cookies.set(key, value, { expires: expires });
+}

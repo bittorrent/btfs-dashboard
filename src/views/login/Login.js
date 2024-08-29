@@ -5,6 +5,7 @@ import FilesStats from 'components/Stats/FilesStats.js';
 import Endpoint from 'components/Login/Endpoint.js';
 import SetPassword from 'components/Login/SetPassword.js';
 import PasswordLogin from 'components/Login/PasswordLogin.js';
+import MessageAlert from 'components/Alerts/MessageAlert';
 import { checkLoginPassword } from 'services/login.js';
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 
@@ -28,11 +29,15 @@ export default function Login(props) {
     // }
 
     const checkLoginPassowrd = async () => {
-        let res = await checkLoginPassword();
-        if (res && res.Success) {
-            setHasPassword(true);
-        } else {
-            // setHasPassword(false);
+        try {
+            let res = await checkLoginPassword();
+            if (res && res.Success) {
+                setHasPassword(true);
+            } else if (res && !res.Success) {
+                // setHasPassword(false);
+            }
+        } catch (error) {
+            console.log(error,);
         }
     };
 
@@ -43,7 +48,6 @@ export default function Login(props) {
 
     const lostPassword = () => {
         // setlostPassword
-        console.log('lostPassword', '----lostPassword');
         setIsReset(true);
     };
 
@@ -66,6 +70,7 @@ export default function Login(props) {
                 )}
                 {endpoint && hasPassword && !isReset && <PasswordLogin endpoint={endpoint} />}
             </div>
+            <MessageAlert />
         </div>
     );
 }

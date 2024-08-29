@@ -6,6 +6,8 @@ import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import CommonModal from './CommonModal';
 import { changePassword } from 'services/login';
+import Cookies from 'js-cookie';
+import { aseEncode } from 'utils/BTFSUtil';
 
 export default function ChangePasswordModal({ color }) {
     const intl = useIntl();
@@ -15,7 +17,6 @@ export default function ChangePasswordModal({ color }) {
 
     useEffect(() => {
         const set = async function (params) {
-            console.log('openChangePasswordModal event has occured');
             setLoading(false);
             openModal();
         };
@@ -29,7 +30,7 @@ export default function ChangePasswordModal({ color }) {
 
     const openModal = () => {
         setShowModal(true);
-        form.resetFields()
+        form.resetFields();
         window.body.style.overflow = 'hidden';
     };
 
@@ -40,16 +41,32 @@ export default function ChangePasswordModal({ color }) {
     };
 
     const onFinish = async value => {
-        // setFiletimeout(value)
+        const { oldpassword, password } = value;
+        let NODE_URL = localStorage.getItem('NODE_URL')
+            ? localStorage.getItem('NODE_URL')
+            : 'http://localhost:5001';
+
+        let asePassowrd = aseEncode(password, NODE_URL);
+        let aseOldPassowrd = aseEncode(oldpassword, NODE_URL);
         setLoading(true);
+        const token = Cookies.get(NODE_URL);
         try {
-            let res = await changePassword();
+            let res = await changePassword(aseOldPassowrd, asePassowrd, token);
             setLoading(false);
-            Emitter.emit('showMessageAlert', {
-                message: 'decrypt_download_success',
-                status: 'success',
-                type: 'frontEnd',
-            });
+            if (res && res.Success) {
+                Emitter.emit('showMessageAlert', {
+                    message: 'change_password_success',
+                    status: 'success',
+                    type: 'frontEnd',
+                });
+                closeModal();
+            } else {
+                Emitter.emit('showMessageAlert', {
+                    message: 'change_password_fail',
+                    status: 'error',
+                    type: 'frontEnd',
+                });
+            }
         } catch (e) {
             Emitter.emit('showMessageAlert', { message: e.Message, status: 'error' });
         }
@@ -65,6 +82,14 @@ export default function ChangePasswordModal({ color }) {
             callback();
         }
     };
+    const validateNewPassword = (rules, value, callback) => {
+        let oldpassword = form.getFieldValue('oldpassword');
+        if (oldpassword === value) {
+            callback(new Error(intl.formatMessage({ id: 'same_as_old_password' })));
+        } else {
+            callback();
+        }
+    };
 
     return (
         <CommonModal visible={showModal} onCancel={closeModal}>
@@ -76,11 +101,7 @@ export default function ChangePasswordModal({ color }) {
                         layout="vertical"
                         requiredMark={false}
                         form={form}
-                        // labelCol={{ span: 8 }}
-                        // wrapperCol={{ span: 16 }}
-                        // initialValues={{ remember: true }}
                         onFinish={onFinish}
-                        // onFinishFailed={onFinishFailed}
                         autoComplete="off">
                         <Form.Item
                             label={
@@ -90,7 +111,7 @@ export default function ChangePasswordModal({ color }) {
                             rules={[
                                 { required: true, message: t('private_key_validate_required') },
                                 {
-                                    pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+                                    pattern: /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
                                     message: t('password_validate_pattern'),
                                 },
                             ]}>
@@ -116,11 +137,19 @@ export default function ChangePasswordModal({ color }) {
                             rules={[
                                 { required: true, message: t('private_key_validate_required') },
                                 {
-                                    pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+                                    pattern: /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
                                     message: t('password_validate_pattern'),
                                 },
+                                {
+                                    validator: (rules, value, callback) => {
+                                        validateNewPassword(rules, value, callback);
+                                    },
+                                },
                             ]}>
-                            <Input.Password className="mr-2 common-input theme-bg theme-border-color" />
+                            <Input.Password
+                                placeholder={intl.formatMessage({ id: 'enter_password_placeholder' })}
+                                className="mr-2 common-input theme-bg theme-border-color"
+                            />
                         </Form.Item>
                         <Form.Item
                             label={<div className="font-bold theme-text-main">{t('re_enter_password')}</div>}
@@ -132,7 +161,10 @@ export default function ChangePasswordModal({ color }) {
                                     },
                                 },
                             ]}>
-                            <Input.Password className="mr-2 common-input theme-bg theme-border-color" />
+                            <Input.Password
+                                placeholder={intl.formatMessage({ id: 're_enter_password_placeholder' })}
+                                className="mr-2 common-input theme-bg theme-border-color"
+                            />
                         </Form.Item>
                         <Form.Item className="mb-0">
                             <div className="mt-2 flex justify-end">

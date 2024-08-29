@@ -451,6 +451,13 @@ const en_US = {
         enter_password:'Set a login password ',
         enter_password_desc:'(a combination of letters and numbers larger than 8 characters)',
         re_enter_password:'Re-enter password',
+        login_title:'欢迎回来',
+        login_lock_message:'操作已被锁定，请十分钟后再试',
+
+        reset_password_private_key_placeholder:'请输入以16进制的私钥格式',
+        re_enter_password_placeholder:'Re-enter your password',
+        enter_password_placeholder:'Enter your password',
+
 
 
         check_private_key:'查看私钥',
@@ -464,11 +471,18 @@ const en_US = {
         change_password_modal:'修改登录密码',
         enter_old_password:'输入旧密码',
         enter_old_password_placeholder:'请输入旧密码',
+        change_password_success:'密码修改成功',
+        change_password_fail:'密码修改失败',
+        password_error:'密码错误',
+        same_as_old_password:'新密码不能与旧密码相同',
+
+
 
         password_validate_required:'请输入密码',
-        password_validate_pattern:'至少8个字符，至少1个大写字母，1个小写字母和1个数字',
+        password_validate_pattern:'至少8个字符，至少1个小写字母和1个数字',
         password_re_enter_validate_pattern:'输入密码不一致',
         private_key_validate_required:'请输入私钥',
+        private_key_validate_pattern:'请输入16进制私钥',
 
         logout:'退出登录',
 

@@ -1,17 +1,17 @@
-import React, { useContext } from 'react';
-import { mainContext } from 'reducer';
+import React from 'react';
 import { useIntl } from 'react-intl';
-import themeStyle from 'utils/themeStyle.js';
-import { Tooltip, Form, Input, Button } from 'antd';
+import { Form, Input } from 'antd';
 import { t } from 'utils/text.js';
+import Emitter from 'utils/eventBus';
 import { aseEncode } from 'utils/BTFSUtil';
+import { useHistory } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
-import { setLoginPassword,resetLoginPassword } from 'services/login.js';
+import { setLoginPassword, resetLoginPassword, login } from 'services/login.js';
 
 const Endpoint = ({ endpoint, isReset }) => {
-    // const { dispatch, state } = useContext(mainContext);
-    // const { account } = state;
     const intl = useIntl();
+    const history = useHistory();
     const [form] = Form.useForm();
 
     const onFinish = async (values: any) => {
@@ -25,10 +25,13 @@ const Endpoint = ({ endpoint, isReset }) => {
         }
     };
 
-    const resetPassword = async (password,privateKey ) => {
+    const resetPassword = async (password, privateKey) => {
         try {
-            let res = await resetLoginPassword(privateKey,password);
-            if (res) {
+            let res = await resetLoginPassword(privateKey, password);
+            if (res && res.Success) {
+                loginFn(password);
+            } else {
+                Emitter.emit('showMessageAlert', { message: res.Text, status: 'error' });
             }
         } catch (error) {}
     };
@@ -36,9 +39,28 @@ const Endpoint = ({ endpoint, isReset }) => {
     const setPassoword = async password => {
         try {
             let res = await setLoginPassword(password);
-            if (res) {
+            if (res && res.Success) {
+                loginFn(password);
+            } else {
+                Emitter.emit('showMessageAlert', { message: res.Text, status: 'error' });
             }
-        } catch (error) {}
+        } catch (error) {
+            Emitter.emit('showMessageAlert', { message: 'setting_error', status: 'error', type: 'frontEnd' });
+        }
+    };
+
+    const loginFn = async password => {
+        try {
+            let res = await login(password);
+            if (res && res.Success) {
+                Cookies.set(endpoint, res.Text, { expires: 1, domain: 'localhost' });
+                history.push('/admin/settings');
+            } else {
+                Emitter.emit('showMessageAlert', { message: res.Text || 'error', status: 'error' });
+            }
+        } catch (error) {
+            Emitter.emit('showMessageAlert', { message: error.Message || 'error', status: 'error' });
+        }
     };
 
     const validatePwd = (rules, value, callback) => {
@@ -64,11 +86,8 @@ const Endpoint = ({ endpoint, isReset }) => {
                     layout="vertical"
                     requiredMark={false}
                     form={form}
-                    // labelCol={{ span: 8 }}
-                    // wrapperCol={{ span: 16 }}
                     initialValues={{ endpoint }}
                     onFinish={onFinish}
-                    // onFinishFailed={onFinishFailed}
                     autoComplete="off">
                     <Form.Item
                         label={<div className="font-bold theme-text-main">API {t('endpoint')}</div>}
@@ -79,12 +98,19 @@ const Endpoint = ({ endpoint, isReset }) => {
                         <Form.Item
                             label={<div className="font-bold theme-text-main">{t('enter_private_key')}</div>}
                             name="privateKey"
-                            rules={[{ required: true, message: t('private_key_validate_required') }]}>
+                            rules={[
+                                { required: true, message: t('private_key_validate_required') },
+                                {
+                                    pattern: /^[A-Fa-f0-9]{1,}$/,
+                                    message: t('private_key_validate_pattern'),
+                                },
+                            ]}>
                             <Input.TextArea
                                 rows={4}
-                                placeholder="maxLength is 6"
+                                placeholder={intl.formatMessage({
+                                    id: 'reset_password_private_key_placeholder',
+                                })}
                                 className="mr-2 common-input theme-bg theme-border-color"
-                                maxLength={6}
                             />
                         </Form.Item>
                     )}
@@ -104,11 +130,14 @@ const Endpoint = ({ endpoint, isReset }) => {
                         rules={[
                             { required: true, message: t('password_validate_required') },
                             {
-                                pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+                                pattern: /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
                                 message: t('password_validate_pattern'),
                             },
                         ]}>
-                        <Input.Password className="mr-2 common-input theme-bg theme-border-color" />
+                        <Input.Password
+                            placeholder={intl.formatMessage({ id: 'enter_password_placeholder' })}
+                            className="mr-2 common-input theme-bg theme-border-color"
+                        />
                     </Form.Item>
                     <Form.Item
                         label={<div className="font-bold theme-text-main">{t('re_enter_password')}</div>}
@@ -120,7 +149,10 @@ const Endpoint = ({ endpoint, isReset }) => {
                                 },
                             },
                         ]}>
-                        <Input.Password className="mr-2 common-input theme-bg theme-border-color" />
+                        <Input.Password
+                            placeholder={intl.formatMessage({ id: 're_enter_password_placeholder' })}
+                            className="mr-2 common-input theme-bg theme-border-color"
+                        />
                     </Form.Item>
                     <Form.Item>
                         <button

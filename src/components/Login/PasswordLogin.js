@@ -1,62 +1,79 @@
-import React, { useContext } from 'react';
-import { mainContext } from 'reducer';
-import { Dropdown, Menu } from 'antd';
-import themeStyle from 'utils/themeStyle.js';
-import { QuestionCircleOutlined } from '@ant-design/icons';
-import { Tooltip, Form, Input, Button } from 'antd';
-import { Truncate } from 'utils/text.js';
+import React, {useState, useEffect } from 'react';
+import { useIntl } from 'react-intl';
+import {useHistory } from 'react-router-dom';
+import {  Form, Input } from 'antd';
 import { t } from 'utils/text.js';
-import ClipboardCopy from 'components/Utils/ClipboardCopy';
 import { aseEncode } from 'utils/BTFSUtil';
+import Cookies from 'js-cookie';
+
 import Emitter from 'utils/eventBus';
-
-
 
 import { login } from 'services/login.js';
 
-const PasswordLogin = ({ color,endpoint }) => {
-    // const { dispatch, state } = useContext(mainContext);
-    // const { account } = state;
+const PasswordLogin = ({ color, endpoint }) => {
+    const history = useHistory();
+    const intl = useIntl();
+    const [form] = Form.useForm();
+    const [times, setTimes] = useState(0);
+    const [isLock, setIsLock] = useState(false);
+    const [validateMsg, setValidateMsg] = useState('');
 
-    const onFinish =async (values: any) => {
-        let password = values.password
-        let psw = aseEncode(password,endpoint)
-        let res = await login(psw)
-        if(res){
-
+    const onFinish = async (values: any) => {
+        if (isLock) return;
+        let password = values.password;
+        let psw = aseEncode(password, endpoint);
+        let res = await login(psw);
+        if (res && res.Success) {
+            Cookies.set(endpoint, res.Text, { expires: 1, domain: 'localhost' });
+            history.push('/admin/settings');
+        } else {
+            setTimes(times + 1);
+            Emitter.emit('showMessageAlert', { message: res.Text || 'error', status: 'error' });
         }
-
     };
 
-    const LostPassword = ()=>{
-        Emitter.emit('handleLostPassword')
-    }
+    const LostPassword = () => {
+        Emitter.emit('handleLostPassword');
+    };
+
+    useEffect(() => {
+        if (times >= 5) {
+            setIsLock(true);
+        }
+    }, [times]);
+
+    useEffect(() => {
+        let timer = null;
+        if (isLock) {
+            setValidateMsg(t('login_lock_message'));
+            timer = setTimeout(() => {
+                setIsLock(false);
+            }, 600000);
+        } else {
+            setValidateMsg('');
+            setTimes(0);
+        }
+        return () => clearInterval(timer);
+    }, [isLock]);
 
     return (
         <div className="flex flex-col justify-center max-w-515px  min-w-334px">
             <div className="min-h-400">
-                <div className="login-title">{t('set_login_password')}</div>
-                <div className="text-gray-900 text-sm font-bold mb-12">{t('set_login_password_desc')}</div>
+                <div className="login-title mb-12">{t('login_title')}</div>
 
                 <Form
                     name="basic"
                     layout="vertical"
+                    form={form}
                     requiredMark={false}
-                    // labelWrap={true}
                     labelCol={{ span: 24 }}
-                    // wrapperCol={{ span: 16 }}
-                    initialValues={{endpoint }}
+                    initialValues={{ endpoint }}
                     onFinish={onFinish}
-                    // onFinishFailed={onFinishFailed}
                     autoComplete="off">
                     <Form.Item
                         label={<div className="font-bold theme-text-main">API {t('endpoint')}</div>}
                         name="endpoint">
-                        <Input
-                            defaultValue="http://localhost:5001"
-                            className="mr-2 common-input theme-bg theme-border-color"
-                            disabled
-                        />
+                        <Input className="mr-2 common-input theme-bg theme-border-color" disabled />
                     </Form.Item>
 
                     <Form.Item
@@ -65,7 +82,9 @@ const PasswordLogin = ({ color,endpoint }) => {
                                 <h5 className="font-bold theme-text-main shrink-0" htmlFor="grid-password">
                                     {t('login_password')}
                                 </h5>
-                                <span className="text-sm font-medium  theme-text-base cursor-pointer" onClick={LostPassword}>
+                                <span
+                                    className="text-sm font-medium  theme-text-base cursor-pointer"
+                                    onClick={LostPassword}>
                                     {t('lost_password')}
                                 </span>
                             </div>
@@ -74,17 +93,20 @@ const PasswordLogin = ({ color,endpoint }) => {
                         rules={[
                             { required: true, message: t('password_validate_required') },
                             {
-                                pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+                                pattern: /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
                                 message: t('password_validate_pattern'),
                             },
                         ]}>
-                        <Input.Password className="mr-2 common-input theme-bg theme-border-color" />
+                        <Input.Password
+
+                        placeholder={intl.formatMessage({ id: 'enter_password_placeholder' })}
+                        className="mr-2 common-input theme-bg theme-border-color" />
                     </Form.Item>
+                    <div className="flex justify-between  w-full mt-2 ml-1 ">
+                        <span className="theme-text-error text-xs pt-1">{validateMsg}</span>
+                    </div>
                     <Form.Item>
-                        <button
-                            className="mt-5 common-btn theme-common-btn login-btn"
-                            type="primary"
-                            >
+                        <button className="mt-5 common-btn theme-common-btn login-btn" type="primary">
                             {t('next')}
                         </button>
                     </Form.Item>

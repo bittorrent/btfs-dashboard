@@ -290,9 +290,9 @@ export const encryptUploadFiles = async (file,hostId,password,onUploadProgress) 
 };
 
 
-export const decryptUploadFiles = async (cid,hostid,password) => {
+export const decryptUploadFiles = async (cid,hostid,password,t) => {
     try {
-            let data = await Client10.decrypt({cid,hostid,password}, {}, {responseType: 'blob'});
+            let data = await Client10.decrypt({cid,hostid,password,t}, {}, {responseType: 'blob'});
             if(data.Type && data.Type === 'error' ){
                 return Promise.reject(data);
             }

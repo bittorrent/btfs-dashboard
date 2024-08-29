@@ -54,9 +54,16 @@ export default function CardSettings({ color }) {
   const [copyUrl, setCopyUrl] = useState(getCopyUrl(NODE_URL));
   const reveal = async () => {
     // e.preventDefault();
-    Emitter.emit('openCheckPrivateKeyModal');
+    Emitter.emit('openPasswordVerifyModal',{callbackFn:getPrivateKeys});
+  };
 
-
+  const getPrivateKeys = async () => {
+    let { privateKey } = await getPrivateKey();
+    if (privateKey) {
+      Emitter.emit('openMessageModal', { message: privateKey });
+    } else {
+      Emitter.emit('showMessageAlert', { message: 'api_not_set', status: 'error', type: 'frontEnd' });
+    }
   };
   const changePassowrd = async () => {
     // e.preventDefault();
@@ -100,7 +107,7 @@ export default function CardSettings({ color }) {
     }
   };
 
-  const logout = async ()=>{
+  const handleLogout = async ()=>{
         await logout()
         history.push('/login');
   }
@@ -136,13 +143,13 @@ export default function CardSettings({ color }) {
         <div className="flex">
           <input
             type="text"
-            className="mr-2 common-input theme-bg theme-border-color"
+            className="mr-2 common-input theme-text-desc theme-base-bg border-none"
             defaultValue="http://localhost:5001"
             ref={inputRef}
             onChange={handleChange}
             disabled
           />
-          <button className="ml-2 common-btn theme-common-btn" type="button" onClick={logout}>
+          <button className="ml-2 common-btn theme-common-btn" type="button" onClick={handleLogout}>
             {t('logout')}
           </button>
         </div>

@@ -7,11 +7,13 @@ import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import CommonModal from './CommonModal';
 import { getPrivateKey } from 'services/otherService.js';
+import Cookies from 'js-cookie';
+
 
 import { aseEncode } from 'utils/BTFSUtil';
 let inputMaxLength = 100;
 
-export default function CheckPrivateKeyModal({ color }) {
+export default function PasswordVerifyModal({ color }) {
     const intl = useIntl();
     const [showModal, setShowModal] = useState(false);
     const [validateMsg, setValidateMsg] = useState('');
@@ -19,17 +21,19 @@ export default function CheckPrivateKeyModal({ color }) {
     const [password, setPassword] = useState('');
     const inputRef = useRef(null);
 
+    let callbackFn = null;
     useEffect(() => {
         const set = async function (params) {
             console.log('openDecryptFileModal event has occured');
+            callbackFn = params.callbackFn;
             setValidateMsg('');
             setPassword('');
             setLoading(false);
             openModal();
         };
-        Emitter.on('openCheckPrivateKeyModal', set);
+        Emitter.on('openPasswordVerifyModal', set);
         return () => {
-            Emitter.removeListener('openCheckPrivateKeyModal');
+            Emitter.removeListener('openPasswordVerifyModal');
             window.body.style.overflow = '';
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -49,7 +53,7 @@ export default function CheckPrivateKeyModal({ color }) {
     };
 
     const checkPassword = val => {
-        const reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/g;
+        const reg = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/g;
         if (!val || reg.test(val)) {
             setValidateMsg('');
             return true;
@@ -81,11 +85,16 @@ export default function CheckPrivateKeyModal({ color }) {
             ? localStorage.getItem('NODE_URL')
             : 'http://localhost:5001';
         let asePassowrd = aseEncode(password, NODE_URL);
+        const token = Cookies.get(NODE_URL)
         try {
-            let res = await loginValidate(asePassowrd);
+            let res = await loginValidate(asePassowrd,token);
             setLoading(false);
-            if (res) {
-                getPrivateKeyFn()
+            if (res && res.Success) {
+                callbackFn();
+                closeModal()
+            }else{
+                setValidateMsg(t('password_error'))
+                // Emitter.emit('showMessageAlert', { message: res.Text, status: 'error' });
             }
         } catch (e) {
             Emitter.emit('showMessageAlert', { message: e.Message, status: 'error' });

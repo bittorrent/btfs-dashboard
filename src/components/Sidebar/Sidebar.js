@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { mainContext } from 'reducer';
 import LangDropdown from 'components/Dropdowns/LangDropdown.js';
 import ThemeToggle from 'components/Toggles/ThemeToggle';
+import AccountLock from 'components/Lock/AccountLock';
+
 import { getHostInfo } from 'services/dashboardService.js';
 import { MAIN_PAGE_MODE, SAMPLE_PAGE_MODE } from 'utils/constants';
 import HostID from './HostID';
@@ -222,6 +224,7 @@ export default function Sidebar() {
                         <div className="flex items-center">
                             <ThemeToggle />
                             <LangDropdown />
+                            <AccountLock/>
                         </div>
                     </div>
                 </div>

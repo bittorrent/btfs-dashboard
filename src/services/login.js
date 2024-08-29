@@ -28,17 +28,17 @@ export const login = async (arg) => {
         console.log(e);
     }
 };
-export const loginValidate = async (arg) => {
+export const loginValidate = async (arg,token) => {
     try {
-        let data = await Client10.loginValidate(arg);
+        let data = await Client10.loginValidate(arg,token);
         return data;
     } catch (e) {
         console.log(e);
     }
 };
-export const changePassword = async (arg) => {
+export const changePassword = async (arg,newpassword,token) => {
     try {
-        let data = await Client10.changePassword(arg);
+        let data = await Client10.changePassword(arg,newpassword,token);
         return data;
     } catch (e) {
         console.log(e);

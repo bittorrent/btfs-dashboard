@@ -377,8 +377,8 @@ class APIClient10 {
         });
     }
 
-    decrypt({cid,hostid,password}, body, config) {
-        return this.request(`/api/v1/decrypt?arg=${cid}&from=${hostid}&p=${password}`, body, config);
+    decrypt({cid,hostid,password,t}, body, config) {
+        return this.request(`/api/v1/decrypt?arg=${cid}&from=${hostid}&p=${password}&t=${t}`, body, config);
     }
 
     // s3 api
@@ -415,14 +415,14 @@ class APIClient10 {
     setLoginPassword(arg){
         return this.request(`/api/v1/dashboard/set?arg=${arg}`);
     }
-    login(){
-        return this.request(`/api/v1/dashboard/login`);
+    login(arg){
+        return this.request(`/api/v1/dashboard/login?arg=${arg}`);
     }
-    loginValidate(){
-        return this.request(`/api/v1/dashboard/validate`);
+    loginValidate(arg,token){
+        return this.request(`/api/v1/dashboard/validate?arg=${arg}&token=${token}`);
     }
-    changePassword(){
-        return this.request(`/api/v1/dashboard/change`);
+    changePassword(arg,newpassword,token){
+        return this.request(`/api/v1/dashboard/change?arg=${arg}&arg=${newpassword}&token=${token}`);
     }
     resetLoginPassword(){
         return this.request(`/api/v1/dashboard/reset`);
