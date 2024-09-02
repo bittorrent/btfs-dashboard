@@ -1,18 +1,16 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Emitter from 'utils/eventBus';
-import { mainContext } from 'reducer';
-import FilesStats from 'components/Stats/FilesStats.js';
 import Endpoint from 'components/Login/Endpoint.js';
 import SetPassword from 'components/Login/SetPassword.js';
 import PasswordLogin from 'components/Login/PasswordLogin.js';
 import MessageAlert from 'components/Alerts/MessageAlert';
 import { checkLoginPassword } from 'services/login.js';
-import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 export default function Login(props) {
     const [isReset, setIsReset] = useState(false);
     const [endpoint, setEndpoint] = useState('');
     const [hasPassword, setHasPassword] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     // const { state } = useContext(mainContext);
     // const { theme } = state;
@@ -28,32 +26,35 @@ export default function Login(props) {
     //     // const isMainMode = await getPageMode();
     // }
 
-    const checkLoginPassowrd = async () => {
+    const endpointChange = async val => {
+        if(loading)return;
+        setLoading(true)
         try {
             let res = await checkLoginPassword();
+            setLoading(false)
+            if(res.Type === 'error'){
+                Emitter.emit('showMessageAlert', { message: res.Message || 'error', status: 'error' });
+                return;
+            }
             if (res && res.Success) {
                 setHasPassword(true);
+                setEndpoint(val);
             } else if (res && !res.Success) {
-                // setHasPassword(false);
+                setHasPassword(false);
             }
         } catch (error) {
-            console.log(error,);
+            console.log(error);
         }
     };
 
-    const endpointChange = async val => {
-        await checkLoginPassowrd();
-        setEndpoint(val);
-    };
-
     const lostPassword = () => {
-        // setlostPassword
         setIsReset(true);
     };
 
     useEffect(() => {
         Emitter.on('handleEndpoint', endpointChange);
         Emitter.on('handleLostPassword', lostPassword);
+        document.documentElement.classList.remove('dark');
     }, []);
 
     return (

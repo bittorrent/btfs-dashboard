@@ -29,9 +29,11 @@ const AccountLock = () => {
     }, [theme]);
 
     return (
-        <button onClick={lockAccount} className="ml-2 round-btn theme-round-btn ">
-            {theme === 'light' && <img src={require(`assets/img/lock.svg`).default} alt="" />}
-            {theme === 'dark' && <img src={require(`assets/img/lock-dark.svg`).default} alt="" />}
+        <button onClick={lockAccount} className="ml-2 round-btn theme-round-btn account-lock">
+            <img  className="lock-img" src={require(`assets/img/lock.svg`).default} alt="" />
+            <img  className="lock-img-hover " src={require(`assets/img/lock-dark.svg`).default} alt="" />
+            {//theme === 'dark' && <img src={require(`assets/img/lock-dark.svg`).default} alt="" />
+                }
         </button>
     );
 };

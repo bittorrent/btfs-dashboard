@@ -117,9 +117,9 @@ export default function Admin() {
       return;
     }
     const isMainMode = await getPageMode();
-    if (!NODE_URL && !window.location.href.includes('/admin/settings')) {
-      history.push('/admin/settings');
-    } else {
+    // if (!NODE_URL && !window.location.href.includes('/admin/settings')) {
+    //   history.push('/admin/settings');
+    // } else {
       // check node status
       window.loading = true;
       let result = await nodeStatusCheck(NODE_URL, isMainMode);
@@ -138,7 +138,7 @@ export default function Admin() {
           nodeStatus: false,
         });
       }
-    }
+    // }
     window.body = document.getElementsByTagName('body')[0];
   };
 

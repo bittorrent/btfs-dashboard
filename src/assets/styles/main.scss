@@ -328,3 +328,21 @@
 .ant-form-item .ant-input{
     background-color: transparent
 }
+
+
+.account-lock{
+    .lock-img-hover{
+        display: none
+        }
+      .lock-img{
+            display: block
+        }
+    &:hover{
+        .lock-img{
+            display: none
+        }
+        .lock-img-hover{
+            display: block
+        }
+    }
+}

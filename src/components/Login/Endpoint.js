@@ -1,28 +1,16 @@
-import React, { useContext,useState ,useRef,useEffect} from 'react';
-import { mainContext } from 'reducer';
-import { Dropdown, Menu } from 'antd';
-import themeStyle from 'utils/themeStyle.js';
+import React, {useState ,useRef,useEffect} from 'react';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import Emitter from 'utils/eventBus';
-
-import { nodeStatusCheck, getPrivateKey, getRepo, setApiUrl } from 'services/otherService.js';
 import { urlCheck } from 'utils/checks.js';
-
 import { Tooltip } from 'antd';
-import { Truncate } from 'utils/text.js';
 import { t } from 'utils/text.js';
-import ClipboardCopy from 'components/Utils/ClipboardCopy';
 
 
 
 
 const Endpoint = ({ color }) => {
-    // const { dispatch, state } = useContext(mainContext);
-    // const { account } = state;
     const inputRef = useRef(null);
-    const { dispatch, state } = useContext(mainContext);
     const [endpoint, setEndpoint] = useState('');
-    const [loading, setLoading] = useState(false);
 
 
     const getEndpoint = ()=>{
@@ -31,7 +19,6 @@ const Endpoint = ({ color }) => {
         if(NODE_URL){
             inputRef.current.value = NODE_URL;
         }
-        // const isMainMode = await getPageMode();
     }
 
       const getNodeUrl = () => {
@@ -46,28 +33,11 @@ const Endpoint = ({ color }) => {
       };
 
     const save = async (e, wallet) => {
-        const node_url2 = getNodeUrl();
-        Emitter.emit('handleEndpoint', node_url2);
-        return
+        e.preventDefault();
+        e.stopPropagation();
         const node_url = getNodeUrl();
         if (!node_url) return;
-        let result = await nodeStatusCheck(node_url);
-        if (result) {
-          window.nodeStatus = true;
-          dispatch({
-            type: 'SET_NODE_STATUS',
-            nodeStatus: true,
-          });
-        //   getPath();
-        //   Emitter.emit('showMessageAlert', { message: 'setting_success', status: 'success', type: 'frontEnd' });
-        //   Emitter.emit('getHostId')
-          Emitter.emit('handleEndpoint', node_url);
-        } else {
-        //   setPath('');
-        //   Emitter.emit('showMessageAlert', { message: 'setting_error', status: 'error', type: 'frontEnd' });
-        }
-        //   Emitter.emit('handleEndpoint', {});
-        //   Emitter.emit('handleEndpoint', { checked, parentIndex, childIndex });
+        Emitter.emit('handleEndpoint', node_url);
     };
 
     const handleChange = (e) => {
@@ -96,10 +66,11 @@ const Endpoint = ({ color }) => {
               </div>
                 <input
                     type="text"
-                    className="mr-2 common-input theme-bg theme-border-color"
+                    className="mr-2 common-input  theme-border-color"
                     defaultValue="http://localhost:5001"
                     ref={inputRef}
                     onChange={handleChange}
+                    placeholder="http://localhost:5001"
                 />
                 <button className="mt-5 common-btn theme-common-btn login-btn" type="button" onClick={save}>
                     {t('next')}
