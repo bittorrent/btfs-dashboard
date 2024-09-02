@@ -113,8 +113,8 @@ export default function Admin() {
     const NODE_URL = localStorage.getItem('NODE_URL');
     const token = Cookies.get(NODE_URL)
     if(!token){
-      history.push('/login');
-      return;
+    //   history.push('/login');
+    //   return;
     }
     const isMainMode = await getPageMode();
     // if (!NODE_URL && !window.location.href.includes('/admin/settings')) {

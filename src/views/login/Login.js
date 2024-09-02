@@ -55,6 +55,7 @@ export default function Login(props) {
         Emitter.on('handleEndpoint', endpointChange);
         Emitter.on('handleLostPassword', lostPassword);
         document.documentElement.classList.remove('dark');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import { mainContext } from 'reducer';
 
 const AccountLock = () => {
-    const { dispatch, state } = useContext(mainContext);
+    const { state } = useContext(mainContext);
   const history = useHistory();
 
     const { theme } = state;

@@ -6,7 +6,6 @@ import { Spin, } from 'antd';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import CommonModal from './CommonModal';
-import { getPrivateKey } from 'services/otherService.js';
 import Cookies from 'js-cookie';
 
 
@@ -21,11 +20,13 @@ export default function PasswordVerifyModal({ color }) {
     const [password, setPassword] = useState('');
     const inputRef = useRef(null);
 
-    let callbackFn = null;
+    // let callbackFn = null;
+
+    const callbackFn = useRef(null)
     useEffect(() => {
         const set = async function (params) {
             console.log('openDecryptFileModal event has occured');
-            callbackFn = params.callbackFn;
+            callbackFn.current = params.callbackFn;
             setValidateMsg('');
             setPassword('');
             setLoading(false);
@@ -90,7 +91,7 @@ export default function PasswordVerifyModal({ color }) {
             let res = await loginValidate(asePassowrd,token);
             setLoading(false);
             if (res && res.Success) {
-                callbackFn();
+                callbackFn.current();
                 closeModal()
             }else{
                 setValidateMsg(t('password_error'))
@@ -98,15 +99,6 @@ export default function PasswordVerifyModal({ color }) {
             }
         } catch (e) {
             Emitter.emit('showMessageAlert', { message: e.Message, status: 'error' });
-        }
-    };
-
-    const getPrivateKeyFn = async () => {
-        let { privateKey } = await getPrivateKey();
-        if (privateKey) {
-          Emitter.emit('openMessageModal', { message: privateKey });
-        } else {
-          Emitter.emit('showMessageAlert', { message: 'api_not_set', status: 'error', type: 'frontEnd' });
         }
     };
 

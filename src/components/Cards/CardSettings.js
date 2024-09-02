@@ -30,7 +30,7 @@ export default function CardSettings({ color }) {
   }
   const history = useHistory();
   const inputRef = useRef(null);
-  const { dispatch, state } = useContext(mainContext);
+  const {state } = useContext(mainContext);
   const { pageMode } = state;
   const pathRef = useRef(null);
   const [path, setPath] = useState('');
@@ -51,9 +51,9 @@ export default function CardSettings({ color }) {
     const copyUrl = `${splitUrlList[0]}?api=${nodeUrl}`;
     return copyUrl;
   };
-  const [copyUrl, setCopyUrl] = useState(getCopyUrl(NODE_URL));
+  const copyUrl = getCopyUrl(NODE_URL);
   const reveal = async () => {
-    // e.preventDefault();
+    // e.preventDefault();s
     Emitter.emit('openPasswordVerifyModal',{callbackFn:getPrivateKeys});
   };
 
@@ -76,36 +76,7 @@ export default function CardSettings({ color }) {
     setPath(path);
     setVolume(size);
   };
-  const getNodeUrl = () => {
-    let node_url = inputRef.current.value.replace(/\s*/g, '');
-    if (node_url.charAt(node_url.length - 1) === '/') {
-      node_url = node_url.substr(0, node_url.length - 1);
-    }
-    if (!urlCheck(node_url)) {
-      return null;
-    }
-    return node_url;
-  };
-  const save = async () => {
-    const node_url = getNodeUrl();
-    if (!node_url) return;
-    const copyUrl = getCopyUrl(node_url);
-    setCopyUrl(copyUrl);
-    let result = await nodeStatusCheck(node_url);
-    if (result) {
-      window.nodeStatus = true;
-      dispatch({
-        type: 'SET_NODE_STATUS',
-        nodeStatus: true,
-      });
-      getPath();
-      Emitter.emit('showMessageAlert', { message: 'setting_success', status: 'success', type: 'frontEnd' });
-      Emitter.emit('getHostId')
-    } else {
-      setPath('');
-      Emitter.emit('showMessageAlert', { message: 'setting_error', status: 'error', type: 'frontEnd' });
-    }
-  };
+
 
   const handleLogout = async ()=>{
         await logout()

@@ -1,6 +1,4 @@
 import Client10 from "APIClient/APIClient10.js";
-import xhr from "axios/index";
-import {setClient} from "services/filesService.js";
 
 export const checkLoginPassword = async () => {
     try {

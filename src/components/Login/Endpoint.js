@@ -1,4 +1,4 @@
-import React, {useState ,useRef,useEffect} from 'react';
+import React, {useRef,useEffect} from 'react';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import Emitter from 'utils/eventBus';
 import { urlCheck } from 'utils/checks.js';
@@ -10,12 +10,10 @@ import { t } from 'utils/text.js';
 
 const Endpoint = ({ color }) => {
     const inputRef = useRef(null);
-    const [endpoint, setEndpoint] = useState('');
 
 
     const getEndpoint = ()=>{
         const NODE_URL = localStorage.getItem('NODE_URL');
-        console.log(NODE_URL)
         if(NODE_URL){
             inputRef.current.value = NODE_URL;
         }
@@ -40,9 +38,9 @@ const Endpoint = ({ color }) => {
         Emitter.emit('handleEndpoint', node_url);
     };
 
-    const handleChange = (e) => {
-        setEndpoint(e.target.value);
-    };
+    // const handleChange = (e) => {
+    //     setEndpoint(e.target.value);
+    // };
 
     useEffect(() => {
         getEndpoint()
@@ -69,7 +67,7 @@ const Endpoint = ({ color }) => {
                     className="mr-2 common-input  theme-border-color"
                     defaultValue="http://localhost:5001"
                     ref={inputRef}
-                    onChange={handleChange}
+                    // onChange={handleChange}
                     placeholder="http://localhost:5001"
                 />
                 <button className="mt-5 common-btn theme-common-btn login-btn" type="button" onClick={save}>
