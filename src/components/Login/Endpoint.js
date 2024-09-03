@@ -10,8 +10,6 @@ import { t } from 'utils/text.js';
 
 const Endpoint = ({ color }) => {
     const inputRef = useRef(null);
-
-
     const getEndpoint = ()=>{
         const NODE_URL = localStorage.getItem('NODE_URL');
         if(NODE_URL){
@@ -34,6 +32,7 @@ const Endpoint = ({ color }) => {
         e.preventDefault();
         e.stopPropagation();
         const node_url = getNodeUrl();
+        localStorage.setItem('NODE_URL', node_url);
         if (!node_url) return;
         Emitter.emit('handleEndpoint', node_url);
     };

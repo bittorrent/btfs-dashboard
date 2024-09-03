@@ -1,8 +1,14 @@
 import Client10 from "APIClient/APIClient10.js";
+import xhr from "axios/index";
 
-export const checkLoginPassword = async () => {
+
+
+export const checkLoginPassword = async (url) => {
     try {
-        let data = await Client10.checkLoginPassword();
+        let {data} = await xhr.post(url + '/api/v1/dashboard/check');
+        if(data){
+            localStorage.setItem('NODE_URL', url);
+        }
         return data;
     } catch (e) {
         console.log(e);

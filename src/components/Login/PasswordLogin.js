@@ -24,7 +24,7 @@ const PasswordLogin = ({ color, endpoint }) => {
         let psw = aseEncode(password, endpoint);
         let res = await login(psw);
         if (res && res.Success) {
-            Cookies.set(endpoint, res.Text, { expires: 1, domain: 'localhost' });
+            Cookies.set(endpoint, res.Text, { expires: 1 });
             history.push('/admin/settings');
         } else {
             setTimes(times + 1);

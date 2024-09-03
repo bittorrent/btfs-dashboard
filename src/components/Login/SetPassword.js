@@ -53,7 +53,7 @@ const Endpoint = ({ endpoint, isReset }) => {
         try {
             let res = await login(password);
             if (res && res.Success) {
-                Cookies.set(endpoint, res.Text, { expires: 1, domain: 'localhost' });
+                Cookies.set(endpoint, res.Text, { expires: 1});
                 history.push('/admin/settings');
             } else {
                 Emitter.emit('showMessageAlert', { message: res.Text || 'error', status: 'error' });

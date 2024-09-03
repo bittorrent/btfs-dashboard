@@ -27,18 +27,18 @@ export default function Login(props) {
     // }
 
     const endpointChange = async val => {
-        if(loading)return;
-        setLoading(true)
+        if (loading) return;
+        setLoading(true);
         try {
-            let res = await checkLoginPassword();
-            setLoading(false)
-            if(res.Type === 'error'){
+            let res = await checkLoginPassword(val);
+            setLoading(false);
+            if (res.Type === 'error') {
                 Emitter.emit('showMessageAlert', { message: res.Message || 'error', status: 'error' });
                 return;
             }
+            setEndpoint(val);
             if (res && res.Success) {
                 setHasPassword(true);
-                setEndpoint(val);
             } else if (res && !res.Success) {
                 setHasPassword(false);
             }
@@ -55,7 +55,7 @@ export default function Login(props) {
         Emitter.on('handleEndpoint', endpointChange);
         Emitter.on('handleLostPassword', lostPassword);
         document.documentElement.classList.remove('dark');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

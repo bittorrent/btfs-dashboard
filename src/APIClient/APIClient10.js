@@ -1,16 +1,20 @@
 import xhr from "axios/index";
 import { PRECISION_RATE } from "utils/constants";
+import Cookies from 'js-cookie';
+
 
 class APIClient10 {
     constructor() {
         this.apiUrl = localStorage.getItem('NODE_URL') ? localStorage.getItem('NODE_URL') : "http://localhost:5001";
         this.request = async (url, body, config) => {
             const isFormData = body instanceof FormData
+            const token = Cookies.get(this.apiUrl) || '';
+            const addToken = url.includes('?')? `&token=${token}` : `?token=${token}`
             return new Promise(async (resolve, reject) => {
                 try {
 
                     let {data} = await xhr.post(
-                        this.apiUrl + url,
+                        this.apiUrl + url + addToken,
                         isFormData?body:
                         {
                             ...body
