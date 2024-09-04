@@ -20,7 +20,6 @@ const FileTableDropdown = ({ color, hash, name, size, path, type, cid, isEncrype
     };
 
     useEffect(() => {
-        console.log(cid,'----cdd')
         const t = function () {
             closeDropdownPopover();
         };
@@ -32,7 +31,7 @@ const FileTableDropdown = ({ color, hash, name, size, path, type, cid, isEncrype
 
     const download = async () => {
         if (isEncrypetd) {
-            Emitter.emit('openDecryptFileModal', { path: path, cid });
+            Emitter.emit('openDecryptFileModal', { path: path });
             return;
         }
         if (type === 1) {
