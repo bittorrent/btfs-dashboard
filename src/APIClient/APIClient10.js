@@ -27,6 +27,10 @@ class APIClient10 {
                 }
                 catch (e) {
                     let message;
+                    if (e.response && e.response.status === 401) {
+                        message = e.response['data'];
+                        window.location.href = '/#/login';
+                    }
                     if (e.response && e.response.status === 500) {
                         message = e.response['data']['Message'];
                     }

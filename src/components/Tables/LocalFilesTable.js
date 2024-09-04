@@ -181,11 +181,11 @@ export default function LocalFilesTable({ color }) {
 
     const checkIsEncrypted = name => {
         const arr = name.split('.');
-        const str = arr.slice(-1);
-        if(str === 'bte'){
-            return true
+        const str = arr.slice(-1)[0] || '';
+        if (str === 'bte') {
+            return true;
         }
-        return false
+        return false;
     };
 
     const search = async () => {
@@ -380,7 +380,16 @@ export default function LocalFilesTable({ color }) {
                                                     </td>
                                                     <td className="common-table-body-td">
                                                         {checkIsEncrypted(item['Name']) ? (
-                                                            <span>{t('file_encrypted')}</span>
+                                                            <span>
+                                                                <img
+                                                                    alt=""
+                                                                    src={
+                                                                        require(`../../assets/img/encrypt-icon_${color}.svg`)
+                                                                            .default
+                                                                    }
+                                                                    className="far"
+                                                                />
+                                                            </span>
                                                         ) : (
                                                             ''
                                                         )}
@@ -394,7 +403,8 @@ export default function LocalFilesTable({ color }) {
                                                             size={item['Size']}
                                                             path={breadcrumbName}
                                                             type={item['Type']}
-                                                            isEncrypetd = {checkIsEncrypted(item['Name'])}
+                                                            cid={item.cid}
+                                                            isEncrypetd={checkIsEncrypted(item['Name'])}
                                                         />
                                                     </td>
                                                 </tr>

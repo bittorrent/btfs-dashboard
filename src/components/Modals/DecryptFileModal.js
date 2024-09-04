@@ -11,7 +11,6 @@ import { DECRYPT_FILE_TIME_OUT_LIST } from 'utils/constants.js';
 
 const { Option } = Select;
 
-
 const options = [
     { label: 'decrypt_file_with_host', value: 'host' },
     { label: 'decrypt_file_with_password', value: 'password' },
@@ -37,7 +36,8 @@ export default function EncryptFileModal({ color }) {
     useEffect(() => {
         const set = async function (params) {
             console.log('openDecryptFileModal event has occured');
-            setCId('');
+            const curCid = params.cid || '';
+            setCId(curCid);
             setValidateMsg('');
             setPassword('');
             setHostId('');
@@ -154,7 +154,7 @@ export default function EncryptFileModal({ color }) {
 
         setLoading(true);
         try {
-            await decryptUploadFiles(cId, hostId, password,filetimeout);
+            await decryptUploadFiles(cId, hostId, password, filetimeout);
             setLoading(false);
             Emitter.emit('showMessageAlert', {
                 message: 'decrypt_download_success',
@@ -170,18 +170,22 @@ export default function EncryptFileModal({ color }) {
         setDecryptType(e.target.value);
     };
 
-
     const handleChange = value => {
-        setFiletimeout(value)
-    }
-
+        setFiletimeout(value);
+    };
 
     return (
         <CommonModal visible={showModal} onCancel={closeModal}>
             <div className="common-modal-wrapper theme-bg">
-                <main className="flex flex-col justify-center items-center theme-bg theme-text-main">
-                    <div className="font-semibold  text-xl"> {t('decrypt_upload_file')} </div>
-                    <div className="text-xs font-medium mb-6 theme-text-sub-info">
+                <main className="flex flex-col justify-center theme-bg theme-text-main">
+                    <img
+                        alt=""
+                        src={require(`../../assets/img/decrypt-cid.png`).default}
+                        className="mb-4"
+                        width={43}
+                    />
+                    <div className="font-semibold  text-xl  mb-2"> {t('decrypt_upload_file')} </div>
+                    <div className="text-xs font-medium mb-4 theme-text-sub-info">
                         {t('decrypt_upload_file_desc')}
                     </div>
 
@@ -237,12 +241,11 @@ export default function EncryptFileModal({ color }) {
                         popupClassName="theme-ant-select-popup"
                         defaultValue={filetimeout}
                         style={{ width: '100%' }}
-                        onChange={handleChange}
-                    >
+                        onChange={handleChange}>
                         {DECRYPT_FILE_TIME_OUT_LIST.map(item => {
                             return (
                                 <Option key={item.value} value={item.value}>
-                                {t(`${item.label}`)}
+                                    {t(`${item.label}`)}
                                 </Option>
                             );
                         })}
@@ -300,9 +303,9 @@ export default function EncryptFileModal({ color }) {
                             </div>
                         </div>
                     </div>
-                    <div className="mt-2">
+                    <div className="mt-2 text-right">
                         <button
-                            className="ml-2 common-btn theme-fill-gray text-gray-900 mr-6"
+                            className="ml-2 common-btn theme-fill-gray text-gray-900 mr-4"
                             onClick={closeModal}>
                             {t('cancel_encrypt_file_btn')}
                         </button>

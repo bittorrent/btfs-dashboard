@@ -4,14 +4,22 @@ import Emitter from 'utils/eventBus';
 import { urlCheck } from 'utils/checks.js';
 import { Tooltip } from 'antd';
 import { t } from 'utils/text.js';
+import { getParameterByName } from 'utils/BTFSUtil.js';
 
 
 
 
 const Endpoint = ({ color }) => {
     const inputRef = useRef(null);
+
     const getEndpoint = ()=>{
-        const NODE_URL = localStorage.getItem('NODE_URL');
+        const apiUrl = getParameterByName('api', window.location.href);
+        let NODE_URL = localStorage.getItem('NODE_URL')
+        ? localStorage.getItem('NODE_URL')
+        : 'http://localhost:5001';
+        if (apiUrl && urlCheck(apiUrl) && NODE_URL !== apiUrl) {
+            NODE_URL = apiUrl;
+        }
         if(NODE_URL){
             inputRef.current.value = NODE_URL;
         }

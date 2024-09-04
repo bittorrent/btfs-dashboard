@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useIntl } from 'react-intl';
 import { encryptUploadFiles } from 'services/filesService.js';
 import { LoadingOutlined } from '@ant-design/icons';
-import {  Spin, Progress, Radio, Input, Button } from 'antd';
+import { Spin, Progress, Radio, Input, Button } from 'antd';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import CommonModal from './CommonModal';
@@ -47,7 +47,6 @@ export default function EncryptFileModal({ color }) {
     const [validateKeyMsg, setValidateKeyMsg] = useState('');
     // const controller = useRef<AbortController>(new AbortController());
 
-
     const init = () => {
         setHostId('');
         setFileName('');
@@ -58,7 +57,7 @@ export default function EncryptFileModal({ color }) {
         setValidateKeyMsg('');
         setPercentage(0);
         setLoading(false);
-        setIsCurHost(true)
+        setIsCurHost(true);
     };
     useEffect(() => {
         const set = async function (params) {
@@ -109,9 +108,9 @@ export default function EncryptFileModal({ color }) {
             return;
         }
 
-        if (encryptType !== 'host' && password==='') {
+        if (encryptType !== 'host' && password === '') {
             setValidateKeyMsg(t('validate_encryptkey_null'));
-            return ;
+            return;
         }
 
         if (encryptType !== 'host' && !checkPassword(password)) {
@@ -175,7 +174,7 @@ export default function EncryptFileModal({ color }) {
         validateHostId(val);
     };
 
-    const checkPassword = (val) => {
+    const checkPassword = val => {
         const reg = /^[0-9A-Za-z]{6,20}$/g;
         if (!val || reg.test(val)) {
             setValidateKeyMsg('');
@@ -211,9 +210,15 @@ export default function EncryptFileModal({ color }) {
     return (
         <CommonModal visible={showModal} maskClosable={false} onCancel={closeModal}>
             <div className="common-modal-wrapper theme-bg">
-                <main className="flex flex-col justify-center items-center theme-bg theme-text-main">
-                    <div className="font-semibold text-xl"> {t('encrypt_upload_file')} </div>
-                    <div className="text-xs font-medium mb-6 theme-text-sub-info">
+                <main className="flex flex-col justify-center theme-bg theme-text-main">
+                    <img
+                        alt=""
+                        src={require(`../../assets/img/encrypt.png`).default}
+                        className="mb-4"
+                        width={43}
+                    />
+                    <div className="font-semibold text-xl mb-2"> {t('encrypt_upload_file')} </div>
+                    <div className="text-xs font-medium mb-4 theme-text-sub-info">
                         {t('encrypt_upload_file_desc')}
                     </div>
                     <div className="font-semibold  w-full mb-3">
@@ -225,7 +230,7 @@ export default function EncryptFileModal({ color }) {
                             value={encryptType}>
                             {options.map(v => {
                                 return (
-                                    <Radio value={v.value}  key={v.value}>
+                                    <Radio value={v.value} key={v.value}>
                                         <div className=" w-full font-semibold mb-3">
                                             <p>{t(`${v.label}`)}</p>
                                         </div>
@@ -242,7 +247,7 @@ export default function EncryptFileModal({ color }) {
                         onClick={onAddFile}>
                         {fileName ? fileName : t('select_encrypt_file_btn')}
                     </button>
-                    <div className="flex justify-between  w-full text-xs mb-8">
+                    <div className="flex justify-between  w-full text-xs mb-4">
                         <span className="theme-text-error">{validateFileMsg}</span>
                     </div>
                     <input
@@ -262,7 +267,7 @@ export default function EncryptFileModal({ color }) {
                                     return (
                                         <Radio value={v.value} key={v.label}>
                                             <div className=" w-full mb-3">
-                                                <p className='font-semibold '>{t(`${v.label}`)}</p>
+                                                <p className="font-semibold ">{t(`${v.label}`)}</p>
                                                 <span className="text-xs font-medium theme-text-sub-info">
                                                     {t(`${v.desc}`)}
                                                 </span>
@@ -345,9 +350,9 @@ export default function EncryptFileModal({ color }) {
                             strokeColor="#3257F6"
                         />
                     )}
-                    <div className="mt-2">
+                    <div className="mt-2 text-right">
                         <button
-                            className="ml-2 common-btn theme-fill-gray text-gray-900 mr-6"
+                            className="ml-2 common-btn theme-fill-gray text-gray-900 mr-4"
                             onClick={closeModal}>
                             {t('cancel_encrypt_file_btn')}
                         </button>
