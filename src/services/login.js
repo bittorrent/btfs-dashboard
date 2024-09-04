@@ -50,9 +50,9 @@ export const changePassword = async (arg,newpassword,token) => {
 };
 
 
-export const resetLoginPassword = async (arg) => {
+export const resetLoginPassword = async (privateKey, password) => {
     try {
-        let data = await Client10.resetLoginPassword(arg);
+        let data = await Client10.resetLoginPassword(privateKey, password);
         return data;
     } catch (e) {
         console.log(e);

@@ -2,11 +2,15 @@ import Client10 from "APIClient/APIClient10.js";
 import BigNumber from 'bignumber.js';
 import {switchStorageUnit2, fileArrayBuffer, compareStr} from "utils/BTFSUtil.js";
 import {create} from 'ipfs-http-client';
+import Cookies from 'js-cookie';
+
+
 
 const FileType = require('file-type');
 
 let apiUrl = localStorage.getItem('NODE_URL') ? localStorage.getItem('NODE_URL') : "http://localhost:5001";
 
+const token = Cookies.get(apiUrl) || '';
 let client;
 
 export const setClient = (apiUrl) => {
@@ -126,6 +130,7 @@ export const uploadFiles = async (input, path, onUploadProgress, setErr, setMess
             totalSize = input[0].size;
             let file = await client.add(input[0], {
                 pin: true,
+                token:token,
                 progress: (size) => {
                     onUploadProgress(size, totalSize)
                 }
@@ -147,7 +152,7 @@ export const uploadFiles = async (input, path, onUploadProgress, setErr, setMess
             }
             let size = 0;
             let folder;
-            for await (const result of client.addAll(input, {pin: true})) {
+            for await (const result of client.addAll(input, {pin: true,token})) {
                 folder = result;
                 if (size > totalSize) {
                 } else {
@@ -210,7 +215,7 @@ export const downloadFolder = async (hash, name, size, onDownloadProgress, setEr
 export const viewFile = async (hash, name, size) => {
     try {
         let content = [];
-        for await (const result of client.cat(hash)) {
+        for await (const result of client.cat(hash ,{token})) {
             content = [...content, ...result];
         }
         let fileType = await  FileType.fromBuffer(new Uint8Array(content));
@@ -245,7 +250,8 @@ export const createNewFolder = async (name, path) => {
     try {
         let url = pathArray2String(path);
         await client.files.mkdir(url + name, {
-            parents: true
+            parents: true,
+            token
         });
         return true
     } catch (e) {
@@ -259,10 +265,10 @@ export const removeFiles = async (hash, name, path, type) => {
     try {
         let url = pathArray2String(path);
         if (type === 1) {
-            await client.files.rm(url + name, {recursive: true});
+            await client.files.rm(url + name, {recursive: true,token});
         }
         if (type === 2) {
-            await client.files.rm(url + name);
+            await client.files.rm(url + name,{token});
         }
         return true;
     } catch (e) {
