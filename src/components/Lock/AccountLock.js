@@ -2,6 +2,8 @@ import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { mainContext } from 'reducer';
+// import Emitter from 'utils/eventBus';
+
 
 const AccountLock = () => {
     const { state } = useContext(mainContext);
@@ -17,7 +19,7 @@ const AccountLock = () => {
             ? localStorage.getItem('NODE_URL')
             : 'http://localhost:5001';
         Cookies.remove(NODE_URL);
-        history.push('/login');
+        history.push({pathname:'/login',state:{back:true}});
     };
 
     useEffect(() => {

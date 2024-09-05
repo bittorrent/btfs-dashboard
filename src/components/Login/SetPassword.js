@@ -6,6 +6,7 @@ import Emitter from 'utils/eventBus';
 import { aseEncode } from 'utils/BTFSUtil';
 import { useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 
 import { setLoginPassword, resetLoginPassword, login } from 'services/login.js';
 
@@ -40,7 +41,10 @@ const Endpoint = ({ endpoint, isReset }) => {
         try {
             let res = await setLoginPassword(password);
             if (res && res.Success) {
-                loginFn(password);
+
+                Emitter.emit('showPasswordLogin');
+                // loginFn(password);
+
             } else {
                 Emitter.emit('showMessageAlert', { message: res.Text, status: 'error' });
             }
@@ -75,10 +79,14 @@ const Endpoint = ({ endpoint, isReset }) => {
         }
     };
 
+    const backPrevious = ()=>{
+        Emitter.emit('showPasswordLogin');
+    }
+
     return (
         <div className="flex flex-col justify-center max-w-515px">
             <div className=" min-h-400">
-                <div className="login-title">{t('set_login_password')}</div>
+                <div className="login-title"><span onClick={backPrevious}  className='cursor-pointer pr-2'><ArrowLeftOutlined style={{ fontSize: 20 }} className='align-middle' /></span>{t('set_login_password')}</div>
                 <div className="text-gray-900 text-sm font-bold mb-12">{t('set_login_password_desc')}</div>
 
                 <Form

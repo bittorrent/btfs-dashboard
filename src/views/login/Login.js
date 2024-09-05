@@ -5,14 +5,17 @@ import SetPassword from 'components/Login/SetPassword.js';
 import PasswordLogin from 'components/Login/PasswordLogin.js';
 import MessageAlert from 'components/Alerts/MessageAlert';
 import { checkLoginPassword } from 'services/login.js';
-
+import { useLocation } from 'react-router-dom';
+import { getParameterByName } from 'utils/BTFSUtil.js';
+import { urlCheck } from 'utils/checks.js';
 
 export default function Login(props) {
+    const location = useLocation();
+    const back = location.state?.back || false
     const [isReset, setIsReset] = useState(false);
     const [endpoint, setEndpoint] = useState('');
-    const [hasPassword, setHasPassword] = useState(true);
+    const [hasPassword, setHasPassword] = useState(back);
     const [loading, setLoading] = useState(false);
-
     // const { state } = useContext(mainContext);
     // const { theme } = state;
     // const query = new URLSearchParams(props.location.search);
@@ -28,6 +31,7 @@ export default function Login(props) {
     // }
 
     const endpointChange = async val => {
+
         if (loading) return;
         setLoading(true);
         try {
@@ -44,7 +48,11 @@ export default function Login(props) {
                 setHasPassword(false);
             }
         } catch (error) {
-            console.log(error);
+            Emitter.emit('showMessageAlert', {
+                message: 'node_not_connected',
+                status: 'error',
+                type: 'frontEnd',
+            });
         }
     };
 
@@ -52,11 +60,44 @@ export default function Login(props) {
         setIsReset(true);
     };
 
+    const show = () => {
+        setIsReset(false);
+        setHasPassword(true);
+    };
+
+    const resetEndpiont = ()=>{
+        setEndpoint('')
+    }
+
+    const init = () => {
+        if (!back) return;
+        const apiUrl = getParameterByName('api', window.location.href);
+        let NODE_URL = localStorage.getItem('NODE_URL')
+            ? localStorage.getItem('NODE_URL')
+            : 'http://localhost:5001';
+        if (apiUrl && urlCheck(apiUrl) && NODE_URL !== apiUrl) {
+            NODE_URL = apiUrl;
+        }
+        setEndpoint(NODE_URL);
+        setHasPassword(true);
+
+    };
     useEffect(() => {
         Emitter.on('handleEndpoint', endpointChange);
         Emitter.on('handleLostPassword', lostPassword);
+        Emitter.on('showPasswordLogin', show);
+        Emitter.on('showEndpoint', resetEndpiont);
+        // Emitter.on('handleLostPassword', lostPassword);
         document.documentElement.classList.remove('dark');
+        init()
         // eslint-disable-next-line react-hooks/exhaustive-deps
+        return () => {
+            Emitter.removeListener('handleEndpoint');
+            Emitter.removeListener('handleLostPassword');
+            Emitter.removeListener('showEndpoint');
+            Emitter.removeListener('showPasswordLogin');
+        };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

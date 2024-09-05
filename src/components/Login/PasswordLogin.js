@@ -4,6 +4,7 @@ import {useHistory } from 'react-router-dom';
 import {  Form, Input } from 'antd';
 import { t } from 'utils/text.js';
 import { aseEncode } from 'utils/BTFSUtil';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import Cookies from 'js-cookie';
 
 import Emitter from 'utils/eventBus';
@@ -36,6 +37,10 @@ const PasswordLogin = ({ color, endpoint }) => {
         Emitter.emit('handleLostPassword');
     };
 
+    const backPrevious = ()=>{
+        Emitter.emit('showEndpoint');
+    }
+
     useEffect(() => {
         if (times >= 5) {
             setIsLock(true);
@@ -59,7 +64,7 @@ const PasswordLogin = ({ color, endpoint }) => {
     return (
         <div className="flex flex-col justify-center max-w-515px  min-w-334px">
             <div className="min-h-400">
-                <div className="login-title mb-12">{t('login_title')}</div>
+                <div className="login-title mb-12"><span onClick={backPrevious}  className='cursor-pointer pr-2'><ArrowLeftOutlined style={{ fontSize: 20 }}  className='align-middle' /></span>{t('login_title')}</div>
 
                 <Form
                     name="basic"

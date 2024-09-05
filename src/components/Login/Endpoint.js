@@ -40,8 +40,8 @@ const Endpoint = ({ color }) => {
         e.preventDefault();
         e.stopPropagation();
         const node_url = getNodeUrl();
-        localStorage.setItem('NODE_URL', node_url);
         if (!node_url) return;
+        localStorage.setItem('NODE_URL', node_url);
         Emitter.emit('handleEndpoint', node_url);
     };
 
