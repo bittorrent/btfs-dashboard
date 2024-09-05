@@ -8,7 +8,7 @@ import { useIntl } from 'react-intl';
 import { mainContext } from 'reducer';
 
 export default function EncryptFileModal({ color }) {
-    const [showModal, setShowModal] = useState(true);
+    const [showModal, setShowModal] = useState(false);
     const [cid, setCid] = useState('');
 
     const intl = useIntl();
@@ -49,12 +49,19 @@ export default function EncryptFileModal({ color }) {
         <CommonModal visible={showModal} maskClosable={false} onCancel={closeModal}>
             <div className="common-modal-wrapper theme-bg">
                 <main className="flex flex-col justify-center items-center theme-bg theme-text-main">
-                    <img
-                        alt=""
-                        src={require(`../../assets/img/encrypt.png`).default}
-                        className="mb-4"
-                        width={43}
-                    />
+                    <div className="mb-4 relative pr-1 pb-1">
+                        <img
+                            alt=""
+                            src={require(`../../assets/img/encrypt.png`).default}
+                            width={43}
+                        />
+                        <img
+                            alt=""
+                            className="absolute bottom-0 right-0"
+                            src={require(`../../assets/img/success.png`).default}
+                            width={22}
+                        />
+                    </div>
                     <div className="font-semibold text-xl  mb-2"> {t('encrypt_file_cid_title')} </div>
                     <div className="text-xs font-medium mb-4 theme-text-sub-info">
                         {t('encrypt_file_cid_desc')}

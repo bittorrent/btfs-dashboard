@@ -8,10 +8,12 @@ import { checkLoginPassword } from 'services/login.js';
 import { useLocation } from 'react-router-dom';
 import { getParameterByName } from 'utils/BTFSUtil.js';
 import { urlCheck } from 'utils/checks.js';
+import LangDropdown from 'components/Dropdowns/LangDropdown.js';
+import ThemeToggle from 'components/Toggles/ThemeToggle';
 
 export default function Login(props) {
     const location = useLocation();
-    const back = location.state?.back || false
+    const back = location.state?.back || false;
     const [isReset, setIsReset] = useState(false);
     const [endpoint, setEndpoint] = useState('');
     const [hasPassword, setHasPassword] = useState(back);
@@ -31,7 +33,6 @@ export default function Login(props) {
     // }
 
     const endpointChange = async val => {
-
         if (loading) return;
         setLoading(true);
         try {
@@ -65,9 +66,9 @@ export default function Login(props) {
         setHasPassword(true);
     };
 
-    const resetEndpiont = ()=>{
-        setEndpoint('')
-    }
+    const resetEndpiont = () => {
+        setEndpoint('');
+    };
 
     const init = () => {
         if (!back) return;
@@ -80,7 +81,6 @@ export default function Login(props) {
         }
         setEndpoint(NODE_URL);
         setHasPassword(true);
-
     };
     useEffect(() => {
         Emitter.on('handleEndpoint', endpointChange);
@@ -88,8 +88,8 @@ export default function Login(props) {
         Emitter.on('showPasswordLogin', show);
         Emitter.on('showEndpoint', resetEndpiont);
         // Emitter.on('handleLostPassword', lostPassword);
-        document.documentElement.classList.remove('dark');
-        init()
+        // document.documentElement.classList.remove('dark');、
+        init();
         // eslint-disable-next-line react-hooks/exhaustive-deps
         return () => {
             Emitter.removeListener('handleEndpoint');
@@ -97,17 +97,65 @@ export default function Login(props) {
             Emitter.removeListener('showEndpoint');
             Emitter.removeListener('showPasswordLogin');
         };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
-        <div className="flex">
-            <div className="flex flex-1  justify-center items-center login-bg min-h-screen">
-                <div className="flex justify-center items-center ">
-                    <img src={require(`assets/img/login-img.png`).default} alt="" width={556} height={403} />
+        <div className="flex theme-bg flex-col md:flex-row">
+        <div className={'flex justify-between p-4 md:hidden'}>
+            <div className={'flex justify-between'}>
+                <div className="items-center flex">
+                    <img
+                        className="inline-block"
+                        src={require('assets/img/btfs_logo.png').default}
+                        style={{ width: '37px', height: '40px' }}
+                        alt="btfs_logo"
+                    />
+                    <span className="theme-text-main">BTFS Dashboard</span>
+                    <span className="theme-text-base"> 3.0</span>
                 </div>
             </div>
-            <div className="flex flex-1 min-h-screen login-form  ">
+            <ul className="items-center flex flex-wrap list-none">
+                <li className="inline-block relative">
+                    <LangDropdown
+                    // color={theme}
+                    />
+                </li>
+            </ul>
+
+        </div>
+
+            <div className="flex flex-1  items-center flex-col login-bg md:min-h-full justify-between">
+                <div className="flex justify-start md:min-w-full ">
+                    <div
+                        className={`pl-8 pt-4 inline-block text-left mr-0  whitespace-nowrap text-sm font-bold px-0`}
+                        to="/">
+                        <img
+                            className="inline-block"
+                            src={require('assets/img/btfs_logo.png').default}
+                            style={{ width: '37px', height: '40px' }}
+                            alt="btfs_logo"
+                        />
+                        <span className="theme-text-main">BTFS Dashboard</span>
+                        <span className="theme-text-base"> 3.0</span>
+                    </div>
+                </div>
+                <div className="flex  flex-auto justify-center items-center  ">
+                    <div className="flex justify-center items-center  ">
+                        <img
+                            src={require(`assets/img/login-img.png`).default}
+                            alt=""
+                            width={556}
+                            height={403}
+                        />
+                    </div>
+                </div>
+                <div className="flex w-full justify-start pl-8" style={{ flex: '0 0 60px' }}>
+                    <ThemeToggle />
+                    <LangDropdown />
+                </div>
+            </div>
+            <div className="flex flex-1 min-h-screen login-form md:min-h-full">
                 {!endpoint && <Endpoint />}
                 {((endpoint && !hasPassword) || isReset) && (
                     <SetPassword endpoint={endpoint} isReset={isReset} />

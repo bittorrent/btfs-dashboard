@@ -84,7 +84,7 @@ export default function ChangePasswordModal({ color }) {
     };
     const validateNewPassword = (rules, value, callback) => {
         let oldpassword = form.getFieldValue('oldpassword');
-        if (oldpassword === value) {
+        if (oldpassword && oldpassword === value) {
             callback(new Error(intl.formatMessage({ id: 'same_as_old_password' })));
         } else {
             callback();
@@ -135,7 +135,7 @@ export default function ChangePasswordModal({ color }) {
                             }
                             name="password"
                             rules={[
-                                { required: true, message: t('private_key_validate_required') },
+                                { required: true, message: t('password_validate_required') },
                                 {
                                     pattern: /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
                                     message: t('password_validate_pattern'),

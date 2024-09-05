@@ -423,68 +423,62 @@ const en_US = {
 
 
         //v3.1
-        dncrypt_file_time_out:'文件获取超时时间',
-        dncrypt_file_time_out_desc:'设置超时时间以避免长时间等待，更长的超时时间可以增加文件获取的成功率',
-        seconds_30:'30秒',
-        minutes_1:'1分钟',
-        minutes_3:'3分钟',
-        minutes_5:'5分钟',
-        minutes_10:'10分钟',
+        dncrypt_file_time_out: "File acquisition timeout",
+        dncrypt_file_time_out_desc: "Set a timeout period to avoid long waits. A longer timeout may increase the success rate of file acquisition",
+        seconds_30: "30 seconds",
+        minutes_1: "1 minute",
+        minutes_3: "3 minutes",
+        minutes_5: "5 minutes",
+        minutes_10: "10 minutes",
 
-        file_cid:'CID',
-        file_create:'Created',
-        file_isencrypted:'Is Encrypted',
+        file_cid: "CID",
+        file_create: "Created",
+        file_isencrypted: "Is Encrypted",
+        file_encrypted: "Encrypted",
 
-        file_encrypted:'Encrypted',
+        login: "Login",
+        login_endpoint_desc: "Enter a local or remote API Endpoint to continue",
+        set_login_password: "Set login password",
+        set_login_password_desc: "When logging in to the node for the first time, please set a login password to protect the node’s data and private key",
+        reset_login_password: "Reset login password",
+        reset_login_password_desc: "BTFS does not save the password. If you forget your login password, you can use the node’s private key to reset it",
+        enter_private_key: "Please enter the node private key",
+        login_password: "login password",
+        lost_password: "Forgot password?",
+        enter_password: "Set login password",
+        enter_password_desc: "A combination of letters and numbers with more than 8 characters",
+        re_enter_password: "Re-enter password",
+        login_title: "Welcome back",
+        login_lock_message: "Too many failed attempts. The operation has been locked. Please try again in 10 minutes",
 
+        reset_password_private_key_placeholder: "Please enter in hexadecimal private key format",
+        re_enter_password_placeholder: "Re-enter password",
+        enter_password_placeholder: "Please enter password",
 
+        check_private_key: "View private key",
+        check_private_key_desc: "The private key provides full access to your node and assets. Please ensure that the private key is not leaked to others.",
+        check_private_key_input: "Enter login password to continue.",
+        check_private_key_input_placeholder: "Please enter password.",
 
-        login:'Login',
-        login_endpoint_desc:'Please set a login password when loghe node data and private key security',
-        set_login_password:'设置登录密码',
-        set_login_password_desc:'设置登录密码描述',
-        reset_login_password:'重置登录密码',
-        reset_login_password_desc:'重置登录密码描述',
-        enter_private_key:'请输入节点私钥',
-        login_password:'login password',
-        lost_password:'Lost password?',
-        enter_password:'Set a login password ',
-        enter_password_desc:'(a combination of letters and numbers larger than 8 characters)',
-        re_enter_password:'Re-enter password',
-        login_title:'欢迎回来',
-        login_lock_message:'操作已被锁定，请十分钟后再试',
+        setting_login_password: "Login password",
+        setting_login_password_btn: "Change password",
+        change_password_modal: "Change login password",
+        enter_old_password: "Enter old password",
+        enter_old_password_placeholder: "Please enter old password",
+        change_password_success: "Password changed successfully",
+        change_password_fail: "Password change failed",
+        password_error: "Password error",
+        same_as_old_password: "The new password cannot be the same as the old password.",
+        // Validate
 
-        reset_password_private_key_placeholder:'请输入以16进制的私钥格式',
-        re_enter_password_placeholder:'Re-enter your password',
-        enter_password_placeholder:'Enter your password',
+        password_validate_required: "Please enter password",
+        password_validate_pattern: "At least 8 characters, including at least 1 lowercase letter and 1 number",
+        password_re_enter_validate_pattern: "Passwords do not match",
+        private_key_validate_required: "Please enter private key",
+        private_key_validate_pattern: "Please enter hexadecimal private key",
 
+        logout: "Logout",
 
-
-        check_private_key:'查看私钥',
-        check_private_key_desc:'私钥提供了对您节点和资产的完整访问权限 请确保私钥不会泄露给其他人',
-        check_private_key_input:'输入登录密码以继续',
-        check_private_key_input_placeholder:'Enter your password',
-
-
-        setting_login_password:'Login Password',
-        setting_login_password_btn:'Change Password ',
-        change_password_modal:'修改登录密码',
-        enter_old_password:'输入旧密码',
-        enter_old_password_placeholder:'请输入旧密码',
-        change_password_success:'密码修改成功',
-        change_password_fail:'密码修改失败',
-        password_error:'密码错误',
-        same_as_old_password:'新密码不能与旧密码相同',
-
-
-
-        password_validate_required:'请输入密码',
-        password_validate_pattern:'至少8个字符，至少1个小写字母和1个数字',
-        password_re_enter_validate_pattern:'输入密码不一致',
-        private_key_validate_required:'请输入私钥',
-        private_key_validate_pattern:'请输入16进制私钥',
-
-        logout:'退出登录',
 
 
 };

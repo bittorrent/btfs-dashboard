@@ -62,23 +62,22 @@ const PasswordLogin = ({ color, endpoint }) => {
     }, [isLock]);
 
     return (
-        <div className="flex flex-col justify-center max-w-515px  min-w-334px">
+        <div className="flex flex-col justify-center max-w-515px  min-w-334px login-form-w ">
             <div className="min-h-400">
-                <div className="login-title mb-12"><span onClick={backPrevious}  className='cursor-pointer pr-2'><ArrowLeftOutlined style={{ fontSize: 20 }}  className='align-middle' /></span>{t('login_title')}</div>
-
+                <div className="login-title mb-12 theme-text-main"><span onClick={backPrevious}  className='cursor-pointer pr-2'><ArrowLeftOutlined style={{ fontSize: 20 }}  className='align-middle' /></span>{t('login_title')}</div>
                 <Form
                     name="basic"
                     layout="vertical"
                     form={form}
                     requiredMark={false}
-                    labelCol={{ span: 24 }}
+                    // labelCol={{ span: 24 }}
                     initialValues={{ endpoint }}
                     onFinish={onFinish}
                     autoComplete="off">
                     <Form.Item
                         label={<div className="font-bold theme-text-main">API {t('endpoint')}</div>}
                         name="endpoint">
-                        <Input className="mr-2 common-input theme-bg theme-border-color" disabled />
+                        <Input className="mr-2 common-input theme-text-desc theme-base-bg border-none" disabled />
                     </Form.Item>
 
                     <Form.Item
@@ -105,7 +104,7 @@ const PasswordLogin = ({ color, endpoint }) => {
                         <Input.Password
 
                         placeholder={intl.formatMessage({ id: 'enter_password_placeholder' })}
-                        className="mr-2 common-input theme-bg theme-border-color" />
+                        className="mr-2 common-input theme-bg theme-border-color theme-text-main" />
                     </Form.Item>
                     <div className="flex justify-between  w-full mt-2 ml-1 ">
                         <span className="theme-text-error text-xs pt-1">{validateMsg}</span>

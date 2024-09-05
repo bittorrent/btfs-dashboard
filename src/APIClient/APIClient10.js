@@ -433,7 +433,7 @@ class APIClient10 {
         return this.request(`/api/v1/dashboard/change?arg=${arg}&arg=${newpassword}&token=${token}`);
     }
     resetLoginPassword(privateKey, password){
-        return this.request(`/api/v1/dashboard/reset??arg=${privateKey}&arg=${password}`);
+        return this.request(`/api/v1/dashboard/reset?arg=${privateKey}&arg=${password}`);
     }
     logout(){
         return this.request(`/api/v1/dashboard/logout`);

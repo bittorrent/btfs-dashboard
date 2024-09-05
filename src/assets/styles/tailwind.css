@@ -1892,6 +1892,10 @@ video {
   padding-bottom: 0px;
 }
 
+.pr-1 {
+    padding-right: 0.25rem;
+}
+
 .pl-0 {
   padding-left: 0px;
 }
@@ -1899,7 +1903,9 @@ video {
 .pt-2 {
   padding-top: 0.5rem;
 }
-
+.pb-1 {
+    padding-bottom: 0.25rem;
+}
 .pb-2 {
   padding-bottom: 0.5rem;
 }
@@ -1931,10 +1937,17 @@ video {
 .pr-8 {
   padding-right: 2rem;
 }
+.pl-8 {
+    padding-left: 2rem;
+  }
 
 .pr-12 {
     padding-right: 3rem;
  }
+
+.pl-12 {
+    padding-left: 3rem;
+  }
 
 .pb-12 {
   padding-bottom: 3rem;
@@ -2287,6 +2300,9 @@ video {
 
   .md\:justify-start {
     justify-content: flex-start;
+  }
+  .md\:justify-center {
+    justify-content: center;
   }
 
   .md\:justify-end {

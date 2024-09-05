@@ -54,24 +54,24 @@ const Endpoint = ({ color }) => {
     }, []);
 
     return (
-        <div className="flex flex-col justify-center max-w-515px">
+        <div className="flex flex-col max-w-515px  justify-center ">
             <div className=" min-h-400">
-                <div className="login-title">{t('login')}</div>
-                <div className="text-gray-900 text-sm font-bold mb-12">
+                <div className="login-title theme-text-main">{t('login')}</div>
+                <div className="text-gray-900 text-sm font-bold mb-12 theme-text-sub-main">
                 {t('login_endpoint_desc')}
                 </div>
                 <div className="mb-2 setting-header">
                 <h5 className="font-bold theme-text-main" htmlFor="grid-password">
                   API {t('endpoint')}
                 </h5>
-                <Tooltip overlayInnerStyle={{ width: '180px' }} placement="top" title={<p>{t('copy_url_tips')}</p>}>
+                <Tooltip overlayInnerStyle={{ width: '340px' }} placement="top" title={<p>{t('copy_url_tips')}</p>}>
                   {/* <i className="far fa-question-circle ml-1 text-xs"></i> */}
                   <QuestionCircleOutlined className="inline-flex items-center ml-1 text-xs" />
                 </Tooltip>
               </div>
                 <input
                     type="text"
-                    className="mr-2 common-input  theme-border-color"
+                    className="mr-2  common-input theme-bg theme-border-color theme-text-main"
                     defaultValue="http://localhost:5001"
                     ref={inputRef}
                     // onChange={handleChange}

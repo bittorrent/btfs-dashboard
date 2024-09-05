@@ -84,9 +84,9 @@ const Endpoint = ({ endpoint, isReset }) => {
     }
 
     return (
-        <div className="flex flex-col justify-center max-w-515px">
+        <div className="flex flex-col justify-center max-w-515px login-form-w">
             <div className=" min-h-400">
-                <div className="login-title"><span onClick={backPrevious}  className='cursor-pointer pr-2'><ArrowLeftOutlined style={{ fontSize: 20 }} className='align-middle' /></span>{t('set_login_password')}</div>
+                <div className="login-title theme-text-main"><span onClick={backPrevious}  className='cursor-pointer pr-2'><ArrowLeftOutlined style={{ fontSize: 20 }} className='align-middle' /></span>{t('set_login_password')}</div>
                 <div className="text-gray-900 text-sm font-bold mb-12">{t('set_login_password_desc')}</div>
 
                 <Form
@@ -100,7 +100,7 @@ const Endpoint = ({ endpoint, isReset }) => {
                     <Form.Item
                         label={<div className="font-bold theme-text-main">API {t('endpoint')}</div>}
                         name="endpoint">
-                        <Input className="mr-2 common-input theme-bg theme-border-color" disabled />
+                        <Input className="mr-2 common-input theme-text-desc theme-base-bg border-none " disabled />
                     </Form.Item>
                     {isReset && (
                         <Form.Item
