@@ -123,6 +123,7 @@ export default function EncryptFileModal({ color }) {
             let passwords = encryptType === 'host' ? '' : password;
             let result = await encryptUploadFiles(currentFile, hostid, passwords, onUploadProgress(fileName));
             Emitter.emit('openEncryptFileCidModal', result);
+            Emitter.emit('updateFiles');
         } catch (e) {
             Emitter.emit('showMessageAlert', { message: e.Message, status: 'error' });
         }

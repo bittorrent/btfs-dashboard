@@ -62,7 +62,7 @@ const PasswordLogin = ({ color, endpoint }) => {
     }, [isLock]);
 
     return (
-        <div className="flex flex-col justify-center max-w-515px  min-w-334px login-form-w ">
+        <div className="flex flex-col justify-center max-w-450px  min-w-334px login-form-w ">
             <div className="min-h-400">
                 <div className="login-title mb-12 theme-text-main"><span onClick={backPrevious}  className='cursor-pointer pr-2'><ArrowLeftOutlined style={{ fontSize: 20 }}  className='align-middle' /></span>{t('login_title')}</div>
                 <Form
@@ -70,6 +70,7 @@ const PasswordLogin = ({ color, endpoint }) => {
                     layout="vertical"
                     form={form}
                     requiredMark={false}
+                    className="login-form-w-334px"
                     // labelCol={{ span: 24 }}
                     initialValues={{ endpoint }}
                     onFinish={onFinish}

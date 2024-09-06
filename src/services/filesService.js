@@ -10,7 +10,6 @@ const FileType = require('file-type');
 
 let apiUrl = localStorage.getItem('NODE_URL') ? localStorage.getItem('NODE_URL') : "http://localhost:5001";
 
-const token = Cookies.get(apiUrl) || '';
 let client;
 
 export const setClient = (apiUrl) => {
@@ -125,12 +124,13 @@ export const getFolerSize = async (files) => {
 export const uploadFiles = async (input, path, onUploadProgress, setErr, setMessage) => {
     try {
         let url = pathArray2String(path);
+        const token = Cookies.get(apiUrl) || '';
         let totalSize = 0;
         if (input.length === 1) {
             totalSize = input[0].size;
             let file = await client.add(input[0], {
                 pin: true,
-                token:token,
+                token,
                 progress: (size) => {
                     onUploadProgress(size, totalSize)
                 }
@@ -215,6 +215,7 @@ export const downloadFolder = async (hash, name, size, onDownloadProgress, setEr
 export const viewFile = async (hash, name, size) => {
     try {
         let content = [];
+        const token = Cookies.get(apiUrl) || '';
         for await (const result of client.cat(hash ,{token})) {
             content = [...content, ...result];
         }
@@ -248,6 +249,8 @@ export const importFromBTFS = async (hash, path) => {
 
 export const createNewFolder = async (name, path) => {
     try {
+
+        const token = Cookies.get(apiUrl) || '';
         let url = pathArray2String(path);
         await client.files.mkdir(url + name, {
             parents: true,
@@ -263,6 +266,8 @@ export const createNewFolder = async (name, path) => {
 
 export const removeFiles = async (hash, name, path, type) => {
     try {
+
+        const token = Cookies.get(apiUrl) || '';
         let url = pathArray2String(path);
         if (type === 1) {
             await client.files.rm(url + name, {recursive: true,token});

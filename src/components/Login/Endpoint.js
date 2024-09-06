@@ -54,7 +54,7 @@ const Endpoint = ({ color }) => {
     }, []);
 
     return (
-        <div className="flex flex-col max-w-515px  justify-center ">
+        <div className="flex flex-col max-w-450px  justify-center login-form-w  ">
             <div className=" min-h-400">
                 <div className="login-title theme-text-main">{t('login')}</div>
                 <div className="text-gray-900 text-sm font-bold mb-12 theme-text-sub-main">
@@ -71,7 +71,7 @@ const Endpoint = ({ color }) => {
               </div>
                 <input
                     type="text"
-                    className="mr-2  common-input theme-bg theme-border-color theme-text-main"
+                    className="mr-2  common-input theme-bg theme-border-color theme-text-main login-form-w-334px"
                     defaultValue="http://localhost:5001"
                     ref={inputRef}
                     // onChange={handleChange}
