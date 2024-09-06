@@ -2290,6 +2290,10 @@ video {
     flex-direction: column;
   }
 
+  .md\:flex-1 {
+    flex: 1 1 0%;
+  }
+
   .md\:flex-nowrap {
     flex-wrap: nowrap;
   }
@@ -2331,6 +2335,9 @@ video {
 
   .md\:min-w-full {
     min-width: 100%;
+  }
+  .md\:min-h-screen {
+    min-height: 100vh;
   }
 
   .md\:opacity-100 {

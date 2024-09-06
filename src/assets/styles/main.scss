@@ -378,10 +378,11 @@
     width: 100vw;
     padding-left: 0;
     justify-content: center;
+    background:  #F2F5F7 url(../img/background.png)  no-repeat right top;
+    background-size: contain;
 }
     .login-form-w{
-        max-width: 100%;
-        padding: 0 20px;
+        width: 90vw;
     }
 
 }

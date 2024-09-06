@@ -101,29 +101,38 @@ export default function Login(props) {
     }, []);
 
     return (
-        <div className="flex theme-bg flex-col md:flex-row">
-        <div className={'flex justify-between p-4 md:hidden'}>
-            <div className={'flex justify-between'}>
-                <div className="items-center flex">
-                    <img
-                        className="inline-block"
-                        src={require('assets/img/btfs_logo.png').default}
-                        style={{ width: '37px', height: '40px' }}
-                        alt="btfs_logo"
-                    />
-                    <span className="theme-text-main">BTFS Dashboard</span>
-                    <span className="theme-text-base"> 3.0</span>
-                </div>
-            </div>
-            <ul className="items-center flex flex-wrap list-none">
-                <li className="inline-block relative">
-                    <LangDropdown
-                    // color={theme}
-                    />
-                </li>
-            </ul>
+        <div className="flex theme-bg flex-col md:flex-row min-h-screen">
+            <div className={'flex justify-between p-4 md:hidden'}>
+                {
+                    //     <button
+                    //     className="theme-round-btn px-2 py-1 rounded border md:hidden"
+                    //     type="button"
+                    //     // onClick={() => setCollapseShow(' m-2 py-3 px-6 ')}
+                    //     >
+                    //     <i className="fas fa-bars"></i>
+                    // </button>
+                }
 
-        </div>
+                <div className={'flex justify-between'}>
+                    <div className="items-center flex">
+                        <img
+                            className="inline-block"
+                            src={require('assets/img/btfs_logo.png').default}
+                            style={{ width: '37px', height: '40px' }}
+                            alt="btfs_logo"
+                        />
+                        <span className="theme-text-main pr-1">BTFS Dashboard</span>
+                        <span className="theme-text-base"> 3.0</span>
+                    </div>
+                </div>
+                <ul className="items-center flex flex-wrap list-none">
+                    <li className="inline-block relative">
+                        <LangDropdown
+                        // color={theme}
+                        />
+                    </li>
+                </ul>
+            </div>
 
             <div className="flex flex-1  items-center flex-col login-bg md:min-h-full justify-between">
                 <div className="flex justify-start md:min-w-full ">
@@ -136,7 +145,7 @@ export default function Login(props) {
                             style={{ width: '37px', height: '40px' }}
                             alt="btfs_logo"
                         />
-                        <span className="theme-text-main">BTFS Dashboard</span>
+                        <span className="theme-text-main ">BTFS Dashboard</span>
                         <span className="theme-text-base"> 3.0</span>
                     </div>
                 </div>
@@ -155,7 +164,7 @@ export default function Login(props) {
                     <LangDropdown />
                 </div>
             </div>
-            <div className="flex flex-1 min-h-screen login-form md:min-h-full">
+            <div className="flex flex-1 login-form md:min-h-screen">
                 {!endpoint && <Endpoint />}
                 {((endpoint && !hasPassword) || isReset) && (
                     <SetPassword endpoint={endpoint} isReset={isReset} />
