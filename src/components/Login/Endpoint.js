@@ -1,6 +1,7 @@
 import React, {useRef,useEffect} from 'react';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import Emitter from 'utils/eventBus';
+import { setApiUrl } from 'services/otherService.js';
 import { urlCheck } from 'utils/checks.js';
 import { Tooltip } from 'antd';
 import { t } from 'utils/text.js';
@@ -42,6 +43,7 @@ const Endpoint = ({ color }) => {
         const node_url = getNodeUrl();
         if (!node_url) return;
         localStorage.setItem('NODE_URL', node_url);
+        setApiUrl(node_url);
         Emitter.emit('handleEndpoint', node_url);
     };
 
