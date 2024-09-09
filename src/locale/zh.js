@@ -467,6 +467,9 @@ const zh_CN = {
 
         logout: "退出登录",
 
+        reset_password_success:'密码重置成功',
+        set_password_success:'密码设置成功',
+
 
 };
 

@@ -30,6 +30,7 @@ const Endpoint = ({ endpoint, isReset }) => {
         try {
             let res = await resetLoginPassword(privateKey, password);
             if (res && res.Success) {
+                Emitter.emit('showMessageAlert', { message: 'reset_password_success', status: 'success', type: 'frontEnd' });
                 loginFn(password);
             } else {
                 Emitter.emit('showMessageAlert', { message: res.Text, status: 'error' });
@@ -41,10 +42,9 @@ const Endpoint = ({ endpoint, isReset }) => {
         try {
             let res = await setLoginPassword(password);
             if (res && res.Success) {
-
+                Emitter.emit('showMessageAlert', { message: 'reset_password_success', status: 'success' , type: 'frontEnd'});
                 Emitter.emit('showPasswordLogin');
                 // loginFn(password);
-
             } else {
                 Emitter.emit('showMessageAlert', { message: res.Text, status: 'error' });
             }
@@ -57,7 +57,7 @@ const Endpoint = ({ endpoint, isReset }) => {
         try {
             let res = await login(password);
             if (res && res.Success) {
-                Cookies.set(endpoint, res.Text, { expires: 1});
+                Cookies.set(endpoint, res.Text, { expires: 1 });
                 history.push('/admin/settings');
             } else {
                 Emitter.emit('showMessageAlert', { message: res.Text || 'error', status: 'error' });
@@ -79,14 +79,23 @@ const Endpoint = ({ endpoint, isReset }) => {
         }
     };
 
-    const backPrevious = ()=>{
-        Emitter.emit('showPasswordLogin');
-    }
+    const backPrevious = () => {
+        if (isReset) {
+            Emitter.emit('showPasswordLogin');
+            return;
+        }
+        Emitter.emit('showEndpoint');
+    };
 
     return (
         <div className="flex flex-col justify-center max-w-450px login-form-w">
             <div className=" min-h-400">
-                <div className="login-title theme-text-main"><span onClick={backPrevious}  className='cursor-pointer pr-2'><ArrowLeftOutlined style={{ fontSize: 20 }} className='align-middle' /></span>{t('set_login_password')}</div>
+                <div className="login-title theme-text-main">
+                    <span onClick={backPrevious} className="cursor-pointer pr-2">
+                        <ArrowLeftOutlined style={{ fontSize: 20 }} className="align-middle" />
+                    </span>
+                    {t('set_login_password')}
+                </div>
                 <div className="text-gray-900 text-sm font-bold mb-12">{t('set_login_password_desc')}</div>
 
                 <Form
@@ -100,7 +109,10 @@ const Endpoint = ({ endpoint, isReset }) => {
                     <Form.Item
                         label={<div className="font-bold theme-text-main">API {t('endpoint')}</div>}
                         name="endpoint">
-                        <Input className="mr-2 common-input theme-text-desc theme-base-bg border-none " disabled />
+                        <Input
+                            className="mr-2 common-input theme-text-desc theme-base-bg border-none "
+                            disabled
+                        />
                     </Form.Item>
                     {isReset && (
                         <Form.Item
@@ -109,7 +121,7 @@ const Endpoint = ({ endpoint, isReset }) => {
                             rules={[
                                 { required: true, message: t('private_key_validate_required') },
                                 {
-                                    pattern: /^[A-Fa-f0-9]{1,}$/,
+                                    pattern: /^0[xX][0-9a-fA-F]+$/,
                                     message: t('private_key_validate_pattern'),
                                 },
                             ]}>
