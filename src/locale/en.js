@@ -480,8 +480,10 @@ const en_US = {
         logout: "Logout",
 
 
-        reset_password_success:'密码重置成功',
-        set_password_success:'密码设置成功',
+        reset_password_success:'Password has been successfully set',
+        set_password_success:'Password has been successfully set',
+        lougout_comfirm_modal_title:'Logout',
+        lougout_comfirm_modal_desc:'Are you sure you want to log out of the current node?'
 
 };
 

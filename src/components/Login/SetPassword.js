@@ -94,9 +94,9 @@ const Endpoint = ({ endpoint, isReset }) => {
                     <span onClick={backPrevious} className="cursor-pointer pr-2">
                         <ArrowLeftOutlined style={{ fontSize: 20 }} className="align-middle" />
                     </span>
-                    {t('set_login_password')}
+                    {t(`${isReset?'re':''}set_login_password`)}
                 </div>
-                <div className="text-gray-900 text-sm font-bold mb-12">{t('set_login_password_desc')}</div>
+                <div className="text-gray-900 text-sm font-bold mb-12">{t(`${isReset?'re':''}set_login_password_desc`)}</div>
 
                 <Form
                     name="basic"

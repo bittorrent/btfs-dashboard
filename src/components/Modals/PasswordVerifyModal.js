@@ -6,7 +6,7 @@ import { Spin, } from 'antd';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import CommonModal from './CommonModal';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 
 
 import { aseEncode } from 'utils/BTFSUtil';
@@ -76,6 +76,7 @@ export default function PasswordVerifyModal({ color }) {
     const handleSubmit = async () => {
         if (!password) {
             setValidateMsg(t('password_validate_required'));
+            return;
         }
         if (password && !checkPassword(password)) {
             setValidateMsg(t('password_validate_pattern'));
@@ -86,9 +87,9 @@ export default function PasswordVerifyModal({ color }) {
             ? localStorage.getItem('NODE_URL')
             : 'http://localhost:5001';
         let asePassowrd = aseEncode(password, NODE_URL);
-        const token = Cookies.get(NODE_URL)
+        // const token = Cookies.get(NODE_URL)
         try {
-            let res = await loginValidate(asePassowrd,token);
+            let res = await loginValidate(asePassowrd);
             setLoading(false);
             if (res && res.Success) {
                 callbackFn.current();

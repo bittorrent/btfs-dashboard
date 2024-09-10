@@ -105,7 +105,7 @@ export default function ChangePasswordModal({ color }) {
                         autoComplete="off">
                         <Form.Item
                             label={
-                                <div className="font-bold theme-text-main">API {t('enter_old_password')}</div>
+                                <div className="font-bold theme-text-main">{t('enter_old_password')}</div>
                             }
                             name="oldpassword"
                             rules={[

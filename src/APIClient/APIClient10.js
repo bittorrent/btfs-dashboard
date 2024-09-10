@@ -427,11 +427,11 @@ class APIClient10 {
     login(arg){
         return this.request(`/api/v1/dashboard/login?arg=${arg}`);
     }
-    loginValidate(arg,token){
-        return this.request(`/api/v1/dashboard/validate?arg=${arg}&token=${token}`);
+    loginValidate(arg){
+        return this.request(`/api/v1/dashboard/validate?arg=${arg}`);
     }
-    changePassword(arg,newpassword,token){
-        return this.request(`/api/v1/dashboard/change?arg=${arg}&arg=${newpassword}&token=${token}`);
+    changePassword(arg,newpassword){
+        return this.request(`/api/v1/dashboard/change?arg=${arg}&arg=${newpassword}`);
     }
     resetLoginPassword(privateKey, password){
         return this.request(`/api/v1/dashboard/reset?arg=${privateKey}&arg=${password}`);

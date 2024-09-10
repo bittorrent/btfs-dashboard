@@ -469,7 +469,8 @@ const zh_CN = {
 
         reset_password_success:'密码重置成功',
         set_password_success:'密码设置成功',
-
+        lougout_comfirm_modal_title:'退出登录',
+        lougout_comfirm_modal_desc:'确认要退出当前节点登录吗?'
 
 };
 

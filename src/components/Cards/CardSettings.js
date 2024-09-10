@@ -3,13 +3,12 @@ import { Tooltip } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { mainContext } from 'reducer';
 import Emitter from 'utils/eventBus';
-import Cookies from 'js-cookie';
-import { useHistory } from 'react-router-dom';
 
 import { nodeStatusCheck, getPrivateKey, getRepo, setApiUrl } from 'services/otherService.js';
 import { t } from 'utils/text.js';
 import { urlCheck } from 'utils/checks.js';
 import PathConfirmModal from 'components/Modals/PathConfirmModal.js';
+import LogoutConfirmModal from 'components/Modals/LogoutComfirmModal';
 import CardConfig from './CardConfig';
 import ConfigConfirmModal from 'components/Modals/ConfigConfirmModal';
 import ClipboardCopy from 'components/Utils/ClipboardCopy';
@@ -17,7 +16,6 @@ import S3CardConfig from './S3CardConfig';
 import { getParameterByName } from 'utils/BTFSUtil.js';
 import { MAIN_PAGE_MODE } from 'utils/constants';
 
-import { logout } from 'services/login.js';
 
 export default function CardSettings({ color }) {
     const apiUrl = getParameterByName('api', window.location.href);
@@ -28,7 +26,6 @@ export default function CardSettings({ color }) {
         setApiUrl(apiUrl);
         NODE_URL = apiUrl;
     }
-    const history = useHistory();
     const inputRef = useRef(null);
     const { state } = useContext(mainContext);
     const { pageMode } = state;
@@ -77,12 +74,7 @@ export default function CardSettings({ color }) {
     };
 
     const handleLogout = async () => {
-        await logout();
-        let NODE_URL = localStorage.getItem('NODE_URL')
-            ? localStorage.getItem('NODE_URL')
-            : 'http://localhost:5001';
-        Cookies.remove(NODE_URL);
-        history.push('/login');
+        Emitter.emit('openLogoutConfirmModal', {});
     };
 
     const changePath = async e => {
@@ -188,6 +180,7 @@ export default function CardSettings({ color }) {
 
             <PathConfirmModal />
             <ConfigConfirmModal />
+            <LogoutConfirmModal />
         </div>
     );
 }
