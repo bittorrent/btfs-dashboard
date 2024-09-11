@@ -483,7 +483,10 @@ const en_US = {
         reset_password_success:'Password has been successfully set',
         set_password_success:'Password has been successfully set',
         lougout_comfirm_modal_title:'Logout',
-        lougout_comfirm_modal_desc:'Are you sure you want to log out of the current node?'
+        lougout_comfirm_modal_desc:'Are you sure you want to log out of the current node?',
+        enable_token_auth_msg:'The current node has the EnableTokenAuth option disabled. To ensure data security, please upgrade to the latest version and enable this option in the configuration before continuing to use the Dashboard.',
+
+
 
 };
 

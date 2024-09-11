@@ -1,36 +1,31 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useEffect, useState } from 'react';
 import Emitter from 'utils/eventBus';
+
+import { mainContext } from 'reducer';
 import Endpoint from 'components/Login/Endpoint.js';
 import SetPassword from 'components/Login/SetPassword.js';
 import PasswordLogin from 'components/Login/PasswordLogin.js';
 import MessageAlert from 'components/Alerts/MessageAlert';
+import MessageNotification from 'components/Alerts/MessageNotification';
 import { checkLoginPassword } from 'services/login.js';
+import { getHostConfigData } from 'services/otherService.js';
 import { useLocation } from 'react-router-dom';
 import { getParameterByName } from 'utils/BTFSUtil.js';
 import { urlCheck } from 'utils/checks.js';
 import LangDropdown from 'components/Dropdowns/LangDropdown.js';
 import ThemeToggle from 'components/Toggles/ThemeToggle';
 
+
 export default function Login(props) {
     const location = useLocation();
+    const { state } = useContext(mainContext);
+    const { theme } = state;
     const back = location.state?.back || false;
     const [isReset, setIsReset] = useState(false);
     const [endpoint, setEndpoint] = useState('');
     const [hasPassword, setHasPassword] = useState(back);
     const [loading, setLoading] = useState(false);
-    // const { state } = useContext(mainContext);
-    // const { theme } = state;
-    // const query = new URLSearchParams(props.location.search);
-    // const bucketDetail = Number(query.get('bucketDetail'));
-    // const bucketName = query.get('bucketName');
-    // const accessKeyId = query.get('accessKeyId');
-    // const secretAccessKey = query.get('secretAccessKey');
-
-    // const getEndpoint = ()=>{
-    //     const NODE_URL = localStorage.getItem('NODE_URL');
-    //     console.log(NODE_URL)
-    //     // const isMainMode = await getPageMode();
-    // }
 
     const endpointChange = async val => {
         if (loading) return;
@@ -42,9 +37,9 @@ export default function Login(props) {
                 Emitter.emit('showMessageAlert', { message: res.Message || 'error', status: 'error' });
                 return;
             }
-            setEndpoint(val);
             if (res && res.Success) {
-                setHasPassword(true);
+                await getHostConfig(val);
+                return;
             } else if (res && !res.Success) {
                 setHasPassword(false);
             }
@@ -55,6 +50,19 @@ export default function Login(props) {
                 type: 'frontEnd',
             });
         }
+    };
+
+    const getHostConfig = async val => {
+        try {
+            const res = await getHostConfigData();
+            const EnableTokenAuth = res?.API?.EnableTokenAuth;
+            if (!EnableTokenAuth) {
+                setHasPassword(true);
+                setEndpoint(val);
+            } else {
+                Emitter.emit('showMessageNotification', { message: 'enable_token_auth_msg', status: 'error' ,type: 'frontEnd',});
+            }
+        } catch (error) {}
     };
 
     const lostPassword = () => {
@@ -82,6 +90,7 @@ export default function Login(props) {
         setEndpoint(NODE_URL);
         setHasPassword(true);
     };
+
     useEffect(() => {
         Emitter.on('handleEndpoint', endpointChange);
         Emitter.on('handleLostPassword', lostPassword);
@@ -152,7 +161,9 @@ export default function Login(props) {
                 <div className="flex  flex-auto justify-center items-center  ">
                     <div className="flex justify-center items-center  ">
                         <img
-                            src={require(`assets/img/login-img.png`).default}
+                            src={
+                                require(`assets/img/login-img${theme === 'dark' ? '-dark' : ''}.png`).default
+                            }
                             alt=""
                             width={556}
                             height={403}
@@ -172,6 +183,7 @@ export default function Login(props) {
                 {endpoint && hasPassword && !isReset && <PasswordLogin endpoint={endpoint} />}
             </div>
             <MessageAlert />
+            <MessageNotification />
         </div>
     );
 }

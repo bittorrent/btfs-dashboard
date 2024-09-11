@@ -218,7 +218,7 @@ export default function EncryptFileModal({ color }) {
                         className="mb-4"
                         width={43}
                     />
-                    <div className="font-semibold text-xl mb-2"> {t('encrypt_upload_file')} </div>
+                    <div className="font-semibold  text-xl mb-2"> {t('encrypt_upload_file')} </div>
                     <div className="text-xs font-medium mb-4 theme-text-sub-info">
                         {t('encrypt_upload_file_desc')}
                     </div>
@@ -268,7 +268,7 @@ export default function EncryptFileModal({ color }) {
                                     return (
                                         <Radio value={v.value} key={v.label}>
                                             <div className=" w-full mb-3">
-                                                <p className="font-semibold ">{t(`${v.label}`)}</p>
+                                                <p className="font-semibold theme-text-main ">{t(`${v.label}`)}</p>
                                                 <span className="text-xs font-medium theme-text-sub-info">
                                                     {t(`${v.desc}`)}
                                                 </span>
@@ -312,7 +312,7 @@ export default function EncryptFileModal({ color }) {
                         <div>
                             <Input
                                 placeholder={intl.formatMessage({ id: 'set_encrypt_key_placeholder' })}
-                                className="common-input random_key"
+                                className="common-input random_key  theme-bg theme-border-color"
                                 value={password}
                                 onChange={passwordChange}
                                 readOnly={loading}

@@ -470,7 +470,9 @@ const zh_CN = {
         reset_password_success:'密码重置成功',
         set_password_success:'密码设置成功',
         lougout_comfirm_modal_title:'退出登录',
-        lougout_comfirm_modal_desc:'确认要退出当前节点登录吗?'
+        lougout_comfirm_modal_desc:'确认要退出当前节点登录吗?',
+        enable_token_auth_msg:'当前节点未开启EnableTokenAuth选项，为保护数据安全，请升级为最新版后在配置中启用后继续使用Dashboard',
+
 
 };
 

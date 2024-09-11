@@ -53,7 +53,7 @@ const PasswordLogin = ({ color, endpoint }) => {
             setValidateMsg(t('login_lock_message'));
             timer = setTimeout(() => {
                 setIsLock(false);
-            }, 600000);
+            }, 180000);
         } else {
             setValidateMsg('');
             setTimes(0);
@@ -108,7 +108,7 @@ const PasswordLogin = ({ color, endpoint }) => {
                         className="mr-2 common-input theme-bg theme-border-color theme-text-main" />
                     </Form.Item>
                     <div className="flex justify-between  w-full mt-2 ml-1 ">
-                        <span className="theme-text-error text-xs pt-1">{validateMsg}</span>
+                        <span className="theme-text-error text-sm pt-1">{validateMsg}</span>
                     </div>
                     <Form.Item>
                         <button className="mt-5 common-btn theme-common-btn login-btn" type="primary">

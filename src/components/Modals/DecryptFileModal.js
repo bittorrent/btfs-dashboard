@@ -286,7 +286,7 @@ export default function EncryptFileModal({ color }) {
                         <div>
                             <input
                                 placeholder={intl.formatMessage({ id: 'set_decrypt_key_placeholder' })}
-                                className="common-input random_key"
+                                className="common-input random_key theme-bg theme-border-color"
                                 maxLength={inputMaxLength}
                                 ref={inputKeyRef}
                                 onChange={passwordChange}

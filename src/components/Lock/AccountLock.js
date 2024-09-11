@@ -1,15 +1,16 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
+//  { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import { mainContext } from 'reducer';
+// import { mainContext } from 'reducer';
 // import Emitter from 'utils/eventBus';
 
 
 const AccountLock = () => {
-    const { state } = useContext(mainContext);
+    // const { state } = useContext(mainContext);
   const history = useHistory();
 
-    const { theme } = state;
+    // const { theme } = state;
     const lockAccount = e => {
         e.preventDefault();
         e.stopPropagation();
@@ -22,13 +23,13 @@ const AccountLock = () => {
         history.push({pathname:'/login',state:{back:true}});
     };
 
-    useEffect(() => {
-        if (theme === 'dark') {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-    }, [theme]);
+    // useEffect(() => {
+    //     if (theme === 'dark') {
+    //         document.documentElement.classList.add('dark');
+    //     } else {
+    //         document.documentElement.classList.remove('dark');
+    //     }
+    // }, [theme]);
 
     return (
         <button onClick={lockAccount} className="ml-2 round-btn theme-round-btn account-lock">
