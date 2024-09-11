@@ -14,7 +14,7 @@ import { t } from 'utils/text.js';
 
 
 const dashboardLink = { path: '/admin/dashboard', text: t('dashboard'), iconClass: ' iconfont BTFS_icon_Dashboard ' };
-const chequeLink = { path: '/admin/cheque', text: t('cheques'), iconClass: ' iconfont BTFS_icon_Cheques ' };
+const chequeLink = { path: '/admin/cheque', text: t('cheques'), iconClass: ' iconfont BTFS_icon_Cheques  icon-cheques' };
 const onlineProofLink = { path: '/admin/onlineproof', text: t('heartbeats'), iconClass: ' iconfont BTFS_icon_a-OnlineProof ' };
 const peersLink = { path: '/admin/peers', text: t('peers'), iconClass: ' iconfont BTFS_icon_Peers ' };
 const filesLink = { path: '/admin/files', text: t('files'), iconClass: ' iconfont BTFS_icon_Files ' };
