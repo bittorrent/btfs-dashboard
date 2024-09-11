@@ -25,7 +25,7 @@ const MessageNotification = () => {
             }
             if (params.status === 'error') {
                 notification.error({
-                    className: 'login-notification-error',
+                    className: 'login-notification-error theme-bg',
                     placement: 'topRight',
                     duration: 5,
                     description: msg,

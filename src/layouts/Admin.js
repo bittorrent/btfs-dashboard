@@ -124,7 +124,7 @@ export default function Admin() {
 
     const token = Cookies.get(NODE_URL)
     if(!token){
-      history.push('/login');
+      history.push(`/login${apiUrl?'?api='+apiUrl:''}`);
       return;
     }
     const isMainMode = await getPageMode();

@@ -439,7 +439,25 @@
     }
 }
 
-.icon-cheques{
-    font-size:0.6rem;
+.icon-cheques {
+    font-size: 0.6rem;
 
 }
+
+.dark .anticon.ant-notification-notice-icon-error {
+
+    color: #ff4d4f;
+}
+
+.dark .ant-notification-notice-description {
+    color: #fff;
+}
+
+.dark .ant-message-notice-content{
+    background: rgba(0, 0, 0, .85);
+    color: #fff;
+}
+
+.dark .ant-message-error .anticon{
+        color: #ff4d4f;
+ }

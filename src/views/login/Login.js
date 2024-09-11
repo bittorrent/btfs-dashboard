@@ -56,7 +56,7 @@ export default function Login(props) {
         try {
             const res = await getHostConfigData();
             const EnableTokenAuth = res?.API?.EnableTokenAuth;
-            if (!EnableTokenAuth) {
+            if (EnableTokenAuth) {
                 setHasPassword(true);
                 setEndpoint(val);
             } else {

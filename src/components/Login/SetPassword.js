@@ -20,7 +20,7 @@ const Endpoint = ({ endpoint, isReset }) => {
         let psw = aseEncode(password, endpoint);
         if (isReset) {
             const privateKey = values.privateKey;
-            resetPassword(privateKey, psw);
+            resetPassword(psw,privateKey);
         } else {
             setPassoword(psw);
         }
@@ -121,7 +121,7 @@ const Endpoint = ({ endpoint, isReset }) => {
                             rules={[
                                 { required: true, message: t('private_key_validate_required') },
                                 {
-                                    pattern: /^0[xX][0-9a-fA-F]+$/,
+                                    pattern: /^[0-9a-fA-F]+$/,
                                     message: t('private_key_validate_pattern'),
                                 },
                             ]}>

@@ -15,7 +15,7 @@ const HostID = ({ ID = '' }) => {
           </div>
           <Truncate
             className="text-xs font-bold"
-            style={{ fontFamily: 'Helvetica-Bold, Helvetica', color: '#131523' }}>
+            style={{ fontFamily: 'Helvetica-Bold, Helvetica', }}>
             {ID}
           </Truncate>
         </div>
