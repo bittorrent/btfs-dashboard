@@ -322,7 +322,7 @@ export default function LocalFilesTable({ color }) {
                                                     </td>
                                                     <td
                                                         className="common-table-body-td"
-                                                        style={{ minWidth: '350px' }}>
+                                                        style={{ minWidth: '150px' }}>
                                                         <div className="flex">
                                                             <a
                                                                 className="flex items-center"
@@ -340,7 +340,7 @@ export default function LocalFilesTable({ color }) {
                                                                             require('assets/img/folder.png')
                                                                                 .default
                                                                         }
-                                                                        className="h-12 w-12 bg-white rounded-full border"
+                                                                        className="h-10 w-10 bg-white rounded-full border"
                                                                         alt="..."
                                                                     />
                                                                 )}
@@ -350,16 +350,13 @@ export default function LocalFilesTable({ color }) {
                                                                             require('assets/img/file.png')
                                                                                 .default
                                                                         }
-                                                                        className="h-12 w-12 bg-white rounded-full border"
+                                                                        className="h-10 w-10 bg-white rounded-full border"
                                                                         alt="..."
                                                                     />
                                                                 )}
                                                                 <div className="flex flex-col justify-center">
                                                                     <span className="ml-3 font-bold">
                                                                         {item['Name']}
-                                                                    </span>
-                                                                    <span className="ml-3 font-bold">
-                                                                        {item['Hash']}
                                                                     </span>
                                                                 </div>
                                                             </a>
@@ -369,7 +366,7 @@ export default function LocalFilesTable({ color }) {
                                                         {switchStorageUnit2(item['Size'])}
                                                     </td>
                                                     <td className="common-table-body-td">
-                                                        {item.cid ? item.cid : '--'}
+                                                        {item['Hash']  || '--'}
                                                     </td>
                                                     <td className="common-table-body-td">
                                                         {item.Created
@@ -378,7 +375,7 @@ export default function LocalFilesTable({ color }) {
                                                               )
                                                             : '--'}
                                                     </td>
-                                                    <td className="common-table-body-td">
+                                                    <td className="common-table-body-td text-center">
                                                         {checkIsEncrypted(item['Name']) ? (
                                                             <span>
                                                                 <img

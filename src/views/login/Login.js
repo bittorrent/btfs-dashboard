@@ -16,7 +16,6 @@ import { urlCheck } from 'utils/checks.js';
 import LangDropdown from 'components/Dropdowns/LangDropdown.js';
 import ThemeToggle from 'components/Toggles/ThemeToggle';
 
-
 export default function Login(props) {
     const location = useLocation();
     const { state } = useContext(mainContext);
@@ -33,15 +32,28 @@ export default function Login(props) {
         try {
             let res = await checkLoginPassword(val);
             setLoading(false);
-            if (res.Type === 'error') {
+            if (!res || res.Type === 'error') {
                 Emitter.emit('showMessageAlert', { message: res.Message || 'error', status: 'error' });
                 return;
             }
-            if (res && res.Success) {
-                await getHostConfig(val);
+            let enableTokenAuth = await getHostConfig();
+
+            if (!enableTokenAuth) {
+                Emitter.emit('showMessageNotification', {
+                    message: 'enable_token_auth_msg',
+                    status: 'error',
+                    type: 'frontEnd',
+                });
                 return;
-            } else if (res && !res.Success) {
+            }
+            setEndpoint(val);
+            if (res && res.Success) {
+                setHasPassword(true);
+                return;
+            }
+            if (res && !res.Success) {
                 setHasPassword(false);
+                return;
             }
         } catch (error) {
             Emitter.emit('showMessageAlert', {
@@ -52,15 +64,18 @@ export default function Login(props) {
         }
     };
 
-    const getHostConfig = async val => {
+    const getHostConfig = async () => {
         try {
             const res = await getHostConfigData();
             const EnableTokenAuth = res?.API?.EnableTokenAuth;
             if (EnableTokenAuth) {
-                setHasPassword(true);
-                setEndpoint(val);
+                return EnableTokenAuth;
             } else {
-                Emitter.emit('showMessageNotification', { message: 'enable_token_auth_msg', status: 'error' ,type: 'frontEnd',});
+                Emitter.emit('showMessageNotification', {
+                    message: 'enable_token_auth_msg',
+                    status: 'error',
+                    type: 'frontEnd',
+                });
             }
         } catch (error) {}
     };

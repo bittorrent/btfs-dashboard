@@ -453,11 +453,50 @@
     color: #fff;
 }
 
-.dark .ant-message-notice-content{
+.dark .ant-message-notice-content {
     background: rgba(0, 0, 0, .85);
     color: #fff;
 }
 
-.dark .ant-message-error .anticon{
-        color: #ff4d4f;
- }
+.dark .ant-message-error .anticon {
+    color: #ff4d4f;
+}
+
+.hover-change {
+    .hover-hidden {
+        display: block;
+        transition: .3s;
+
+        &.show {
+            display: block;
+        }
+
+        &.hidden {
+            display: none;
+        }
+    }
+
+    .hover-show {
+        display: none;
+        transition: .3s;
+
+        &.show {
+            display: block;
+        }
+
+        &.hidden {
+            display: none;
+        }
+    }
+
+    &:hover {
+        .hover-hidden {
+            display: none;
+        }
+
+        .hover-show {
+            display: block;
+        }
+    }
+
+}

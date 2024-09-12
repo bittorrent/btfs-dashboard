@@ -66,12 +66,26 @@ const FileTableDropdown = ({ color, hash, name, size, path, type, cid, isEncrype
     return (
         <>
             <a
-                className="text-blueGray-500 py-1 px-3"
+                className="text-blueGray-500 py-1 px-3 hover-change "
                 ref={btnDropdownRef}
                 onClick={e => {
                     trigger(e);
                 }}>
-                <i className="fas fa-ellipsis-v"></i>
+                {
+                    // <i className="fas fa-ellipsis-v"></i>/
+                }
+                <img
+                    alt=""
+                    className={"hover-hidden " + (dropdownPopoverShow ? 'hidden':'show')}
+                    src={require('../../assets/img/file-operate.svg').default}
+                    style={{ width: '24px', height: '24px' }}
+                />
+                <img
+                    alt=""
+                    className={"hover-show " + (dropdownPopoverShow ? 'show':'hidden')}
+                    src={require('../../assets/img/file-operate-active.svg').default}
+                    style={{ width: '24px', height: '24px' }}
+                />
             </a>
             <div
                 ref={popoverDropdownRef}

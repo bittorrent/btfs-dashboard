@@ -1174,7 +1174,8 @@ video {
 .common-table-body-td {
   font-size: 0.875rem;
   line-height: 1.25rem;
-  padding: 1rem;
+  /* padding: 1rem; */
+  padding: 0 1rem;
   vertical-align: middle;
   white-space: nowrap;
 }
