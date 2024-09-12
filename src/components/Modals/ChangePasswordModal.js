@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
-import { logout } from 'services/login.js';
+// import { logout } from 'services/login.js';
 
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin, Form, Input } from 'antd';
@@ -11,6 +11,8 @@ import CommonModal from './CommonModal';
 import { changePassword } from 'services/login';
 import Cookies from 'js-cookie';
 import { aseEncode } from 'utils/BTFSUtil';
+
+// import { updateLoginToken } from 'services/otherService';
 
 export default function ChangePasswordModal({ color }) {
     const intl = useIntl();
@@ -64,7 +66,7 @@ export default function ChangePasswordModal({ color }) {
                     type: 'frontEnd',
                 });
                 closeModal();
-                await logout();
+                // await logout();
                 Cookies.remove(NODE_URL);
                 history.push('/login');
             } else {

@@ -31,7 +31,8 @@ const Endpoint = ({ endpoint, isReset }) => {
             let res = await resetLoginPassword(privateKey, password);
             if (res && res.Success) {
                 Emitter.emit('showMessageAlert', { message: 'reset_password_success', status: 'success', type: 'frontEnd' });
-                loginFn(password);
+                Emitter.emit('showPasswordLogin');
+                // loginFn(password);
             } else {
                 Emitter.emit('showMessageAlert', { message: res.Text, status: 'error' });
             }
@@ -53,19 +54,19 @@ const Endpoint = ({ endpoint, isReset }) => {
         }
     };
 
-    const loginFn = async password => {
-        try {
-            let res = await login(password);
-            if (res && res.Success) {
-                Cookies.set(endpoint, res.Text, { expires: 1 });
-                history.push('/admin/settings');
-            } else {
-                Emitter.emit('showMessageAlert', { message: res.Text || 'error', status: 'error' });
-            }
-        } catch (error) {
-            Emitter.emit('showMessageAlert', { message: error.Message || 'error', status: 'error' });
-        }
-    };
+    // const loginFn = async password => {
+    //     try {
+    //         let res = await login(password);
+    //         if (res && res.Success) {
+    //             Cookies.set(endpoint, res.Text, { expires: 1 });
+    //             history.push('/admin/settings');
+    //         } else {
+    //             Emitter.emit('showMessageAlert', { message: res.Text || 'error', status: 'error' });
+    //         }
+    //     } catch (error) {
+    //         Emitter.emit('showMessageAlert', { message: error.Message || 'error', status: 'error' });
+    //     }
+    // };
 
     const validatePwd = (rules, value, callback) => {
         let loginpass = form.getFieldValue('password');
