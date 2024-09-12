@@ -45,6 +45,8 @@ export default function EncryptFileModal({ color }) {
     const [isCurHost, setIsCurHost] = useState(true);
     const [password, setPassword] = useState('');
     const [validateKeyMsg, setValidateKeyMsg] = useState('');
+    const [path, setPath] = useState(null);
+
     // const controller = useRef<AbortController>(new AbortController());
 
     const init = () => {
@@ -61,8 +63,9 @@ export default function EncryptFileModal({ color }) {
     };
     useEffect(() => {
         const set = async function (params) {
-            console.log('openEncryptFileModal event has occured');
+            console.log('openEncryptFileModal event has occured',params);
             init();
+            setPath(params.path);
             openModal();
         };
         Emitter.on('openEncryptFileModal', set);
@@ -121,7 +124,7 @@ export default function EncryptFileModal({ color }) {
             setLoading(true);
             let hostid = encryptType === 'host' ? hostId : '';
             let passwords = encryptType === 'host' ? '' : password;
-            let result = await encryptUploadFiles(currentFile, hostid, passwords, onUploadProgress(fileName));
+            let result = await encryptUploadFiles(currentFile, hostid, passwords,path,onUploadProgress(fileName));
             Emitter.emit('openEncryptFileCidModal', result);
             Emitter.emit('updateFiles');
         } catch (e) {

@@ -1,7 +1,7 @@
-import React, {useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useIntl } from 'react-intl';
-import {useHistory } from 'react-router-dom';
-import {  Form, Input } from 'antd';
+import { useHistory } from 'react-router-dom';
+import { Form, Input } from 'antd';
 import { t } from 'utils/text.js';
 import { aseEncode } from 'utils/BTFSUtil';
 import { ArrowLeftOutlined } from '@ant-design/icons';
@@ -10,6 +10,7 @@ import Cookies from 'js-cookie';
 import Emitter from 'utils/eventBus';
 
 import { login } from 'services/login.js';
+import { updateLoginToken } from 'services/otherService';
 
 const PasswordLogin = ({ color, endpoint }) => {
     const history = useHistory();
@@ -26,6 +27,7 @@ const PasswordLogin = ({ color, endpoint }) => {
         let res = await login(psw);
         if (res && res.Success) {
             Cookies.set(endpoint, res.Text, { expires: 1 });
+            updateLoginToken();
             history.push('/admin/settings');
         } else {
             setTimes(times + 1);
@@ -34,12 +36,15 @@ const PasswordLogin = ({ color, endpoint }) => {
     };
 
     const LostPassword = () => {
+        if (isLock) {
+            return;
+        }
         Emitter.emit('handleLostPassword');
     };
 
-    const backPrevious = ()=>{
+    const backPrevious = () => {
         Emitter.emit('showEndpoint');
-    }
+    };
 
     useEffect(() => {
         if (times >= 5) {
@@ -64,7 +69,12 @@ const PasswordLogin = ({ color, endpoint }) => {
     return (
         <div className="flex flex-col justify-center max-w-450px  min-w-334px login-form-w ">
             <div className="min-h-400">
-                <div className="login-title mb-12 theme-text-main"><span onClick={backPrevious}  className='cursor-pointer pr-2'><ArrowLeftOutlined style={{ fontSize: 20 }}  className='align-middle' /></span>{t('login_title')}</div>
+                <div className="login-title mb-12 theme-text-main">
+                    <span onClick={backPrevious} className="cursor-pointer pr-2">
+                        <ArrowLeftOutlined style={{ fontSize: 20 }} className="align-middle" />
+                    </span>
+                    {t('login_title')}
+                </div>
                 <Form
                     name="basic"
                     layout="vertical"
@@ -78,7 +88,10 @@ const PasswordLogin = ({ color, endpoint }) => {
                     <Form.Item
                         label={<div className="font-bold theme-text-main">API {t('endpoint')}</div>}
                         name="endpoint">
-                        <Input className="mr-2 common-input theme-text-desc theme-base-bg border-none" disabled />
+                        <Input
+                            className="mr-2 common-input theme-text-desc theme-base-bg border-none"
+                            disabled
+                        />
                     </Form.Item>
 
                     <Form.Item
@@ -103,9 +116,9 @@ const PasswordLogin = ({ color, endpoint }) => {
                             },
                         ]}>
                         <Input.Password
-
-                        placeholder={intl.formatMessage({ id: 'enter_password_placeholder' })}
-                        className="mr-2 common-input theme-bg theme-border-color theme-text-main" />
+                            placeholder={intl.formatMessage({ id: 'enter_password_placeholder' })}
+                            className="mr-2 common-input theme-bg theme-border-color theme-text-main"
+                        />
                     </Form.Item>
                     <div className="flex justify-between  w-full mt-2 ml-1 ">
                         <span className="theme-text-error text-sm pt-1">{validateMsg}</span>

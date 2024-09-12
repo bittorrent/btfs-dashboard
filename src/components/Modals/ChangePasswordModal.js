@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
+import { useHistory } from 'react-router-dom';
+import { logout } from 'services/login.js';
+
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin, Form, Input } from 'antd';
 import Emitter from 'utils/eventBus';
@@ -14,6 +17,7 @@ export default function ChangePasswordModal({ color }) {
     const [form] = Form.useForm();
     const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState(false);
+    const history = useHistory();
 
     useEffect(() => {
         const set = async function (params) {
@@ -60,6 +64,9 @@ export default function ChangePasswordModal({ color }) {
                     type: 'frontEnd',
                 });
                 closeModal();
+                await logout();
+                Cookies.remove(NODE_URL);
+                history.push('/login');
             } else {
                 Emitter.emit('showMessageAlert', {
                     message: 'change_password_fail',
@@ -104,9 +111,7 @@ export default function ChangePasswordModal({ color }) {
                         onFinish={onFinish}
                         autoComplete="off">
                         <Form.Item
-                            label={
-                                <div className="font-bold theme-text-main">{t('enter_old_password')}</div>
-                            }
+                            label={<div className="font-bold theme-text-main">{t('enter_old_password')}</div>}
                             name="oldpassword"
                             rules={[
                                 { required: true, message: t('private_key_validate_required') },

@@ -6,10 +6,10 @@ import Cookies from 'js-cookie';
 class APIClient10 {
     constructor() {
         this.apiUrl = localStorage.getItem('NODE_URL') ? localStorage.getItem('NODE_URL') : "http://localhost:5001";
+        this.token = Cookies.get(this.apiUrl) || '';
         this.request = async (url, body, config) => {
             const isFormData = body instanceof FormData
-            const token = Cookies.get(this.apiUrl) || '';
-            const addToken = url.includes('?')? `&token=${token}` : `?token=${token}`
+            const addToken = url.includes('?')? `&token=${this.token}` : `?token=${this.token}`
             return new Promise(async (resolve, reject) => {
                 try {
 
@@ -65,6 +65,10 @@ class APIClient10 {
 
     setApiUrl(url) {
         this.apiUrl = url;
+    }
+
+    updateToken() {
+        this.token = Cookies.get(this.apiUrl) || ''
     }
 
 
