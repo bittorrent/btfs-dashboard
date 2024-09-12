@@ -36,9 +36,9 @@ const PasswordLogin = ({ color, endpoint }) => {
     };
 
     const LostPassword = () => {
-        if (isLock) {
-            return;
-        }
+        // if (isLock) {
+        //     return;
+        // }
         Emitter.emit('handleLostPassword');
     };
 
