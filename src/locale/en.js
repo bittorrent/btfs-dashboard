@@ -486,6 +486,9 @@ const en_US = {
         lougout_comfirm_modal_desc:'Are you sure you want to log out of the current node?',
         enable_token_auth_msg:'The current node has the EnableTokenAuth option disabled. To ensure data security, please upgrade to the latest version and enable this option in the configuration before continuing to use the Dashboard.',
 
+        read_doc:'Read the Doc',
+        login_error:'Login failed, please check the network',
+        login_password_error:'Wrong login password',
 
 
 };

@@ -472,7 +472,9 @@ const zh_CN = {
         lougout_comfirm_modal_title:'退出登录',
         lougout_comfirm_modal_desc:'确认要退出当前节点登录吗?',
         enable_token_auth_msg:'当前节点未开启EnableTokenAuth选项，为保护数据安全，请升级为最新版后在配置中启用后继续使用Dashboard',
-
+        read_doc:'阅读文档',
+        login_error:'登录失败，请检查网络',
+        login_password_error:'登录密码错误',
 
 };
 

@@ -31,7 +31,8 @@ const PasswordLogin = ({ color, endpoint }) => {
             history.push('/admin/settings');
         } else {
             setTimes(times + 1);
-            Emitter.emit('showMessageAlert', { message: res.Text || 'error', status: 'error' });
+            let msg = res.Text === 'password is not correct' ? 'login_password_error' : 'login_error';
+            Emitter.emit('showMessageAlert', { message: msg, status: 'error', type: 'frontEnd'  });
         }
     };
 

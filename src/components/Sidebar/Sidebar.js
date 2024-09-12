@@ -193,6 +193,15 @@ export default function Sidebar() {
                             <li className="items-center">
                                 <a
                                     className={'sidebar-link theme-sidebar-link'}
+                                    href="https://docs.btfs.io/docs/btfs-dashboard"
+                                    target="_blank"
+                                    rel="noreferrer">
+                                    {t('read_doc')}
+                                </a>
+                            </li>
+                            <li className="items-center">
+                                <a
+                                    className={'sidebar-link theme-sidebar-link'}
                                     href="https://github.com/bittorrent/btfs-dashboard"
                                     target="_blank"
                                     rel="noreferrer">

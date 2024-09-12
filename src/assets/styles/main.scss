@@ -424,6 +424,10 @@
         background: #F2F5F7 url(../img/background.png) no-repeat right top;
         background-size: contain;
     }
+    .dark  .login-form {
+        background: rgba(0,0,0,0)
+        // background: #F2F5F7 url(../img/background.png) no-repeat right top;
+    }
 
     .login-form-w {
         width: 90vw;

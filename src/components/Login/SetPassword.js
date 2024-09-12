@@ -4,15 +4,15 @@ import { Form, Input } from 'antd';
 import { t } from 'utils/text.js';
 import Emitter from 'utils/eventBus';
 import { aseEncode } from 'utils/BTFSUtil';
-import { useHistory } from 'react-router-dom';
-import Cookies from 'js-cookie';
+// import { useHistory } from 'react-router-dom';
+// import Cookies from 'js-cookie';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
-import { setLoginPassword, resetLoginPassword, login } from 'services/login.js';
+import { setLoginPassword, resetLoginPassword } from 'services/login.js';
 
 const Endpoint = ({ endpoint, isReset }) => {
     const intl = useIntl();
-    const history = useHistory();
+    // const history = useHistory();
     const [form] = Form.useForm();
 
     const onFinish = async (values: any) => {
