@@ -1,7 +1,7 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-export function Truncate({children, className = '', style = {}}) {
+export function Truncate({children, className = '', style = {},start=7,end=7}) {
   if(!children) return '';
   if (children.length <= 14) {
     return (
@@ -13,7 +13,7 @@ export function Truncate({children, className = '', style = {}}) {
   if (children.length > 14)
     return (
         <div className={"theme-text-main "+ className} style={style}>
-            {children.substring(0,7)} ... {children.substring(children.length - 7, children.length)}
+            {children.substring(0,start)} ... {children.substring(children.length - end, children.length)}
         </div>
     )
 }

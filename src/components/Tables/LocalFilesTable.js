@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useIntl } from 'react-intl';
-import { Breadcrumb, Pagination, Tabs } from 'antd';
+import { Breadcrumb, Pagination, Tabs, Tooltip } from 'antd';
 import PropTypes from 'prop-types';
 import FileTableDropdown from 'components/Dropdowns/FileTableDropdown.js';
 import ImportFilesDropdown from 'components/Dropdowns/ImportFilesDropdown.js';
@@ -14,6 +14,8 @@ import { t } from 'utils/text.js';
 import moment from 'moment';
 
 import Emitter from 'utils/eventBus';
+import { Truncate } from 'utils/text';
+
 
 let didCancel = false;
 let filesAll = [];
@@ -322,7 +324,7 @@ export default function LocalFilesTable({ color }) {
                                                     </td>
                                                     <td
                                                         className="common-table-body-td"
-                                                        style={{ minWidth: '150px' }}>
+                                                        style={{ minWidth: '220px', maxWidth: '300px' }}>
                                                         <div className="flex">
                                                             <a
                                                                 className="flex items-center"
@@ -354,10 +356,22 @@ export default function LocalFilesTable({ color }) {
                                                                         alt="..."
                                                                     />
                                                                 )}
-                                                                <div className="flex flex-col justify-center">
-                                                                    <span className="ml-3 font-bold">
-                                                                        {item['Name']}
-                                                                    </span>
+                                                                <div className="flex w-full flex-col justify-center">
+                                                                    {item['Name'].length > 14 ? (
+                                                                        <Tooltip
+                                                                            className="cursor-pointer flex "
+                                                                            placement="top"
+                                                                            title={item['Name']}>
+                                                                            <span className="ml-3 font-bold">
+                                                                                <Truncate start={5}>{item['Name']}</Truncate>
+                                                                            </span>
+
+                                                                        </Tooltip>
+                                                                    ) : (
+                                                                        <span className="ml-3 font-bold">
+                                                                            {item['Name']}
+                                                                        </span>
+                                                                    )}
                                                                 </div>
                                                             </a>
                                                         </div>
@@ -366,7 +380,7 @@ export default function LocalFilesTable({ color }) {
                                                         {switchStorageUnit2(item['Size'])}
                                                     </td>
                                                     <td className="common-table-body-td">
-                                                        {item['Hash']  || '--'}
+                                                        {item['Hash'] || '--'}
                                                     </td>
                                                     <td className="common-table-body-td">
                                                         {item.Created
