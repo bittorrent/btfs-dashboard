@@ -27,6 +27,7 @@ export default function TransferConfirmModal({ color }) {
         const set = async function (params) {
             console.log('openTransferConfirmModal event has occured');
             openModal();
+            inputAmountRef.current.value = ''
             tokenRef.current = 'BTT';
             const currentObj = {
                 BTT: params.maxBTT,
