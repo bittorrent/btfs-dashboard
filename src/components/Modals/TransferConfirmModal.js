@@ -62,8 +62,7 @@ export default function TransferConfirmModal({ color }) {
                 inputAmountRef.current.value,
                 tokenRef.current
             );
-        }
-        if (tokenRef.current === 'WBTT') {
+        }else if (tokenRef.current === 'WBTT') {
             result = await WBTTTransfer(
                 inputAddressRef.current.value.trim(),
                 inputAmountRef.current.value,
