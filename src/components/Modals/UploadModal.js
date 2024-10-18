@@ -72,7 +72,7 @@ export default function UploadModal({ color }) {
                     {!err && <Progress type="circle" percent={percentage} />}
                     {err && <Progress type="circle" percent={percentage} status="exception" />}
                     <div className="font-semibold mt-4 w-full overflow-auto text-center">
-                        {err ? t({ id: 'upload_fail' }) : percentage > 99 ? t({ id: 'upload_success' }) : t({ id: 'uploading' }) }
+                        {err ? t('upload_fail') : percentage > 99 ? t('upload_success') : t('uploading') }
                          &nbsp;
                         <span className={themeStyle.title[color]}>{name.current}</span>
                     </div>
