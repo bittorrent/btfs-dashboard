@@ -15,6 +15,7 @@ import { getParameterByName } from 'utils/BTFSUtil.js';
 import { urlCheck } from 'utils/checks.js';
 import LangDropdown from 'components/Dropdowns/LangDropdown.js';
 import ThemeToggle from 'components/Toggles/ThemeToggle';
+import { t } from 'utils/text.js';
 
 export default function Login(props) {
     const location = useLocation();
@@ -173,8 +174,11 @@ export default function Login(props) {
                         <span className="theme-text-base"> 3.0</span>
                     </div>
                 </div>
+                <div className="flex w-full login-placeholder">
+
+                </div>
                 <div className="flex  flex-auto justify-center items-center  ">
-                    <div className="flex justify-center items-center  ">
+                    <div className="flex justify-center items-center ">
                         <img
                             src={
                                 require(`assets/img/login-img${theme === 'dark' ? '-dark' : ''}.png`).default
@@ -185,6 +189,50 @@ export default function Login(props) {
                         />
                     </div>
                 </div>
+                <ul className=" flex md:flex-col md:min-w-full flex-col list-none mb-2 justify-start pl-8 ">
+                    <li className="items-center">
+                        <span className={'login-link theme-sidebar-link'}>{t('version')} 3.1.0</span>
+                    </li>
+
+                    <li className="items-center">
+                        <a
+                            className={'login-link theme-sidebar-link'}
+                            href="https://docs.btfs.io/docs/btfs-dashboard"
+                            target="_blank"
+                            rel="noreferrer">
+                            {t('read_doc')}
+                        </a>
+                    </li>
+                    <li className="items-center">
+                        <a
+                            className={'login-link theme-sidebar-link'}
+                            href="https://github.com/bittorrent/btfs-dashboard"
+                            target="_blank"
+                            rel="noreferrer">
+                            {t('view_code')}
+                        </a>
+                    </li>
+
+                    <li className="items-center">
+                        <a
+                            className={'login-link theme-sidebar-link'}
+                            href="https://github.com/bittorrent/btfs-dashboard/issues"
+                            target="_blank"
+                            rel="noreferrer">
+                            {t('report_bugs')}
+                        </a>
+                    </li>
+
+                    <li className="items-center">
+                        <a
+                            className={'login-link theme-sidebar-link'}
+                            href="https://docs.google.com/forms/d/e/1FAIpQLSeH1Vhm4C6tcsI80gLzUQ58cuYtMHj3LEQFx_STAqWNoCP3Ew/viewform"
+                            target="_blank"
+                            rel="noreferrer">
+                            {t('contact_us')}
+                        </a>
+                    </li>
+                </ul>
                 <div className="flex w-full justify-start pl-8" style={{ flex: '0 0 60px' }}>
                     <ThemeToggle />
                     <LangDropdown />

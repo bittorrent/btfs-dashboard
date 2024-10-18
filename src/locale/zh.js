@@ -476,6 +476,11 @@ const zh_CN = {
         login_error:'登录失败，请检查网络',
         login_password_error:'登录密码错误',
 
+        upload_success:'上传成功',
+        download_success:'下载成功',
+        upload_fail:'上传失败',
+        download_fail:'下载失败'
+
 };
 
 export default zh_CN

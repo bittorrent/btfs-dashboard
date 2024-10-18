@@ -490,6 +490,11 @@ const en_US = {
         login_error:'Login failed, please check the network',
         login_password_error:'Wrong login password',
 
+        upload_success:'Upload Successfully',
+        download_success:'Download Successfully',
+        upload_fail:'Upload Failed',
+        download_fail:'Download Failed'
+
 
 };
 

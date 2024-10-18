@@ -1123,6 +1123,16 @@ video {
   padding-bottom: 0.75rem;
 }
 
+.login-link {
+    display: block;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+
 .border-dotted{
     border-style: dotted;
 }
@@ -1178,6 +1188,7 @@ video {
   padding: 0 1rem;
   vertical-align: middle;
   white-space: nowrap;
+  height: 40px;
 }
 
 .bg-black {
@@ -2534,4 +2545,8 @@ video {
 
 .min-h-screen{
     min-height: 100vh;
+}
+
+.login-placeholder{
+    height: 5rem;
 }

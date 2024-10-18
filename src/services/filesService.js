@@ -20,7 +20,7 @@ export const setClient = apiUrl => {
 
 setClient(apiUrl);
 
-export  const setFileServiceApiUrl = url => {
+export const setFileServiceApiUrl = url => {
     apiUrl = url;
 };
 
@@ -291,13 +291,15 @@ export const removeFiles = async (hash, name, path, type) => {
     }
 };
 
-export const encryptUploadFiles = async (file, hostId, password,path, onUploadProgress) => {
-    console.log(file, hostId, password,path, onUploadProgress)
+export const encryptUploadFiles = async (file, hostId, password, path, onUploadProgress) => {
+    console.log(file, hostId, password, path, onUploadProgress);
     try {
         const formData = new FormData();
         formData.append('file', file);
         formData.append('path', path);
-        let res = await Client10.encrypt(formData, hostId, password, onUploadProgress);
+        let newPath = [...path].slice(1);
+        let pathStr = newPath.length ? '/' + newPath.join('/') + '/' : '/';
+        let res = await Client10.encrypt(formData, hostId, password,pathStr, onUploadProgress);
         if (res?.Type === 'error') {
             return Promise.reject(res);
         } else {

@@ -379,8 +379,8 @@ class APIClient10 {
         }
     }
 
-    encrypt(formData,to,password,onUploadProgress) {
-        return this.request(`/api/v1/encrypt?${to?'to='+to:''}${password?'p='+password:''}`,formData,{
+    encrypt(formData,to,password,pathStr,onUploadProgress) {
+        return this.request(`/api/v1/encrypt?${to?'to='+to:''}&${password?'p='+password:''}&${pathStr?'d='+pathStr:''}`,formData,{
             'headers':{
                 'Content-Type':'application/x-www-form-urlencoded',
             },
