@@ -351,14 +351,14 @@ export default function S3BucketsTable({ color, bucketName, accessKeyId, secretA
                                                         {item['Type'] === 1 && (
                                                             <img
                                                                 src={require('assets/img/folder.png').default}
-                                                                className="h-12 w-12 bg-white rounded-full border"
+                                                                className="h-10 w-10 bg-white rounded-full border"
                                                                 alt="..."
                                                             />
                                                         )}
                                                         {item['Type'] === 2 && (
                                                             <img
                                                                 src={require('assets/img/file.png').default}
-                                                                className="h-12 w-12 bg-white rounded-full border"
+                                                                className="h-10 w-10 bg-white rounded-full border"
                                                                 alt="..."
                                                             />
                                                         )}
@@ -375,7 +375,7 @@ export default function S3BucketsTable({ color, bucketName, accessKeyId, secretA
                                                     <ClipboardCopy value={item.CID} />
                                                 </Tooltip> : '--'}</td>
                                             <td className="common-table-body-td">{item.GatewayUrl ?
-                                                <span className="h-full flex">
+                                                <span className="h-full flex items-center">
                                                     <Tooltip className="flex" placement="top" title={item.GatewayUrl}>
                                                     <a className="flex items-center theme-link" target="_blank" rel="noreferrer" href={item.GatewayUrl}><span>{item.GatewayUrlAbbrValue}</span></a>
                                                     <ClipboardCopy value={item.GatewayUrl} />
