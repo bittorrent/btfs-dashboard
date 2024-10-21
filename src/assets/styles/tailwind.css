@@ -1119,14 +1119,12 @@ video {
   line-height: 1rem;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
 }
 
 .login-link {
-    display: block;
+    /* display: block; */
     font-size: 0.75rem;
-    line-height: 1rem;
+    line-height: 1.2rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     padding-top: 0.25rem;
