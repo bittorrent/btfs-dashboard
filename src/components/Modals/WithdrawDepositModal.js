@@ -16,7 +16,7 @@ const { Option } = Select;
 export default function WithdrawDepositModal({ color }) {
     const intl = useIntl();
     const inputRef = useRef(null);
-    const tokenRef = useRef('WBTT');
+    // const tokenRef = useRef('WBTT');/
     const [type, setType] = useState(null);
     const [title, setTitle] = useState(null);
     const [description, setDescription] = useState(null);
@@ -25,13 +25,15 @@ export default function WithdrawDepositModal({ color }) {
     const [account, setAccount] = useState(null);
     const [valid, setValid] = useState(false);
     const maxRef = useRef(null);
+    const [tokenCurrent, setTokenCurrent] = useState('BTT');
+
 
     useEffect(() => {
         const set = function (params) {
             openModal();
             setType(params.type);
             let currentObj = {};
-            const token = tokenRef.current || 'WBTT';
+            const token = tokenCurrent || 'WBTT';
 
             if (params.type === 'withdraw') {
                 setTitle('chequebook_withdraw');
@@ -92,7 +94,7 @@ export default function WithdrawDepositModal({ color }) {
     const _withdraw = async () => {
         let amount = inputRef.current.value;
         closeModal();
-        let result = await withdraw(amount, tokenRef.current);
+        let result = await withdraw(amount, tokenCurrent);
         if (result['Type'] === 'error') {
             Emitter.emit('showMessageAlert', { message: result['Message'], status: 'error' });
         } else {
@@ -104,7 +106,7 @@ export default function WithdrawDepositModal({ color }) {
     const _deposit = async () => {
         let amount = inputRef.current.value;
         closeModal();
-        let result = await deposit(amount, tokenRef.current);
+        let result = await deposit(amount, tokenCurrent);
         if (result['Type'] === 'error') {
             Emitter.emit('showMessageAlert', { message: result['Message'], status: 'error' });
         } else {
@@ -154,7 +156,8 @@ export default function WithdrawDepositModal({ color }) {
         window.body.style.overflow = '';
     };
     const handleChange = useCallback(value => {
-        tokenRef.current = value;
+        // tokenRef.current = value;
+        setTokenCurrent(value)
         inputRef.current.value = null;
         if (value === 'BTT') {
             setMax(maxRef.current.BTT);
@@ -187,7 +190,7 @@ export default function WithdrawDepositModal({ color }) {
                                     defaultValue="WBTT"
                                     style={{ width: 100 }}
                                     onChange={handleChange}
-                                    value={tokenRef.current}
+                                    value={tokenCurrent}
                                 // dropdownStyle={{ background: themeStyle.bg[color] }}
                                 >
                                     {MULTIPLE_CURRENCY_LIST.map(item => {

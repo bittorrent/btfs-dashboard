@@ -16,19 +16,22 @@ export default function TransferConfirmModal({ color }) {
     const intl = useIntl();
     const inputAddressRef = useRef(null);
     const inputAmountRef = useRef(null);
-    const tokenRef = useRef('BTT');
+    // const tokenRef = useRef('BTT');
     const maxRef = useRef(null);
     const [showModal, setShowModal] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
     const [max, setMax] = useState(0);
     const [valid, setValid] = useState(false);
+    const [tokenCurrent, setTokenCurrent] = useState('BTT');
+
 
     useEffect(() => {
         const set = async function (params) {
             console.log('openTransferConfirmModal event has occured');
             openModal();
             inputAmountRef.current.value = ''
-            tokenRef.current = 'BTT';
+            // tokenRef.current = 'BTT';
+            setTokenCurrent('BTT')
             const currentObj = {
                 BTT: params.maxBTT,
             };
@@ -56,23 +59,23 @@ export default function TransferConfirmModal({ color }) {
         setShowConfirm(false);
 
         let result;
-        if (tokenRef.current === 'BTT') {
+        if (tokenCurrent === 'BTT') {
             result = await BTTTransfer(
                 inputAddressRef.current.value.trim(),
                 inputAmountRef.current.value,
-                tokenRef.current
+                tokenCurrent
             );
-        }else if (tokenRef.current === 'WBTT') {
+        }else if (tokenCurrent === 'WBTT') {
             result = await WBTTTransfer(
                 inputAddressRef.current.value.trim(),
                 inputAmountRef.current.value,
-                tokenRef.current
+                tokenCurrent
             );
         } else {
             result = await currencyTransfer(
                 inputAddressRef.current.value.trim(),
                 inputAmountRef.current.value,
-                tokenRef.current
+                tokenCurrent
             );
         }
 
@@ -118,7 +121,8 @@ export default function TransferConfirmModal({ color }) {
     };
 
     const handleChange = useCallback(value => {
-        tokenRef.current = value;
+        // tokenRef.current = value;
+        setTokenCurrent(value)
         inputAmountRef.current.value = null;
 
         if (value === 'BTT') {
@@ -170,7 +174,7 @@ export default function TransferConfirmModal({ color }) {
                                         className={'theme-border-color ' + color}
                                         defaultValue="BTT"
                                         style={{ width: 90 }}
-                                        value={tokenRef.current}
+                                        value={tokenCurrent}
                                         onChange={handleChange}
                                     // dropdownStyle={{ background: themeStyle.bg[color] }}
                                     >
@@ -232,7 +236,7 @@ export default function TransferConfirmModal({ color }) {
                                 <div className="flex-1">
                                     <p className="p-2">{t('send_amount')}</p>
                                     <p className="p-2 font-semibold">
-                                        {inputAmountRef.current?.value} &nbsp; {tokenRef.current}
+                                        {inputAmountRef.current?.value} &nbsp; {tokenCurrent}
                                     </p>
                                 </div>
                                 <div className="flex-1">
@@ -246,7 +250,7 @@ export default function TransferConfirmModal({ color }) {
                         <div>
                             {t('total')}: &nbsp;
                             <span className="text-xl font-semibold">
-                                {inputAmountRef.current?.value} {tokenRef.current} + {FEE} BTT
+                                {inputAmountRef.current?.value} {tokenCurrent} + {FEE} BTT
                             </span>
                         </div>
                         <div>
