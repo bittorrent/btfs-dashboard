@@ -70,6 +70,7 @@ export default function WithdrawDepositModal({ color }) {
             Emitter.removeListener('openWithdrawDepositModal');
             window.body.style.overflow = '';
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const _withdraw10 = async () => {
