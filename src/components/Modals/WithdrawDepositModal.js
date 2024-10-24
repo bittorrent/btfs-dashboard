@@ -34,14 +34,14 @@ export default function WithdrawDepositModal({ color }) {
             setType(params.type);
             let currentObj = {};
             const token = tokenCurrent || 'WBTT';
-
+            let maxnum = 0
             if (params.type === 'withdraw') {
                 setTitle('chequebook_withdraw');
                 setDescription('amount_to_withdraw');
                 params.allCurrencyBalanceList.forEach(item => {
                     currentObj[item.key] = item.maxBookBalanceCount;
                 });
-                setMax(currentObj[token]);
+                maxnum = currentObj[token]|| 0
             }
             if (params.type === 'deposit') {
                 setTitle('chequebook_deposit');
@@ -49,13 +49,14 @@ export default function WithdrawDepositModal({ color }) {
                 params.allCurrencyBalanceList.forEach(item => {
                     currentObj[item.key] = item.maxAddressCount;
                 });
-                setMax(currentObj[token]);
+                maxnum = currentObj[token]|| 0
             }
             if (params.type === 'withdraw10') {
                 setTitle('BTFS_10_withdraw');
                 setDescription('10_withdraw_description');
                 setAccount(params.account);
-                setMax(params.maxBTT);
+                maxnum = params.maxBTT || 0
+                // setMax(params.maxBTT);
                 if (params.maxBTT) {
                     setValid(true);
                     // setTimeout(()=>{
@@ -63,6 +64,7 @@ export default function WithdrawDepositModal({ color }) {
                     // }, 100);
                 }
             }
+            setMax(maxnum);
             maxRef.current = currentObj;
         };
         Emitter.on('openWithdrawDepositModal', set);
@@ -160,11 +162,13 @@ export default function WithdrawDepositModal({ color }) {
         // tokenRef.current = value;
         setTokenCurrent(value)
         inputRef.current.value = null;
+        let maxNum = 0
         if (value === 'BTT') {
-            setMax(maxRef.current.BTT);
+             maxNum = maxRef.current.BTT || 0
         } else {
-            setMax(maxRef.current[value]);
+             maxNum = maxRef.current[value] || 0
         }
+        setMax(maxNum);
     }, []);
 
     return (
