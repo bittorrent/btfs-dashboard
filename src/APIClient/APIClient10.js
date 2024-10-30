@@ -1,16 +1,20 @@
 import xhr from "axios/index";
 import { PRECISION_RATE } from "utils/constants";
+import Cookies from 'js-cookie';
+
 
 class APIClient10 {
     constructor() {
         this.apiUrl = localStorage.getItem('NODE_URL') ? localStorage.getItem('NODE_URL') : "http://localhost:5001";
+        this.token = Cookies.get(this.apiUrl) || '';
         this.request = async (url, body, config) => {
             const isFormData = body instanceof FormData
+            const addToken = url.includes('?')? `&token=${this.token}` : `?token=${this.token}`
             return new Promise(async (resolve, reject) => {
                 try {
 
                     let {data} = await xhr.post(
-                        this.apiUrl + url,
+                        this.apiUrl + url + addToken,
                         isFormData?body:
                         {
                             ...body
@@ -23,6 +27,10 @@ class APIClient10 {
                 }
                 catch (e) {
                     let message;
+                    if (e.response && e.response.status === 401) {
+                        message = e.response['data'];
+                        window.location.href = '/#/login';
+                    }
                     if (e.response && e.response.status === 500) {
                         message = e.response['data']['Message'];
                     }
@@ -58,6 +66,11 @@ class APIClient10 {
     setApiUrl(url) {
         this.apiUrl = url;
     }
+
+    updateToken() {
+        this.token = Cookies.get(this.apiUrl) || ''
+    }
+
 
     getHostVersion() {
         return this.request('/api/v1/version');
@@ -366,8 +379,8 @@ class APIClient10 {
         }
     }
 
-    encrypt(formData,to,password,onUploadProgress) {
-        return this.request(`/api/v1/encrypt?${to?'to='+to:''}${password?'p='+password:''}`,formData,{
+    encrypt(formData,to,password,pathStr,onUploadProgress) {
+        return this.request(`/api/v1/encrypt?${to?'to='+to:''}&${password?'p='+password:''}&${pathStr?'d='+pathStr:''}`,formData,{
             'headers':{
                 'Content-Type':'application/x-www-form-urlencoded',
             },
@@ -377,8 +390,8 @@ class APIClient10 {
         });
     }
 
-    decrypt({cid,hostid,password}, body, config) {
-        return this.request(`/api/v1/decrypt?arg=${cid}&from=${hostid}&p=${password}`, body, config);
+    decrypt({cid,hostid,password,t}, body, config) {
+        return this.request(`/api/v1/decrypt?arg=${cid}&from=${hostid}&p=${password}&t=${t}`, body, config);
     }
 
     // s3 api
@@ -406,6 +419,29 @@ class APIClient10 {
 
     deleteS3AccessKey(key) {
         return this.request(`/api/v1/accesskey/delete/${key}`);
+    }
+
+    //login
+    checkLoginPassword() {
+        return this.request(`/api/v1/dashboard/check`);
+    }
+    setLoginPassword(arg){
+        return this.request(`/api/v1/dashboard/set?arg=${arg}`);
+    }
+    login(arg){
+        return this.request(`/api/v1/dashboard/login?arg=${arg}`);
+    }
+    loginValidate(arg){
+        return this.request(`/api/v1/dashboard/validate?arg=${arg}`);
+    }
+    changePassword(arg,newpassword){
+        return this.request(`/api/v1/dashboard/change?arg=${arg}&arg=${newpassword}`);
+    }
+    resetLoginPassword(privateKey, password){
+        return this.request(`/api/v1/dashboard/reset?arg=${privateKey}&arg=${password}`);
+    }
+    logout(){
+        return this.request(`/api/v1/dashboard/logout`);
     }
 
 }

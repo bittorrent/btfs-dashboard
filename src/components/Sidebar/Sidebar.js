@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { mainContext } from 'reducer';
 import LangDropdown from 'components/Dropdowns/LangDropdown.js';
 import ThemeToggle from 'components/Toggles/ThemeToggle';
+import AccountLock from 'components/Lock/AccountLock';
+
 import { getHostInfo } from 'services/dashboardService.js';
 import { MAIN_PAGE_MODE, SAMPLE_PAGE_MODE } from 'utils/constants';
 import HostID from './HostID';
@@ -12,7 +14,7 @@ import { t } from 'utils/text.js';
 
 
 const dashboardLink = { path: '/admin/dashboard', text: t('dashboard'), iconClass: ' iconfont BTFS_icon_Dashboard ' };
-const chequeLink = { path: '/admin/cheque', text: t('cheques'), iconClass: ' iconfont BTFS_icon_Cheques ' };
+const chequeLink = { path: '/admin/cheque', text: t('cheques'), iconClass: ' iconfont BTFS_icon_Cheques  icon-cheques' };
 const onlineProofLink = { path: '/admin/onlineproof', text: t('heartbeats'), iconClass: ' iconfont BTFS_icon_a-OnlineProof ' };
 const peersLink = { path: '/admin/peers', text: t('peers'), iconClass: ' iconfont BTFS_icon_Peers ' };
 const filesLink = { path: '/admin/files', text: t('files'), iconClass: ' iconfont BTFS_icon_Files ' };
@@ -154,7 +156,7 @@ export default function Sidebar() {
                                         'theme-sidebar-link md:block text-left md:pb-2 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0'
                                     }
                                     to="/">
-                                    BTFS 3.0.0
+                                    BTFS 3.1.0
                                 </Link>
                             </div>
                             <div className="w-4/12 flex flex-row-reverse">
@@ -185,9 +187,18 @@ export default function Sidebar() {
                         {/* Navigation */}
                         <ul className="md:flex-col md:min-w-full flex flex-col list-none mb-4">
                             <li className="items-center">
-                                <a className={'sidebar-link theme-sidebar-link'}>{t('version')} 3.0.0</a>
+                                <a className={'sidebar-link theme-sidebar-link'}>{t('version')} 3.1.0</a>
                             </li>
 
+                            <li className="items-center">
+                                <a
+                                    className={'sidebar-link theme-sidebar-link'}
+                                    href="https://docs.btfs.io/docs/btfs-dashboard"
+                                    target="_blank"
+                                    rel="noreferrer">
+                                    {t('read_doc')}
+                                </a>
+                            </li>
                             <li className="items-center">
                                 <a
                                     className={'sidebar-link theme-sidebar-link'}
@@ -222,6 +233,7 @@ export default function Sidebar() {
                         <div className="flex items-center">
                             <ThemeToggle />
                             <LangDropdown />
+                            <AccountLock/>
                         </div>
                     </div>
                 </div>

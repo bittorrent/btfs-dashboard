@@ -409,6 +409,78 @@ const zh_CN = {
         dncrypt_file_hostid_desc:'提供文件所在的节点ID可大大提升文件获取速度',
         decrypt_file_hostId_validate:'请输入正确的节点 ID',
 
+        //v3.1
+
+        dncrypt_file_time_out: "文件获取超时时间",
+        dncrypt_file_time_out_desc:"设置超时时间以避免长时间等待，延长超时时间可能有助于提高文件获取成功率",
+        seconds_30: "30秒",
+        minutes_1: "1分钟",
+        minutes_3: "3分钟",
+        minutes_5: "5分钟",
+        minutes_10: "10分钟",
+
+        file_cid: "CID",
+        file_create: "创建时间",
+        file_isencrypted: "是否加密",
+        file_encrypted: "已加密",
+
+        login: "登录",
+        login_endpoint_desc: "输入本地或远程API Endpoint以继续",
+        set_login_password: "设置登录密码",
+        set_login_password_desc: "首次登录节点时，请设置登录密码以保护节点数据和私钥安全",
+        reset_login_password: "重置登录密码",
+        reset_login_password_desc: "BTFS不会保存密码。若您忘记登录密码，可通过节点的私钥进行密码重置",
+        enter_private_key: "请输入节点私钥",
+        login_password: "登录密码",
+        lost_password: "忘记密码?",
+        enter_password: "设置登录密码",
+        enter_password_desc:"密码需为字母和数字的组合，至少8个字符",
+        re_enter_password: "重新输入密码",
+        login_title: "欢迎回来",
+        login_lock_message: "错误次数过多，操作已被锁定，请10分钟后再试",
+
+        reset_password_private_key_placeholder: "请输入16进制的私钥格式",
+        re_enter_password_placeholder: "重新输入密码",
+        enter_password_placeholder: "请输入密码",
+
+        check_private_key: "查看私钥",
+        check_private_key_desc:"私钥提供了对您节点和资产的完整访问权限，请妥善保管，避免泄露给他人",
+        check_private_key_input: "输入登录密码以继续",
+        check_private_key_input_placeholder: "请输入密码",
+
+        setting_login_password: "登录密码",
+        setting_login_password_btn: "修改密码",
+        change_password_modal: "修改登录密码",
+        enter_old_password: "输入旧密码",
+        enter_old_password_placeholder: "请输入旧密码",
+        change_password_success: "密码修改成功",
+        change_password_fail: "密码修改失败",
+        password_error: "密码错误",
+        same_as_old_password: "新密码不能与旧密码相同，请重新输入",
+        // Validate
+
+        password_validate_required: "请输入密码",
+        password_validate_pattern: "至少8个字符，至少1个小写字母和1个数字",
+        password_re_enter_validate_pattern: "输入密码不一致",
+        private_key_validate_required: "请输入私钥",
+        private_key_validate_pattern: "请输入16进制私钥",
+
+        logout: "退出登录",
+
+        reset_password_success:'密码重置成功',
+        set_password_success:'密码设置成功',
+        lougout_comfirm_modal_title:'退出登录',
+        lougout_comfirm_modal_desc:'确认要退出当前节点登录吗?',
+        enable_token_auth_msg:'当前节点未开启EnableTokenAuth选项，为保护数据安全，请升级为最新版后在配置中启用后继续使用Dashboard',
+        read_doc:'阅读文档',
+        login_error:'登录失败，请检查网络',
+        login_password_error:'登录密码错误',
+
+        upload_success:'上传成功',
+        download_success:'下载成功',
+        upload_fail:'上传失败',
+        download_fail:'下载失败'
+
 };
 
 export default zh_CN

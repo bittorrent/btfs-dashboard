@@ -170,3 +170,25 @@ export const MULTIPLE_CURRENCY_RATE = {
     USDD_t:1000000000000000000,
     USDT_t:1000000,
   };
+
+  export const DECRYPT_FILE_TIME_OUT_LIST = [
+    {
+        label:'seconds_30',
+        value: 30
+    },
+    {
+        label:'minutes_1',
+        value: 60
+    },
+    {
+        label:'minutes_3',
+        value: 180
+    }, {
+        label:'minutes_5',
+        value: 300
+    },
+    {
+        label:'minutes_10',
+        value: 600
+    },
+  ]

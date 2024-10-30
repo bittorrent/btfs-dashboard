@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useIntl } from 'react-intl';
-import { Breadcrumb, Pagination, Tabs } from 'antd';
+import { Breadcrumb, Pagination, Tabs, Tooltip } from 'antd';
 import PropTypes from 'prop-types';
 import FileTableDropdown from 'components/Dropdowns/FileTableDropdown.js';
 import ImportFilesDropdown from 'components/Dropdowns/ImportFilesDropdown.js';
@@ -11,7 +11,11 @@ import S3ApiTable from './S3ApiTable';
 import { getRootFiles, getHashByPath, getFolerSize, getFiles, searchFiles } from 'services/filesService.js';
 import { switchStorageUnit2 } from 'utils/BTFSUtil.js';
 import { t } from 'utils/text.js';
+import moment from 'moment';
+
 import Emitter from 'utils/eventBus';
+import { Truncate } from 'utils/text';
+
 
 let didCancel = false;
 let filesAll = [];
@@ -177,6 +181,15 @@ export default function LocalFilesTable({ color }) {
         }
     };
 
+    const checkIsEncrypted = name => {
+        const arr = name.split('.');
+        const str = arr.slice(-1)[0] || '';
+        if (str === 'bte') {
+            return true;
+        }
+        return false;
+    };
+
     const search = async () => {
         let hash = inputRef.current.value;
         let { Type, Message } = await searchFiles(hash);
@@ -210,7 +223,7 @@ export default function LocalFilesTable({ color }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    console.log("breadcrumbName", breadcrumbName);
+    console.log('breadcrumbName', breadcrumbName);
 
     return (
         <>
@@ -259,7 +272,6 @@ export default function LocalFilesTable({ color }) {
                             <div className="flex">
                                 <ImportFilesEncryptDropdown color={color} path={breadcrumbName} />
                                 <ImportFilesDropdown color={color} path={breadcrumbName} />
-
                             </div>
                         </div>
                         <div className="w-full overflow-x-auto">
@@ -274,10 +286,15 @@ export default function LocalFilesTable({ color }) {
                                                 onClick={selectAll}
                                             />
                                         </th>
-                                        <th className="common-table-head-th" style={{ width: '70%' }}>
+                                        <th className="common-table-head-th" style={{ minWidth: '100px' }}>
                                             {t('file_name')}
                                         </th>
                                         <th className="common-table-head-th">{t('size')}</th>
+                                        <th className="common-table-head-th" style={{ minWidth: '150px' }}>
+                                            {t('file_cid')}
+                                        </th>
+                                        <th className="common-table-head-th">{t('file_create')}</th>
+                                        <th className="common-table-head-th">{t('file_isencrypted')}</th>
                                         <th className="common-table-head-th"></th>
                                     </tr>
                                 </thead>
@@ -294,39 +311,101 @@ export default function LocalFilesTable({ color }) {
                                                             name="checkbox"
                                                             className="bg-blue form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
                                                             onClick={e => {
-                                                                select(e, item['Hash'], item['Name'], item['Type'], item['Size'], breadcrumbName);
+                                                                select(
+                                                                    e,
+                                                                    item['Hash'],
+                                                                    item['Name'],
+                                                                    item['Type'],
+                                                                    item['Size'],
+                                                                    breadcrumbName
+                                                                );
                                                             }}
                                                         />
                                                     </td>
-                                                    <td className="common-table-body-td" style={{ minWidth: '350px' }}>
+                                                    <td
+                                                        className="common-table-body-td"
+                                                        style={{ minWidth: '220px', maxWidth: '300px' }}>
                                                         <div className="flex">
                                                             <a
                                                                 className="flex items-center"
                                                                 onClick={() => {
-                                                                    addPath(item['Hash'], item['Name'], item['Type'], item['Size']);
+                                                                    addPath(
+                                                                        item['Hash'],
+                                                                        item['Name'],
+                                                                        item['Type'],
+                                                                        item['Size']
+                                                                    );
                                                                 }}>
                                                                 {item['Type'] === 1 && (
                                                                     <img
-                                                                        src={require('assets/img/folder.png').default}
-                                                                        className="h-12 w-12 bg-white rounded-full border"
+                                                                        src={
+                                                                            require('assets/img/folder.png')
+                                                                                .default
+                                                                        }
+                                                                        className="h-10 w-10 bg-white rounded-full border"
                                                                         alt="..."
                                                                     />
                                                                 )}
                                                                 {item['Type'] === 2 && (
                                                                     <img
-                                                                        src={require('assets/img/file.png').default}
-                                                                        className="h-12 w-12 bg-white rounded-full border"
+                                                                        src={
+                                                                            require('assets/img/file.png')
+                                                                                .default
+                                                                        }
+                                                                        className="h-10 w-10 bg-white rounded-full border"
                                                                         alt="..."
                                                                     />
                                                                 )}
-                                                                <div className="flex flex-col justify-center">
-                                                                    <span className="ml-3 font-bold">{item['Name']}</span>
-                                                                    <span className="ml-3 font-bold">{item['Hash']}</span>
+                                                                <div className="flex w-full flex-col justify-center">
+                                                                    {item['Name'].length > 14 ? (
+                                                                        <Tooltip
+                                                                            className="cursor-pointer flex "
+                                                                            placement="top"
+                                                                            title={item['Name']}>
+                                                                            <span className="ml-3 font-bold">
+                                                                                <Truncate start={5}>{item['Name']}</Truncate>
+                                                                            </span>
+
+                                                                        </Tooltip>
+                                                                    ) : (
+                                                                        <span className="ml-3 font-bold">
+                                                                            {item['Name']}
+                                                                        </span>
+                                                                    )}
                                                                 </div>
                                                             </a>
                                                         </div>
                                                     </td>
-                                                    <td className="common-table-body-td">{switchStorageUnit2(item['Size'])}</td>
+                                                    <td className="common-table-body-td">
+                                                        {switchStorageUnit2(item['Size'])}
+                                                    </td>
+                                                    <td className="common-table-body-td">
+                                                        {item['Hash'] || '--'}
+                                                    </td>
+                                                    <td className="common-table-body-td">
+                                                        {item.Created
+                                                            ? moment(item.Created).format(
+                                                                  'YYYY-MM-DD HH:mm:ss'
+                                                              )
+                                                            : '--'}
+                                                    </td>
+                                                    <td className="common-table-body-td text-center">
+                                                        {checkIsEncrypted(item['Name']) ? (
+                                                            <span>
+                                                                <img
+                                                                    alt=""
+                                                                    src={
+                                                                        require(`../../assets/img/encrypt-icon_${color}.svg`)
+                                                                            .default
+                                                                    }
+                                                                    className="far"
+                                                                />
+                                                            </span>
+                                                        ) : (
+                                                            ''
+                                                        )}
+                                                    </td>
+
                                                     <td className="common-table-body-td">
                                                         <FileTableDropdown
                                                             color={color}
@@ -335,6 +414,8 @@ export default function LocalFilesTable({ color }) {
                                                             size={item['Size']}
                                                             path={breadcrumbName}
                                                             type={item['Type']}
+                                                            cid={item.cid}
+                                                            isEncrypetd={checkIsEncrypted(item['Name'])}
                                                         />
                                                     </td>
                                                 </tr>
@@ -351,7 +432,9 @@ export default function LocalFilesTable({ color }) {
                                     />
                                 </div>
                             )}
-                            {files && total === 0 && <div className="w-full flex justify-center p-4">{t('no_data')}</div>}
+                            {files && total === 0 && (
+                                <div className="w-full flex justify-center p-4">{t('no_data')}</div>
+                            )}
                         </div>
                         <div className="mt-4 flex justify-between items-center">
                             <div>Total: {total}</div>
@@ -364,12 +447,15 @@ export default function LocalFilesTable({ color }) {
                                 onChange={pageChange}
                             />
                         </div>
-                        <FileControl itemSelected={itemSelected} unSelect={unSelect} color={color} data={batch} />
+                        <FileControl
+                            itemSelected={itemSelected}
+                            unSelect={unSelect}
+                            color={color}
+                            data={batch}
+                        />
                     </div>
                 </Tabs.TabPane>
-
             </Tabs>
-
         </>
     );
 }

@@ -1,10 +1,20 @@
 import Client10 from "APIClient/APIClient10.js";
 import xhr from "axios/index";
-import {setClient} from "services/filesService.js";
+import {setClient,setFileServiceApiUrl} from "services/filesService.js";
 
 export const setApiUrl = (url) => {
     try {
         Client10.setApiUrl(url);
+        setFileServiceApiUrl(url)
+        updateLoginToken()
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+export const updateLoginToken = () => {
+    try {
+        Client10.updateToken();
     } catch (e) {
         console.log(e);
     }

@@ -3,12 +3,18 @@ import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import { mainContext } from 'reducer';
 import MessageAlert from 'components/Alerts/MessageAlert';
 import MessageModal from 'components/Modals/MessageModal';
+import PasswordVerifyModal from 'components/Modals/PasswordVerifyModal';
 import AdminNavbar from 'components/Navbars/AdminNavbar.js';
 import Sidebar from 'components/Sidebar/Sidebar.js';
 import { nodeStatusCheck, getHostConfigData } from 'services/otherService.js';
 import { SimpleRoutes, MainRoutes } from 'routes/index';
 import { MAIN_PAGE_MODE, SAMPLE_PAGE_MODE } from 'utils/constants';
 import { getUrl } from 'utils/BTFSUtil';
+import Cookies from 'js-cookie';
+import { getParameterByName } from 'utils/BTFSUtil.js';
+import { urlCheck } from 'utils/checks.js';
+
+
 
 import {
   ArcElement,
@@ -108,11 +114,23 @@ export default function Admin() {
   };
 
   const init = async () => {
-    const NODE_URL = localStorage.getItem('NODE_URL');
+    const apiUrl = getParameterByName('api', window.location.href);
+    let NODE_URL = localStorage.getItem('NODE_URL')
+        ? localStorage.getItem('NODE_URL')
+        : 'http://localhost:5001';
+    if (apiUrl && urlCheck(apiUrl) && NODE_URL !== apiUrl) {
+        NODE_URL = apiUrl;
+    }
+
+    const token = Cookies.get(NODE_URL)
+    if(!token){
+      history.push(`/login${apiUrl?'?api='+apiUrl:''}`);
+      return;
+    }
     const isMainMode = await getPageMode();
-    if (!NODE_URL && !window.location.href.includes('/admin/settings')) {
-      history.push('/admin/settings');
-    } else {
+    // if (!NODE_URL && !window.location.href.includes('/admin/settings')) {
+    //   history.push('/admin/settings');
+    // } else {
       // check node status
       window.loading = true;
       let result = await nodeStatusCheck(NODE_URL, isMainMode);
@@ -125,17 +143,19 @@ export default function Admin() {
         });
       } else {
         window.loading = false;
-        window.nodeStatus = false;
+        window.nodeStatus = false;//  false;// false;
         dispatch({
           type: 'SET_NODE_STATUS',
           nodeStatus: false,
         });
       }
-    }
+    // }
     window.body = document.getElementsByTagName('body')[0];
   };
 
   useEffect(() => {
+    // 检查登录状态
+
     init();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -160,6 +180,7 @@ export default function Admin() {
         </div>
       </div>
       <MessageModal color={theme} />
+      <PasswordVerifyModal color={theme} />
       <MessageAlert />
     </>
   );

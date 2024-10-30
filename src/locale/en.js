@@ -420,6 +420,82 @@ const en_US = {
     "decrypt_file_hostId_validate": "Please enter a valid host ID",
 
 
+
+
+        //v3.1
+        dncrypt_file_time_out: "File acquisition timeout",
+        dncrypt_file_time_out_desc: "Set a timeout period to avoid long waits. A longer timeout may increase the success rate of file acquisition",
+        seconds_30: "30 seconds",
+        minutes_1: "1 minute",
+        minutes_3: "3 minutes",
+        minutes_5: "5 minutes",
+        minutes_10: "10 minutes",
+
+        file_cid: "CID",
+        file_create: "Created",
+        file_isencrypted: "Is Encrypted",
+        file_encrypted: "Encrypted",
+
+        login: "Login",
+        login_endpoint_desc: "Enter a local or remote API Endpoint to continue",
+        set_login_password: "Set login password",
+        set_login_password_desc: "When logging in to the node for the first time, please set a login password to protect the node’s data and private key",
+        reset_login_password: "Reset login password",
+        reset_login_password_desc: "BTFS does not save the password. If you forget your login password, you can use the node’s private key to reset it",
+        enter_private_key: "Please enter the node private key",
+        login_password: "login password",
+        lost_password: "Forgot password?",
+        enter_password: "Set login password",
+        enter_password_desc: "A combination of letters and numbers with more than 8 characters",
+        re_enter_password: "Re-enter password",
+        login_title: "Welcome back",
+        login_lock_message: "Too many failed attempts. The operation has been locked. Please try again in 10 minutes",
+
+        reset_password_private_key_placeholder: "Please enter in hexadecimal private key format",
+        re_enter_password_placeholder: "Re-enter password",
+        enter_password_placeholder: "Please enter password",
+
+        check_private_key: "View private key",
+        check_private_key_desc: "The private key provides full access to your node and assets. Please ensure that the private key is not leaked to others.",
+        check_private_key_input: "Enter login password to continue.",
+        check_private_key_input_placeholder: "Please enter password.",
+
+        setting_login_password: "Login password",
+        setting_login_password_btn: "Change password",
+        change_password_modal: "Change login password",
+        enter_old_password: "Enter old password",
+        enter_old_password_placeholder: "Please enter old password",
+        change_password_success: "Password changed successfully",
+        change_password_fail: "Password change failed",
+        password_error: "Password error",
+        same_as_old_password: "The new password cannot be the same as the old password.",
+        // Validate
+
+        password_validate_required: "Please enter password",
+        password_validate_pattern: "At least 8 characters, including at least 1 lowercase letter and 1 number",
+        password_re_enter_validate_pattern: "Passwords do not match",
+        private_key_validate_required: "Please enter private key",
+        private_key_validate_pattern: "Please enter hexadecimal private key",
+
+        logout: "Logout",
+
+
+        reset_password_success:'Password has been successfully set',
+        set_password_success:'Password has been successfully set',
+        lougout_comfirm_modal_title:'Logout',
+        lougout_comfirm_modal_desc:'Are you sure you want to log out of the current node?',
+        enable_token_auth_msg:'The current node has the EnableTokenAuth option disabled. To ensure data security, please upgrade to the latest version and enable this option in the configuration before continuing to use the Dashboard.',
+
+        read_doc:'Read the Doc',
+        login_error:'Login failed, please check the network',
+        login_password_error:'Wrong login password',
+
+        upload_success:'Upload Successfully',
+        download_success:'Download Successfully',
+        upload_fail:'Upload Failed',
+        download_fail:'Download Failed'
+
+
 };
 
 export default en_US;

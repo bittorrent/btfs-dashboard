@@ -16,7 +16,7 @@ const { Option } = Select;
 export default function WithdrawDepositModal({ color }) {
     const intl = useIntl();
     const inputRef = useRef(null);
-    const tokenRef = useRef('WBTT');
+    // const tokenRef = useRef('WBTT');/
     const [type, setType] = useState(null);
     const [title, setTitle] = useState(null);
     const [description, setDescription] = useState(null);
@@ -25,21 +25,23 @@ export default function WithdrawDepositModal({ color }) {
     const [account, setAccount] = useState(null);
     const [valid, setValid] = useState(false);
     const maxRef = useRef(null);
+    const [tokenCurrent, setTokenCurrent] = useState('BTT');
+
 
     useEffect(() => {
         const set = function (params) {
             openModal();
             setType(params.type);
             let currentObj = {};
-            const token = tokenRef.current || 'WBTT';
-
+            const token = tokenCurrent || 'WBTT';
+            let maxnum = 0
             if (params.type === 'withdraw') {
                 setTitle('chequebook_withdraw');
                 setDescription('amount_to_withdraw');
                 params.allCurrencyBalanceList.forEach(item => {
                     currentObj[item.key] = item.maxBookBalanceCount;
                 });
-                setMax(currentObj[token]);
+                maxnum = currentObj[token]|| 0
             }
             if (params.type === 'deposit') {
                 setTitle('chequebook_deposit');
@@ -47,13 +49,14 @@ export default function WithdrawDepositModal({ color }) {
                 params.allCurrencyBalanceList.forEach(item => {
                     currentObj[item.key] = item.maxAddressCount;
                 });
-                setMax(currentObj[token]);
+                maxnum = currentObj[token]|| 0
             }
             if (params.type === 'withdraw10') {
                 setTitle('BTFS_10_withdraw');
                 setDescription('10_withdraw_description');
                 setAccount(params.account);
-                setMax(params.maxBTT);
+                maxnum = params.maxBTT || 0
+                // setMax(params.maxBTT);
                 if (params.maxBTT) {
                     setValid(true);
                     // setTimeout(()=>{
@@ -61,6 +64,7 @@ export default function WithdrawDepositModal({ color }) {
                     // }, 100);
                 }
             }
+            setMax(maxnum);
             maxRef.current = currentObj;
         };
         Emitter.on('openWithdrawDepositModal', set);
@@ -68,6 +72,7 @@ export default function WithdrawDepositModal({ color }) {
             Emitter.removeListener('openWithdrawDepositModal');
             window.body.style.overflow = '';
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const _withdraw10 = async () => {
@@ -92,7 +97,7 @@ export default function WithdrawDepositModal({ color }) {
     const _withdraw = async () => {
         let amount = inputRef.current.value;
         closeModal();
-        let result = await withdraw(amount, tokenRef.current);
+        let result = await withdraw(amount, tokenCurrent);
         if (result['Type'] === 'error') {
             Emitter.emit('showMessageAlert', { message: result['Message'], status: 'error' });
         } else {
@@ -104,7 +109,7 @@ export default function WithdrawDepositModal({ color }) {
     const _deposit = async () => {
         let amount = inputRef.current.value;
         closeModal();
-        let result = await deposit(amount, tokenRef.current);
+        let result = await deposit(amount, tokenCurrent);
         if (result['Type'] === 'error') {
             Emitter.emit('showMessageAlert', { message: result['Message'], status: 'error' });
         } else {
@@ -154,13 +159,16 @@ export default function WithdrawDepositModal({ color }) {
         window.body.style.overflow = '';
     };
     const handleChange = useCallback(value => {
-        tokenRef.current = value;
+        // tokenRef.current = value;
+        setTokenCurrent(value)
         inputRef.current.value = null;
+        let maxNum = 0
         if (value === 'BTT') {
-            setMax(maxRef.current.BTT);
+             maxNum = maxRef.current.BTT || 0
         } else {
-            setMax(maxRef.current[value]);
+             maxNum = maxRef.current[value] || 0
         }
+        setMax(maxNum);
     }, []);
 
     return (
@@ -187,7 +195,7 @@ export default function WithdrawDepositModal({ color }) {
                                     defaultValue="WBTT"
                                     style={{ width: 100 }}
                                     onChange={handleChange}
-                                    value={tokenRef.current}
+                                    value={tokenCurrent}
                                 // dropdownStyle={{ background: themeStyle.bg[color] }}
                                 >
                                     {MULTIPLE_CURRENCY_LIST.map(item => {

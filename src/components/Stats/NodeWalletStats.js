@@ -237,13 +237,17 @@ export default function NodeWalletStats({ color }) {
 
     const onTransfer = e => {
         e.preventDefault();
+        Emitter.emit('openPasswordVerifyModal',{ callbackFn: onTransferConfirm })
+    };
+
+    const onTransferConfirm = e=>{
         Emitter.emit('openTransferConfirmModal', {
             type: 'transfer',
             maxBTT: _BTTCAddressBTT,
             maxWBTT: _BTTCAddressWBTT,
             allCurrencyBalanceList: allCurrencyBalanceList,
         });
-    };
+    }
 
     const onExchange = e => {
         e.preventDefault();

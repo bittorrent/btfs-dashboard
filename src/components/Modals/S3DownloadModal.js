@@ -56,7 +56,8 @@ export default function S3DownloadModal({ color }) {
                     {err && percentage < 100 && <Progress type="circle" percent={percentage} status="exception" />}
                     {percentage >= 100 && <Progress type="circle" percent={percentage} />}
                     <div className="font-semibold mt-4 w-full overflow-auto text-center">
-                        {t('downloading')} &nbsp;
+                        {err ?  t('download_fail') : percentage > 99 ? t('download_success') : t('downloading') }
+                        &nbsp;
                         <span className={themeStyle.title[color]}>{name.current}</span>
                     </div>
                 </main>

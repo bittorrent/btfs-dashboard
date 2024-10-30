@@ -158,7 +158,23 @@ const S3BucketFileTableDropdown = ({ color, item, globalS3, bucketName }) => {
         onClick={e => {
           trigger(e);
         }}>
-        <i className="fas fa-ellipsis-v"></i>
+        {
+
+        // <i className="fas fa-ellipsis-v" ></i>
+
+        }
+        <img
+        alt=""
+        className={"hover-hidden " + (dropdownPopoverShow ? 'hidden':'show')}
+        src={require('../../assets/img/file-operate.svg').default}
+        style={{ width: '24px', height: '24px' }}
+        />
+        <img
+            alt=""
+            className={"hover-show " + (dropdownPopoverShow ? 'show':'hidden')}
+            src={require('../../assets/img/file-operate-active.svg').default}
+            style={{ width: '24px', height: '24px' }}
+        />
       </a>
       <div
         ref={popoverDropdownRef}

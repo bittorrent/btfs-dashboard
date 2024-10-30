@@ -5,91 +5,113 @@ import { removeFiles } from 'services/filesService.js';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 
-const FileTableDropdown = ({ color, hash, name, size, path, type }) => {
-  const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
-  const btnDropdownRef = React.createRef();
-  const popoverDropdownRef = React.createRef();
-  const openDropdownPopover = () => {
-    createPopper(btnDropdownRef.current, popoverDropdownRef.current, {
-      placement: 'left-start',
-    });
-    setDropdownPopoverShow(true);
-  };
-  const closeDropdownPopover = () => {
-    setDropdownPopoverShow(false);
-  };
-
-  useEffect(() => {
-    const t = function () {
-      closeDropdownPopover();
+const FileTableDropdown = ({ color, hash, name, size, path, type, cid, isEncrypetd }) => {
+    const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
+    const btnDropdownRef = React.createRef();
+    const popoverDropdownRef = React.createRef();
+    const openDropdownPopover = () => {
+        createPopper(btnDropdownRef.current, popoverDropdownRef.current, {
+            placement: 'left-start',
+        });
+        setDropdownPopoverShow(true);
     };
-    document.addEventListener('click', t);
-    return () => {
-      document.removeEventListener('click', t);
+    const closeDropdownPopover = () => {
+        setDropdownPopoverShow(false);
     };
-  }, []);
 
-  const download = async () => {
-    if (type === 1) {
-      Emitter.emit('openDownloadModal', { hash: hash, name: name, size: size, type: 1 });
-    }
-    if (type === 2) {
-      Emitter.emit('openDownloadModal', { hash: hash, name: name, size: size, type: 2 });
-    }
-  };
+    useEffect(() => {
+        const t = function () {
+            closeDropdownPopover();
+        };
+        document.addEventListener('click', t);
+        return () => {
+            document.removeEventListener('click', t);
+        };
+    }, []);
 
-  const remove = async () => {
-    let result = await removeFiles(hash, name, path, type);
-    if (result) {
-      Emitter.emit('showMessageAlert', { message: 'delete_success', status: 'success', type: 'frontEnd' });
-    } else {
-      Emitter.emit('showMessageAlert', { message: 'delete_fail', status: 'error', type: 'frontEnd' });
-    }
-    Emitter.emit('updateFiles');
-  };
+    const download = async () => {
+        if (isEncrypetd) {
+            Emitter.emit('openDecryptFileModal', { path: path });
+            return;
+        }
+        if (type === 1) {
+            Emitter.emit('openDownloadModal', { hash: hash, name: name, size: size, type: 1 });
+        }
+        if (type === 2) {
+            Emitter.emit('openDownloadModal', { hash: hash, name: name, size: size, type: 2 });
+        }
+    };
 
-  const trigger = e => {
-    e.preventDefault();
-    setTimeout(() => {
-      dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover();
-    }, 50);
-  };
+    const remove = async () => {
+        let result = await removeFiles(hash, name, path, type);
+        if (result) {
+            Emitter.emit('showMessageAlert', {
+                message: 'delete_success',
+                status: 'success',
+                type: 'frontEnd',
+            });
+        } else {
+            Emitter.emit('showMessageAlert', { message: 'delete_fail', status: 'error', type: 'frontEnd' });
+        }
+        Emitter.emit('updateFiles');
+    };
 
-  return (
-    <>
-      <a
-        className="text-blueGray-500 py-1 px-3"
-        ref={btnDropdownRef}
-        onClick={e => {
-          trigger(e);
-        }}>
-        <i className="fas fa-ellipsis-v"></i>
-      </a>
-      <div
-        ref={popoverDropdownRef}
-        className={
-          (dropdownPopoverShow ? 'block ' : 'hidden ') +
-          '_box-shadow text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48 theme-bg'
-        }>
-        <a
-          className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent"
-          onClick={() => {
-            download();
-          }}>
-          <i className="w-5 mr-3 fas fa-download"></i>
-          {t('download')}
-        </a>
-        <a
-          className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent"
-          onClick={e => {
-            remove();
-          }}>
-          <i className="w-5 mr-3 fas fa-trash-alt"></i>
-          {t('delete')}
-        </a>
-      </div>
-    </>
-  );
+    const trigger = e => {
+        e.preventDefault();
+        setTimeout(() => {
+            dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover();
+        }, 50);
+    };
+
+    return (
+        <>
+            <a
+                className="text-blueGray-500 py-1 px-3 hover-change "
+                ref={btnDropdownRef}
+                onClick={e => {
+                    trigger(e);
+                }}>
+                {
+                    // <i className="fas fa-ellipsis-v"></i>/
+                }
+                <img
+                    alt=""
+                    className={"hover-hidden " + (dropdownPopoverShow ? 'hidden':'show')}
+                    src={require('../../assets/img/file-operate.svg').default}
+                    style={{ width: '24px', height: '24px' }}
+                />
+                <img
+                    alt=""
+                    className={"hover-show " + (dropdownPopoverShow ? 'show':'hidden')}
+                    src={require('../../assets/img/file-operate-active.svg').default}
+                    style={{ width: '24px', height: '24px' }}
+                />
+            </a>
+            <div
+                ref={popoverDropdownRef}
+                className={
+                    (dropdownPopoverShow ? 'block ' : 'hidden ') +
+                    '_box-shadow text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48 theme-bg'
+                }>
+                <a
+                    className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent"
+                    onClick={() => {
+                        download();
+                    }}>
+                    <i className="w-5 mr-3 fas fa-download"></i>
+                    {t('download')}
+                </a>
+                <a
+                    className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent"
+                    onClick={e => {
+                        remove();
+                    }}>
+                    <i className="w-5 mr-3 fas fa-trash-alt"></i>
+                    {t('delete')}
+                </a>
+            </div>
+        </>
+    );
 };
 
 export default FileTableDropdown;
