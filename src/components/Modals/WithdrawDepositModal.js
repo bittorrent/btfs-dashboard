@@ -25,7 +25,7 @@ export default function WithdrawDepositModal({ color }) {
     const [account, setAccount] = useState(null);
     const [valid, setValid] = useState(false);
     const maxRef = useRef(null);
-    const [tokenCurrent, setTokenCurrent] = useState('BTT');
+    const [tokenCurrent, setTokenCurrent] = useState('WBTT');
 
 
     useEffect(() => {
