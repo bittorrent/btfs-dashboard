@@ -116,7 +116,7 @@ export default function ChangePasswordModal({ color }) {
                             label={<div className="font-bold theme-text-main">{t('enter_old_password')}</div>}
                             name="oldpassword"
                             rules={[
-                                { required: true, message: t('private_key_validate_required') },
+                                { required: true, message: t('enter_old_password_placeholder') },
                                 {
                                     pattern: /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
                                     message: t('password_validate_pattern'),

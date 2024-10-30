@@ -59,7 +59,7 @@ const PasswordLogin = ({ color, endpoint }) => {
             setValidateMsg(t('login_lock_message'));
             timer = setTimeout(() => {
                 setIsLock(false);
-            }, 180000);
+            }, 600000);
         } else {
             setValidateMsg('');
             setTimes(0);
