@@ -50,7 +50,6 @@ jobs:
           port: ${{ secrets.PORT }}
           source: "build"
           target: "~"
-          args: '-v'  # 添加调试参数
 
       - name: Pin dashboard build - production
         uses: appleboy/ssh-action@master
@@ -61,3 +60,4 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             ./btfs/bin/btfs add -r build | tail -1 | awk '{print $2}'
+            rm -rf ~/build
