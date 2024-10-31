@@ -14,6 +14,8 @@ import { t } from 'utils/text.js';
 import { Link } from 'react-router-dom';
 import Emitter from 'utils/eventBus';
 import * as AWS from "@aws-sdk/client-s3";
+import { Truncate } from 'utils/text';
+
 import { XhrHttpHandler } from "@aws-sdk/xhr-http-handler";
 import { sortListByDate } from 'utils/BTFSUtil';
 const { S3Client, ListObjectsCommand } = AWS;
@@ -362,10 +364,22 @@ export default function S3BucketsTable({ color, bucketName, accessKeyId, secretA
                                                                 alt="..."
                                                             />
                                                         )}
-                                                        <div className="flex flex-col justify-center">
-                                                            <span className="ml-3 font-bold">{item['Name']}</span>
-                                                            <span className="ml-3 font-bold">{item['Hash']}</span>
-                                                        </div>
+
+                                                        {item['Name'].length > 18 ? (
+                                                            <Tooltip
+                                                                className="cursor-pointer flex "
+                                                                placement="top"
+                                                                title={item['Name']}>
+                                                                <span className="ml-3 font-bold">
+                                                                    <Truncate start={8}>{item['Name']}</Truncate>
+                                                                </span>
+
+                                                            </Tooltip>
+                                                        ) : (
+                                                            <span className="ml-3 font-bold">
+                                                                {item['Name']}
+                                                            </span>
+                                                        )}
                                                     </a>
                                                 </div>
                                             </td>

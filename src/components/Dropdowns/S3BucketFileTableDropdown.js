@@ -153,7 +153,7 @@ const S3BucketFileTableDropdown = ({ color, item, globalS3, bucketName }) => {
   return (
     <>
       <a
-        className="text-blueGray-500 py-1 px-3"
+        className="text-blueGray-500 py-1 px-3 hover-change "
         ref={btnDropdownRef}
         onClick={e => {
           trigger(e);
