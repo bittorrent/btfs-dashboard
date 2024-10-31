@@ -12,10 +12,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       
-      - name: Debug information
-        run: |
-          echo "Connecting to host: ${{ secrets.HOST_PRODUCTION }}"
-    
       - name: Install Node
         uses: actions/setup-node@v2
         with:
@@ -65,4 +61,3 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             ./btfs/bin/btfs add -r build | tail -1 | awk '{print $2}'
-            rm -rf ~/build
