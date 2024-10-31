@@ -54,6 +54,7 @@ jobs:
           port: ${{ secrets.PORT }}
           source: "build"
           target: "~"
+          args: '-v'  # 添加调试参数
 
       - name: Pin dashboard build - production
         uses: appleboy/ssh-action@master
