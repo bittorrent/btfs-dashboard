@@ -2,8 +2,7 @@
 import Client10 from "APIClient/APIClient10.js";
 import BigNumber from 'bignumber.js';
 import { switchStorageUnit2, switchBalanceUnit, toThousands, getTimes,formatNumber } from "utils/BTFSUtil.js";
-import { PRECISION, PRECISION_RATE, PRECISION_OLD, FEE, NEW_SCORE_VERSION, INIT_MULTI_CURRENCY_DATA, MULTIPLE_CURRENCY_LIST } from "utils/constants.js";
-
+import { PRECISION, PRECISION_RATE, PRECISION_OLD, FEE, NEW_SCORE_VERSION, INIT_MULTI_CURRENCY_DATA, MULTIPLE_CURRENCY_LIST,MULTIPLE_CURRENCY_RATE } from "utils/constants.js";
 export const getHostInfo = () => {
   return Client10.getHostInfo();
 }
@@ -321,7 +320,8 @@ export const getNodeWalletStats = async () => {
             newItem.bookBalanceValue = 0
             newItem.maxBookBalanceCount = 0
             if (allBalanceData?.[item.key]) {
-                newItem.addressValue = switchBalanceUnit(allBalanceData?.[item.key], priceList?.[item.key]?.rate)
+                // newItem.addressValue = switchBalanceUnit(allBalanceData?.[item.key], priceList?.[item.key]?.rate)
+                newItem.addressValue = switchBalanceUnit(allBalanceData?.[item.key], MULTIPLE_CURRENCY_RATE?.[item.key])
                 newItem.maxAddressCount = new BigNumber(allBalanceData?.[item.key])
                     .dividedBy(priceList?.[item.key]?.rate)
                     .toNumber()
