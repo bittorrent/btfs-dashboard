@@ -1,5 +1,5 @@
 import xhr from "axios/index";
-import { PRECISION_RATE ,MULTIPLE_CURRENCY_RATE} from "utils/constants";
+import { MULTIPLE_CURRENCY_RATE} from "utils/constants";
 import Cookies from 'js-cookie';
 
 
