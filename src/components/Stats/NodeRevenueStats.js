@@ -232,7 +232,6 @@ export default function NodeRevenueStats({ color }) {
             dataList: chequeEarningDetailList,
         });
     };
-
     return (
         <div className="w-full h-full common-card shadow-none lg:shadow-md p-0">
             <div className="flex flex-wrap h-full">

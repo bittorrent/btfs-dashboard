@@ -35,6 +35,7 @@ export default function WithdrawDepositModal({ color }) {
             let currentObj = {};
             const token = tokenCurrent || 'WBTT';
             let maxnum = 0
+            setTokenCurrent(token)
             if (params.type === 'withdraw') {
                 setTitle('chequebook_withdraw');
                 setDescription('amount_to_withdraw');
