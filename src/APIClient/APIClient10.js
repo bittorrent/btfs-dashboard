@@ -1,5 +1,5 @@
 import xhr from "axios/index";
-import { PRECISION_RATE } from "utils/constants";
+import { MULTIPLE_CURRENCY_RATE} from "utils/constants";
 import Cookies from 'js-cookie';
 
 
@@ -97,7 +97,7 @@ class APIClient10 {
         return this.request('/api/v1/cheque/price-all').then((res) => {
             Object.keys(res).forEach((key) => {
                 const item = res[key];
-                item.rate = +item.rate * PRECISION_RATE;
+                item.rate = MULTIPLE_CURRENCY_RATE[key] //+item.rate * PRECISION_RATE;
             })
             return res;
         }).catch(e => {

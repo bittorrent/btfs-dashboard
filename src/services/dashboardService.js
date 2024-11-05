@@ -2,7 +2,7 @@
 import Client10 from "APIClient/APIClient10.js";
 import BigNumber from 'bignumber.js';
 import { switchStorageUnit2, switchBalanceUnit, toThousands, getTimes,formatNumber } from "utils/BTFSUtil.js";
-import { PRECISION, PRECISION_RATE, PRECISION_OLD, FEE, NEW_SCORE_VERSION, INIT_MULTI_CURRENCY_DATA, MULTIPLE_CURRENCY_LIST,MULTIPLE_CURRENCY_RATE } from "utils/constants.js";
+import { PRECISION, PRECISION_RATE, PRECISION_OLD, FEE, NEW_SCORE_VERSION, INIT_MULTI_CURRENCY_DATA, MULTIPLE_CURRENCY_LIST } from "utils/constants.js";
 export const getHostInfo = () => {
   return Client10.getHostInfo();
 }
@@ -150,13 +150,7 @@ export const getNodeRevenueStats = async () => {
                 : 0;
             const chequeExpense = +result[0]["totalSent"];
             const hasTotalExpense = gasFee || chequeExpense;
-            const currencyRateList = [];
-            currencyRateList.push(
-                1,
-                result[5]?.data?.rate,
-                result[6]?.data?.rate,
-                result[7]?.data?.rate
-            );
+
             const checksExpenseDetailsData = [];
             const chequeEarningDetailData = [];
             INIT_MULTI_CURRENCY_DATA.forEach((item, index) => {
@@ -177,8 +171,7 @@ export const getNodeRevenueStats = async () => {
                     priceItem?.rate
                 )
                 expenseItem.bttValue = switchBalanceUnit(
-                    (+totalData.total_issued || 0) *
-                    (currencyRateList[index] ? 1 / currencyRateList[index] : 1),
+                    (+totalData.total_issued || 0) ,
                     priceItem?.rate * exchangeRate
                 )
                 earningItem.value = switchBalanceUnit(
@@ -186,8 +179,7 @@ export const getNodeRevenueStats = async () => {
                     priceItem?.rate
                 )
                 earningItem.bttValue = switchBalanceUnit(
-                    (+totalData.total_received || 0) *
-                    (currencyRateList[index] ? 1 / currencyRateList[index] : 1),
+                    (+totalData.total_received || 0) ,
                     priceItem?.rate * exchangeRate
                 )
                 checksExpenseDetailsData.push(expenseItem)
@@ -320,8 +312,8 @@ export const getNodeWalletStats = async () => {
             newItem.bookBalanceValue = 0
             newItem.maxBookBalanceCount = 0
             if (allBalanceData?.[item.key]) {
-                // newItem.addressValue = switchBalanceUnit(allBalanceData?.[item.key], priceList?.[item.key]?.rate)
-                newItem.addressValue = switchBalanceUnit(allBalanceData?.[item.key], MULTIPLE_CURRENCY_RATE?.[item.key])
+                newItem.addressValue = switchBalanceUnit(allBalanceData?.[item.key], priceList?.[item.key]?.rate)
+                // newItem.addressValue = switchBalanceUnit(allBalanceData?.[item.key], MULTIPLE_CURRENCY_RATE?.[item.key])
                 newItem.maxAddressCount = new BigNumber(allBalanceData?.[item.key])
                     .dividedBy(priceList?.[item.key]?.rate)
                     .toNumber()
@@ -410,10 +402,10 @@ export const getFilesStorage = async () => {
 
 const formAmount = (amount, currencyType = '') => {
     let precision = PRECISION;
-    if (!['btt', 'wbtt'].includes(currencyType.toLowerCase())) {
+    if (!['btt', 'wbtt','usdd'].includes(currencyType.toLowerCase())) {
         precision = PRECISION_RATE;
     }
-    console.log(amount, currencyType, PRECISION_RATE);
+    console.log(amount, currencyType, precision);
     let amount_str = new BigNumber(amount).multipliedBy(precision).toFixed();
     return amount_str;
 };
