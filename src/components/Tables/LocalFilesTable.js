@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useIntl } from 'react-intl';
-import { Breadcrumb, Pagination, Tabs, Tooltip } from 'antd';
+import { Breadcrumb, Pagination, Tabs, Tooltip, Button } from 'antd';
 import PropTypes from 'prop-types';
 import FileTableDropdown from 'components/Dropdowns/FileTableDropdown.js';
 import ImportFilesDropdown from 'components/Dropdowns/ImportFilesDropdown.js';
 import ImportFilesEncryptDropdown from 'components/Dropdowns/ImportFilesEncryptDropdown.js';
+import FileBlackListModal from 'components/Modals/FileBlackListModal.js';
 import FileControl from 'components/Footers/FileControl.js';
 import S3ApiTable from './S3ApiTable';
 import { getRootFiles, getHashByPath, getFolerSize, getFiles, searchFiles } from 'services/filesService.js';
@@ -15,7 +16,6 @@ import moment from 'moment';
 
 import Emitter from 'utils/eventBus';
 import { Truncate } from 'utils/text';
-
 
 let didCancel = false;
 let filesAll = [];
@@ -31,6 +31,11 @@ export default function LocalFilesTable({ color }) {
     const [total, setTotal] = useState(0);
     const [current, setCurrent] = useState(1);
     const [batch, setBatch] = useState([]);
+    const [activeKey, setActiveKey] = useState('1');
+    const [showFileBlackListModal, setShowFileBlackListModal] = useState(false);
+
+
+
 
     const selectAll = e => {
         let fileControl = document.getElementById('fileControl');
@@ -202,6 +207,20 @@ export default function LocalFilesTable({ color }) {
         addPath(hash, hash, -1);
     };
 
+    const changeActiveKey = activeKey => {
+        setActiveKey(activeKey);
+    };
+
+    const operations = () => {
+        if (activeKey === '2') {
+            return <Button className="common-btn" onClick={()=> setShowFileBlackListModal(true)} >{t('file_black_list')}</Button>;
+        }
+        return null
+    };
+
+
+
+
     useEffect(() => {
         const set = async function () {
             setTimeout(() => {
@@ -223,11 +242,15 @@ export default function LocalFilesTable({ color }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    console.log('breadcrumbName', breadcrumbName);
 
     return (
         <>
-            <Tabs defaultActiveKey="1" className="mb-4 common-card theme-bg theme-text-main file-tab-content">
+            <Tabs
+                defaultActiveKey="1"
+                activeKey={activeKey}
+                onChange={changeActiveKey}
+                className="mb-4 common-card theme-bg theme-text-main file-tab-content"
+                tabBarExtraContent={operations()}>
                 <Tabs.TabPane tab={t('s3_api')} key="1" className="w-full">
                     <S3ApiTable color={color} />
                 </Tabs.TabPane>
@@ -363,9 +386,10 @@ export default function LocalFilesTable({ color }) {
                                                                             placement="top"
                                                                             title={item['Name']}>
                                                                             <span className="ml-3 font-bold">
-                                                                                <Truncate start={5}>{item['Name']}</Truncate>
+                                                                                <Truncate start={5}>
+                                                                                    {item['Name']}
+                                                                                </Truncate>
                                                                             </span>
-
                                                                         </Tooltip>
                                                                     ) : (
                                                                         <span className="ml-3 font-bold">
@@ -454,6 +478,7 @@ export default function LocalFilesTable({ color }) {
                             data={batch}
                         />
                     </div>
+                    <FileBlackListModal color={color} showModal={showFileBlackListModal} closeModal={()=> setShowFileBlackListModal(false)} />
                 </Tabs.TabPane>
             </Tabs>
         </>

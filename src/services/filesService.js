@@ -323,3 +323,25 @@ export const decryptUploadFiles = async (cid, hostid, password, t) => {
         return false;
     }
 };
+
+
+export const getFileBlackList = async () => {
+    try {
+        let data = await Client10.getFileBlackList();
+        return data;
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+
+export const addFileBlackList = async (arg,batch) => {
+    try {
+        let data = await Client10.addFileBlackList(arg,batch);
+        return data;
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+
