@@ -11,7 +11,6 @@ import isIPFS from 'is-ipfs';
 const { TextArea } = Input;
 
 export default function EncryptFileModal({ color, closeModal, showModal = false }) {
-
     const intl = useIntl();
     const [loading, setLoading] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
@@ -20,8 +19,10 @@ export default function EncryptFileModal({ color, closeModal, showModal = false 
     const [validateMsg, setValidateMsg] = useState('');
 
     const getFileBlackListData = async () => {
-        let listData = await getFileBlackList()  || [];
-        let listStr = listData.join('\n') || ''
+        setLoading(true);
+        let listData = (await getFileBlackList()) || [];
+        setLoading(false);
+        let listStr = listData.join('\n') || '';
         setListVal(listStr);
         setInitListVal(listStr);
     };
@@ -44,7 +45,6 @@ export default function EncryptFileModal({ color, closeModal, showModal = false 
     }, [showModal]);
 
     const validateCid = val => {
-
         let res = isIPFS.cid(val);
         if (res) {
             setValidateMsg('');
@@ -85,25 +85,28 @@ export default function EncryptFileModal({ color, closeModal, showModal = false 
         // if (listVal && !validateListVal(listVal)) {
         //     return;
         // }
+        if(!listVal){
+            setValidateMsg(t('validate_file_blacklist_cid1'))
+            return
+        }
         let listArr = listVal.split('\n');
         let validateCids = true;
-        for (var v in listArr){
-            if(listArr[v] && !validateCid(listArr[v])){
-                validateCids = false
+        for (var v in listArr) {
+            if (listArr[v] && !validateCid(listArr[v])) {
+                validateCids = false;
                 break;
             }
-
         }
-        if(!validateCids){
+        if (!validateCids) {
             setValidateMsg(t('validate_file_blacklist_cid2'));
-            return
+            return;
         }
 
         try {
-            await addFileBlackList(listArr,true);
+            await addFileBlackList(listArr, true);
             setLoading(false);
             setInitListVal(listVal);
-            setIsEdit(false)
+            setIsEdit(false);
             Emitter.emit('showMessageAlert', {
                 message: 'add_file_blacklist_success',
                 status: 'success',
@@ -112,9 +115,7 @@ export default function EncryptFileModal({ color, closeModal, showModal = false 
         } catch (e) {
             Emitter.emit('showMessageAlert', { message: e.Message, status: 'error' });
         }
-
     };
-
 
     return (
         <CommonModal visible={showModal} onCancel={closeModal}>
@@ -122,74 +123,68 @@ export default function EncryptFileModal({ color, closeModal, showModal = false 
                 <main className="flex flex-col justify-center theme-bg theme-text-main">
                     <img
                         alt=""
-                        src={require(`../../assets/img/decrypt-cid.png`).default}
+                        src={require(`../../assets/img/cid-blacklist.png`).default}
                         className="mb-4"
                         width={43}
                     />
                     <div className="font-semibold  text-xl  mb-2"> {t('file_blacklist_title')} </div>
-                    <div className="text-xs font-medium  theme-text-sub-info">
-                        {t('file_blacklist_desc')}
-                    </div>
+                    <div className="text-xs font-medium  theme-text-sub-info">{t('file_blacklist_desc')}</div>
                     <div className="text-xs font-medium mb-4 theme-text-sub-info">
-                    {t('file_blacklist_desc2')}
-                     </div>
-
-
-
-                    <TextArea
-                        className="w-full h-3   theme-bg theme-border-color  rounded-lg h-400-px"
-                        style={{ height: 400 }}
-                        readOnly={!isEdit}
-                        onChange={changeListVal}
-                        value={listVal}
-                        placeholder={intl.formatMessage({ id: 'decrypt_input_cid_placeholder' })}
-                    />
-
-                    <div className="flex justify-between  w-full  mb-4">
-                        <span className="theme-text-error text-xs pt-1">{validateMsg}</span>
+                        {t('file_blacklist_desc2')}
                     </div>
-                    {isEdit ? (
-                        <div className="mt-2 text-right">
-                            <button
-                                className="ml-2 common-btn theme-fill-gray text-gray-900 mr-4"
-                                onClick={cancelEdit}>
-                                {t('file_blacklist_cancel')}
-                            </button>
 
-                            <div className="ml-2 inline-block">
-                                <Spin
-                                    spinning={loading}
-                                    indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}>
+                    <Spin spinning={loading} indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}>
+                        <TextArea
+                            className="w-full h-3   theme-bg theme-border-color  rounded-lg h-400-px"
+                            style={{ height: 400 }}
+                            readOnly={!isEdit}
+                            onChange={changeListVal}
+                            value={listVal}
+                            placeholder={intl.formatMessage({ id: 'file_blacklist_cid_placeholder' })}
+                        />
+
+                        <div className="flex justify-between  w-full  mb-4">
+                            <span className="theme-text-error text-xs pt-1">{validateMsg}</span>
+                        </div>
+                        {isEdit ? (
+                            <div className="mt-2 text-right">
+                                <button
+                                    className="ml-2 common-btn theme-fill-gray text-gray-900 mr-4"
+                                    onClick={cancelEdit}>
+                                    {t('file_blacklist_cancel')}
+                                </button>
+
+                                <div className="ml-2 inline-block">
                                     <button
                                         type="primary"
                                         className="common-btn theme-common-btn"
                                         onClick={saveFileList}>
                                         {t('file_blacklist_save')}
                                     </button>
-                                </Spin>
+                                </div>
                             </div>
-                        </div>
-                    ) : (
-                        <div className="mt-2 text-right">
-                            <button
-                                className="ml-2 common-btn theme-fill-gray text-gray-900 mr-4"
-                                onClick={closeModal}>
-                                {t('file_blacklist_close')}
-                            </button>
-                            <div className="ml-2 inline-block">
-                                <Spin
-                                    spinning={loading}
-                                    indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}>
-                                    <button
-                                        type="primary"
-                                        className="common-btn theme-common-btn"
-                                        onClick={editFileList}>
-                                        {t('file_blacklist_edit')}
-                                    </button>
-                                </Spin>
+                        ) : (
+                            <div className="mt-2 text-right">
+                                <button
+                                    className="ml-2 common-btn theme-fill-gray text-gray-900 mr-4"
+                                    onClick={closeModal}>
+                                    {t('file_blacklist_close')}
+                                </button>
+                                <div className="ml-2 inline-block">
+                                    <Spin
+                                        spinning={loading}
+                                        indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}>
+                                        <button
+                                            type="primary"
+                                            className="common-btn theme-common-btn"
+                                            onClick={editFileList}>
+                                            {t('file_blacklist_edit')}
+                                        </button>
+                                    </Spin>
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
+                    </Spin>
                 </main>
             </div>
         </CommonModal>

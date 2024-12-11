@@ -503,11 +503,12 @@ const en_US = {
         file_blacklist_edit:'编辑',
         day: 'Day',
         add_file_blacklist_success:'添加成功',
-        validate_file_blacklist_cid1:'不可输入中文，请使用英文逗号,区分',
+        validate_file_blacklist_cid1:'请输入cid',
         validate_file_blacklist_cid2:'请输入正确的cid',
         file_blacklist_title:'黑名单内容',
         file_blacklist_desc:'请在此处添加需纳入黑名单的内容 CID，每行一个。',
-        file_blacklist_desc2:'被列入黑名单的内容将无法通过 BTFSGateway(8080端口)访问。'
+        file_blacklist_desc2:'被列入黑名单的内容将无法通过 BTFSGateway(8080端口)访问。',
+        file_blacklist_cid_placeholder:'输入黑名单CID'
 
 };
 
