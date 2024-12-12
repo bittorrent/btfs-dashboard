@@ -496,19 +496,19 @@ const en_US = {
         download_fail:'Download Failed',
 
         //v1.9
-        file_black_list:'文件黑名单',
-        file_blacklist_cancel:'取消',
-        file_blacklist_close:'关闭',
-        file_blacklist_save:'保存',
-        file_blacklist_edit:'编辑',
+        file_black_list: 'File Blacklist',
+        file_blacklist_cancel: 'Cancel',
+        file_blacklist_close: 'Close',
+        file_blacklist_save: 'Save',
+        file_blacklist_edit: 'Edit',
         day: 'Day',
-        add_file_blacklist_success:'添加成功',
-        validate_file_blacklist_cid1:'请输入cid',
-        validate_file_blacklist_cid2:'请输入正确的cid',
-        file_blacklist_title:'黑名单内容',
-        file_blacklist_desc:'请在此处添加需纳入黑名单的内容 CID，每行一个。',
-        file_blacklist_desc2:'被列入黑名单的内容将无法通过 BTFSGateway(8080端口)访问。',
-        file_blacklist_cid_placeholder:'输入黑名单CID'
+        add_file_blacklist_success: 'Added Successfully',
+        validate_file_blacklist_cid1: 'Chinese characters are not allowed. Please use commas (,) to separate entries.',
+        validate_file_blacklist_cid2: 'Please enter a valid CID.',
+        file_blacklist_title: 'Blacklist Content',
+        file_blacklist_desc: 'Add the CIDs of the content to be blacklisted here, one per line.',
+        file_blacklist_desc2: 'Content listed in the blacklist will be inaccessible via the BTFSGateway (port 8080).',
+        file_blacklist_cid_placeholder:'No file blacklist has been added yet.'
 
 };
 
