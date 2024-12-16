@@ -212,10 +212,10 @@ export default function LocalFilesTable({ color }) {
     };
 
     const operations = () => {
-        if (activeKey === '2') {
+        // if (activeKey === '2') {
             return <Button className="common-btn" onClick={()=> setShowFileBlackListModal(true)} >{t('file_black_list')}</Button>;
-        }
-        return null
+        // }
+        // return null
     };
 
 
