@@ -495,7 +495,8 @@ const zh_CN = {
         file_blacklist_title: '黑名单内容',
         file_blacklist_desc: '请在此处输入需列入黑名单的 CID，每行一个。',
         file_blacklist_desc2: '被列入黑名单的内容将无法通过 BTFSGateway（端口 8080）访问。',
-        file_blacklist_cid_placeholder:'还未添加过文件黑名单'
+        file_blacklist_cid_placeholder:'还未添加过文件黑名单',
+        lock_success:'账户锁定成功'
 
 
 };

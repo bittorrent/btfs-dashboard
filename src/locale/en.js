@@ -508,7 +508,9 @@ const en_US = {
         file_blacklist_title: 'Blacklist Content',
         file_blacklist_desc: 'Add the CIDs of the content to be blacklisted here, one per line.',
         file_blacklist_desc2: 'Content listed in the blacklist will be inaccessible via the BTFSGateway (port 8080).',
-        file_blacklist_cid_placeholder:'No file blacklist has been added yet.'
+        file_blacklist_cid_placeholder:'No file blacklist has been added yet.',
+        lock_success:'Account Locked Successfully'
+
 
 };
 
