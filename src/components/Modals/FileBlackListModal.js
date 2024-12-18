@@ -85,10 +85,10 @@ export default function EncryptFileModal({ color, closeModal, showModal = false 
         // if (listVal && !validateListVal(listVal)) {
         //     return;
         // }
-        if(!listVal){
-            setValidateMsg(t('validate_file_blacklist_cid1'))
-            return
-        }
+        // if(!listVal){
+        //     setValidateMsg(t('validate_file_blacklist_cid1'))
+        //     return
+        // }
         let listArr = listVal.split('\n');
         let validateCids = true;
         for (var v in listArr) {
@@ -112,6 +112,7 @@ export default function EncryptFileModal({ color, closeModal, showModal = false 
                 status: 'success',
                 type: 'frontEnd',
             });
+            closeModal()
         } catch (e) {
             Emitter.emit('showMessageAlert', { message: e.Message, status: 'error' });
         }

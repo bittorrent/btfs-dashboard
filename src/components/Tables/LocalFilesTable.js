@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useIntl } from 'react-intl';
-import { Breadcrumb, Pagination, Tabs, Tooltip, Button } from 'antd';
+import { Breadcrumb, Pagination, Tabs, Tooltip } from 'antd';
 import PropTypes from 'prop-types';
 import FileTableDropdown from 'components/Dropdowns/FileTableDropdown.js';
 import ImportFilesDropdown from 'components/Dropdowns/ImportFilesDropdown.js';
@@ -213,7 +213,7 @@ export default function LocalFilesTable({ color }) {
 
     const operations = () => {
         // if (activeKey === '2') {
-            return <Button className="common-btn" onClick={()=> setShowFileBlackListModal(true)} >{t('file_black_list')}</Button>;
+            return <button className="common-btn theme-white-btn" onClick={()=> setShowFileBlackListModal(true)} >{t('file_black_list')}</button>;
         // }
         // return null
     };
