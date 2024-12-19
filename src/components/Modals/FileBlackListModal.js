@@ -10,7 +10,7 @@ import isIPFS from 'is-ipfs';
 
 const { TextArea } = Input;
 
-export default function EncryptFileModal({ color, closeModal, showModal = false }) {
+export default function FileBlackListModal({ color, closeModal, showModal }) {
     const intl = useIntl();
     const [loading, setLoading] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
@@ -32,16 +32,13 @@ export default function EncryptFileModal({ color, closeModal, showModal = false 
             setValidateMsg('');
             getFileBlackListData();
         }
+        setIsEdit(false);
         // Emitter.on('openDecryptFileModal', set);
         return () => {
             // Emitter.removeListener('openDecryptFileModal');
             window.body.style.overflow = '';
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [showModal]);
-
-    useEffect(() => {
-        setIsEdit(false);
     }, [showModal]);
 
     const validateCid = val => {

@@ -211,9 +211,13 @@ export default function LocalFilesTable({ color }) {
         setActiveKey(activeKey);
     };
 
+    const  showFileBlackListModalFn= ()=>{
+         setShowFileBlackListModal(true)
+    }
+
     const operations = () => {
         // if (activeKey === '2') {
-            return <button className="common-btn theme-white-btn" onClick={()=> setShowFileBlackListModal(true)} >{t('file_black_list')}</button>;
+            return <button className="common-btn theme-white-btn" onClick={showFileBlackListModalFn} >{t('file_black_list')}</button>;
         // }
         // return null
     };
@@ -478,9 +482,9 @@ export default function LocalFilesTable({ color }) {
                             data={batch}
                         />
                     </div>
-                    <FileBlackListModal color={color} showModal={showFileBlackListModal} closeModal={()=> setShowFileBlackListModal(false)} />
                 </Tabs.TabPane>
             </Tabs>
+            <FileBlackListModal color={color} showModal={showFileBlackListModal} closeModal={()=> setShowFileBlackListModal(false)} />
         </>
     );
 }
