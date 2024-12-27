@@ -444,6 +444,14 @@ class APIClient10 {
         return this.request(`/api/v1/dashboard/logout`);
     }
 
+    getFileBlackList(){
+        return this.request(`/api/v1/cidstore/list`);
+    }
+
+    addFileBlackList(arg,batch){
+        return this.request(`/api/v1/cidstore/add?arg=${arg}&batch=${batch}`);
+    }
+
 }
 
 const Client10 = new APIClient10();

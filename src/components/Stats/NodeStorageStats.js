@@ -41,7 +41,7 @@ const Contracts = ({ contracts, hostPrice }) => {
           {contracts}
         </div>
         <div className="theme-text-sub-main">
-          {t('price')}: {hostPrice} WBTT (GB / {t('month')})
+          {t('price')}: {hostPrice} WBTT (GB / {t('day')})
         </div>
       </div>
     </div>

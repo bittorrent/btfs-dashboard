@@ -363,7 +363,7 @@ export const getNodeStorageStats = async () => {
                 capacity: switchStorageUnit2(result[1]['StorageMax']),
                 storageUsed: switchStorageUnit2(result[1]['RepoSize']),
                 percentage: new BigNumber(result[1]['RepoSize']).dividedBy(result[1]['StorageMax']).multipliedBy(100).toFixed(2),
-                hostPrice: formatNumber((result[0]['price'] * 30 / PRECISION),2),
+                hostPrice: formatNumber((result[0]['price'] / PRECISION_RATE),2),
                 contracts: result[2]['active_contract_num'],
                 uncashed: switchBalanceUnit(result[3]['total_received_uncashed']),
                 uncashedChange: switchBalanceUnit(result[3]['total_received_daily_uncashed']),

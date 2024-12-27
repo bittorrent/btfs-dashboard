@@ -493,7 +493,23 @@ const en_US = {
         upload_success:'Upload Successfully',
         download_success:'Download Successfully',
         upload_fail:'Upload Failed',
-        download_fail:'Download Failed'
+        download_fail:'Download Failed',
+
+        //v1.9
+        file_black_list: 'File Blacklist',
+        file_blacklist_cancel: 'Cancel',
+        file_blacklist_close: 'Close',
+        file_blacklist_save: 'Save',
+        file_blacklist_edit: 'Edit',
+        day: 'Day',
+        add_file_blacklist_success: 'Added Successfully',
+        validate_file_blacklist_cid1: 'Chinese characters are not allowed. Please use commas (,) to separate entries.',
+        validate_file_blacklist_cid2: 'Please enter a valid CID.',
+        file_blacklist_title: 'Blacklist Content',
+        file_blacklist_desc: 'Add the CIDs of the content to be blacklisted here, one per line.',
+        file_blacklist_desc2: 'Content listed in the blacklist will be inaccessible via the BTFSGateway (default port 8080).',
+        file_blacklist_cid_placeholder:'No file blacklist has been added yet.',
+        lock_success:'Account Locked Successfully'
 
 
 };

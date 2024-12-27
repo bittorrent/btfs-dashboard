@@ -3,7 +3,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
 // import { mainContext } from 'reducer';
-// import Emitter from 'utils/eventBus';
+import Emitter from 'utils/eventBus';
 
 
 const AccountLock = () => {
@@ -20,6 +20,8 @@ const AccountLock = () => {
             ? localStorage.getItem('NODE_URL')
             : 'http://localhost:5001';
         Cookies.remove(NODE_URL);
+
+        Emitter.emit('showMessageAlert', { message: 'lock_success', status: 'success', type: 'frontEnd' });
         history.push({pathname:'/login',state:{back:true}});
     };
 

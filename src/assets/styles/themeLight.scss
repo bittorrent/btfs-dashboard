@@ -108,7 +108,7 @@
   color: $base-color;
   &:focus {
     background-color: $white;
-    border-color: $white;
+    border-color:$base-color; //$white;
     color: $base-color;
   }
   &:hover {
