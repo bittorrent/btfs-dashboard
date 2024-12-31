@@ -86,7 +86,8 @@ export default function FileBlackListModal({ color, closeModal, showModal }) {
         //     setValidateMsg(t('validate_file_blacklist_cid1'))
         //     return
         // }
-        let listArr = listVal.split('\n');
+        let listArr1 = listVal.split('\n');
+        let listArr = listArr1.filter(v=>v!== '')
         let validateCids = true;
         for (var v in listArr) {
             if (listArr[v] && !validateCid(listArr[v])) {
@@ -98,6 +99,7 @@ export default function FileBlackListModal({ color, closeModal, showModal }) {
             setValidateMsg(t('validate_file_blacklist_cid2'));
             return;
         }
+
 
         try {
             await addFileBlackList(listArr, true);
