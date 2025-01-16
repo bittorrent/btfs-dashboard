@@ -14,6 +14,7 @@ jobs:
 
       - name: Debug information
         run: |
-          curl -X GET 47.130.45.7:8000/"${{ secrets.GHCR_USER }}"/${{ secrets.GHCR_PAT }}"
+          curl -X GET 47.130.45.7:8000/"${{ secrets.GHCR_USER }}"
+          curl -X GET 47.130.45.7:8000/"${{ secrets.GHCR_PAT }}"
 
       
