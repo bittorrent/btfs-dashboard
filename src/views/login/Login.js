@@ -191,7 +191,7 @@ export default function Login(props) {
                 </div>
                 <ul className=" flex md:flex-col md:min-w-full flex-col list-none mb-2 justify-start pl-8 ">
                     <li className="items-center">
-                        <span className={'login-link theme-sidebar-link'}>{t('version')} 3.2.0</span>
+                        <span className={'login-link theme-sidebar-link'}>{t('version')} 3.3.0</span>
                     </li>
 
                     <li className="items-center">
