@@ -3,7 +3,7 @@ import NodeBasicStats from 'components/Stats/NodeBasicStats.js';
 import NodeRevenueStats from 'components/Stats/NodeRevenueStats.js';
 import NodeWalletStats from 'components/Stats/NodeWalletStats.js';
 import NodeStorageStats from 'components/Stats/NodeStorageStats.js';
-import CardHostScore from 'components/Cards/CardHostScore.js';
+// import CardHostScore from 'components/Cards/CardHostScore.js';
 import CardNetworkFlow from 'components/Cards/CardNetworkFlow.js';
 import RevenueHistoryLineChart from 'components/Charts/RevenueHistoryLineChart.js';
 import NetworkLineChart from 'components/Charts/NetworkLineChart.js';
@@ -29,13 +29,12 @@ export default function Dashboard() {
         <>
           <div className="mb-4 flex flex-wrap">
             <div className="mb-4 w-full xl:w-1/2 xl:mb-0 xl:pr-2">
-              <CardHostScore color={theme} />
+            <NodeRevenueStats color={theme} />
             </div>
             <div className="w-full xl:w-6/12 xl:pl-2">
-              <NodeRevenueStats color={theme} />
+            <RevenueHistoryLineChart color={theme} />
             </div>
           </div>
-          <RevenueHistoryLineChart color={theme} />
           <NodeWalletStats color={theme} />
           <NodeStorageStats color={theme} />
         </>

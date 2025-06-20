@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { unstable_batchedUpdates } from 'react-dom';
 import { useIntl } from 'react-intl';
-import { Progress, Tooltip } from 'antd';
+import {  Tooltip } from 'antd';
 import { ReactComponent as OnlineIcon } from 'assets/img/online.svg';
 import ClipboardCopy from 'components/Utils/ClipboardCopy';
 import { getNodeBasicStats, getSimpleNodeBasicStats } from 'services/dashboardService.js';
@@ -9,10 +9,10 @@ import { t, Truncate } from 'utils/text.js';
 import { btfsScanLinkCheck } from 'utils/checks.js';
 import { CHAIN_NAME } from 'utils/constants';
 
-const UPTIME_PROGRESS = {
-  STROKE_COLOR: '#06A561',
-  TRAIL_COLOR: '#C5F1D5',
-};
+// const UPTIME_PROGRESS = {
+//   STROKE_COLOR: '#06A561',
+//   TRAIL_COLOR: '#C5F1D5',
+// };
 
 const HostID = ({ ID,version, chain}) => {
   return (
@@ -93,35 +93,8 @@ const Status = ({ status, peers, message }) => {
   );
 };
 
-const Uptime = ({ uptime }) => {
-  return (
-    <div className="w-full h-full flex justify-between">
-      <div className="flex flex-col justify-between">
-        <h5 className="text-base font-bold theme-text-main">{t('uptime')}</h5>
-        <div className="font-semibold theme-text-success">{uptime} %</div>
-      </div>
-      <div className="h-full">
-        <Progress
-          type="circle"
-          width={56}
-          className="mt-1"
-          trailColor={UPTIME_PROGRESS.TRAIL_COLOR}
-          strokeColor={UPTIME_PROGRESS.STROKE_COLOR}
-          percent={uptime ?? 0}
-          format={() => (
-            <div className="theme-text-success">
-              <i className="fa-regular fa-clock"></i>
-            </div>
-          )}
-        />
-      </div>
-    </div>
-  );
-};
-
 export default function NodeBasicStats({ isMainMode }) {
   const [ID, setID] = useState('--');
-  const [uptime, setUptime] = useState('--');
   const [peers, setPeers] = useState('--');
   const [status, setStatus] = useState(null);
   const [message, setMessage] = useState('online');
@@ -132,11 +105,10 @@ export default function NodeBasicStats({ isMainMode }) {
     let didCancel = false;
     const fetchData = async () => {
       if(isMainMode){
-        let { ID, uptime, peers, status, message,version } = await getNodeBasicStats();
+        let { ID, peers, status, message,version } = await getNodeBasicStats();
         if (!didCancel) {
           unstable_batchedUpdates(() => {
             setID(ID);
-            setUptime(uptime);
             setPeers(peers);
             setVersion(version);
             setChain(CHAIN_NAME[localStorage.getItem('CHAIN_ID')]);
@@ -165,14 +137,11 @@ export default function NodeBasicStats({ isMainMode }) {
       <div className="mx-auto w-full">
         {isMainMode ?
           <div className="flex flex-wrap">
-            <div className="px-6 py-8 w-full border-b rounded-t-2xl theme-bg theme-border-color xl:w-1/3 xl:border-0 xl:border-r xl:rounded-none xl:rounded-l-2xl">
+            <div className="px-6 py-8 w-full border-b rounded-t-2xl theme-bg theme-border-color xl:w-1/2 xl:border-0 xl:border-r xl:rounded-none xl:rounded-l-2xl">
               <HostID ID={ID}  version={version} chain={chain}/>
             </div>
-            <div className="px-6 py-8 w-full border-b theme-bg theme-border-color xl:w-1/3 xl:border-0 xl:border-r">
+            <div className="px-6 py-8 w-full border-b theme-bg theme-border-color xl:w-1/2 xl:border-0 xl:border-r">
               <Status status={status} peers={peers} message={message} />
-            </div>
-            <div className="px-6 py-8 w-full rounded-b-2xl theme-bg xl:w-1/3 xl:rounded-none xl:rounded-r-2xl">
-              <Uptime uptime={uptime} />
             </div>
           </div> :
           <div className="flex flex-wrap">

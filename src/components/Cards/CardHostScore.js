@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import HostScoreRingChart from 'components/Charts/HostScoreRingChart.js';
 import HostScoreProgressChart from 'components/Charts/HostScoreProgressChart.js';
-import { getHostAllScore } from 'services/dashboardService.js';
+// import { getHostAllScore } from 'services/dashboardService.js';
 
-let didCancel = false;
+// let didCancel = false;
 export default function CardHostScore({ color }) {
   const [newRingChartData, setNewRingChartData] = useState({
     lastUpdated: 0,
@@ -19,27 +19,27 @@ export default function CardHostScore({ color }) {
   const [newScoreInit, setNewScoreInit] = useState(true);
 
   useEffect(() => {
-    fetchData();
+    // fetchData();
     return () => {
-      didCancel = true;
+    //   didCancel = true;
     };
   }, []);
 
-  const fetchData = async () => {
-    didCancel = false;
-    const [data2] = await getHostAllScore();
-    const newLeftData = data2.leftData;
-    const newRightData = data2.rightData;
-    if (!didCancel) {
-      if (newLeftData.level) {
-        setNewRingChartData(newLeftData);
-        setNewProgressChartData(newRightData);
-        setNewScoreInit(false);
-      } else {
-        setNewScoreInit(true);
-      }
-    }
-  };
+//   const fetchData = async () => {
+//     didCancel = false;
+//     const [data2] = await getHostAllScore();
+//     const newLeftData = data2.leftData;
+//     const newRightData = data2.rightData;
+//     if (!didCancel) {
+//       if (newLeftData.level) {
+//         setNewRingChartData(newLeftData);
+//         setNewProgressChartData(newRightData);
+//         setNewScoreInit(false);
+//       } else {
+//         setNewScoreInit(true);
+//       }
+//     }
+//   };
 
   return (
     <div className={'h-full common-card p-0 shadow-none lg:shadow-md'}>

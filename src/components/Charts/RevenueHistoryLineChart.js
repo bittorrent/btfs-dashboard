@@ -153,8 +153,8 @@ function RevenueHistoryLineChart({ color }) {
   };
 
   return (
-    <div className="mb-4 common-card py-5 pb-0 theme-bg">
-      <header className="flex justify-between items-center">
+    <div className="common-card pb-0 theme-bg">
+      <header className="flex justify-between items-center mb-5">
         <h5 className="text-base font-bold theme-text-main">{t('earning_history')}</h5>
         <ButtonSwitch
           current="left"
@@ -169,8 +169,8 @@ function RevenueHistoryLineChart({ color }) {
         />
       </header>
       <main>
-        <div id="revenue-history-line-chart-content" className="relative h-300-px">
-          <canvas id="revenue-history-line-chart" style={{ height: 300, width: '100%' }}></canvas>
+        <div id="revenue-history-line-chart-content" className="relative h-320-px">
+          <canvas id="revenue-history-line-chart" style={{ height: 320, width: '100%' }}></canvas>
         </div>
       </main>
     </div>
