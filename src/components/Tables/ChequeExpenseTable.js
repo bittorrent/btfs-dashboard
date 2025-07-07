@@ -114,7 +114,7 @@ export default function ChequeExpenseTable({ color }) {
           <Pagination
             className={'mt-4 ' + color}
             simple
-            showTotal={true}
+            // showTotal={true}
             current={current}
             total={total}
             hideOnSinglePage={true}
