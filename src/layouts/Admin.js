@@ -122,11 +122,11 @@ export default function Admin() {
         NODE_URL = apiUrl;
     }
 
-    const token = Cookies.get(NODE_URL)
-    if(!token){
-      history.push(`/login${apiUrl?'?api='+apiUrl:''}`);
-      return;
-    }
+    // const token = Cookies.get(NODE_URL)
+    // if(!token){
+    //   history.push(`/login${apiUrl?'?api='+apiUrl:''}`);
+    //   return;
+    // }
     const isMainMode = await getPageMode();
     // if (!NODE_URL && !window.location.href.includes('/admin/settings')) {
     //   history.push('/admin/settings');
@@ -143,7 +143,7 @@ export default function Admin() {
         });
       } else {
         window.loading = false;
-        window.nodeStatus = false;//  false;// false;
+        window.nodeStatus = true;//  false;// false;
         dispatch({
           type: 'SET_NODE_STATUS',
           nodeStatus: false,

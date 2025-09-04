@@ -81,7 +81,7 @@
   }
 }
 
-.theme-common-btn {
+.theme-common-btn , .ant-btn.theme-common-btn {
   background-color: $base-color;
   border-color: $base-color;
   color: #fff;

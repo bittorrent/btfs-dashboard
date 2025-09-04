@@ -452,6 +452,40 @@ class APIClient10 {
         return this.request(`/api/v1/cidstore/add?arg=${arg}&batch=${batch}`);
     }
 
+
+
+    disableRenew(arg){
+        return this.request(`/api/v1/storage/upload/renew/disable?arg=${arg}`);
+    }
+    enableRenew(arg){
+        return this.request(`/api/v1/storage/upload/renew/enable?arg=${arg}`);
+    }
+    getRenewList(){
+        return this.request(`/api/v1/storage/upload/renew/list`);
+    }
+    getRenewInfo(arg){
+        return this.request(`/api/v1/storage/upload/renew/info?arg=${arg}`);
+    }
+
+    setProxy(arg,bool){
+        return this.request(`/api/v1/config?arg=${arg}&arg=${bool}&bool=${bool}`);
+    }
+
+    setProxyPrice(arg){
+        return this.request(`/api/v1/storage/upload/proxy/config?proxy-price=${arg}`);
+    }
+    getProxyPrice(){
+        return this.request(`/api/v1/storage/upload/proxy/config/show`);
+    }
+    getProxyUploadList(){
+        return this.request(`/api/v1/storage/upload/proxy/list`);
+    }
+    getUserBlance(){
+        return this.request(`/api/v1/storage/upload/proxy/pay/balance`);
+    }
+    getUserPayHistory(){
+        return this.request(`/api/v1/storage/upload/proxy/pay/history`);
+    }
 }
 
 const Client10 = new APIClient10();

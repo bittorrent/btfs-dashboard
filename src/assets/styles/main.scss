@@ -315,7 +315,7 @@
 }
 
 .dark .login-bg {
-    background:#1a2c5d;
+    background: #1a2c5d;
     // background: #161921;
 
     //   url(../img/background.png)  no-repeat right;
@@ -425,9 +425,9 @@
         background: #F2F5F7 url(../img/background.png) no-repeat right top;
         background-size: contain;
     }
-    .dark  .login-form {
-        background: rgba(0,0,0,0)
-        // background: #F2F5F7 url(../img/background.png) no-repeat right top;
+
+    .dark .login-form {
+        background: rgba(0, 0, 0, 0) // background: #F2F5F7 url(../img/background.png) no-repeat right top;
     }
 
     .login-form-w {
@@ -507,3 +507,151 @@
 }
 
 
+.radio-style-tabs .ant-tabs-nav::before {
+    border-bottom: none !important;
+}
+
+.radio-style-tabs .ant-tabs-nav .ant-tabs-nav-wrap {
+    justify-content: center
+}
+
+.radio-style-tabs .ant-tabs-tab {
+    border: 1px solid #3257f6;
+    // border-radius: 6px;
+    background: #fafafa;
+    padding: 4px 16px;
+    //   margin-right: 8px;
+    margin: 0;
+    min-width: 150px;
+    color: #3257f6;
+    justify-content: center;
+    transition: all 0.2s;
+
+
+
+    &:first-of-type {
+        border-radius: 6px 0 0 6px;
+        border-right: 0;
+    }
+
+    &:nth-child(2) {
+        border-radius: 0 6px 6px 0;
+    }
+}
+
+
+
+.radio-style-tabs .ant-tabs-tab.ant-tabs-tab-active {
+    border-color: #3257f6;
+    background: #3257f6;
+
+    &:hover {
+        background: #5b78f7;
+    }
+}
+
+.radio-style-tabs .ant-tabs-ink-bar {
+    display: none;
+}
+
+.radio-style-tabs .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #fff;
+
+    &:hover {
+        color: #fff;
+    }
+}
+
+.radio-style-tabs .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab .ant-tabs-tab-btn:hover {
+    color: #5b78f7;
+}
+
+.radio-style-tabs .ant-tabs-ink-bar {
+    display: none;
+}
+
+
+.ant-select.common-table-head-select {
+    height: 20px;
+    line-height: 20px;
+
+    .ant-select-selector {
+        padding: 0 11px 0 0;
+    }
+
+    .ant-select-selector,
+    .ant-select-selection-item {
+        height: 20px !important;
+        line-height: 20px !important;
+        color: #a1a7c4;
+
+    }
+}
+
+.info-modal {
+    max-height: 350px;
+    overflow-y: auto;
+    line-height: 16px;
+    font-size: 12px;
+    font-family: SFMono-Regular, ui-monospace, Consolas, 'Liberation Mono', Menlo, monospace;
+
+    p {
+        // margin: 0;
+        // margin-block-start: 0em;
+        // margin-block-end: 0em;
+        // margin-inline-start: 0px;
+        // margin-inline-end: 0px;
+    }
+
+}
+
+
+.ant-input-number.ant-input-number-in-form-item.common-input {
+    border: none;
+    background-color: rgba(255, 255, 255, 0) !important;
+    padding: 0;
+
+    &:focus,
+    &:focus-within,
+    &.focused {
+        box-shadow: none !important;
+        outline: none !important;
+    }
+
+    .ant-input-number-handler-wrap {
+        display: none !important;
+    }
+
+    .ant-input-number-input {
+        height: 2.25rem;
+    }
+
+}
+
+
+.ant-input-number-group-wrapper.common-input {
+    padding: 0;
+}
+
+.ant-input-number-group-wrapper.common-input .ant-input-number-group-addon {
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+
+
+.table-page-content-light {
+    .ant-table-tbody>tr>td, .ant-table-thead>tr>th, .ant-table tfoot>tr>td, .ant-table tfoot>tr>th {
+       padding: 10px 16px;
+    }
+
+    .ant-table-thead>tr>th {
+        padding: 0.5rem 1rem;
+        background-color: #f2f5f7;
+    }
+    .ant-table-tbody>tr>td {
+        // padding: 0.5rem 1rem;
+    }
+
+
+}

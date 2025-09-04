@@ -10,6 +10,7 @@ const SET_NODE = 'SET_NODE';
 const SET_PAGE_MODE = 'SET_PAGE_MODE';
 const SET_S3_API_URL = 'SET_S3_API_URL';
 const SET_ADDRESS_CONFIG = 'SET_ADDRESS_CONFIG';
+const SET_PROXY_CONFIG = 'SET_PROXY_CONFIG';
 
 const mainContext = React.createContext();
 const theme = localStorage.getItem('theme');
@@ -27,6 +28,7 @@ const initState = {
     node: null,
     pageMode: pageMode ? pageMode : MAIN_PAGE_MODE,
     s3ApiUrl: '',
+    proxyMode:false,
 };
 
 const reducer = (state, action) => {
@@ -49,6 +51,8 @@ const reducer = (state, action) => {
             return {...state, s3ApiUrl: action.s3ApiUrl};
         case SET_ADDRESS_CONFIG:
                 return {...state, addressConfig: action.addressConfig};
+        case SET_PROXY_CONFIG:
+                return {...state, proxyMode: action.proxyMode};
         default:
             return state
     }

@@ -509,7 +509,82 @@ const en_US = {
         file_blacklist_desc: 'Add the CIDs of the content to be blacklisted here, one per line.',
         file_blacklist_desc2: 'Content listed in the blacklist will be inaccessible via the BTFSGateway (default port 8080).',
         file_blacklist_cid_placeholder:'No file blacklist has been added yet.',
-        lock_success:'Account Locked Successfully'
+        lock_success:'Account Locked Successfully',
+
+        //v4.0.1
+
+        added_files:'Added Files',
+        auto_renew_files:'Auto Renew Files',
+        auto_renew_file_cid:'文件CID',
+        auto_renew_file_filesize:'文件大小',
+        auto_renew_file_uploaded_time:'Uploaded Time',
+        auto_renew_file_sp:'SP',
+        auto_renew_status:'Auto Renew',
+        auto_renew_file_more_info:'More Info',
+        auto_renew_operation:'操作',
+        disable_auto_renew:'关闭自动续费',
+        enable_auto_renew:'开启自动续费',
+        disable_auto_renew_desc:'关闭自动续费',
+        enable_auto_renew_desc:'开启自动续费',
+        enable:'开启',
+        disable:'关闭',
+        view:'View',
+        renew_file_info:'文件信息',
+        renew_file_info_desc:'文件信息',
+        On:'开启',
+        Off:'关闭',
+        all:'All',
+        auto_renew_on:'Auto Renew On',
+        auto_renew_off:'Auto Renew Off',
+
+
+
+
+        proxy:'Proxy mode',
+        enable_proxy_mode:'启用代理模式',
+        proxy_service_price:'代理服务价格',
+        unit_day:'Day',
+        proxy_upload:'代理上传',
+        user_balance:'用户余额',
+        start_proxy_service:'开启代理服务',
+        start_proxy_service_desc:'开启代理服务说明',
+        start_service_confirm:'开启',
+        close_proxy_service:'关闭代理服务',
+        close_proxy_service_desc:'关闭代理服务',
+        close_service_confirm:'关闭',
+
+        change_price_modal:'更改价格',
+        change_price_modal_desc:'更改价格',
+        enter_new_price_placeholder:'输入价格',
+        new_price_validate_pattern:'输入价格错误',
+        price_validate_min:'服务价格低于BTS网络存储价格',
+        price_validate_max:'服务价格设置过高',
+        price_validate_integer:'服务价格不能是小数',
+        default_price:'使用默认',
+
+        proxy_upload_table_address:"Address",
+        proxy_upload_table_cid:'文件CID',
+        proxy_upload_table_filesize:'文件大小',
+        proxy_upload_table_fees:'费用',
+        proxy_upload_table_unitprice:'单价',
+        proxy_upload_table_view:'信息',
+        proxy_file_info:'代理上传信息',
+        proxy_file_info_desc:'代理上传信息',
+
+        user_balance_table_address:'Address',
+        user_balance_table_balance:'Balance',
+        user_balance_table_deposit_history:'Deposit History',
+        user_balance_table_from:'from',
+        user_balance_table_to:"To",
+        user_balance_table_value:"Value",
+        user_balance_table_hash:"Hash",
+        user_pay_history:"充值历史",
+        user_pay_history_desc:"充值历史",
+
+
+
+
+
 
 
 };

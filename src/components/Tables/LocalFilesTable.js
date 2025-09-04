@@ -9,6 +9,7 @@ import ImportFilesEncryptDropdown from 'components/Dropdowns/ImportFilesEncryptD
 import FileBlackListModal from 'components/Modals/FileBlackListModal.js';
 import FileControl from 'components/Footers/FileControl.js';
 import S3ApiTable from './S3ApiTable';
+import AutoRenewFileTable from './AutoRenewFileTable';
 import { getRootFiles, getHashByPath, getFolerSize, getFiles, searchFiles } from 'services/filesService.js';
 import { switchStorageUnit2 } from 'utils/BTFSUtil.js';
 import { t } from 'utils/text.js';
@@ -32,10 +33,8 @@ export default function LocalFilesTable({ color }) {
     const [current, setCurrent] = useState(1);
     const [batch, setBatch] = useState([]);
     const [activeKey, setActiveKey] = useState('1');
+    const [activeFileKey, setActiveFileKey] = useState('1');
     const [showFileBlackListModal, setShowFileBlackListModal] = useState(false);
-
-
-
 
     const selectAll = e => {
         let fileControl = document.getElementById('fileControl');
@@ -211,19 +210,24 @@ export default function LocalFilesTable({ color }) {
         setActiveKey(activeKey);
     };
 
-    const  showFileBlackListModalFn= ()=>{
-         setShowFileBlackListModal(true)
-    }
+    const changeActiveFileKey = activeKey => {
+        setActiveFileKey(activeKey);
+    };
+
+    const showFileBlackListModalFn = () => {
+        setShowFileBlackListModal(true);
+    };
 
     const operations = () => {
         // if (activeKey === '2') {
-            return <button className="common-btn theme-white-btn" onClick={showFileBlackListModalFn} >{t('file_black_list')}</button>;
+        return (
+            <button className="common-btn theme-white-btn" onClick={showFileBlackListModalFn}>
+                {t('file_black_list')}
+            </button>
+        );
         // }
         // return null
     };
-
-
-
 
     useEffect(() => {
         const set = async function () {
@@ -246,7 +250,6 @@ export default function LocalFilesTable({ color }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-
     return (
         <>
             <Tabs
@@ -259,232 +262,260 @@ export default function LocalFilesTable({ color }) {
                     <S3ApiTable color={color} />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab={t('native_api')} key="2">
-                    <div className="mb-4 flex rounded-2xl">
-                        <input
-                            type="text"
-                            placeholder={intl.formatMessage({ id: 'search_here' }) + '...'}
-                            className={'common-input h-12 rounded-l-2xl theme-border-color theme-bg'}
-                            ref={inputRef}
-                        />
-                        <button
-                            className="ml-2 common-btn w-120-px h-12 rounded-r-2xl theme-white-btn"
-                            type="button"
-                            onClick={search}>
-                            {t('search_go')}
-                        </button>
-                    </div>
-                    {/* <div className={'relative flex flex-col common-card theme-bg theme-text-main'}> */}
-                    <div className={'relative flex flex-col'}>
-                        <div className="mb-4 flex flex-wrap items-center">
-                            <div className="relative mr-4 flex-1 overflow-overlay">
-                                <div className=" flex whitespace-nowrap">
-                                    <Breadcrumb>
-                                        {breadcrumbName.length > 0 &&
-                                            breadcrumbName.map((item, index) => {
-                                                return (
-                                                    <Breadcrumb.Item key={index}>
-                                                        <a
-                                                            className="font-semibold"
-                                                            onClick={() => {
-                                                                minusPath(breadcrumbName[index]);
-                                                            }}>
-                                                            {item}
-                                                        </a>
-                                                    </Breadcrumb.Item>
-                                                );
-                                            })}
-                                    </Breadcrumb>
+                    <Tabs
+                        defaultActiveKey="1"
+                        activeKey={activeFileKey}
+                        onChange={changeActiveFileKey}
+                        className="mb-4 common-card theme-bg theme-text-main radio-style-tabs p-0">
+                        <Tabs.TabPane tab={t('added_files')} key="1">
+                            <div className="mb-4 flex rounded-2xl">
+                                <input
+                                    type="text"
+                                    placeholder={intl.formatMessage({ id: 'search_here' }) + '...'}
+                                    className={'common-input h-12 rounded-l-2xl theme-border-color theme-bg'}
+                                    ref={inputRef}
+                                />
+                                <button
+                                    className="ml-2 common-btn w-120-px h-12 rounded-r-2xl theme-white-btn"
+                                    type="button"
+                                    onClick={search}>
+                                    {t('search_go')}
+                                </button>
+                            </div>
+                            {/* <div className={'relative flex flex-col common-card theme-bg theme-text-main'}> */}
+                            <div className={'relative flex flex-col'}>
+                                <div className="mb-4 flex flex-wrap items-center">
+                                    <div className="relative mr-4 flex-1 overflow-overlay">
+                                        <div className=" flex whitespace-nowrap">
+                                            <Breadcrumb>
+                                                {breadcrumbName.length > 0 &&
+                                                    breadcrumbName.map((item, index) => {
+                                                        return (
+                                                            <Breadcrumb.Item key={index}>
+                                                                <a
+                                                                    className="font-semibold"
+                                                                    onClick={() => {
+                                                                        minusPath(breadcrumbName[index]);
+                                                                    }}>
+                                                                    {item}
+                                                                </a>
+                                                            </Breadcrumb.Item>
+                                                        );
+                                                    })}
+                                            </Breadcrumb>
+                                        </div>
+                                    </div>
+                                    <div className="flex">
+                                        <ImportFilesEncryptDropdown color={color} path={breadcrumbName} />
+                                        <ImportFilesDropdown color={color} path={breadcrumbName} />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex">
-                                <ImportFilesEncryptDropdown color={color} path={breadcrumbName} />
-                                <ImportFilesDropdown color={color} path={breadcrumbName} />
-                            </div>
-                        </div>
-                        <div className="w-full overflow-x-auto">
-                            <table className="w-full bg-transparent border-collapse">
-                                <thead className="theme-table-head-bg">
-                                    <tr className="common-table-head-tr theme-border-color theme-text-sub-info">
-                                        <th className="common-table-head-th" style={{ width: '50px' }}>
-                                            <input
-                                                type="checkbox"
-                                                name="checkboxHub"
-                                                className="bg-blue form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
-                                                onClick={selectAll}
-                                            />
-                                        </th>
-                                        <th className="common-table-head-th" style={{ minWidth: '100px' }}>
-                                            {t('file_name')}
-                                        </th>
-                                        <th className="common-table-head-th">{t('size')}</th>
-                                        <th className="common-table-head-th" style={{ minWidth: '150px' }}>
-                                            {t('file_cid')}
-                                        </th>
-                                        <th className="common-table-head-th">{t('file_create')}</th>
-                                        <th className="common-table-head-th">{t('file_isencrypted')}</th>
-                                        <th className="common-table-head-th"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {files &&
-                                        files.map((item, index) => {
-                                            return (
-                                                <tr
-                                                    key={index}
-                                                    className="common-table-body-tr theme-border-color theme-text-main theme-table-row-hover">
-                                                    <td className="common-table-body-td">
-                                                        <input
-                                                            type="checkbox"
-                                                            name="checkbox"
-                                                            className="bg-blue form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
-                                                            onClick={e => {
-                                                                select(
-                                                                    e,
-                                                                    item['Hash'],
-                                                                    item['Name'],
-                                                                    item['Type'],
-                                                                    item['Size'],
-                                                                    breadcrumbName
-                                                                );
-                                                            }}
-                                                        />
-                                                    </td>
-                                                    <td
-                                                        className="common-table-body-td"
-                                                        style={{ minWidth: '220px', maxWidth: '300px' }}>
-                                                        <div className="flex">
-                                                            <a
-                                                                className="flex items-center"
-                                                                onClick={() => {
-                                                                    addPath(
-                                                                        item['Hash'],
-                                                                        item['Name'],
-                                                                        item['Type'],
-                                                                        item['Size']
-                                                                    );
-                                                                }}>
-                                                                {item['Type'] === 1 && (
-                                                                    <img
-                                                                        src={
-                                                                            require('assets/img/folder.png')
-                                                                                .default
-                                                                        }
-                                                                        className="h-10 w-10 bg-white rounded-full border"
-                                                                        alt="..."
-                                                                    />
-                                                                )}
-                                                                {item['Type'] === 2 && (
-                                                                    <img
-                                                                        src={
-                                                                            require('assets/img/file.png')
-                                                                                .default
-                                                                        }
-                                                                        className="h-10 w-10 bg-white rounded-full border"
-                                                                        alt="..."
-                                                                    />
-                                                                )}
-                                                                <div className="flex w-full flex-col justify-center">
-                                                                    {item['Name'].length > 14 ? (
-                                                                        <Tooltip
-                                                                            className="cursor-pointer flex "
-                                                                            placement="top"
-                                                                            title={item['Name']}>
-                                                                            <span className="ml-3 font-bold">
-                                                                                <Truncate start={5}>
-                                                                                    {item['Name']}
-                                                                                </Truncate>
-                                                                            </span>
-                                                                        </Tooltip>
-                                                                    ) : (
-                                                                        <span className="ml-3 font-bold">
-                                                                            {item['Name']}
-                                                                        </span>
-                                                                    )}
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                    <td className="common-table-body-td">
-                                                        {switchStorageUnit2(item['Size'])}
-                                                    </td>
-                                                    <td className="common-table-body-td">
-                                                        {item['Hash'] || '--'}
-                                                    </td>
-                                                    <td className="common-table-body-td">
-                                                        {item.Created
-                                                            ? moment(item.Created).format(
-                                                                  'YYYY-MM-DD HH:mm:ss'
-                                                              )
-                                                            : '--'}
-                                                    </td>
-                                                    <td className="common-table-body-td text-center">
-                                                        {checkIsEncrypted(item['Name']) ? (
-                                                            <span>
-                                                                <img
-                                                                    alt=""
-                                                                    src={
-                                                                        require(`../../assets/img/encrypt-icon_${color}.svg`)
-                                                                            .default
-                                                                    }
-                                                                    className="far"
+                                <div className="w-full overflow-x-auto">
+                                    <table className="w-full bg-transparent border-collapse">
+                                        <thead className="theme-table-head-bg">
+                                            <tr className="common-table-head-tr theme-border-color theme-text-sub-info">
+                                                <th
+                                                    className="common-table-head-th"
+                                                    style={{ width: '50px' }}>
+                                                    <input
+                                                        type="checkbox"
+                                                        name="checkboxHub"
+                                                        className="bg-blue form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
+                                                        onClick={selectAll}
+                                                    />
+                                                </th>
+                                                <th
+                                                    className="common-table-head-th"
+                                                    style={{ minWidth: '100px' }}>
+                                                    {t('file_name')}
+                                                </th>
+                                                <th className="common-table-head-th">{t('size')}</th>
+                                                <th
+                                                    className="common-table-head-th"
+                                                    style={{ minWidth: '150px' }}>
+                                                    {t('file_cid')}
+                                                </th>
+                                                <th className="common-table-head-th">{t('file_create')}</th>
+                                                <th className="common-table-head-th">
+                                                    {t('file_isencrypted')}
+                                                </th>
+                                                <th className="common-table-head-th"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {files &&
+                                                files.map((item, index) => {
+                                                    return (
+                                                        <tr
+                                                            key={index}
+                                                            className="common-table-body-tr theme-border-color theme-text-main theme-table-row-hover">
+                                                            <td className="common-table-body-td">
+                                                                <input
+                                                                    type="checkbox"
+                                                                    name="checkbox"
+                                                                    className="bg-blue form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
+                                                                    onClick={e => {
+                                                                        select(
+                                                                            e,
+                                                                            item['Hash'],
+                                                                            item['Name'],
+                                                                            item['Type'],
+                                                                            item['Size'],
+                                                                            breadcrumbName
+                                                                        );
+                                                                    }}
                                                                 />
-                                                            </span>
-                                                        ) : (
-                                                            ''
-                                                        )}
-                                                    </td>
+                                                            </td>
+                                                            <td
+                                                                className="common-table-body-td"
+                                                                style={{
+                                                                    minWidth: '220px',
+                                                                    maxWidth: '300px',
+                                                                }}>
+                                                                <div className="flex">
+                                                                    <a
+                                                                        className="flex items-center"
+                                                                        onClick={() => {
+                                                                            addPath(
+                                                                                item['Hash'],
+                                                                                item['Name'],
+                                                                                item['Type'],
+                                                                                item['Size']
+                                                                            );
+                                                                        }}>
+                                                                        {item['Type'] === 1 && (
+                                                                            <img
+                                                                                src={
+                                                                                    require('assets/img/folder.png')
+                                                                                        .default
+                                                                                }
+                                                                                className="h-10 w-10 bg-white rounded-full border"
+                                                                                alt="..."
+                                                                            />
+                                                                        )}
+                                                                        {item['Type'] === 2 && (
+                                                                            <img
+                                                                                src={
+                                                                                    require('assets/img/file.png')
+                                                                                        .default
+                                                                                }
+                                                                                className="h-10 w-10 bg-white rounded-full border"
+                                                                                alt="..."
+                                                                            />
+                                                                        )}
+                                                                        <div className="flex w-full flex-col justify-center">
+                                                                            {item['Name'].length > 14 ? (
+                                                                                <Tooltip
+                                                                                    className="cursor-pointer flex "
+                                                                                    placement="top"
+                                                                                    title={item['Name']}>
+                                                                                    <span className="ml-3 font-bold">
+                                                                                        <Truncate start={5}>
+                                                                                            {item['Name']}
+                                                                                        </Truncate>
+                                                                                    </span>
+                                                                                </Tooltip>
+                                                                            ) : (
+                                                                                <span className="ml-3 font-bold">
+                                                                                    {item['Name']}
+                                                                                </span>
+                                                                            )}
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                            <td className="common-table-body-td">
+                                                                {switchStorageUnit2(item['Size'])}
+                                                            </td>
+                                                            <td className="common-table-body-td">
+                                                                {item['Hash'] || '--'}
+                                                            </td>
+                                                            <td className="common-table-body-td">
+                                                                {item.Created
+                                                                    ? moment(item.Created).format(
+                                                                          'YYYY-MM-DD HH:mm:ss'
+                                                                      )
+                                                                    : '--'}
+                                                            </td>
+                                                            <td className="common-table-body-td text-center">
+                                                                {checkIsEncrypted(item['Name']) ? (
+                                                                    <span>
+                                                                        <img
+                                                                            alt=""
+                                                                            src={
+                                                                                require(`../../assets/img/encrypt-icon_${color}.svg`)
+                                                                                    .default
+                                                                            }
+                                                                            className="far"
+                                                                        />
+                                                                    </span>
+                                                                ) : (
+                                                                    ''
+                                                                )}
+                                                            </td>
 
-                                                    <td className="common-table-body-td">
-                                                        <FileTableDropdown
-                                                            color={color}
-                                                            hash={item['Hash']}
-                                                            name={item['Name']}
-                                                            size={item['Size']}
-                                                            path={breadcrumbName}
-                                                            type={item['Type']}
-                                                            cid={item.cid}
-                                                            isEncrypetd={checkIsEncrypted(item['Name'])}
-                                                        />
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })}
-                                </tbody>
-                            </table>
-                            {!files && (
-                                <div className="w-full flex justify-center pt-4">
-                                    <img
-                                        alt="loading"
-                                        src={require('../../assets/img/loading.svg').default}
-                                        style={{ width: '50px', height: '50px' }}
+                                                            <td className="common-table-body-td">
+                                                                <FileTableDropdown
+                                                                    color={color}
+                                                                    hash={item['Hash']}
+                                                                    name={item['Name']}
+                                                                    size={item['Size']}
+                                                                    path={breadcrumbName}
+                                                                    type={item['Type']}
+                                                                    cid={item.cid}
+                                                                    isEncrypetd={checkIsEncrypted(
+                                                                        item['Name']
+                                                                    )}
+                                                                />
+                                                            </td>
+                                                        </tr>
+                                                    );
+                                                })}
+                                        </tbody>
+                                    </table>
+                                    {!files && (
+                                        <div className="w-full flex justify-center pt-4">
+                                            <img
+                                                alt="loading"
+                                                src={require('../../assets/img/loading.svg').default}
+                                                style={{ width: '50px', height: '50px' }}
+                                            />
+                                        </div>
+                                    )}
+                                    {files && total === 0 && (
+                                        <div className="w-full flex justify-center p-4">{t('no_data')}</div>
+                                    )}
+                                </div>
+                                <div className="mt-4 flex justify-between items-center">
+                                    <div>Total: {total}</div>
+                                    <Pagination
+                                        className={color}
+                                        simple
+                                        current={current}
+                                        total={total}
+                                        hideOnSinglePage={true}
+                                        onChange={pageChange}
                                     />
                                 </div>
-                            )}
-                            {files && total === 0 && (
-                                <div className="w-full flex justify-center p-4">{t('no_data')}</div>
-                            )}
-                        </div>
-                        <div className="mt-4 flex justify-between items-center">
-                            <div>Total: {total}</div>
-                            <Pagination
-                                className={color}
-                                simple
-                                current={current}
-                                total={total}
-                                hideOnSinglePage={true}
-                                onChange={pageChange}
-                            />
-                        </div>
-                        <FileControl
-                            itemSelected={itemSelected}
-                            unSelect={unSelect}
-                            color={color}
-                            data={batch}
-                        />
-                    </div>
+                                <FileControl
+                                    itemSelected={itemSelected}
+                                    unSelect={unSelect}
+                                    color={color}
+                                    data={batch}
+                                />
+                            </div>
+                        </Tabs.TabPane>
+                        <Tabs.TabPane tab={t('auto_renew_files')} key="2" className="w-full">
+                            <AutoRenewFileTable color={color} />
+                        </Tabs.TabPane>
+                    </Tabs>
                 </Tabs.TabPane>
             </Tabs>
-            <FileBlackListModal color={color} showModal={showFileBlackListModal} closeModal={()=> setShowFileBlackListModal(false)} />
+            <FileBlackListModal
+                color={color}
+                showModal={showFileBlackListModal}
+                closeModal={() => setShowFileBlackListModal(false)}
+            />
         </>
     );
 }

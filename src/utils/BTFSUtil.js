@@ -122,7 +122,6 @@ export function switchBalanceUnit(balance, precision = PRECISION) {
     let num = 0;
     precision = parseFloat(precision);
     balance = balance / precision;
-
     // handle big number
     if (balance / B > 1) {
         num = formatNumber(balance / B, 2);
@@ -166,10 +165,25 @@ export function ceilLatency(str) {
     }
 }
 
+// export function toThousands(num) {
+//     if (num === null) return '--';
+//     return (num || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+// }
+
 export function toThousands(num) {
-    if (num === null) return '--';
-    return (num || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
-}
+    if (num === null || num === '-') return '-';
+    const numStr = (num || 0).toString();
+    const decimalIndex = numStr.indexOf('.');
+    let integerPart = numStr;
+    let decimalPart = '';
+
+    if (decimalIndex !== -1) {
+      integerPart = numStr.substring(0, decimalIndex);
+      decimalPart = numStr.substring(decimalIndex);
+    }
+    const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return formattedInteger + decimalPart;
+  }
 
 export function getTimes(date) {
     return (
