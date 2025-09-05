@@ -11,13 +11,13 @@ export default function AutoRenewInfoModal() {
     const [info, setInfo] = useState(null);
     const [loading, setLoading] = useState(false);
     const [curHash, setCurHash] = useState(null);
-    const CheckDetailData = useRef({ title: '', dataList: [] });
+    const CheckDetailData = useRef(null);
 
     useEffect(() => {
         const set = function (params) {
-            console.log('openAutoRenewInfoModal event has occured', params);
+            // console.log('openAutoRenewInfoModal event has occured', params);
+            CheckDetailData.current = params.file_hash;
             openModal();
-            CheckDetailData.current = params;
         };
         Emitter.on('openAutoRenewInfoModal', set);
         return () => {
@@ -26,50 +26,46 @@ export default function AutoRenewInfoModal() {
         };
     }, []);
 
+
+    useEffect(() => {
+        if(CheckDetailData.current){
+            getInfo()
+        }
+    }, [CheckDetailData.current]);
+
     const openModal = () => {
         setShowModal(true);
-        getInfo();
         window.body.style.overflow = 'hidden';
     };
 
     const closeModal = () => {
+        setLoading(false);
         setShowModal(false);
         window.body.style.overflow = '';
     };
 
     const getInfo = async () => {
-        // Emitter.emit('handleResetConfig', {});
-        // let res = await getRenewInfo();
-        let res = {
-            cid: 'string',
-            shards_info: [
-                {
-                    shard_id: 'string',
-                    ShardSize: 0,
-                    sp_id: 'string',
-                },
-            ],
-            renewal_duration: 0,
-            token: 'string',
-            price: 0,
-            enabled: true,
-            total_pay: 0,
-            created_at: 'string',
-            next_renewal_at: 'string',
-        };
-        console.log(res, '----ress');
-        setInfo(res);
+        setLoading(true);
+        let res = await getRenewInfo(CheckDetailData.current);
+        if (res?.Type === 'error') {
+            closeModal()
+            Emitter.emit('showMessageAlert', {
+                message: res?.Message, //|| 'set_renew_on_fail'
+                status: 'error',
+            });
+        } else {
+            setInfo(res);
+        }
+        setLoading(false);
     };
-
-
-
-
 
     return (
         <CommonModal visible={showModal} onCancel={closeModal}>
             <div className={'common-modal-wrapper theme-bg'}>
                 <header className="common-modal-header theme-text-main mb-2">{t('renew_file_info')}</header>
-                <main className="mb-4 text-xs font-medium mb-4 theme-text-sub-info">{t('renew_file_info_desc')}</main>
+                <main className="mb-4 text-xs font-medium mb-4 theme-text-sub-info">
+                    {t('renew_file_info_desc')}
+                </main>
 
                 {
                     //     CheckDetailData.current.dataList.map((item, index) => {
@@ -92,7 +88,6 @@ export default function AutoRenewInfoModal() {
                     <main className="w-full flex flex-wrap ">
                         {info && (
                             <div className="theme-fill-gray w-full p-2 common-card theme-text-main info-modal">
-
                                 {
                                     renderNestedJson(info)
                                     //  <div className="flex items-center theme-text-main">

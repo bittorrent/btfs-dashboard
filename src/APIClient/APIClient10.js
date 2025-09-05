@@ -468,7 +468,7 @@ class APIClient10 {
     }
 
     setProxy(arg,bool){
-        return this.request(`/api/v1/config?arg=${arg}&arg=${bool}&bool=${bool}`);
+        return this.request(`/api/v1/config?arg=${arg}&arg=${bool}&bool=${true}`);
     }
 
     setProxyPrice(arg){

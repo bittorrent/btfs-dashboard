@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { mainContext } from 'reducer';
-import { Tabs, Switch } from 'antd';
+import { Tabs } from 'antd';
 import { t } from 'utils/text.js';
 import ProxySettings from 'components/Cards/ProxySettings.js';
 import ProxyUploadTable from 'components/Tables/ProxyUploadTable';
@@ -9,7 +9,7 @@ import UserBalanceTable from 'components/Tables/UserBalanceTable';
 
 export default function Settings(props) {
     const { state } = useContext(mainContext);
-    const query = new URLSearchParams(props.location.search);
+    // const query = new URLSearchParams(props.location.search);
     const [activeKey, setActiveKey] = useState('1');
 
     const { theme } = state;

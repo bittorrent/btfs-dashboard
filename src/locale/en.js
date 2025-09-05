@@ -583,6 +583,17 @@ const en_US = {
 
 
 
+        set_renew_on_fail:'开启自动续费失败',
+        set_renew_off_fail:'关闭自动续费失败',
+        set_renew_on_success:'开启自动续费成功',
+        set_renew_off_success:'关闭自动续费成功',
+        set_proxy_on_success:'开启代理服务成功',
+        set_proxy_on_fail:'开启代理服务失败',
+        set_proxy_off_success:'关闭代理服务成功',
+        set_proxy_off_fail:'关闭代理服务失败'
+
+
+
 
 
 

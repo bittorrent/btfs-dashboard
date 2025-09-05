@@ -7,13 +7,15 @@ import ChangePriceModal from 'components/Modals/ChangePriceModal';
 import { getProxyPrice } from 'services/proxyService';
 
 export default function CardSettings({ color }) {
-    const [checked, setChecked] = useState(false);
+    const isProxyMode = localStorage.getItem('IS_PROXY_MODE');
+    const [checked, setChecked] = useState(isProxyMode);
     const [loading, setLoading] = useState(false);
     const [curProxyPrice, setCurProxyPrice] = useState(125);
 
 
     useEffect(() => {
         getCurProxyPrice()
+
     }, []);
 
     const getCurProxyPrice = async () => {

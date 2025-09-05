@@ -35,12 +35,23 @@ export default function ProxyConfirmModal({ color, setSwitchLoading, setSwitchCh
     const handleConfirm = async () => {
         setLoading(true);
         let res = await setProxy('Experimental.EnableProxyMode', isOpenProxy.current);
+
+        if (res?.Type === 'error') {
+            Emitter.emit('showMessageAlert', {
+                message: res?.Message, //|| 'set_renew_on_fail'
+                status: 'error',
+            });
+
+            return;
+        }
         if (res.Key) {
-            // dispatch({
-            //     type: 'SET_ADDRESS_CONFIG',
-            //     addressConfig: res.Value,
-            // });
+            localStorage.setItem('IS_PROXY_MODE', res.Value );
             setSwitchChecked(res.Value);
+            Emitter.emit('showMessageAlert', {
+                message: res.Value ? 'set_proxy_on_success' : 'set_proxy_off_success',
+                status: 'success',
+                type: 'frontEnd',
+            });
             closeModal();
         }
         closeModal();
@@ -58,8 +69,7 @@ export default function ProxyConfirmModal({ color, setSwitchLoading, setSwitchCh
                     {isOpenProxy.current ? t('start_proxy_service_desc') : t('close_proxy_service_desc')}
                 </main>
                 <footer className="common-modal-footer">
-
-                    <button className={"  mr-4 common-btn theme-grey-btn"  }onClick={closeModal}>
+                    <button className={'  mr-4 common-btn theme-grey-btn'} onClick={closeModal}>
                         {t('cancel')}
                     </button>
                     {isOpenProxy.current ? (

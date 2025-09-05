@@ -11,35 +11,10 @@ import { switchStorageUnit2 } from 'utils/BTFSUtil.js';
 import moment from 'moment';
 import { t } from 'utils/text.js';
 import Emitter from 'utils/eventBus';
-import themeStyle from 'utils/themeStyle.js';
-import { sortListByDate } from 'utils/BTFSUtil';
 import { getRenewList } from 'services/filesService.js';
 import { Truncate } from 'utils/text.js';
 
 const { Option } = Select;
-
-const fileMock = [
-    {
-        file_hash: 'QmVSr8H3cLh5ZfN7wemQY35jro87K64mTnLC7Nq2ALUofA',
-        file_size: 1780,
-        auto_renewal: true,
-        sp: ['16Uiu2HAmMd1ULqj9NYUrzYfBmf3HNzZiaVVUzh1Kw9e6KKyuM44i'],
-        duration: 0,
-        total_cost: 123,
-        created_at: '2025-06-11T07:29:37.962514711Z',
-        expires_at: 'string',
-    },
-    {
-        file_hash: 'QmVSr8H3cLh5ZfN7wemQY35jro87K64mTnLC7Nq2ALUofA1',
-        file_size: 9988877,
-        auto_renewal: false,
-        sp: ['16Uiu2HAmMd1ULqj9NYUrzYfBmf3HNzZiaVVUzh1Kw9e6KKyuM44i'],
-        duration: 0,
-        total_cost: 0,
-        created_at: 'string',
-        expires_at: 'string',
-    },
-];
 
 export default function AutoRenewFileTable({ color }) {
     const history = useHistory();
@@ -50,7 +25,6 @@ export default function AutoRenewFileTable({ color }) {
     const [total, setTotal] = useState(0);
     const batchList = useRef([]);
     const [current, setCurrent] = useState(1);
-    const [batch, setBatch] = useState([]);
     // const curHash
 
     useEffect(() => {
@@ -69,14 +43,10 @@ export default function AutoRenewFileTable({ color }) {
             setLoading(false);
             if (data) {
                 let list = data?.renewals || []
-                //     // data = data.filter(item => item.enable);
-                //     // const list = sortListByDate(data, 'created_at');
-                //     // setAccessKeyList(() => [...list]);
-                //     // setAccessData(list[0]);
-                // setFiles(list);
-                // setInitFiles(list);
-                setFiles(fileMock);
-                setInitFiles(fileMock);
+                let total = data?.total  || 0
+                setTotal(total)
+                setFiles(list);
+                setInitFiles(list);
             } else {
                 // setBucketList(() => []);
             }
@@ -114,7 +84,7 @@ export default function AutoRenewFileTable({ color }) {
 
     const unSelect = useCallback(() => {
         batchList.current = [];
-        setBatch([]);
+        // setBatch([]);
         let checkbox = document.getElementsByName('checkbox');
         checkbox.forEach(item => {
             item.checked = '';
@@ -130,7 +100,7 @@ export default function AutoRenewFileTable({ color }) {
     }, []);
 
     const handleView = item => {
-        Emitter.emit('openAutoRenewInfoModal', { item });
+        Emitter.emit('openAutoRenewInfoModal', item);
     };
 
     const fileLink = hash => {
