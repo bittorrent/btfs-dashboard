@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Table, Tooltip } from 'antd';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { t } from 'utils/text.js';
 // import { AmountTruncate, AddressJumpTruncate, Truncate } from 'components/text/index';
 // import './index.less';
@@ -10,24 +10,11 @@ import { Truncate } from 'utils/text.js';
 import { getProxyUploadList } from 'services/proxyService';
 import Emitter from 'utils/eventBus';
 import { switchStorageUnit2 } from 'utils/BTFSUtil.js';
-
-let list = [
-    {
-        cid: 'QmVSr8H3cLh5ZfN7wemQY35jro87K64mTnLC7Nq2ALUofA',
-        file_size: 0,
-        price: 0,
-        expire_at: 0,
-        total_pay: 0,
-        created_at: 0,
-        address: '16Uiu2HAmMd1ULqj9NYUrzYfBmf3HNzZiaVVUzh1Kw9e6KKyuM44i',
-    },
-];
+import {  BTTCSCAN_ADDRESS,FINDER_FILE_MAIN } from "utils/constants";
 
 function ProxyUploadTable({ bttcAddr, vaultAddr, color }) {
     const [listLoading, setListLoading] = useState(true);
-    const [scoreLoading, setScoreLoading] = useState(false);
     const [dataList, setDataList] = useState([]);
-    const [networkScoreDetail, setNetworkScoreDetail] = useState(null);
 
     useEffect(() => {
         fetchData();
@@ -37,7 +24,7 @@ function ProxyUploadTable({ bttcAddr, vaultAddr, color }) {
     const fetchData = async () => {
         try {
             setListLoading(true);
-            setDataList(list);
+            setDataList([]);
             let res = await getProxyUploadList();
             console.log(res, 'getProxyUploadList');
             // if (res.code === 0) {
@@ -48,18 +35,6 @@ function ProxyUploadTable({ bttcAddr, vaultAddr, color }) {
 
     const handleView = item => {
         Emitter.emit('openProxyUploadModal', { item });
-    };
-
-    const fileLink = hash => {
-        if (!hash) return;
-        let url = 'https://gateway.btfs.io/btfs/' + hash;
-        window.open(url, '_blank');
-    };
-
-    const addressLink = hash => {
-        if (!hash) return;
-        let url = 'https://bttcscan.com/address/' + hash;
-        window.open(url, '_blank');
     };
 
     function initColumn() {
@@ -74,9 +49,7 @@ function ProxyUploadTable({ bttcAddr, vaultAddr, color }) {
                         <Tooltip className="cursor-pointer flex " placement="top" title={record.address}>
                             <a
                                 className="flex"
-                                onClick={() => {
-                                    addressLink(record.address);
-                                }}>
+                                href={`${BTTCSCAN_ADDRESS}${record.address}`}>
                                 <Truncate after={11} className={' theme-link'}>
                                     {record.address}
                                 </Truncate>
@@ -95,9 +68,7 @@ function ProxyUploadTable({ bttcAddr, vaultAddr, color }) {
                         <Tooltip className="cursor-pointer flex " placement="top" title={record.cid}>
                             <a
                                 className="flex"
-                                onClick={() => {
-                                    fileLink(record.cid);
-                                }}>
+                                href={`${FINDER_FILE_MAIN}${record.cid}`}>
                                 <Truncate after={11} className={' theme-link'}>
                                     {record.cid}
                                 </Truncate>

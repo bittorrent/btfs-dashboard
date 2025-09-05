@@ -10,7 +10,7 @@ export default function AutoRenewInfoModal() {
     const [showModal, setShowModal] = useState(false);
     const [info, setInfo] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [curHash, setCurHash] = useState(null);
+    // const [curHash, setCurHash] = useState(null);
     const CheckDetailData = useRef(null);
 
     useEffect(() => {
@@ -31,6 +31,7 @@ export default function AutoRenewInfoModal() {
         if(CheckDetailData.current){
             getInfo()
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [CheckDetailData.current]);
 
     const openModal = () => {

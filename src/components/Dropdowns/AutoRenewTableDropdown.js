@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect } from 'react';
 import { createPopper } from '@popperjs/core';
-import { removeFiles } from 'services/filesService.js';
+// import { removeFiles } from 'services/filesService.js';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 

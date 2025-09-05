@@ -590,10 +590,10 @@ const en_US = {
         set_proxy_on_success:'开启代理服务成功',
         set_proxy_on_fail:'开启代理服务失败',
         set_proxy_off_success:'关闭代理服务成功',
-        set_proxy_off_fail:'关闭代理服务失败'
+        set_proxy_off_fail:'关闭代理服务失败',
 
-
-
+        change_price_success:'代理服务价格修改成功',
+        change_price_fail:'代理服务价格修改失败',
 
 
 

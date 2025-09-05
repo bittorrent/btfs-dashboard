@@ -1,13 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect, useState,  useCallback, useRef } from 'react';
+import React, { useEffect, useState,  useCallback } from 'react';
 import { Pagination,Select,  Tooltip } from 'antd';
 import PropTypes from 'prop-types';
 import AutoRenewTableDropdown from 'components/Dropdowns/AutoRenewTableDropdown.js';
 import DisableAutoRenewModal from 'components/Modals/DisableAutoRenewModal';
 import EnableAutoRenewModal from 'components/Modals/EnableAutoRenewModal';
 import AutoRenewInfoModal from 'components/Modals/AutoRenewInfoModal';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import { switchStorageUnit2 } from 'utils/BTFSUtil.js';
+import {  BTFSSCAN_PROVIDER,FINDER_FILE_MAIN } from "utils/constants";
 import moment from 'moment';
 import { t } from 'utils/text.js';
 import Emitter from 'utils/eventBus';
@@ -17,24 +18,14 @@ import { Truncate } from 'utils/text.js';
 const { Option } = Select;
 
 export default function AutoRenewFileTable({ color }) {
-    const history = useHistory();
+    // const history = useHistory();
     const [loading, setLoading] = useState(false);
-    const [itemSelected, setItemSelected] = useState(0);
+    // const [itemSelected, setItemSelected] = useState(0);
     const [files, setFiles] = useState(null);
     const [initFiles, setInitFiles] = useState(null);
     const [total, setTotal] = useState(0);
-    const batchList = useRef([]);
+    // const batchList = useRef([]);
     const [current, setCurrent] = useState(1);
-    // const curHash
-
-    useEffect(() => {
-        const set = async function () {};
-        // Emitter.on('updateS3Buckets', set);
-        return () => {
-            // Emitter.removeListener('updateS3Buckets');
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     const fetchData = async () => {
         setLoading(true);
@@ -67,50 +58,18 @@ export default function AutoRenewFileTable({ color }) {
         // setFiles(filesAll.slice((page - 1) * 10, (page - 1) * 10 + 10));
     };
 
-    const selectAll = e => {
-        let fileControl = document.getElementById('fileControl');
-        let checkbox = document.getElementsByName('checkbox');
-
-        if (e.target.checked) {
-            checkbox.forEach(item => {
-                item.checked = 'checked';
-            });
-            fileControl.style.bottom = 0;
-            setItemSelected(checkbox.length);
-        } else {
-            unSelect();
-        }
-    };
-
-    const unSelect = useCallback(() => {
-        batchList.current = [];
-        // setBatch([]);
-        let checkbox = document.getElementsByName('checkbox');
-        checkbox.forEach(item => {
-            item.checked = '';
-        });
-        let checkboxHub = document.getElementsByName('checkboxHub');
-        if (checkboxHub[0]) {
-            checkboxHub[0].checked = '';
-        }
-        let fileControl = document.getElementById('fileControl');
-        if (fileControl) {
-            fileControl.style.bottom = '-5rem';
-        }
-    }, []);
-
     const handleView = item => {
         Emitter.emit('openAutoRenewInfoModal', item);
     };
 
     const fileLink = hash => {
         if (!hash) return;
-        let url = 'https://gateway.btfs.io/btfs/' + hash;
+        let url = FINDER_FILE_MAIN + hash;
         window.open(url, '_blank');
     };
     const spLink = hash => {
         if (!hash) return;
-        let url = 'https://scan.btfs.io/#/provider/' + hash;
+        let url = BTFSSCAN_PROVIDER + hash;
         window.open(url, '_blank');
     };
 
@@ -157,7 +116,6 @@ export default function AutoRenewFileTable({ color }) {
                                         bordered={false}
                                         className="common-table-head-select"
                                         onChange={handleChange}
-                                        popupClassName='common-select-option'
                                         popupClassName={` ${
                                             color === 'light' ? '' : 'common-select-option-dark'
                                         }`}
@@ -270,7 +228,7 @@ export default function AutoRenewFileTable({ color }) {
                                 })}
                         </tbody>
                     </table>
-                    {!files && (
+                    {loading && (
                         <div className="w-full flex justify-center pt-4">
                             <img
                                 alt="loading"

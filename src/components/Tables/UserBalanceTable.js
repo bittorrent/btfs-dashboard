@@ -1,39 +1,19 @@
 import { useState, useEffect } from 'react';
 import { Table, Tooltip } from 'antd';
-import { Link } from 'react-router-dom';
 import { t } from 'utils/text.js';
 import Emitter from 'utils/eventBus';
-import { switchStorageUnit2, switchBalanceUnit, toThousands, getTimes,formatNumber } from "utils/BTFSUtil.js";
+import {  toThousands } from "utils/BTFSUtil.js";  //switchBalanceUnit,
+import {  BTTCSCAN_ADDRESS } from "utils/constants";
 
-// import { AmountTruncate, AddressJumpTruncate, Truncate } from 'components/text/index';
-// import './index.less';
-// import { ArrowLeftOutlined } from '@ant-design/icons';
-// import NetworkScore from './components/NetworkScore';
 
 import { Truncate } from 'utils/text.js';
-import { getUserBlance, getUserPayHistory } from 'services/proxyService';
+import { getUserBlance } from 'services/proxyService';
 
 import UserPayHistoryModal from 'components/Modals/UserPayHistoryModal';
 
-// import { switchStorageUnit2 } from 'utils/utils';
-// import { fetchSpList, fetchSpNetwork } from 'api/api';
-
-// import { formatBNum2Str } from 'utils/chartCommonUtils';
-
-// import BaseTitle from '../../components/BaseTitle';
-
-let list = [
-    {
-        address: 'QmVSr8H3cLh5ZfN7wemQY35jro87K64mTnLC7Nq2ALUofA',
-        balance: '11111',
-    },
-];
-
 function UserBalanceTable({ bttcAddr, vaultAddr, color }) {
     const [listLoading, setListLoading] = useState(true);
-    const [scoreLoading, setScoreLoading] = useState(false);
     const [dataList, setDataList] = useState([]);
-    const [networkScoreDetail, setNetworkScoreDetail] = useState(null);
 
     useEffect(() => {
         fetchData();
@@ -43,11 +23,11 @@ function UserBalanceTable({ bttcAddr, vaultAddr, color }) {
     const fetchData = async () => {
         try {
             setListLoading(true);
-            setDataList(list);
             let res = await getUserBlance();
             console.log(res, '-----');
             //   if (res.code === 0) {
             //   }
+            setDataList([]);
             setListLoading(false);
         } catch (error) {}
     };
@@ -56,11 +36,11 @@ function UserBalanceTable({ bttcAddr, vaultAddr, color }) {
         Emitter.emit('openUserPayHistoryModal', { item });
     };
 
-    const addressLink = hash => {
-        if (!hash) return;
-        let url = 'https://bttcscan.com/address/' + hash;
-        window.open(url, '_blank');
-    };
+    // const addressLink = hash => {
+    //     if (!hash) return;
+    //     let url = 'https://bttcscan.com/address/' + hash;
+    //     window.open(url, '_blank');
+    // };
 
     function initColumn() {
         return [
@@ -73,9 +53,7 @@ function UserBalanceTable({ bttcAddr, vaultAddr, color }) {
                     return (
                         <Tooltip className="cursor-pointer flex " placement="top" title={record.address}>
                             <a
-                                onClick={() => {
-                                    addressLink(record.address);
-                                }}>
+                                href={`${BTTCSCAN_ADDRESS}${record.address}`}>
                                 <Truncate after={15} className={' theme-link'}>
                                     {record.address}
                                 </Truncate>
@@ -92,7 +70,7 @@ function UserBalanceTable({ bttcAddr, vaultAddr, color }) {
                 render: record => {
                     return (
                         <div className="flex items-center theme-text-main  font-gilroymedium fs-14">
-                            <Truncate after={11}>{switchBalanceUnit(record.balance,1)}</Truncate>
+                            <Truncate after={11}>{toThousands(record.balance)}</Truncate>
                         </div>
                     );
                 },

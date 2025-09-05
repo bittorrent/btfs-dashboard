@@ -3,14 +3,13 @@ import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import { Spin } from 'antd';
 import CommonModal from './CommonModal';
-import { getRenewInfo } from 'services/filesService.js';
+// import { getRenewInfo } from 'services/filesService.js';
 import { renderNestedJson } from 'utils/text.js';
 
 export default function ProxyUploadModal({color}) {
     const [showModal, setShowModal] = useState(false);
     const [info, setInfo] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [curHash, setCurHash] = useState(null);
     const CheckDetailData = useRef({ title: '', dataList: [] });
 
     useEffect(() => {
@@ -24,6 +23,7 @@ export default function ProxyUploadModal({color}) {
             Emitter.removeListener('openProxyUploadModal');
             window.body.style.overflow = '';
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const openModal = () => {
@@ -38,27 +38,29 @@ export default function ProxyUploadModal({color}) {
     };
 
     const getInfo = async () => {
+        setLoading(true)
         // Emitter.emit('handleResetConfig', {});
         // let res = await getRenewInfo();
-        let res = {
-            cid: 'string',
-            shards_info: [
-                {
-                    shard_id: 'string',
-                    ShardSize: 0,
-                    sp_id: 'string',
-                },
-            ],
-            renewal_duration: 0,
-            token: 'string',
-            price: 0,
-            enabled: true,
-            total_pay: 0,
-            created_at: 'string',
-            next_renewal_at: 'string',
-        };
-        console.log(res, '----ress');
-        setInfo(res);
+        // let res = {
+        //     cid: 'string',
+        //     shards_info: [
+        //         {
+        //             shard_id: 'string',
+        //             ShardSize: 0,
+        //             sp_id: 'string',
+        //         },
+        //     ],
+        //     renewal_duration: 0,
+        //     token: 'string',
+        //     price: 0,
+        //     enabled: true,
+        //     total_pay: 0,
+        //     created_at: 'string',
+        //     next_renewal_at: 'string',
+        // };
+        // console.log(res, '----ress');
+        setInfo([]);
+        setLoading(false)
     };
 
 

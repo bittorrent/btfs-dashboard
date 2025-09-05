@@ -1,26 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 // import { logout } from 'services/login.js';
 
 import { LoadingOutlined } from '@ant-design/icons';
-import { Spin, Form,InputNumber } from 'antd';
+import { Spin, Form, InputNumber } from 'antd';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import CommonModal from './CommonModal';
 import { setProxyPrice } from 'services/proxyService';
 
+const maxPrice = 100000;
 
-const maxPrice = 100000
+const defaultPrice = 125;
 
-const defaultPrice = 125
-
-export default function ChangePriceModal({ color,fetchCurProxyPrice }) {
+export default function ChangePriceModal({ color, fetchCurProxyPrice }) {
     const intl = useIntl();
     const [form] = Form.useForm();
     const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [isValid, setIsValid] = useState(true);
+    // const [isValid, setIsValid] = useState(true);
     // const history = useHistory();
 
     useEffect(() => {
@@ -48,70 +47,76 @@ export default function ChangePriceModal({ color,fetchCurProxyPrice }) {
         window.body.style.overflow = '';
     };
 
-    const onFinishFailed = (errorInfo) => {
-        setIsValid(false);
+    const onFinishFailed = errorInfo => {
+        // setIsValid(false);
         console.log('验证失败:', errorInfo);
     };
 
-
     const onFinish = async value => {
         const { newprice } = value;
-        setIsValid(true);
+        // setIsValid(true);
         setLoading(true);
         try {
-            // let res =
-            await setProxyPrice(newprice);
-            fetchCurProxyPrice()
+            let res = await setProxyPrice(newprice);
             setLoading(false);
-            // if (res && res.Success) {
-            //     Emitter.emit('showMessageAlert', {
-            //         message: 'change_password_success',
-            //         status: 'success',
-            //         type: 'frontEnd',
-            //     });
-            //     closeModal();
-            // } else {
-            //     Emitter.emit('showMessageAlert', {
-            //         message: 'change_password_fail',
-            //         status: 'error',
-            //         type: 'frontEnd',
-            //     });
-            // }
+            if (res?.Type === 'error') {
+                closeModal();
+                Emitter.emit('showMessageAlert', {
+                    message: res?.Message, //|| 'set_renew_on_fail'
+                    status: 'error',
+                });
+                // Emitter.emit('showMessageAlert', {
+                //     //         message: 'change_password_fail',
+                //     //         status: 'error',
+                //     //         type: 'frontEnd',
+                //     //     });
+                return;
+            }
+            fetchCurProxyPrice();
+            Emitter.emit('showMessageAlert', {
+                message: 'change_price_success',
+                status: 'success',
+                type: 'frontEnd',
+            });
+            closeModal();
+
         } catch (e) {
             Emitter.emit('showMessageAlert', { message: e.Message, status: 'error' });
         }
     };
     const validateNewPrice = (_, value) => {
-        if (value && value < defaultPrice ) {
+        if (value && value < defaultPrice) {
             return Promise.reject(new Error(intl.formatMessage({ id: 'price_validate_min' })));
         }
 
-        if (value && value > maxPrice ) {
+        if (value && value > maxPrice) {
             return Promise.reject(new Error(intl.formatMessage({ id: 'price_validate_max' })));
-         }
-         if (value && !Number.isInteger(value)) {
+        }
+        if (value && !Number.isInteger(value)) {
             return Promise.reject(new Error(intl.formatMessage({ id: 'price_validate_integer' })));
         }
         return Promise.resolve();
     };
 
-    const handleDefaultPrice = ()=>{
-        form.setFieldsValue({newprice:defaultPrice})
-    }
+    const handleDefaultPrice = () => {
+        form.setFieldsValue({ newprice: defaultPrice });
+    };
 
     return (
         <CommonModal visible={showModal} onCancel={closeModal}>
             <div className="common-modal-wrapper theme-bg">
                 <main className="flex flex-col justify-center  theme-bg theme-text-main">
-                {
+                    {
+                        // <div className="font-semibold  text-base mb-6"> {t('change_price_modal')} </div>
+                        // <main className="mb-8 theme-text-main">{t('change_price_modal_desc')}</main>
+                    }
 
-                    // <div className="font-semibold  text-base mb-6"> {t('change_price_modal')} </div>
-                    // <main className="mb-8 theme-text-main">{t('change_price_modal_desc')}</main>
-
-                }
-
-                    <header className="common-modal-header theme-text-main mb-2">{t('change_price_modal')}</header>
-                    <main className="mb-4 text-xs font-medium mb-4 theme-text-sub-info">{t('change_price_modal_desc')}</main>
+                    <header className="common-modal-header theme-text-main mb-2">
+                        {t('change_price_modal')}
+                    </header>
+                    <main className="mb-4 text-xs font-medium mb-4 theme-text-sub-info">
+                        {t('change_price_modal_desc')}
+                    </main>
                     <Form
                         name="basic"
                         layout="vertical"
@@ -137,8 +142,14 @@ export default function ChangePriceModal({ color,fetchCurProxyPrice }) {
                                 // max={maxPrice}
                                 addonAfter={
                                     <div>
-                                        <span className="mr-2 theme-text-sub-info">BTT(GB/{t('unit_day')})</span>
-                                        <span className="theme-text-base cursor-pointer" onClick={handleDefaultPrice}>{t('default_price')}</span>
+                                        <span className="mr-2 theme-text-sub-info">
+                                            BTT(GB/{t('unit_day')})
+                                        </span>
+                                        <span
+                                            className="theme-text-base cursor-pointer"
+                                            onClick={handleDefaultPrice}>
+                                            {t('default_price')}
+                                        </span>
                                     </div>
                                 }
                             />
@@ -154,7 +165,7 @@ export default function ChangePriceModal({ color,fetchCurProxyPrice }) {
                                     <Spin
                                         spinning={loading}
                                         indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}>
-                                        <button type="primary" disabled className="common-btn theme-common-btn">
+                                        <button type="primary" className="common-btn theme-common-btn">
                                             {t('change')}
                                         </button>
                                     </Spin>

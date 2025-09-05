@@ -3,16 +3,20 @@ import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import { Table, Spin, Tooltip } from 'antd';
 import CommonModal from './CommonModal';
-import { getRenewInfo } from 'services/filesService.js';
-import { renderNestedJson } from 'utils/text.js';
-import { Link } from 'react-router-dom';
 import { Truncate } from 'utils/text.js';
 import { getUserPayHistory } from 'services/proxyService';
-import { switchStorageUnit2, switchBalanceUnit, toThousands, getTimes,formatNumber } from "utils/BTFSUtil.js";
+import { BTTCSCAN_ADDRESS } from 'utils/constants';
+import {
+    // switchStorageUnit2,
+    switchBalanceUnit,
+    // toThousands,
+    // getTimes,
+    // formatNumber,
+} from 'utils/BTFSUtil.js';
 
 export default function UserPayHistoryModal({ color }) {
     const [showModal, setShowModal] = useState(false);
-    const [info, setInfo] = useState(null);
+    // const [info, setInfo] = useState(null);
     const [loading, setLoading] = useState(false);
     const [dataList, setDataList] = useState([]);
     const CheckDetailData = useRef({ title: '', dataList: [] });
@@ -28,6 +32,7 @@ export default function UserPayHistoryModal({ color }) {
             Emitter.removeListener('openUserPayHistoryModal');
             window.body.style.overflow = '';
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -50,28 +55,23 @@ export default function UserPayHistoryModal({ color }) {
         try {
             setLoading(true);
             let res = await getUserPayHistory(CheckDetailData.current);
-            let res2 = [
-                {
-                    hash: 'QmVSr8H3cLh5ZfN7wemQY35jro87K64mTnLC7Nq2ALUofA',
-                    from: 'QmVSr8H3cLh5ZfN7wemQY35jro87K64mTnLC7Nq2ALUofA',
-                    to: 'QmVSr8H3cLh5ZfN7wemQY35jro87K64mTnLC7Nq2ALUofA',
-                    value: 'string',
-                    pay_time: 0,
-                },
-            ];
-            if (res.Type !== "error") {
-                // setDataList(res2);
+            // let res2 = [
+            //     {
+            //         hash: 'QmVSr8H3cLh5ZfN7wemQY35jro87K64mTnLC7Nq2ALUofA',
+            //         from: 'QmVSr8H3cLh5ZfN7wemQY35jro87K64mTnLC7Nq2ALUofA',
+            //         to: 'QmVSr8H3cLh5ZfN7wemQY35jro87K64mTnLC7Nq2ALUofA',
+            //         value: 'string',
+            //         pay_time: 0,
+            //     },
+            // ];
+            if (res.Type !== 'error') {
+                setDataList([]);
             }
 
             setLoading(false);
         } catch (error) {}
     };
 
-    const addressLink = hash => {
-        if (!hash) return;
-        let url = 'https://bttcscan.com/address/' + hash;
-        window.open(url, '_blank');
-    };
 
     function initColumn() {
         return [
@@ -83,10 +83,7 @@ export default function UserPayHistoryModal({ color }) {
                 render: record => {
                     return (
                         <Tooltip className="cursor-pointer flex " placement="top" title={record.from}>
-                            <a
-                                onClick={() => {
-                                    addressLink(record.from);
-                                }}>
+                            <a href={`${BTTCSCAN_ADDRESS}${record.from}`}>
                                 <Truncate after={11} className={' theme-link'}>
                                     {record.from}
                                 </Truncate>
@@ -103,10 +100,7 @@ export default function UserPayHistoryModal({ color }) {
                 render: record => {
                     return (
                         <Tooltip className="cursor-pointer flex " placement="top" title={record.to}>
-                            <a
-                                onClick={() => {
-                                    addressLink(record.to);
-                                }}>
+                            <a href={`${BTTCSCAN_ADDRESS}${record.to}`}>
                                 <Truncate after={11} className={' theme-link'}>
                                     {record.to}
                                 </Truncate>
@@ -123,7 +117,7 @@ export default function UserPayHistoryModal({ color }) {
                 render: record => {
                     return (
                         <div className="flex items-center  font-gilroymedium fs-14">
-                            <Truncate after={11}>{switchBalanceUnit(record.value, 1) }</Truncate>
+                            <Truncate after={11}>{switchBalanceUnit(record.value, 1)}</Truncate>
                         </div>
                     );
                 },
@@ -137,10 +131,7 @@ export default function UserPayHistoryModal({ color }) {
                 render: record => {
                     return (
                         <Tooltip className="cursor-pointer flex " placement="top" title={record.hash}>
-                            <a
-                                onClick={() => {
-                                    addressLink(record.hash);
-                                }}>
+                            <a href={`${BTTCSCAN_ADDRESS}${record.hash}`}>
                                 <Truncate after={11} className={' theme-link'}>
                                     {record.hash}
                                 </Truncate>
@@ -156,7 +147,9 @@ export default function UserPayHistoryModal({ color }) {
         <CommonModal visible={showModal} onCancel={closeModal} width={800}>
             <div className={'common-modal-wrapper theme-bg'}>
                 <header className="common-modal-header theme-text-main mb-2">{t('user_pay_history')}</header>
-                <main className="mb-4 text-xs font-medium mb-4 theme-text-sub-info">{t('user_pay_history_desc')}</main>
+                <main className="mb-4 text-xs font-medium mb-4 theme-text-sub-info">
+                    {t('user_pay_history_desc')}
+                </main>
                 <Spin spinning={loading}>
                     <div className="card-border pb-30-px">
                         <Table
