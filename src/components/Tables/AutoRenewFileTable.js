@@ -14,18 +14,21 @@ import { t } from 'utils/text.js';
 import Emitter from 'utils/eventBus';
 import { getRenewList } from 'services/filesService.js';
 import { Truncate } from 'utils/text.js';
+import { sortListByDate } from 'utils/BTFSUtil';
 
 const { Option } = Select;
 
-export default function AutoRenewFileTable({ color }) {
-    // const history = useHistory();
+
+let filesAll = [];
+
+export default function AutoRenewFileTable({ color,activeFileKey }) {
     const [loading, setLoading] = useState(false);
-    // const [itemSelected, setItemSelected] = useState(0);
     const [files, setFiles] = useState(null);
     const [initFiles, setInitFiles] = useState(null);
     const [total, setTotal] = useState(0);
-    // const batchList = useRef([]);
     const [current, setCurrent] = useState(1);
+    const [autoRenew, setAutoRenew] = useState('all');
+
 
     const fetchData = async () => {
         setLoading(true);
@@ -33,29 +36,43 @@ export default function AutoRenewFileTable({ color }) {
             let data = await getRenewList();
             setLoading(false);
             if (data) {
-                let list = data?.renewals || []
+                let fileList = data?.renewals || []
                 let total = data?.total  || 0
+                const list = sortListByDate(fileList, 'created_at')
+                filesAll = list
                 setTotal(total)
-                setFiles(list);
-                setInitFiles(list);
+                setFiles(() => [...list]);
+                setInitFiles(() => [...list]);
+                sliceDate(current)
             } else {
                 // setBucketList(() => []);
             }
         } catch (error) {}
     };
     useEffect(() => {
-        fetchData();
+        // fetchData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        if(activeFileKey === '2'){
+            setAutoRenew('all')
+            fetchData();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [activeFileKey]);
+
+
 
 
     const pageChange = useCallback(value => {
         setCurrent(value);
         sliceDate(value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const sliceDate = page => {
-        // setFiles(filesAll.slice((page - 1) * 10, (page - 1) * 10 + 10));
+        setFiles(filesAll.slice((page - 1) * 10, (page - 1) * 10 + 10));
     };
 
     const handleView = item => {
@@ -74,11 +91,16 @@ export default function AutoRenewFileTable({ color }) {
     };
 
     const handleChange = value => {
+        setAutoRenew(value)
         if (value === 'all') {
+            filesAll = initFiles
             setFiles(initFiles);
+            setTotal(initFiles.length || 0)
             return;
         }
-        const arr = initFiles.filter(v => !!value === v.auto_renewal);
+        const arr = initFiles.filter(v => !!value === v.auto_renewal) || [];
+        filesAll = arr
+        setTotal(arr.length)
         setFiles(arr);
     };
 
@@ -111,7 +133,8 @@ export default function AutoRenewFileTable({ color }) {
                                 </th>
                                 <th className="common-table-head-th">
                                     <Select
-                                        defaultValue="all"
+                                        // defaultValue='all'
+                                        value={autoRenew}
                                         style={{ width: 140 }}
                                         bordered={false}
                                         className="common-table-head-select"

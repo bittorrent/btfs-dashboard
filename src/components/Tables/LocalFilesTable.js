@@ -506,7 +506,7 @@ export default function LocalFilesTable({ color }) {
                             </div>
                         </Tabs.TabPane>
                         <Tabs.TabPane tab={t('auto_renew_files')} key="2" className="w-full">
-                            <AutoRenewFileTable color={color} />
+                            <AutoRenewFileTable color={color} activeFileKey={activeFileKey} />
                         </Tabs.TabPane>
                     </Tabs>
                 </Tabs.TabPane>

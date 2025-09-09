@@ -72,7 +72,7 @@ const AutoRenewTableDropdown = ({ color, size, cid, autorenewOn }) => {
                 ref={popoverDropdownRef}
                 className={
                     (dropdownPopoverShow ? 'block ' : 'hidden ') +
-                    '_box-shadow text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-36 theme-bg'
+                    '_box-shadow text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-36 text-center theme-bg'
                 }>
                 {autorenewOn ? (
                     <a

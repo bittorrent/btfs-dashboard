@@ -5,6 +5,7 @@ import { Spin } from 'antd';
 import CommonModal from './CommonModal';
 import { getRenewInfo } from 'services/filesService.js';
 import { renderNestedJson } from 'utils/text.js';
+import { toThousands } from 'utils/BTFSUtil';
 
 export default function AutoRenewInfoModal() {
     const [showModal, setShowModal] = useState(false);
@@ -24,17 +25,20 @@ export default function AutoRenewInfoModal() {
             Emitter.removeListener('openAutoRenewInfoModal');
             window.body.style.overflow = '';
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-
-    useEffect(() => {
-        if(CheckDetailData.current){
-            getInfo()
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [CheckDetailData.current]);
+    // useEffect(() => {
+    //     if (CheckDetailData.current) {
+    //         getInfo();
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [CheckDetailData.current]);
 
     const openModal = () => {
+        if (CheckDetailData.current) {
+            getInfo();
+        }
         setShowModal(true);
         window.body.style.overflow = 'hidden';
     };
@@ -49,19 +53,30 @@ export default function AutoRenewInfoModal() {
         setLoading(true);
         let res = await getRenewInfo(CheckDetailData.current);
         if (res?.Type === 'error') {
-            closeModal()
+            closeModal();
             Emitter.emit('showMessageAlert', {
                 message: res?.Message, //|| 'set_renew_on_fail'
                 status: 'error',
             });
         } else {
-            setInfo(res);
+            let info = {};
+            for (const key in res) {
+                if (key === 'price') {
+                    info['price'] = toThousands(res[key]) + ' BTT'
+                } else if (key === 'enabled') {
+                    info['auto_renewal'] = res[key]
+                } else {
+                    info[key] = res[key]
+                }
+            }
+
+            setInfo(info);
         }
         setLoading(false);
     };
 
     return (
-        <CommonModal visible={showModal} onCancel={closeModal}>
+        <CommonModal visible={showModal} onCancel={closeModal} width={600}>
             <div className={'common-modal-wrapper theme-bg'}>
                 <header className="common-modal-header theme-text-main mb-2">{t('renew_file_info')}</header>
                 <main className="mb-4 text-xs font-medium mb-4 theme-text-sub-info">
