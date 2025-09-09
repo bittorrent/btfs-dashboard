@@ -147,7 +147,7 @@ export default function Login(props) {
                             alt="btfs_logo"
                         />
                         <span className="theme-text-main pr-1">BTFS Dashboard</span>
-                        <span className="theme-text-base"> 4.1</span>
+                        <span className="theme-text-base"> 4.0</span>
                     </div>
                 </div>
                 <ul className="items-center flex flex-wrap list-none">
@@ -171,7 +171,7 @@ export default function Login(props) {
                             alt="btfs_logo"
                         />
                         <span className="theme-text-main ">BTFS Dashboard</span>
-                        <span className="theme-text-base"> 4.1</span>
+                        <span className="theme-text-base"> 4.0</span>
                     </div>
                 </div>
                 <div className="flex w-full login-placeholder">

@@ -14,7 +14,7 @@ const maxPrice = 100000;
 
 const defaultPrice = 125;
 
-export default function ChangePriceModal({ color, fetchCurProxyPrice }) {
+export default function ChangePriceModal({ color, fetchCurProxyPrice,curProxyPrice }) {
     const intl = useIntl();
     const [form] = Form.useForm();
     const [showModal, setShowModal] = useState(false);
@@ -24,6 +24,9 @@ export default function ChangePriceModal({ color, fetchCurProxyPrice }) {
 
     useEffect(() => {
         const set = async function (params) {
+            let curProxyPrice = params.curProxyPrice || ''
+            form.setFieldsValue({ newprice: curProxyPrice });
+            // isOpenProxy.current = params.curProxyPrice;
             setLoading(false);
             openModal();
         };
@@ -35,21 +38,25 @@ export default function ChangePriceModal({ color, fetchCurProxyPrice }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+
+
     const openModal = () => {
         setShowModal(true);
-        form.resetFields();
+        // form.resetFields();
         window.body.style.overflow = 'hidden';
     };
 
-    const closeModal = () => {
+    const closeModal = (e) => {
+        // e.preventDefault();
         setLoading(false);
         setShowModal(false);
+        form.resetFields();
         window.body.style.overflow = '';
     };
 
     const onFinishFailed = errorInfo => {
         // setIsValid(false);
-        console.log('验证失败:', errorInfo);
+        // console.log('验证失败:', errorInfo);
     };
 
     const onFinish = async value => {
@@ -73,15 +80,15 @@ export default function ChangePriceModal({ color, fetchCurProxyPrice }) {
                 return;
             }
             fetchCurProxyPrice();
+            console.log('-----22222')
+            closeModal();
             Emitter.emit('showMessageAlert', {
                 message: 'change_price_success',
                 status: 'success',
                 type: 'frontEnd',
             });
-            closeModal();
-
         } catch (e) {
-            Emitter.emit('showMessageAlert', { message: e.Message, status: 'error' });
+            // Emitter.emit('showMessageAlert', { message: e.Message, status: 'error' });
         }
     };
     const validateNewPrice = (_, value) => {
@@ -158,14 +165,18 @@ export default function ChangePriceModal({ color, fetchCurProxyPrice }) {
                             <div className="mt-2 flex justify-end">
                                 <button
                                     className="ml-2 common-btn theme-fill-gray text-gray-900 mr-2"
-                                    onClick={closeModal}>
+                                    onClick={closeModal}
+                                    htmltype="button">
                                     {t('cancel')}
                                 </button>
                                 <div className="ml-2 inline-block">
                                     <Spin
                                         spinning={loading}
                                         indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}>
-                                        <button type="primary" className="common-btn theme-common-btn">
+                                        <button
+                                            type="primary"
+                                            htmltype="submit"
+                                            className="common-btn theme-common-btn">
                                             {t('change')}
                                         </button>
                                     </Spin>

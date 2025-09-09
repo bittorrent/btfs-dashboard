@@ -42,7 +42,7 @@ export default function CardSettings({ color }) {
     };
 
     const handleChangePrice = ()=>{
-        Emitter.emit('openChangePriceModal');
+        Emitter.emit('openChangePriceModal', { curProxyPrice });
     }
 
     const setSwitchLoading = (loading)=>{
@@ -82,7 +82,7 @@ export default function CardSettings({ color }) {
                 </div>
             </div>
 
-            <ChangePriceModal color={color}  fetchCurProxyPrice={getCurProxyPrice}/>
+            <ChangePriceModal color={color}  fetchCurProxyPrice={getCurProxyPrice} />
             <ProxyConfirmModal  color={color} setSwitchLoading={setSwitchLoading}  setSwitchChecked={getProxyConfig} />
         </div>
     );
