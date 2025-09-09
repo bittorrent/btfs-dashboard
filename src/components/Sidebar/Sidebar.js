@@ -114,7 +114,7 @@ export default function Sidebar() {
                                 <div className="flex flex-col justify-end">
                                     <div>
                                         <span className="theme-text-main">BTFS Dashboard</span>
-                                        <span className="theme-text-base"> 4.0</span>
+                                        <span className="theme-text-base"> 4.1</span>
                                     </div>
                                     <img
                                         className="inline-block"
@@ -125,7 +125,7 @@ export default function Sidebar() {
                                 </div> :
                                 <>
                                     <span className="theme-text-main">BTFS Dashboard</span>
-                                    <span className="theme-text-base"> 4.0</span>
+                                    <span className="theme-text-base"> 4.1</span>
                                 </>
                             }
 
