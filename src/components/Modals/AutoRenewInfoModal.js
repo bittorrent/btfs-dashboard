@@ -5,7 +5,8 @@ import { Spin } from 'antd';
 import CommonModal from './CommonModal';
 import { getRenewInfo } from 'services/filesService.js';
 import { renderNestedJson } from 'utils/text.js';
-import { toThousands } from 'utils/BTFSUtil';
+import { toThousands ,switchBalanceUnit} from 'utils/BTFSUtil';
+import moment from 'moment';
 
 export default function AutoRenewInfoModal() {
     const [showModal, setShowModal] = useState(false);
@@ -49,6 +50,7 @@ export default function AutoRenewInfoModal() {
         window.body.style.overflow = '';
     };
 
+
     const getInfo = async () => {
         setLoading(true);
         let res = await getRenewInfo(CheckDetailData.current);
@@ -58,17 +60,32 @@ export default function AutoRenewInfoModal() {
                 message: res?.Message, //|| 'set_renew_on_fail'
                 status: 'error',
             });
-        } else {
+            return;
+        }
+        if(res?.cid){
             let info = {};
             for (const key in res) {
-                if (key === 'price') {
-                    info['price'] = toThousands(res[key]) + ' BTT'
-                } else if (key === 'enabled') {
-                    info['auto_renewal'] = res[key]
-                } else {
-                    info[key] = res[key]
+                switch (key) {
+                    case 'price':
+                        info['price'] = toThousands(res[key]) + ' BTT';
+                        break;
+                    case 'enabled':
+                        info['auto_renewal'] = res[key];
+                        break;
+                    case 'total_pay':
+                        info['total_pay'] = switchBalanceUnit(res[key]);
+                        break;
+                    case 'created_at':
+                        info['created_at'] = moment(res[key]).utcOffset(480).format('YYYY-MM-DD HH:mm:ss');
+                        break;
+                    case 'next_renewal_at':
+                        res.enabled && (info.next_renewal_at = moment(res[key]).utcOffset(480).format('YYYY-MM-DD HH:mm:ss'));
+                        break;
+                    default:
+                        info[key] = res[key];
                 }
             }
+
 
             setInfo(info);
         }

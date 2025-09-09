@@ -211,7 +211,7 @@ export default function AutoRenewFileTable({ color,activeFileKey }) {
                                             </td>
                                             <td className="common-table-body-td">
                                                 {item.created_at
-                                                    ? moment(item.created_at).format('YYYY-MM-DD HH:mm:ss')
+                                                    ? moment(item.created_at).utcOffset(480).format('YYYY-MM-DD HH:mm:ss')
                                                     : '--'}
                                             </td>
                                             <td className="common-table-body-td">

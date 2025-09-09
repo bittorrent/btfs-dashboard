@@ -5,18 +5,29 @@ import { t } from 'utils/text.js';
 import ProxyConfirmModal from 'components/Modals/ProxyComfirmModal';
 import ChangePriceModal from 'components/Modals/ChangePriceModal';
 import { getProxyPrice } from 'services/proxyService';
+import { getHostConfigData } from 'services/otherService.js';
 
 export default function CardSettings({ color }) {
-    const isProxyMode = localStorage.getItem('IS_PROXY_MODE');
-    const [checked, setChecked] = useState(isProxyMode);
+    // const isProxyMode = localStorage.getItem('IS_PROXY_MODE');
+    const [checked, setChecked] = useState(false);
     const [loading, setLoading] = useState(false);
+    // const [isProxyMode, setIsProxyMode] = useState(false);
     const [curProxyPrice, setCurProxyPrice] = useState(125);
 
 
     useEffect(() => {
         getCurProxyPrice()
+        getProxyConfig()
 
     }, []);
+
+    const getProxyConfig = async()=>  {
+        let data = await getHostConfigData()
+        if (data && data.Experimental) {
+            // setIsProxyMode(data.Experimental.EnableProxyMode)
+            setChecked(data.Experimental.EnableProxyMode)
+        }
+    }
 
     const getCurProxyPrice = async () => {
         let res = await getProxyPrice();
@@ -38,9 +49,9 @@ export default function CardSettings({ color }) {
         setLoading(loading)
     }
 
-    const setSwitchChecked = (checked)=>{
-        setChecked(checked)
-    }
+    // const setSwitchChecked = (checked)=>{
+    //     setChecked(checked)
+    // }
 
     return (
         <div>
@@ -72,7 +83,7 @@ export default function CardSettings({ color }) {
             </div>
 
             <ChangePriceModal color={color}  fetchCurProxyPrice={getCurProxyPrice}/>
-            <ProxyConfirmModal  color={color} setSwitchLoading={setSwitchLoading}  setSwitchChecked={setSwitchChecked} />
+            <ProxyConfirmModal  color={color} setSwitchLoading={setSwitchLoading}  setSwitchChecked={getProxyConfig} />
         </div>
     );
 }

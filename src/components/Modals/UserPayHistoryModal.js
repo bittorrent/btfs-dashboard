@@ -35,14 +35,15 @@ export default function UserPayHistoryModal({ color }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    useEffect(() => {
-        getInfo();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [CheckDetailData.current]);
+    // useEffect(() => {
+    //     // getInfo();
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [CheckDetailData.current]);
 
     const openModal = () => {
-        setShowModal(true);
         getInfo();
+        setShowModal(true);
+
         window.body.style.overflow = 'hidden';
     };
 
@@ -52,6 +53,7 @@ export default function UserPayHistoryModal({ color }) {
     };
 
     const getInfo = async () => {
+        if(!CheckDetailData.current) return
         try {
             setLoading(true);
             let res = await getUserPayHistory(CheckDetailData.current);
