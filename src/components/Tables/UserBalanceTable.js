@@ -17,7 +17,7 @@ function UserBalanceTable({ bttcAddr, vaultAddr, color ,activeKey}) {
 
 
     useEffect(() => {
-        if(activeKey === '1'){
+        if(activeKey === '2'){
             fetchData();
         }
         // fetchCashOutData();
