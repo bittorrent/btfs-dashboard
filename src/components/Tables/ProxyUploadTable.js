@@ -9,32 +9,39 @@ import ProxyUploadModal from 'components/Modals/ProxyUploadModal';
 import { Truncate } from 'utils/text.js';
 import { getProxyUploadList } from 'services/proxyService';
 import Emitter from 'utils/eventBus';
-import { switchStorageUnit2 } from 'utils/BTFSUtil.js';
+import { switchStorageUnit2,switchBalanceUnit} from 'utils/BTFSUtil.js'; //toThousands
 import {  BTTCSCAN_ADDRESS,FINDER_FILE_MAIN } from "utils/constants";
 
-function ProxyUploadTable({ bttcAddr, vaultAddr, color }) {
+function ProxyUploadTable({ bttcAddr, vaultAddr, color ,activeKey}) {
     const [listLoading, setListLoading] = useState(true);
     const [dataList, setDataList] = useState([]);
+    const [total, setTotal] = useState(0);
 
     useEffect(() => {
-        fetchData();
+        if(activeKey === '1'){
+            fetchData();
+        }
         // fetchCashOutData();
-    }, []);
+    }, [activeKey]);
 
     const fetchData = async () => {
         try {
             setListLoading(true);
-            setDataList([]);
             let res = await getProxyUploadList();
-            console.log(res, 'getProxyUploadList');
-            // if (res.code === 0) {
-            // }
+             if (res?.Type === 'error') {
+                    setListLoading(false);
+                        return;
+                }
+            if(res && res.length ){
+                setDataList(res);
+                setTotal(res.length)
+            }
             setListLoading(false);
         } catch (error) {}
     };
 
     const handleView = item => {
-        Emitter.emit('openProxyUploadModal', { item });
+        Emitter.emit('openProxyUploadModal', item);
     };
 
     function initColumn() {
@@ -44,14 +51,18 @@ function ProxyUploadTable({ bttcAddr, vaultAddr, color }) {
                 title: t('proxy_upload_table_address'),
                 className: 'table_icon provider_icon',
                 align: 'left',
+                width:'180px',
                 render: record => {
                     return (
-                        <Tooltip className="cursor-pointer flex " placement="top" title={record.address}>
+                        <Tooltip className="cursor-pointer flex " placement="top" title={record.from}>
                             <a
                                 className="flex"
-                                href={`${BTTCSCAN_ADDRESS}${record.address}`}>
+                                href={`${BTTCSCAN_ADDRESS}${record.from}`}
+                                target='_blank'
+                                rel="noreferrer"
+                                >
                                 <Truncate after={11} className={' theme-link'}>
-                                    {record.address}
+                                    {record.from}
                                 </Truncate>
                             </a>
                         </Tooltip>
@@ -63,12 +74,16 @@ function ProxyUploadTable({ bttcAddr, vaultAddr, color }) {
                 key: 'cid',
                 align: 'left',
                 className: 'send_receive ',
+                width:'180px',
                 render: record => {
                     return (
                         <Tooltip className="cursor-pointer flex " placement="top" title={record.cid}>
                             <a
                                 className="flex"
-                                href={`${FINDER_FILE_MAIN}${record.cid}`}>
+                                href={`${FINDER_FILE_MAIN}${record.cid}`}
+                                target='_blank'
+                                rel="noreferrer"
+                                >
                                 <Truncate after={11} className={' theme-link'}>
                                     {record.cid}
                                 </Truncate>
@@ -92,7 +107,7 @@ function ProxyUploadTable({ bttcAddr, vaultAddr, color }) {
                 align: 'left',
                 className: 'send_receive font-gilroymedium theme-text-main  fs-14',
                 render: record => {
-                    return <div>{record.total_pay + ' BTT'}</div>;
+                    return <div>{switchBalanceUnit(record.total_pay) + ' BTT'}</div>;
                 },
             },
             {
@@ -101,7 +116,7 @@ function ProxyUploadTable({ bttcAddr, vaultAddr, color }) {
                 align: 'left',
                 className: 'send_receive font-gilroymedium  theme-text-main  fs-14 sp-list-latency',
                 render: record => {
-                    return <div>{record.price + ' BTT'}</div>;
+                    return <div>{switchBalanceUnit(record.price) + ' BTT'}</div>;
                 },
             },
             {
@@ -135,7 +150,15 @@ function ProxyUploadTable({ bttcAddr, vaultAddr, color }) {
                     columns={initColumn()}
                     dataSource={dataList}
                     loading={listLoading}
-                    pagination={false}
+                    // pagination={false}
+                    scroll={{ y: 280 ,x: 'max-content'}}
+                    pagination={{
+                        pageSize: 10,
+                        total: total,
+                        showTotal: total => `Total:${total}`,
+                        simple: true,
+                        className: 'flex table-pagination-total',
+                    }}
                 />
             </div>
             <ProxyUploadModal color={color} />

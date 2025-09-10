@@ -6,20 +6,22 @@ import CommonModal from './CommonModal';
 import { Truncate } from 'utils/text.js';
 import { getUserPayHistory } from 'services/proxyService';
 import { BTTCSCAN_ADDRESS } from 'utils/constants';
-import {
-    // switchStorageUnit2,
-    switchBalanceUnit,
-    // toThousands,
-    // getTimes,
-    // formatNumber,
-} from 'utils/BTFSUtil.js';
+// import {
+//     // switchStorageUnit2,
+//     // switchBalanceUnit,
+//     // toThousands,
+//     // getTimes,
+//     // formatNumber,
+// } from 'utils/BTFSUtil.js';
 
 export default function UserPayHistoryModal({ color }) {
     const [showModal, setShowModal] = useState(false);
     // const [info, setInfo] = useState(null);
     const [loading, setLoading] = useState(false);
     const [dataList, setDataList] = useState([]);
-    const CheckDetailData = useRef({ title: '', dataList: [] });
+    const [total, setTotal] = useState(0);
+
+    const CheckDetailData = useRef(null);
 
     useEffect(() => {
         const set = function (params) {
@@ -32,7 +34,7 @@ export default function UserPayHistoryModal({ color }) {
             Emitter.removeListener('openUserPayHistoryModal');
             window.body.style.overflow = '';
         };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // useEffect(() => {
@@ -53,27 +55,22 @@ export default function UserPayHistoryModal({ color }) {
     };
 
     const getInfo = async () => {
-        if(!CheckDetailData.current) return
+        if (!CheckDetailData.current) return;
         try {
             setLoading(true);
             let res = await getUserPayHistory(CheckDetailData.current);
-            // let res2 = [
-            //     {
-            //         hash: 'QmVSr8H3cLh5ZfN7wemQY35jro87K64mTnLC7Nq2ALUofA',
-            //         from: 'QmVSr8H3cLh5ZfN7wemQY35jro87K64mTnLC7Nq2ALUofA',
-            //         to: 'QmVSr8H3cLh5ZfN7wemQY35jro87K64mTnLC7Nq2ALUofA',
-            //         value: 'string',
-            //         pay_time: 0,
-            //     },
-            // ];
-            if (res.Type !== 'error') {
+            if (res.Type === 'error') {
                 setDataList([]);
+                setLoading(false);
+                return;
             }
-
+            if (res && res.length) {
+                setTotal(res.length);
+                setDataList(res);
+            }
             setLoading(false);
         } catch (error) {}
     };
-
 
     function initColumn() {
         return [
@@ -119,7 +116,7 @@ export default function UserPayHistoryModal({ color }) {
                 render: record => {
                     return (
                         <div className="flex items-center  font-gilroymedium fs-14">
-                            <Truncate after={11}>{switchBalanceUnit(record.value, 1)}</Truncate>
+                            <Truncate after={11}>{record.value}</Truncate>
                         </div>
                     );
                 },
@@ -158,11 +155,18 @@ export default function UserPayHistoryModal({ color }) {
                             className={`nowrap transactions-table ${
                                 color === 'light' ? 'table-page-content-light' : 'table-page-content-dark'
                             }`}
-                            rowKey={record => `${record.cid}`}
+                            rowKey={record => `${record.hash}`}
                             columns={initColumn()}
                             dataSource={dataList}
                             loading={loading}
-                            pagination={false}
+                            scroll={{ y: 280 ,x: 'max-content'}}
+                            pagination={{
+                                pageSize: 10,
+                                total: total,
+                                showTotal: total => `Total:${total}`,
+                                simple: true,
+                                className: 'flex table-pagination-total',
+                            }}
                         />
                     </div>
                 </Spin>

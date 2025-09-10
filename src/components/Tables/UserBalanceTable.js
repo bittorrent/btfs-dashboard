@@ -2,32 +2,39 @@ import { useState, useEffect } from 'react';
 import { Table, Tooltip } from 'antd';
 import { t } from 'utils/text.js';
 import Emitter from 'utils/eventBus';
-import {  toThousands } from "utils/BTFSUtil.js";  //switchBalanceUnit,
-import {  BTTCSCAN_ADDRESS } from "utils/constants";
-
+// import { toThousands } from 'utils/BTFSUtil.js'; //switchBalanceUnit,
+import { BTTCSCAN_ADDRESS } from 'utils/constants';
 
 import { Truncate } from 'utils/text.js';
 import { getUserBlance } from 'services/proxyService';
 
 import UserPayHistoryModal from 'components/Modals/UserPayHistoryModal';
 
-function UserBalanceTable({ bttcAddr, vaultAddr, color }) {
+function UserBalanceTable({ bttcAddr, vaultAddr, color ,activeKey}) {
     const [listLoading, setListLoading] = useState(true);
     const [dataList, setDataList] = useState([]);
+    const [total, setTotal] = useState(0);
+
 
     useEffect(() => {
-        fetchData();
+        if(activeKey === '1'){
+            fetchData();
+        }
         // fetchCashOutData();
-    }, []);
+    }, [activeKey]);
 
     const fetchData = async () => {
         try {
             setListLoading(true);
             let res = await getUserBlance();
-            console.log(res, '-----');
-            //   if (res.code === 0) {
-            //   }
-            setDataList([]);
+            if (res?.Type === 'error') {
+                setListLoading(false);
+                return;
+            }
+            if (res && res.length) {
+                setDataList(res);
+                setTotal(res.length)
+            }
             setListLoading(false);
         } catch (error) {}
     };
@@ -52,8 +59,7 @@ function UserBalanceTable({ bttcAddr, vaultAddr, color }) {
                 render: record => {
                     return (
                         <Tooltip className="cursor-pointer flex " placement="top" title={record.address}>
-                            <a
-                                href={`${BTTCSCAN_ADDRESS}${record.address}`}>
+                            <a href={`${BTTCSCAN_ADDRESS}${record.address}`} target="_blank" rel="noreferrer">
                                 <Truncate after={15} className={' theme-link'}>
                                     {record.address}
                                 </Truncate>
@@ -70,7 +76,7 @@ function UserBalanceTable({ bttcAddr, vaultAddr, color }) {
                 render: record => {
                     return (
                         <div className="flex items-center theme-text-main  font-gilroymedium fs-14">
-                            <Truncate after={11}>{toThousands(record.balance)}</Truncate>
+                            <Truncate after={11}>{record.balance}</Truncate>
                         </div>
                     );
                 },
@@ -107,7 +113,15 @@ function UserBalanceTable({ bttcAddr, vaultAddr, color }) {
                     columns={initColumn()}
                     dataSource={dataList}
                     loading={listLoading}
-                    pagination={false}
+                    // pagination={false}
+                    scroll={{ y: 280 ,x: 'max-content'}}
+                    pagination={{
+                        pageSize: 10,
+                        total: total,
+                        showTotal: total => `Total:${total}`,
+                        simple: true,
+                        className: 'flex table-pagination-total',
+                    }}
                 />
             </div>
             <UserPayHistoryModal color={color} />

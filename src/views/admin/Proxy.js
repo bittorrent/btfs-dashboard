@@ -26,11 +26,11 @@ export default function Settings(props) {
                     onChange={changeActiveKey}
                     className="mb-4 common-card theme-bg theme-text-main file-tab-content">
                     <Tabs.TabPane tab={t('proxy_upload')} key="1" className="w-full">
-                        <ProxyUploadTable  color={theme} />
+                        <ProxyUploadTable  color={theme} activeKey={activeKey}/>
                     </Tabs.TabPane>
                     <Tabs.TabPane tab={t('user_balance')} key="2">
                     {
-                        <UserBalanceTable  color={theme} />
+                        <UserBalanceTable  color={theme} activeKey={activeKey} />
                     }
                     </Tabs.TabPane>
                 </Tabs>

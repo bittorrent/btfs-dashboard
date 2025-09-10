@@ -641,17 +641,32 @@
 
 
 .table-page-content-light {
-    .ant-table-tbody>tr>td, .ant-table-thead>tr>th, .ant-table tfoot>tr>td, .ant-table tfoot>tr>th {
-       padding: 10px 16px;
+    .ant-table{
+        height: 300px
+        }
+    .ant-table-tbody>tr>td,
+    .ant-table-thead>tr>th,
+    .ant-table tfoot>tr>td,
+    .ant-table tfoot>tr>th {
+        padding: 10px 16px;
     }
 
     .ant-table-thead>tr>th {
         padding: 0.5rem 1rem;
         background-color: #f2f5f7;
     }
+
     .ant-table-tbody>tr>td {
         // padding: 0.5rem 1rem;
     }
 
 
+}
+
+.table-pagination-total.ant-table-pagination {
+    margin: 16px 0 0 0;
+    .ant-pagination-item,
+    .ant-pagination-total-text {
+        flex: auto
+    }
 }
