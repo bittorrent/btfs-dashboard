@@ -6,6 +6,9 @@ import CommonModal from './CommonModal';
 import { Truncate } from 'utils/text.js';
 import { getUserPayHistory } from 'services/proxyService';
 import { BTTCSCAN_ADDRESS } from 'utils/constants';
+import { sortListByDate } from 'utils/BTFSUtil';
+import moment from 'moment';
+
 // import {
 //     // switchStorageUnit2,
 //     // switchBalanceUnit,
@@ -65,8 +68,9 @@ export default function UserPayHistoryModal({ color }) {
                 return;
             }
             if (res && res.length) {
+                const list = sortListByDate(res, 'pay_time');
                 setTotal(res.length);
-                setDataList(res);
+                setDataList(list);
             }
             setLoading(false);
         } catch (error) {}
@@ -112,20 +116,17 @@ export default function UserPayHistoryModal({ color }) {
                 title: t('user_balance_table_value'),
                 key: 'value',
                 align: 'left',
-                className: 'send_receive font-gilroymedium fs-14',
+                className: 'send_receive font-gilroymedium fs-14  whitespace-nowrap',
                 render: record => {
-                    return (
-                        <div className="flex items-center  font-gilroymedium fs-14">
-                            <Truncate after={11}>{record.value}</Truncate>
-                        </div>
-                    );
+                    let balance = record?.value.replace('(BTT)', '') || '';
+                    return <div className="flex items-center  font-gilroymedium fs-14">{balance}</div>;
                 },
             },
             {
                 title: t('user_balance_table_hash'),
                 key: 'hash',
                 align: 'left',
-                width: '220px',
+                // width: '180px',
                 className: 'send_receive font-gilroymedium fs-14',
                 render: record => {
                     return (
@@ -136,6 +137,19 @@ export default function UserPayHistoryModal({ color }) {
                                 </Truncate>
                             </a>
                         </Tooltip>
+                    );
+                },
+            },
+            {
+                title: t('user_balance_table_pay_time'),
+                key: 'paytime',
+                align: 'left',
+                className: 'send_receive font-gilroymedium fs-14',
+                render: record => {
+                    return (
+                        <div className="flex items-center  font-gilroymedium fs-14">
+                            {moment.unix(record.pay_time).utcOffset(480).format('YYYY-MM-DD HH:mm:ss')}
+                        </div>
                     );
                 },
             },
@@ -159,7 +173,7 @@ export default function UserPayHistoryModal({ color }) {
                             columns={initColumn()}
                             dataSource={dataList}
                             loading={loading}
-                            scroll={{ y: 280 ,x: 'max-content'}}
+                            scroll={{ y: 270, x: true }}
                             pagination={{
                                 pageSize: 10,
                                 total: total,

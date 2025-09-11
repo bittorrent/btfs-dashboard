@@ -531,7 +531,7 @@ const zh_CN = {
         "proxy_service_price": "代理服务价格",
         "unit_day": "天",
         "proxy_upload": "代理上传",
-        "user_balance": "用户余额",
+        "user_balance": "代理收益",
         "start_proxy_service": "开启代理服务",
         "start_proxy_service_desc": "开启后该节点可以以代理模式支持其他用户的上传请求",
         "start_service_confirm": "开启",
@@ -557,9 +557,9 @@ const zh_CN = {
         "proxy_file_info": "代理上传信息",
         "proxy_file_info_desc": "该代理上传记录的详情",
 
-        "user_balance_table_address": "地址",
-        "user_balance_table_balance": "余额",
-        "user_balance_table_deposit_history": "充值记录",
+        "user_balance_table_address": "用户",
+        "user_balance_table_balance": "收益",
+        "user_balance_table_deposit_history": "用户支付记录",
         "user_balance_table_from": "来源",
         "user_balance_table_to": "目标地址",
         "user_balance_table_value": "金额",
@@ -580,6 +580,10 @@ const zh_CN = {
 
         change_price_success: '代理服务价格修改成功',
         change_price_fail: '代理服务价格修改失败',
+
+
+        user_balance_table_pay_time:'支付时间',
+        proxy_upload_table_created_time:'创建时间'
 
 
 };

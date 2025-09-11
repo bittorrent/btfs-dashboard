@@ -3,7 +3,7 @@ import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import { Spin } from 'antd';
 import CommonModal from './CommonModal';
-import { switchBalanceUnit, switchStorageUnit2 } from 'utils/BTFSUtil.js'; //toThousands
+import { switchBalanceUnit, switchStorageUnit2 ,toThousands} from 'utils/BTFSUtil.js'; //toThousands
 // import { getRenewInfo } from 'services/filesService.js';
 import { renderNestedJson } from 'utils/text.js';
 import moment from 'moment';
@@ -57,7 +57,7 @@ export default function ProxyUploadModal({ color }) {
             switch (key) {
                 case 'price':
                     // formatInfos['price'] = toThousands(res[key]) + ' BTT';
-                    formatInfos['price'] = switchBalanceUnit(infos[key]) + ' BTT';
+                    formatInfos['price'] = toThousands(infos[key]) + ' BTT';
                     break;
                 case 'file_size':
                     // formatInfos['price'] = toThousands(res[key]) + ' BTT';

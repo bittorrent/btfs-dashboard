@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect, useState,  useCallback } from 'react';
-import { Pagination,Select,  Tooltip } from 'antd';
+import React, { useEffect, useState, useCallback } from 'react';
+import { Pagination, Select, Tooltip } from 'antd';
 import PropTypes from 'prop-types';
 import AutoRenewTableDropdown from 'components/Dropdowns/AutoRenewTableDropdown.js';
 import DisableAutoRenewModal from 'components/Modals/DisableAutoRenewModal';
@@ -8,7 +8,7 @@ import EnableAutoRenewModal from 'components/Modals/EnableAutoRenewModal';
 import AutoRenewInfoModal from 'components/Modals/AutoRenewInfoModal';
 // import { useHistory } from 'react-router-dom';
 import { switchStorageUnit2 } from 'utils/BTFSUtil.js';
-import {  BTFSSCAN_PROVIDER,FINDER_FILE_MAIN } from "utils/constants";
+import { BTFSSCAN_PROVIDER, FINDER_FILE_MAIN } from 'utils/constants';
 import moment from 'moment';
 import { t } from 'utils/text.js';
 import Emitter from 'utils/eventBus';
@@ -18,10 +18,9 @@ import { sortListByDate } from 'utils/BTFSUtil';
 
 const { Option } = Select;
 
-
 let filesAll = [];
 
-export default function AutoRenewFileTable({ color,activeFileKey }) {
+export default function AutoRenewFileTable({ color, activeFileKey }) {
     const [loading, setLoading] = useState(false);
     const [files, setFiles] = useState(null);
     const [initFiles, setInitFiles] = useState(null);
@@ -29,21 +28,20 @@ export default function AutoRenewFileTable({ color,activeFileKey }) {
     const [current, setCurrent] = useState(1);
     const [autoRenew, setAutoRenew] = useState('all');
 
-
     const fetchData = async () => {
         setLoading(true);
         try {
             let data = await getRenewList();
             setLoading(false);
             if (data) {
-                let fileList = data?.renewals || []
-                let total = data?.total  || 0
-                const list = sortListByDate(fileList, 'created_at')
-                filesAll = list
-                setTotal(total)
+                let fileList = data?.renewals || [];
+                let total = data?.total || 0;
+                const list = sortListByDate(fileList, 'created_at');
+                filesAll = list;
+                setTotal(total);
                 setFiles(() => [...list]);
                 setInitFiles(() => [...list]);
-                sliceDate(current)
+                sliceDate(current);
             } else {
                 // setBucketList(() => []);
             }
@@ -55,20 +53,17 @@ export default function AutoRenewFileTable({ color,activeFileKey }) {
     }, []);
 
     useEffect(() => {
-        if(activeFileKey === '2'){
-            setAutoRenew('all')
+        if (activeFileKey === '2') {
+            setAutoRenew('all');
             fetchData();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeFileKey]);
 
-
-
-
     const pageChange = useCallback(value => {
         setCurrent(value);
         sliceDate(value);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const sliceDate = page => {
@@ -91,16 +86,16 @@ export default function AutoRenewFileTable({ color,activeFileKey }) {
     };
 
     const handleChange = value => {
-        setAutoRenew(value)
+        setAutoRenew(value);
         if (value === 'all') {
-            filesAll = initFiles
+            filesAll = initFiles;
             setFiles(initFiles);
-            setTotal(initFiles.length || 0)
+            setTotal(initFiles.length || 0);
             return;
         }
         const arr = initFiles.filter(v => !!value === v.auto_renewal) || [];
-        filesAll = arr
-        setTotal(arr.length)
+        filesAll = arr;
+        setTotal(arr.length);
         setFiles(arr);
     };
 
@@ -211,7 +206,9 @@ export default function AutoRenewFileTable({ color,activeFileKey }) {
                                             </td>
                                             <td className="common-table-body-td">
                                                 {item.created_at
-                                                    ? moment(item.created_at).utcOffset(480).format('YYYY-MM-DD HH:mm:ss')
+                                                    ? moment(item.created_at)
+                                                          .utcOffset(480)
+                                                          .format('YYYY-MM-DD HH:mm:ss')
                                                     : '--'}
                                             </td>
                                             <td className="common-table-body-td">
@@ -265,21 +262,24 @@ export default function AutoRenewFileTable({ color,activeFileKey }) {
                     )}
                 </div>
                 <div className="mt-4 flex justify-between items-center">
-                <div>Total: {total}</div>
-                <Pagination
-                    className={color}
-                    simple
-                    current={current}
-                    total={total}
-                    hideOnSinglePage={true}
-                    onChange={pageChange}
-                />
-            </div>
+                    {
+                        // total !== 0 &&
+                    }
+                    <div>Total: {total}</div>
+                    <Pagination
+                        className={color}
+                        simple
+                        current={current}
+                        total={total}
+                        hideOnSinglePage={true}
+                        onChange={pageChange}
+                    />
+                </div>
             </div>
 
-            <EnableAutoRenewModal color={color} fetchData={fetchData}/>
-            <DisableAutoRenewModal color={color} fetchData={fetchData}/>
-            <AutoRenewInfoModal color={color}   />
+            <EnableAutoRenewModal color={color} fetchData={fetchData} />
+            <DisableAutoRenewModal color={color} fetchData={fetchData} />
+            <AutoRenewInfoModal color={color} />
         </>
     );
 }

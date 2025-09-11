@@ -142,7 +142,7 @@ export default function Login(props) {
                     <div className="items-center flex">
                         <img
                             className="inline-block"
-                            src={require('assets/img/btfs_logo.png').default}
+                            src={require('assets/img/btfs_logo.png')}
                             style={{ width: '37px', height: '40px' }}
                             alt="btfs_logo"
                         />
@@ -166,7 +166,7 @@ export default function Login(props) {
                         to="/">
                         <img
                             className="inline-block"
-                            src={require('assets/img/btfs_logo.png').default}
+                            src={require('assets/img/btfs_logo.png')}
                             style={{ width: '37px', height: '40px' }}
                             alt="btfs_logo"
                         />
@@ -181,7 +181,7 @@ export default function Login(props) {
                     <div className="flex justify-center items-center ">
                         <img
                             src={
-                                require(`assets/img/login-img${theme === 'dark' ? '-dark' : ''}.png`).default
+                                require(`assets/img/login-img${theme === 'dark' ? '-dark' : ''}.png`)
                             }
                             alt=""
                             width={556}

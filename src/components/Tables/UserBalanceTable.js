@@ -74,9 +74,10 @@ function UserBalanceTable({ bttcAddr, vaultAddr, color ,activeKey}) {
                 align: 'left',
                 className: 'send_receive ',
                 render: record => {
+                    let balance = record?.balance.replace("(BTT)", "") || ''
                     return (
                         <div className="flex items-center theme-text-main  font-gilroymedium fs-14">
-                            <Truncate after={11}>{record.balance}</Truncate>
+                            { balance}
                         </div>
                     );
                 },
@@ -114,7 +115,7 @@ function UserBalanceTable({ bttcAddr, vaultAddr, color ,activeKey}) {
                     dataSource={dataList}
                     loading={listLoading}
                     // pagination={false}
-                    scroll={{ y: 280 ,x: 'max-content'}}
+                    scroll={{ y: 270 ,x: 'max-content'}}
                     pagination={{
                         pageSize: 10,
                         total: total,

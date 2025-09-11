@@ -649,6 +649,7 @@
     .ant-table tfoot>tr>td,
     .ant-table tfoot>tr>th {
         padding: 10px 16px;
+        min-width: 80px !important;
     }
 
     .ant-table-thead>tr>th {

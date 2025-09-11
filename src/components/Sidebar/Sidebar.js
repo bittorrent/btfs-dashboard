@@ -106,7 +106,7 @@ export default function Sidebar() {
                         <Link className={`${isSimpleMode ? 'flex' : 'inline-block'} text-left mr-0  whitespace-nowrap text-sm font-bold px-0`} to="/">
                             <img
                                 className="inline-block"
-                                src={require('assets/img/btfs_logo.png').default}
+                                src={require('assets/img/btfs_logo.png')}
                                 style={{ width: '37px', height: '40px' }}
                                 alt="btfs_logo"
                             />
@@ -118,7 +118,7 @@ export default function Sidebar() {
                                     </div>
                                     <img
                                         className="inline-block"
-                                        src={require('assets/img/simple-mode-icon.png').default}
+                                        src={require('assets/img/simple-mode-icon.png')}
                                         style={{ width: '65px', height: '15px' }}
                                         alt="btfs_logo"
                                     />

@@ -542,7 +542,7 @@ const en_US = {
         "proxy_service_price": "Proxy Service Price",
         "unit_day": "Day",
         "proxy_upload": "Proxy Upload",
-        "user_balance": "User Balance",
+        "user_balance": "Agent Revenue",
         "start_proxy_service": "Start Proxy Service",
         "start_proxy_service_desc": "Once enabled, this node can handle other users' upload requests in proxy mode",
         "start_service_confirm": "Enable",
@@ -568,9 +568,9 @@ const en_US = {
         "proxy_file_info": "Proxy Upload Info",
         "proxy_file_info_desc": "Details of this proxy upload record",
 
-        "user_balance_table_address": "Address",
-        "user_balance_table_balance": "Balance",
-        "user_balance_table_deposit_history": "Deposit Records",
+        "user_balance_table_address": "User",
+        "user_balance_table_balance": "Revenue",
+        "user_balance_table_deposit_history": "User Payment History",
         "user_balance_table_from": "From",
         "user_balance_table_to": "To",
         "user_balance_table_value": "Amount",
@@ -590,6 +590,10 @@ const en_US = {
 
         change_price_success: 'Proxy service price updated successfully',
         change_price_fail: 'Failed to update proxy service price',
+
+
+        user_balance_table_pay_time:'Pay Time',
+        proxy_upload_table_created_time:'Create Time'
 
 
 

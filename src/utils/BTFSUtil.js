@@ -1,7 +1,9 @@
 import moment from 'moment';
 import Cookies from 'js-cookie';
 import { PRECISION } from 'utils/constants.js';
-const crypto = require('crypto');
+// const crypto = require('crypto');
+
+const CryptoJS = require('crypto-js');
 
 export const PiB = 1024.0 * 1024.0 * 1024.0 * 1024.0 * 1024.0;
 export const TiB = 1024.0 * 1024.0 * 1024.0 * 1024.0;
@@ -178,12 +180,12 @@ export function toThousands(num) {
     let decimalPart = '';
 
     if (decimalIndex !== -1) {
-      integerPart = numStr.substring(0, decimalIndex);
-      decimalPart = numStr.substring(decimalIndex);
+        integerPart = numStr.substring(0, decimalIndex);
+        decimalPart = numStr.substring(decimalIndex);
     }
     const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     return formattedInteger + decimalPart;
-  }
+}
 
 export function getTimes(date) {
     return (
@@ -287,12 +289,48 @@ export function sortListByDate(data, sortKey) {
     return res;
 }
 
-export function aseEncode(data, password) {
-    const cipher = crypto.createCipher('aes-256-cbc', password);
-    let crypted = cipher.update(data, 'utf-8', 'hex');
-    crypted += cipher.final('hex');
-    return crypted;
+// 0bea1a4ac0d6e0dde98b07e104695c42
+function evpBytesToKey(password, keySize, ivSize) {
+    const derived = CryptoJS.lib.WordArray.create();
+    let digest = CryptoJS.lib.WordArray.create();
+
+    while (derived.sigBytes < (keySize + ivSize) * 4) {
+        const md5 = CryptoJS.algo.MD5.create();
+        if (digest.sigBytes > 0) {
+            md5.update(digest);
+        }
+        md5.update(password);
+        digest = md5.finalize();
+
+        derived.concat(digest);
+    }
+
+    derived.sigBytes = (keySize + ivSize) * 4;
+
+    return {
+        key: CryptoJS.lib.WordArray.create(derived.words.slice(0, keySize), keySize * 4),
+        iv: CryptoJS.lib.WordArray.create(derived.words.slice(keySize, keySize + ivSize), ivSize * 4),
+    };
 }
+
+export function aseEncode(data, password) {
+    const { key, iv } = evpBytesToKey(CryptoJS.enc.Utf8.parse(password), 8, 4); // 256位密钥需要8个字，128位IV需要4个字
+
+    const encrypted = CryptoJS.AES.encrypt(data, key, {
+        iv: iv,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7,
+    });
+
+    return encrypted.ciphertext.toString(CryptoJS.enc.Hex);
+}
+
+// export function aseEncode(data, password) {
+//     const cipher = crypto.createCipher('aes-256-cbc', password);
+//     let crypted = cipher.update(data, 'utf-8', 'hex');
+//     crypted += cipher.final('hex');
+//     return crypted;
+// }
 
 export function setCookies(key, value, expiresTime) {
     let seconds = expiresTime;
