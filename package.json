@@ -106,6 +106,9 @@
     "webpack-manifest-plugin": "^4.0.2",
     "workbox-webpack-plugin": "^7.1.0"
   },
+  "resolutions": {
+    "form-data": "3.0.4"
+  },
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",

@@ -1,4 +1,5 @@
-@import 'assets/styles/color.scss';
+// @import 'assets/styles/color.scss';
+@use 'assets/styles/color.scss' as *;
 
 .theme-text-base {
   color: $base-color;

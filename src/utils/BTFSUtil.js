@@ -120,6 +120,32 @@ function formatDecimalBalance(balance) {
     }
 }
 
+export function switchBalanceUnit2(balance, precision = PRECISION) {
+    let num = 0;
+    precision = parseFloat(precision);
+    balance = balance / precision;
+    // handle big number
+    if (balance / B > 1) {
+        num = balance / B
+        return num + ' B ';
+    }
+    if (balance / M > 1) {
+        num = balance / M;
+        return num + ' M ';
+    }
+
+    // handle small number
+    if (balance === 0) {
+        return '0';
+    }
+
+    // if (balance < 1) {
+    //     return (balance);
+    // }
+
+    return balance + ' ';
+}
+
 export function switchBalanceUnit(balance, precision = PRECISION) {
     let num = 0;
     precision = parseFloat(precision);
@@ -281,10 +307,17 @@ export function sortListByDate(data, sortKey) {
     const list = data.map(item => {
         item[sortKey + '_time'] = moment(item[sortKey], 'YYYY-MM-DD HH:mm:ss');
         return item;
-    });
-
+    })
     const res = list.sort(function (a, b) {
         return b[sortKey + '_time'] - a[sortKey + '_time'];
+    });
+    return res;
+}
+
+export function sortList(data, sortKey) {
+    const res = data.sort(function (a, b) {
+        // return a[sortKey] - b[sortKey];
+        return b[sortKey] - a[sortKey];
     });
     return res;
 }

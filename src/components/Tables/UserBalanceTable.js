@@ -74,10 +74,11 @@ function UserBalanceTable({ bttcAddr, vaultAddr, color ,activeKey}) {
                 align: 'left',
                 className: 'send_receive ',
                 render: record => {
-                    let balance = record?.balance.replace("(BTT)", "") || ''
+                    let balance = record?.balance.split(' ')[0] || ''
+                    // let balance = record?.balance.replace("(BTT)", "") || ''
                     return (
                         <div className="flex items-center theme-text-main  font-gilroymedium fs-14">
-                            { balance}
+                            { parseFloat(balance)}
                         </div>
                     );
                 },

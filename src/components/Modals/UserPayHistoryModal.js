@@ -6,7 +6,7 @@ import CommonModal from './CommonModal';
 import { Truncate } from 'utils/text.js';
 import { getUserPayHistory } from 'services/proxyService';
 import { BTTCSCAN_ADDRESS } from 'utils/constants';
-import { sortListByDate } from 'utils/BTFSUtil';
+import { sortList } from 'utils/BTFSUtil';
 import moment from 'moment';
 
 // import {
@@ -68,7 +68,7 @@ export default function UserPayHistoryModal({ color }) {
                 return;
             }
             if (res && res.length) {
-                const list = sortListByDate(res, 'pay_time');
+                const list = sortList(res, 'pay_time');
                 setTotal(res.length);
                 setDataList(list);
             }
@@ -118,8 +118,8 @@ export default function UserPayHistoryModal({ color }) {
                 align: 'left',
                 className: 'send_receive font-gilroymedium fs-14  whitespace-nowrap',
                 render: record => {
-                    let balance = record?.value.replace('(BTT)', '') || '';
-                    return <div className="flex items-center  font-gilroymedium fs-14">{balance}</div>;
+                    let balance = record?.value.split(' ')[0] || ''
+                    return <div className="flex items-center  font-gilroymedium fs-14">{parseFloat(balance)}</div>;
                 },
             },
             {

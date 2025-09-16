@@ -1,5 +1,6 @@
 // @import 'color.scss';
- @import 'assets/styles/color.scss';
+//  @import 'assets/styles/color.scss';
+ @use 'assets/styles/color.scss' as *;
 // antd theme light
 // button
 .ant-btn {

@@ -9,9 +9,9 @@ import ProxyUploadModal from 'components/Modals/ProxyUploadModal';
 import { Truncate } from 'utils/text.js';
 import { getProxyUploadList } from 'services/proxyService';
 import Emitter from 'utils/eventBus';
-import { switchStorageUnit2, switchBalanceUnit, toThousands } from 'utils/BTFSUtil.js'; //
+import { switchStorageUnit2, switchBalanceUnit2, toThousands } from 'utils/BTFSUtil.js'; //
 import { BTTCSCAN_ADDRESS, FINDER_FILE_MAIN } from 'utils/constants';
-import { sortListByDate } from 'utils/BTFSUtil';
+import { sortList } from 'utils/BTFSUtil';
 import moment from 'moment';
 
 
@@ -36,7 +36,7 @@ function ProxyUploadTable({ bttcAddr, vaultAddr, color, activeKey }) {
                 return;
             }
             if (res && res.length) {
-                const list = sortListByDate(res, 'created_at');
+                const list = sortList(res, 'created_at');
                 setDataList(list);
                 setTotal(res.length);
             }
@@ -77,7 +77,7 @@ function ProxyUploadTable({ bttcAddr, vaultAddr, color, activeKey }) {
                 key: 'cid',
                 align: 'left',
                 className: 'send_receive ',
-                width: '200px',
+                width: '220px',
                 render: record => {
                     return (
                         <Tooltip className="cursor-pointer flex " placement="top" title={record.cid}>
@@ -109,7 +109,7 @@ function ProxyUploadTable({ bttcAddr, vaultAddr, color, activeKey }) {
                 align: 'left',
                 className: 'send_receive font-gilroymedium theme-text-main  fs-14',
                 render: record => {
-                    return <div>{switchBalanceUnit(record.total_pay) + ' BTT'}</div>;
+                    return <div>{switchBalanceUnit2(record.total_pay) + ' BTT'}</div>;
                 },
             },
             {
