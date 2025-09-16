@@ -47,7 +47,7 @@ const AutoRenewTableDropdown = ({ color, size, cid, autorenewOn }) => {
     return (
         <>
             <a
-                className="text-blueGray-500 py-1 px-3 hover-change "
+                className="text-blueGray-500 py-1 px-3 hover-change  table-cell-actions "
                 ref={btnDropdownRef}
                 onClick={e => {
                     trigger(e);

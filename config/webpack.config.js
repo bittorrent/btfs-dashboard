@@ -401,7 +401,7 @@ module.exports = function (webpackEnv) {
               },
             },
             {
-              test: /.ttf|eot|woff2?$/i,
+              test: /\.(woff|woff2|eot|ttf|otf)$/i,
               type: 'asset/resource',
               // generator: {
               //   // 输出到 font 目录中，占位符 [name] 保留原始文件名，
