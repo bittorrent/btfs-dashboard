@@ -5,7 +5,7 @@ import { Spin } from 'antd';
 import CommonModal from './CommonModal';
 import { getRenewInfo } from 'services/filesService.js';
 import { renderNestedJson } from 'utils/text.js';
-import { toThousands ,switchBalanceUnit} from 'utils/BTFSUtil';
+import { toThousands ,switchBalanceUnit2} from 'utils/BTFSUtil';
 import moment from 'moment';
 
 export default function AutoRenewInfoModal() {
@@ -73,7 +73,7 @@ export default function AutoRenewInfoModal() {
                         info['auto_renewal'] = res[key];
                         break;
                     case 'total_pay':
-                        info['total_pay'] = switchBalanceUnit(res[key]);
+                        info['total_pay'] = switchBalanceUnit2(res[key]) + ' BTT';;
                         break;
                     case 'created_at':
                         info['created_at'] = moment(res[key]).utcOffset(480).format('YYYY-MM-DD HH:mm:ss');

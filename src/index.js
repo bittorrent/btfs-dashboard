@@ -12,8 +12,7 @@ import 'assets/styles/main.scss';
 import 'assets/styles/themeLight.scss';
 import 'assets/styles/themeDark.scss';
 import 'assets/styles/themeAntd.scss';
-import 'assets/styles/index.css';
-import './assets/styles/main.scss';
+import 'assets/styles/index.css'
 
 
 import Admin from 'layouts/Admin.js';
