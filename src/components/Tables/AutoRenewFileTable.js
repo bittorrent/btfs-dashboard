@@ -14,7 +14,7 @@ import { t } from 'utils/text.js';
 import Emitter from 'utils/eventBus';
 import { getRenewList } from 'services/filesService.js';
 import { Truncate } from 'utils/text.js';
-import { sortList } from 'utils/BTFSUtil';
+import { sortListByDate } from 'utils/BTFSUtil';
 
 const { Option } = Select;
 
@@ -36,7 +36,7 @@ export default function AutoRenewFileTable({ color, activeFileKey }) {
             if (data) {
                 let fileList = data?.renewals || [];
                 let total = data?.total || 0;
-                const list = sortList(fileList, 'created_at');
+                const list = sortListByDate(fileList, 'created_at');
                 filesAll = list;
                 setTotal(total);
                 setFiles(() => [...list]);

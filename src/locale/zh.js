@@ -583,7 +583,8 @@ const zh_CN = {
 
 
         user_balance_table_pay_time:'支付时间',
-        proxy_upload_table_created_time:'创建时间'
+        proxy_upload_table_created_time:'创建时间',
+        enable_proxy_mode_desc:"开启后该节点可以通过代理模式处理其他用户的上传请求"
 
 
 };

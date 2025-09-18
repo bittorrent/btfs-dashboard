@@ -593,7 +593,8 @@ const en_US = {
 
 
         user_balance_table_pay_time:'Pay Time',
-        proxy_upload_table_created_time:'Create Time'
+        proxy_upload_table_created_time:'Create Time',
+        enable_proxy_mode_desc:"Once enabled, this node will handle other users' upload requests in proxy mode."
 
 
 
