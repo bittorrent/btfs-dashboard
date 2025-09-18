@@ -8,7 +8,7 @@ import { PROGRESS_COLORS } from 'utils/constants';
 const { TRAIL_COLOR, STROKE_COLOR } = PROGRESS_COLORS;
 
 const CurrencyIcon = ({ icon }) => (
-    <img src={require(`assets/img/${icon}.svg`).default} width={18} height={18} alt="" className="mr-2" />
+    <img src={require(`assets/img/${icon}.svg`)} width={18} height={18} alt="" className="mr-2" />
 );
 
 function SingleCurrency({ item, type, color, index,showUnit=true}) {
