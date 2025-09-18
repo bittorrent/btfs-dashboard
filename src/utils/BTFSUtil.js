@@ -370,3 +370,15 @@ export function setCookies(key, value, expiresTime) {
     let expires = new Date(new Date() * 1 + seconds * 1000);
     return Cookies.set(key, value, { expires: expires });
 }
+
+
+
+export function formatPreciseNumber(str) {
+    if (str.includes('.')) {
+        // 处理小数
+        let [integer, decimal] = str.split('.');
+        decimal = decimal.replace(/0+$/, ''); // 移除小数部分末尾的0
+        return decimal ? `${integer}.${decimal}` : integer;
+    }
+    return str;
+}

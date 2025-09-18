@@ -6,7 +6,7 @@ import CommonModal from './CommonModal';
 import { Truncate } from 'utils/text.js';
 import { getUserPayHistory } from 'services/proxyService';
 import { BTTCSCAN_ADDRESS } from 'utils/constants';
-import { sortList } from 'utils/BTFSUtil';
+import { sortList ,formatPreciseNumber} from 'utils/BTFSUtil';
 import moment from 'moment';
 
 // import {
@@ -119,7 +119,7 @@ export default function UserPayHistoryModal({ color }) {
                 className: 'send_receive font-gilroymedium fs-14  whitespace-nowrap',
                 render: record => {
                     let balance = record?.value.split(' ')[0] || ''
-                    return <div className="flex items-center  font-gilroymedium fs-14">{parseFloat(balance)}</div>;
+                    return <div className="flex items-center  font-gilroymedium fs-14">{formatPreciseNumber(balance)}</div>;
                 },
             },
             {

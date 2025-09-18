@@ -8,6 +8,7 @@ import { BTTCSCAN_ADDRESS } from 'utils/constants';
 import { Truncate } from 'utils/text.js';
 import { getUserBlance } from 'services/proxyService';
 
+import {formatPreciseNumber} from 'utils/BTFSUtil';
 import UserPayHistoryModal from 'components/Modals/UserPayHistoryModal';
 
 function UserBalanceTable({ bttcAddr, vaultAddr, color ,activeKey}) {
@@ -78,7 +79,7 @@ function UserBalanceTable({ bttcAddr, vaultAddr, color ,activeKey}) {
                     // let balance = record?.balance.replace("(BTT)", "") || ''
                     return (
                         <div className="flex items-center theme-text-main  font-gilroymedium fs-14">
-                            { parseFloat(balance)}
+                            { formatPreciseNumber(balance)}
                         </div>
                     );
                 },

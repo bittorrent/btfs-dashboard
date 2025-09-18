@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import { Spin } from 'antd';
@@ -8,17 +8,17 @@ import { switchBalanceUnit2, switchStorageUnit2 ,toThousands} from 'utils/BTFSUt
 import { renderNestedJson } from 'utils/text.js';
 import moment from 'moment';
 
-export default function ProxyUploadModal({ color }) {
+export default function ProxyUploadModal({ color,curItem }) {
     const [showModal, setShowModal] = useState(false);
     const [info, setInfo] = useState(null);
     const [loading, setLoading] = useState(false);
-    const Info = useRef(null);
+    // const Info = useRef(null);
 
     useEffect(() => {
         const set = function (params) {
             // console.log('openProxyUploadModal event has ocscured', params);
             openModal();
-            Info.current = params;
+            // Info.current = params;
         };
         Emitter.on('openProxyUploadModal', set);
         return () => {
@@ -32,7 +32,7 @@ export default function ProxyUploadModal({ color }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
         formatInfo();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [Info.current]);
+    }, [curItem]);
 
     const openModal = () => {
         setShowModal(true);
@@ -48,10 +48,10 @@ export default function ProxyUploadModal({ color }) {
 
     const formatInfo = async () => {
         let formatInfos = {};
-        if (!Info.current) return;
+        if (!curItem) return;
         // setInfo(Info.current);
         // setLoading(false)
-        let infos = Info.current;
+        let infos = curItem;
         setLoading(true);
         for (const key in infos) {
             switch (key) {

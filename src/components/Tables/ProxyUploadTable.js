@@ -19,6 +19,9 @@ function ProxyUploadTable({ bttcAddr, vaultAddr, color, activeKey }) {
     const [listLoading, setListLoading] = useState(true);
     const [dataList, setDataList] = useState([]);
     const [total, setTotal] = useState(0);
+    const [curItem, setCurItem] = useState(null);
+
+
 
     useEffect(() => {
         if (activeKey === '1') {
@@ -45,6 +48,7 @@ function ProxyUploadTable({ bttcAddr, vaultAddr, color, activeKey }) {
     };
 
     const handleView = item => {
+        setCurItem(item)
         Emitter.emit('openProxyUploadModal', item);
     };
 
@@ -177,7 +181,7 @@ function ProxyUploadTable({ bttcAddr, vaultAddr, color, activeKey }) {
                     }}
                 />
             </div>
-            <ProxyUploadModal color={color} />
+            <ProxyUploadModal color={color} curItem={curItem} />
         </>
     );
 }
