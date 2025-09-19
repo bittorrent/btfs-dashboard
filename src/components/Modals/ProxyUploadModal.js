@@ -41,7 +41,7 @@ export default function ProxyUploadModal({ color,curItem }) {
     };
 
     const closeModal = () => {
-        setInfo(null);
+        // setInfo(null);
         setShowModal(false);
         window.body.style.overflow = '';
     };
