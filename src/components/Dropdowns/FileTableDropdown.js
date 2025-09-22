@@ -76,13 +76,13 @@ const FileTableDropdown = ({ color, hash, name, size, path, type, cid, isEncrype
                 }
                 <img
                     alt=""
-                    className={"hover-hidden " + (dropdownPopoverShow ? 'hidden':'show')}
+                    className={'hover-hidden mx-2 ' + (dropdownPopoverShow ? 'hidden' : 'show')}
                     src={require('../../assets/img/file-operate.svg').default}
                     style={{ width: '24px', height: '24px' }}
                 />
                 <img
                     alt=""
-                    className={"hover-show " + (dropdownPopoverShow ? 'show':'hidden')}
+                    className={'hover-show mx-2 ' + (dropdownPopoverShow ? 'show' : 'hidden')}
                     src={require('../../assets/img/file-operate-active.svg').default}
                     style={{ width: '24px', height: '24px' }}
                 />

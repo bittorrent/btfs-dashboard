@@ -39,7 +39,7 @@ export default function CheckDetailModal() {
                         return (
                             <div key={index} className="w-1/2 px-8 py-4">
                                 <div className="flex items-center">
-                                    <img src={require(`assets/img/${item.icon}.svg`).default} alt="" className="mr-2" />
+                                    <img src={require(`assets/img/${item.icon}.svg`)} alt="" className="mr-2" />
                                     <div>
                                         <div className="font-bold theme-text-main">
                                             {item.value}&nbsp;&nbsp;{item.unit}

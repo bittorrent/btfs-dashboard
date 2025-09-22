@@ -311,7 +311,7 @@ export default function LocalFilesTable({ color }) {
                                     </div>
                                 </div>
                                 <div className="w-full overflow-x-auto">
-                                    <table className="w-full bg-transparent border-collapse">
+                                    <table className="w-full bg-transparent border-collapse table-file-list">
                                         <thead className="theme-table-head-bg">
                                             <tr className="common-table-head-tr theme-border-color theme-text-sub-info">
                                                 <th
@@ -387,7 +387,7 @@ export default function LocalFilesTable({ color }) {
                                                                             <img
                                                                                 src={
                                                                                     require('assets/img/folder.png')
-                                                                                        .default
+
                                                                                 }
                                                                                 className="h-10 w-10 bg-white rounded-full border"
                                                                                 alt="..."
@@ -397,7 +397,7 @@ export default function LocalFilesTable({ color }) {
                                                                             <img
                                                                                 src={
                                                                                     require('assets/img/file.png')
-                                                                                        .default
+
                                                                                 }
                                                                                 className="h-10 w-10 bg-white rounded-full border"
                                                                                 alt="..."

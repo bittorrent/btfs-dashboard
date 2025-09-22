@@ -193,7 +193,7 @@ export default function S3ApiTable({ color }) {
             </div>
 
             <div className="w-full overflow-x-auto">
-                <table className="w-full bg-transparent border-collapse">
+                <table className="w-full bg-transparent border-collapse ">
                     <thead className="theme-table-head-bg">
                         <tr className="common-table-head-tr theme-border-color theme-text-sub-info">
                             <th className="common-table-head-th">

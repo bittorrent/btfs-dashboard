@@ -641,9 +641,10 @@
 
 
 .table-page-content-light {
-    .ant-table{
+    .ant-table {
         height: 300px
-        }
+    }
+
     .ant-table-tbody>tr>td,
     .ant-table-thead>tr>th,
     .ant-table tfoot>tr>td,
@@ -666,6 +667,7 @@
 
 .table-pagination-total.ant-table-pagination {
     margin: 16px 0 0 0;
+
     .ant-pagination-item,
     .ant-pagination-total-text {
         flex: auto
@@ -675,4 +677,9 @@
 .common-table-body-td .table-cell-actions {
     max-height: 24px;
     display: inline-block;
+}
+
+
+.table-file-list .common-table-body-td {
+    padding: 0 1rem;
 }

@@ -117,7 +117,7 @@ export default function PasswordVerifyModal({ color }) {
                     </div>
                     <input
                         type="password"
-                        className="w-full h-3 common-input  theme-bg theme-border-color"
+                        className="w-full common-input  theme-bg theme-border-color"
                         single="true"
                         placeholder={intl.formatMessage({ id: 'check_private_key_input_placeholder' })}
                         maxLength={inputMaxLength}
