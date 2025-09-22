@@ -443,8 +443,8 @@ const zh_CN = {
         re_enter_password_placeholder: "重新输入密码",
         enter_password_placeholder: "请输入密码",
 
-        check_private_key: "查看私钥",
-        check_private_key_desc:"私钥提供了对您节点和资产的完整访问权限，请妥善保管，避免泄露给他人",
+        check_private_key: "身份校验",
+        check_private_key_desc:"请输入登录密码验证身份",
         check_private_key_input: "输入登录密码以继续",
         check_private_key_input_placeholder: "请输入密码",
 

@@ -6,7 +6,9 @@ import { Spin, Progress, Radio, Input, Button } from 'antd';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import CommonModal from './CommonModal';
-const crypto = require('crypto');
+const CryptoJS = require('crypto-js');
+
+
 
 let filesInput = null;
 let inputMaxLength = 100;
@@ -208,7 +210,8 @@ export default function EncryptFileModal({ color }) {
     };
 
     const randomKey = () => {
-        const key = crypto.randomBytes(10).toString('hex');
+        const key = CryptoJS.lib.WordArray.random(10).toString(CryptoJS.enc.Hex);
+        //crypto.randomBytes(10).toString('hex');
         setPassword(key);
     };
     return (

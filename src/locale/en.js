@@ -455,8 +455,8 @@ const en_US = {
         re_enter_password_placeholder: "Re-enter password",
         enter_password_placeholder: "Please enter password",
 
-        check_private_key: "View private key",
-        check_private_key_desc: "The private key provides full access to your node and assets. Please ensure that the private key is not leaked to others.",
+        check_private_key: "Identity Verification",
+        check_private_key_desc: "Please enter your login password to verify your identity",
         check_private_key_input: "Enter login password to continue.",
         check_private_key_input_placeholder: "Please enter password.",
 
