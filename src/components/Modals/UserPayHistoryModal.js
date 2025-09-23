@@ -29,7 +29,7 @@ export default function UserPayHistoryModal({ color }) {
     useEffect(() => {
         const set = function (params) {
             console.log('openUserPayHistoryModal event has occured', params);
-            CheckDetailData.current = params;
+            CheckDetailData.current = params.item
             openModal();
         };
         Emitter.on('openUserPayHistoryModal', set);

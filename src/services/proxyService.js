@@ -63,9 +63,9 @@ export const getUserBlance = async () => {
 };
 
 
-export const getUserPayHistory = async () => {
+export const getUserPayHistory = async (arg) => {
     try {
-        let data = await Client10.getUserPayHistory();
+        let data = await Client10.getUserPayHistory(arg);
         return data;
     } catch (e) {
         console.log(e);

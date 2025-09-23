@@ -130,7 +130,7 @@ export default function AutoRenewFileTable({ color, activeFileKey }) {
                                     <Select
                                         // defaultValue='all'
                                         value={autoRenew}
-                                        style={{ width: 140 }}
+                                        style={{ width: 130 }}
                                         bordered={false}
                                         className="common-table-head-select"
                                         onChange={handleChange}

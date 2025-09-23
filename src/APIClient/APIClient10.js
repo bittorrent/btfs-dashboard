@@ -461,7 +461,7 @@ class APIClient10 {
         return this.request(`/api/v1/storage/upload/renew/enable?arg=${arg}`);
     }
     getRenewList(){
-        return this.request(`/api/v1/storage/upload/renew/list`);
+        return this.request(`/api/v1/storage/upload/renew/list?filter=auto`);
     }
     getRenewInfo(arg){
         return this.request(`/api/v1/storage/upload/renew/info?arg=${arg}`);
@@ -483,8 +483,8 @@ class APIClient10 {
     getUserBlance(){
         return this.request(`/api/v1/storage/upload/proxy/pay/balance`);
     }
-    getUserPayHistory(){
-        return this.request(`/api/v1/storage/upload/proxy/pay/history`);
+    getUserPayHistory(arg){
+        return this.request(`/api/v1/storage/upload/proxy/pay/history?arg=${arg}`);
     }
 }
 

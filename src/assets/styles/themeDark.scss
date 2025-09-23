@@ -320,7 +320,7 @@
 
 
 .table-page-content-dark {
-    .ant-table-tbody {
+    .ant-table-tbody , .ant-table {
         background-color: #161921;
     }
 
@@ -365,4 +365,11 @@
 
    .table-page-content-dark .ant-table-tbody>tr.ant-table-placeholder:hover>td {
         background-color: #0d0a08;
+    }
+
+
+.table-page-content-dark .ant-pagination .ant-pagination-simple-pager{
+        input {
+            //  background-color: #0d0a08;
+            }
     }
