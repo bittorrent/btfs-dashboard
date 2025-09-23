@@ -19,7 +19,7 @@ const onlineProofLink = { path: '/admin/onlineproof', text: t('heartbeats'), ico
 const peersLink = { path: '/admin/peers', text: t('peers'), iconClass: ' iconfont BTFS_icon_Peers ' };
 const filesLink = { path: '/admin/files', text: t('files'), iconClass: ' iconfont BTFS_icon_Files ' };
 const settingsLink =  { path: '/admin/settings', text: t('settings'), iconClass: ' iconfont BTFS_icon_Settings ' };
-const proxyLink =  { path: '/admin/proxy', text: t('proxy'), iconClass: ' iconfont BTFS_icon_Settings ' };
+const proxyLink =  { path: '/admin/proxy', text: t('proxy'), iconClass: ' iconfont BTFS_icon_a-ProxyMode ' };
 
 const MainNavLinksConfig = [
     dashboardLink,

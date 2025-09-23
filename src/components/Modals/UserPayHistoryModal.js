@@ -87,7 +87,7 @@ export default function UserPayHistoryModal({ color }) {
                     return (
                         <Tooltip className="cursor-pointer flex " placement="top" title={record.from}>
                             <a href={`${BTTCSCAN_ADDRESS}${record.from}`}>
-                                <Truncate after={11} className={' theme-link'}>
+                                <Truncate end={5} start={5} className={' theme-link'}>
                                     {record.from}
                                 </Truncate>
                             </a>
@@ -104,7 +104,7 @@ export default function UserPayHistoryModal({ color }) {
                     return (
                         <Tooltip className="cursor-pointer flex " placement="top" title={record.to}>
                             <a href={`${BTTCSCAN_ADDRESS}${record.to}`}>
-                                <Truncate after={11} className={' theme-link'}>
+                                <Truncate end={5} start={5} className={' theme-link'}>
                                     {record.to}
                                 </Truncate>
                             </a>
@@ -132,7 +132,7 @@ export default function UserPayHistoryModal({ color }) {
                     return (
                         <Tooltip className="cursor-pointer flex " placement="top" title={record.hash}>
                             <a href={`${BTTCSCAN_ADDRESS}${record.hash}`}>
-                                <Truncate after={11} className={' theme-link'}>
+                                <Truncate end={5} start={5} className={' theme-link'}>
                                     {record.hash}
                                 </Truncate>
                             </a>
