@@ -83,11 +83,12 @@ export default function UserPayHistoryModal({ color }) {
                 title: t('user_balance_table_from'),
                 className: 'table_icon provider_icon',
                 align: 'left',
+                width: '144px',
                 render: record => {
                     return (
                         <Tooltip className="cursor-pointer flex " placement="top" title={record.from}>
                             <a href={`${BTTCSCAN_ADDRESS}${record.from}`}>
-                                <Truncate end={5} start={5} className={' theme-link'}>
+                                <Truncate end={5} start={6} className={' theme-link'}>
                                     {record.from}
                                 </Truncate>
                             </a>
@@ -99,12 +100,13 @@ export default function UserPayHistoryModal({ color }) {
                 title: t('user_balance_table_to'),
                 key: 'to',
                 align: 'left',
+                width: '144px',
                 className: 'send_receive ',
                 render: record => {
                     return (
                         <Tooltip className="cursor-pointer flex " placement="top" title={record.to}>
                             <a href={`${BTTCSCAN_ADDRESS}${record.to}`}>
-                                <Truncate end={5} start={5} className={' theme-link'}>
+                                <Truncate end={5} start={6} className={' theme-link'}>
                                     {record.to}
                                 </Truncate>
                             </a>
@@ -126,13 +128,13 @@ export default function UserPayHistoryModal({ color }) {
                 title: t('user_balance_table_hash'),
                 key: 'hash',
                 align: 'left',
-                // width: '180px',
+                width: '144px',
                 className: 'send_receive font-gilroymedium fs-14',
                 render: record => {
                     return (
                         <Tooltip className="cursor-pointer flex " placement="top" title={record.hash}>
                             <a href={`${BTTCSCAN_ADDRESS}${record.hash}`}>
-                                <Truncate end={5} start={5} className={' theme-link'}>
+                                <Truncate end={5} start={6} className={' theme-link'}>
                                     {record.hash}
                                 </Truncate>
                             </a>
