@@ -217,7 +217,7 @@ export default function EncryptFileModal({ color }) {
                     <input
                         id="file-input"
                         type="input"
-                        className="w-full h-3 common-input  theme-bg theme-border-color"
+                        className="w-full common-input  theme-bg theme-border-color"
                         single="true"
                         // placeholder={intl.formatMessage({ id: 'decrypt_input_cid_placeholder' })}
                         maxLength={inputMaxLength}
@@ -261,7 +261,7 @@ export default function EncryptFileModal({ color }) {
                     <input
                         // id="file-input"
                         type="input"
-                        className="w-full h-3 common-input  theme-bg theme-border-color"
+                        className="w-full common-input  theme-bg theme-border-color"
                         single="true"
                         placeholder={intl.formatMessage({ id: 'decrypt_input_cid_placeholder' })}
                         maxLength={inputMaxLength}

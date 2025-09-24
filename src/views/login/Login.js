@@ -142,7 +142,7 @@ export default function Login(props) {
                     <div className="items-center flex">
                         <img
                             className="inline-block"
-                            src={require('assets/img/btfs_logo.png').default}
+                            src={require('assets/img/btfs_logo.png')}
                             style={{ width: '37px', height: '40px' }}
                             alt="btfs_logo"
                         />
@@ -166,7 +166,7 @@ export default function Login(props) {
                         to="/">
                         <img
                             className="inline-block"
-                            src={require('assets/img/btfs_logo.png').default}
+                            src={require('assets/img/btfs_logo.png')}
                             style={{ width: '37px', height: '40px' }}
                             alt="btfs_logo"
                         />
@@ -181,7 +181,7 @@ export default function Login(props) {
                     <div className="flex justify-center items-center ">
                         <img
                             src={
-                                require(`assets/img/login-img${theme === 'dark' ? '-dark' : ''}.png`).default
+                                require(`assets/img/login-img${theme === 'dark' ? '-dark' : ''}.png`)
                             }
                             alt=""
                             width={556}
@@ -191,7 +191,7 @@ export default function Login(props) {
                 </div>
                 <ul className=" flex md:flex-col md:min-w-full flex-col list-none mb-2 justify-start pl-8 ">
                     <li className="items-center">
-                        <span className={'login-link theme-sidebar-link'}>{t('version')} 4.0.0</span>
+                        <span className={'login-link theme-sidebar-link'}>{t('version')} 4.1.0</span>
                     </li>
 
                     <li className="items-center">

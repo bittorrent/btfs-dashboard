@@ -22,3 +22,24 @@ export function t(id) {
   return <FormattedMessage textComponent="option" id={id} />;
 }
 
+
+export const renderNestedJson = data => {
+    if (typeof data === 'object' && data !== null) {
+      return (
+        <div style={{ marginLeft: '16px' }}>
+          <p>{Array.isArray(data) ? '[' : '{'}</p>
+          {Object.entries(data).map(([key, value]) => (
+            <div key={key} style={{ marginLeft: '16px' }}>
+              <p>
+                {Array.isArray(data) ? '' : <span>{key} : </span>}
+                {typeof value === 'object' ? null : JSON.stringify(value)}
+              </p>
+              {typeof value === 'object' ? renderNestedJson(value) : null}
+            </div>
+          ))}
+          <p>{Array.isArray(data) ? ']' : '}'}</p>
+        </div>
+      );
+    }
+    return <p>{JSON.stringify(data)}</p>;
+  };

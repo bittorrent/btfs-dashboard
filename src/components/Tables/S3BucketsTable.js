@@ -305,7 +305,7 @@ export default function S3BucketsTable({ color, bucketName, accessKeyId, secretA
                     </div>
                 </div>
                 <div className="w-full overflow-x-auto">
-                    <table className="w-full bg-transparent border-collapse">
+                    <table className="w-full bg-transparent border-collapse table-file-list">
                         <thead className="theme-table-head-bg">
                             <tr className="common-table-head-tr theme-border-color theme-text-sub-info">
                                 <th className="common-table-head-th" style={{ width: '50px' }}>
@@ -352,14 +352,14 @@ export default function S3BucketsTable({ color, bucketName, accessKeyId, secretA
                                                         }}>
                                                         {item['Type'] === 1 && (
                                                             <img
-                                                                src={require('assets/img/folder.png').default}
+                                                                src={require('assets/img/folder.png')}
                                                                 className="h-10 w-10 bg-white rounded-full border"
                                                                 alt="..."
                                                             />
                                                         )}
                                                         {item['Type'] === 2 && (
                                                             <img
-                                                                src={require('assets/img/file.png').default}
+                                                                src={require('assets/img/file.png')}
                                                                 className="h-10 w-10 bg-white rounded-full border"
                                                                 alt="..."
                                                             />

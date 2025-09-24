@@ -19,10 +19,12 @@ const onlineProofLink = { path: '/admin/onlineproof', text: t('heartbeats'), ico
 const peersLink = { path: '/admin/peers', text: t('peers'), iconClass: ' iconfont BTFS_icon_Peers ' };
 const filesLink = { path: '/admin/files', text: t('files'), iconClass: ' iconfont BTFS_icon_Files ' };
 const settingsLink =  { path: '/admin/settings', text: t('settings'), iconClass: ' iconfont BTFS_icon_Settings ' };
+const proxyLink =  { path: '/admin/proxy', text: t('proxy'), iconClass: ' iconfont BTFS_icon_a-ProxyMode ' };
 
 const MainNavLinksConfig = [
     dashboardLink,
     chequeLink,
+    proxyLink,
     onlineProofLink,
     peersLink,
     filesLink,
@@ -31,6 +33,7 @@ const MainNavLinksConfig = [
 
 const SimpleNavLinksConfig = [
     dashboardLink,
+    proxyLink,
     peersLink,
     filesLink,
     settingsLink,
@@ -103,7 +106,7 @@ export default function Sidebar() {
                         <Link className={`${isSimpleMode ? 'flex' : 'inline-block'} text-left mr-0  whitespace-nowrap text-sm font-bold px-0`} to="/">
                             <img
                                 className="inline-block"
-                                src={require('assets/img/btfs_logo.png').default}
+                                src={require('assets/img/btfs_logo.png')}
                                 style={{ width: '37px', height: '40px' }}
                                 alt="btfs_logo"
                             />
@@ -115,7 +118,7 @@ export default function Sidebar() {
                                     </div>
                                     <img
                                         className="inline-block"
-                                        src={require('assets/img/simple-mode-icon.png').default}
+                                        src={require('assets/img/simple-mode-icon.png')}
                                         style={{ width: '65px', height: '15px' }}
                                         alt="btfs_logo"
                                     />
@@ -156,7 +159,7 @@ export default function Sidebar() {
                                         'theme-sidebar-link md:block text-left md:pb-2 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0'
                                     }
                                     to="/">
-                                    BTFS 4.0.0
+                                    BTFS 4.1.0
                                 </Link>
                             </div>
                             <div className="w-4/12 flex flex-row-reverse">
@@ -187,7 +190,7 @@ export default function Sidebar() {
                         {/* Navigation */}
                         <ul className="md:flex-col md:min-w-full flex flex-col list-none mb-4">
                             <li className="items-center">
-                                <a className={'sidebar-link theme-sidebar-link'}>{t('version')} 4.0.0</a>
+                                <a className={'sidebar-link theme-sidebar-link'}>{t('version')} 4.1.0</a>
                             </li>
 
                             <li className="items-center">

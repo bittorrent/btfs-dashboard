@@ -17,6 +17,14 @@ export const BTTCSCAN_MAIN = 'https://bttcscan.com';
 
 export const BTTCSCAN_TEST = 'https://testnet.bttcscan.com';
 
+export const BTTCSCAN_ADDRESS = 'https://bttcscan.com/address/';
+
+export const BTFSSCAN_PROVIDER = 'https://scan.btfs.io/#/provider/';
+
+export const FINDER_FILE_MAIN = 'https://gateway.btfs.io/btfs/';
+
+
+
 export const CHAIN_NAME = {
   199: 'BTTC',
   1029: 'BTTC Donau Testnet',

@@ -11,7 +11,7 @@ import ButtonRoundRect from 'components/Buttons/ButtonRoundRect';
 const CoinItem = ({ item, valueAttr }) => {
     return (
         <div key={item.unit} className="flex justify-start items-center w-1/2 mb-2">
-            <img src={require(`assets/img/${item.icon}.svg`).default} alt="" className="mr-2 w-6 h-6" />
+            <img src={require(`assets/img/${item.icon}.svg`)} alt="" className="mr-2 w-6 h-6" />
             <div className="font-bold theme-text-main">
                 <span className={'text-base mr-2'}>{item?.[valueAttr] ?? '-'}</span>
                 <span className={'text-xs'}>{item.unit}</span>

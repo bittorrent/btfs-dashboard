@@ -6,7 +6,9 @@ import { Spin, Progress, Radio, Input, Button } from 'antd';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 import CommonModal from './CommonModal';
-const crypto = require('crypto');
+const CryptoJS = require('crypto-js');
+
+
 
 let filesInput = null;
 let inputMaxLength = 100;
@@ -208,7 +210,8 @@ export default function EncryptFileModal({ color }) {
     };
 
     const randomKey = () => {
-        const key = crypto.randomBytes(10).toString('hex');
+        const key = CryptoJS.lib.WordArray.random(10).toString(CryptoJS.enc.Hex);
+        //crypto.randomBytes(10).toString('hex');
         setPassword(key);
     };
     return (
@@ -247,7 +250,7 @@ export default function EncryptFileModal({ color }) {
                         {t('select_encrypt_file')}
                     </div>
                     <button
-                        className="w-full h-3   common-input theme-bg theme-border-color border-dashed border-[#243c5a] hover:border-color-active "
+                        className="w-full  common-input theme-bg theme-border-color border-dashed border-[#243c5a] hover:border-color-active "
                         onClick={onAddFile}>
                         {fileName ? fileName : t('select_encrypt_file_btn')}
                     </button>
@@ -285,7 +288,7 @@ export default function EncryptFileModal({ color }) {
                             <input
                                 id="file-input"
                                 type="input"
-                                className="w-full h-3 common-input  theme-bg theme-border-color "
+                                className="w-full common-input  theme-bg theme-border-color "
                                 single="true"
                                 placeholder={intl.formatMessage({ id: 'encrypt_file_hostId_null_validate' })}
                                 maxLength={inputMaxLength}
@@ -325,7 +328,7 @@ export default function EncryptFileModal({ color }) {
                                         className="get_key_btn flex items-center "
                                         icon={
                                             <img
-                                                src={require('assets/img/key2.png').default}
+                                                src={require('assets/img/key2.png')}
                                                 className="key_img"
                                                 alt=""
                                             />

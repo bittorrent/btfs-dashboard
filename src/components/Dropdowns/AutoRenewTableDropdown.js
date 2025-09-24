@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect } from 'react';
 import { createPopper } from '@popperjs/core';
-import { removeFiles } from 'services/filesService.js';
+// import { removeFiles } from 'services/filesService.js';
 import Emitter from 'utils/eventBus';
 import { t } from 'utils/text.js';
 
-const FileTableDropdown = ({ color, hash, name, size, path, type, cid, isEncrypetd }) => {
+const AutoRenewTableDropdown = ({ color, size, cid, autorenewOn }) => {
     const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
     const btnDropdownRef = React.createRef();
     const popoverDropdownRef = React.createRef();
@@ -29,31 +29,12 @@ const FileTableDropdown = ({ color, hash, name, size, path, type, cid, isEncrype
         };
     }, []);
 
-    const download = async () => {
-        if (isEncrypetd) {
-            Emitter.emit('openDecryptFileModal', { path: path });
-            return;
-        }
-        if (type === 1) {
-            Emitter.emit('openDownloadModal', { hash: hash, name: name, size: size, type: 1 });
-        }
-        if (type === 2) {
-            Emitter.emit('openDownloadModal', { hash: hash, name: name, size: size, type: 2 });
-        }
+    const disableAutoRenew = async () => {
+        Emitter.emit('openDisableAutoRenewModal', { cid: cid,size: size, });
     };
 
-    const remove = async () => {
-        let result = await removeFiles(hash, name, path, type);
-        if (result) {
-            Emitter.emit('showMessageAlert', {
-                message: 'delete_success',
-                status: 'success',
-                type: 'frontEnd',
-            });
-        } else {
-            Emitter.emit('showMessageAlert', { message: 'delete_fail', status: 'error', type: 'frontEnd' });
-        }
-        Emitter.emit('updateFiles');
+    const enableAutoRenew = async () => {
+        Emitter.emit('openEnableAutoRenewModal', { cid: cid,size: size });
     };
 
     const trigger = e => {
@@ -66,7 +47,7 @@ const FileTableDropdown = ({ color, hash, name, size, path, type, cid, isEncrype
     return (
         <>
             <a
-                className="text-blueGray-500 py-1 px-3 hover-change "
+                className="text-blueGray-500 py-1 px-3 hover-change  table-cell-actions "
                 ref={btnDropdownRef}
                 onClick={e => {
                     trigger(e);
@@ -91,27 +72,28 @@ const FileTableDropdown = ({ color, hash, name, size, path, type, cid, isEncrype
                 ref={popoverDropdownRef}
                 className={
                     (dropdownPopoverShow ? 'block ' : 'hidden ') +
-                    '_box-shadow text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48 theme-bg'
+                    '_box-shadow text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-36 text-center theme-bg'
                 }>
-                <a
-                    className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent"
-                    onClick={() => {
-                        download();
-                    }}>
-                    <i className="w-5 mr-3 fas fa-download"></i>
-                    {t('download')}
-                </a>
-                <a
-                    className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent"
-                    onClick={e => {
-                        remove();
-                    }}>
-                    <i className="w-5 mr-3 fas fa-trash-alt"></i>
-                    {t('delete')}
-                </a>
+                {autorenewOn ? (
+                    <a
+                        className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent"
+                        onClick={() => {
+                            disableAutoRenew();
+                        }}>
+                        {t('disable_auto_renew')}
+                    </a>
+                ) : (
+                    <a
+                        className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent"
+                        onClick={e => {
+                            enableAutoRenew();
+                        }}>
+                        {t('enable_auto_renew')}
+                    </a>
+                )}
             </div>
         </>
     );
 };
 
-export default FileTableDropdown;
+export default AutoRenewTableDropdown;

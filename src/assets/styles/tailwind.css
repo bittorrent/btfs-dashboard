@@ -1745,6 +1745,10 @@ video {
   min-width: 0px;
 }
 
+.min-w-36 {
+    min-width: 8rem;
+  }
+
 .min-w-48 {
   min-width: 12rem;
 }

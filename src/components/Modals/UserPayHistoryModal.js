@@ -1,0 +1,192 @@
+import React, { useEffect, useRef, useState } from 'react';
+import Emitter from 'utils/eventBus';
+import { t } from 'utils/text.js';
+import { Table, Spin, Tooltip } from 'antd';
+import CommonModal from './CommonModal';
+import { Truncate } from 'utils/text.js';
+import { getUserPayHistory } from 'services/proxyService';
+import { BTTCSCAN_ADDRESS } from 'utils/constants';
+import { sortList ,formatPreciseNumber} from 'utils/BTFSUtil';
+import moment from 'moment';
+
+// import {
+//     // switchStorageUnit2,
+//     // switchBalanceUnit,
+//     // toThousands,
+//     // getTimes,
+//     // formatNumber,
+// } from 'utils/BTFSUtil.js';
+
+export default function UserPayHistoryModal({ color }) {
+    const [showModal, setShowModal] = useState(false);
+    // const [info, setInfo] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [dataList, setDataList] = useState([]);
+    const [total, setTotal] = useState(0);
+
+    const CheckDetailData = useRef(null);
+
+    useEffect(() => {
+        const set = function (params) {
+            console.log('openUserPayHistoryModal event has occured', params);
+            CheckDetailData.current = params.item
+            openModal();
+        };
+        Emitter.on('openUserPayHistoryModal', set);
+        return () => {
+            Emitter.removeListener('openUserPayHistoryModal');
+            window.body.style.overflow = '';
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // useEffect(() => {
+    //     // getInfo();
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [CheckDetailData.current]);
+
+    const openModal = () => {
+        getInfo();
+        setShowModal(true);
+
+        window.body.style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+        window.body.style.overflow = '';
+    };
+
+    const getInfo = async () => {
+        if (!CheckDetailData.current) return;
+        try {
+            setLoading(true);
+            let res = await getUserPayHistory(CheckDetailData.current);
+            if (res.Type === 'error') {
+                setDataList([]);
+                setLoading(false);
+                return;
+            }
+            if (res && res.length) {
+                const list = sortList(res, 'pay_time');
+                setTotal(res.length);
+                setDataList(list);
+            }
+            setLoading(false);
+        } catch (error) {}
+    };
+
+    function initColumn() {
+        return [
+            {
+                key: 'from',
+                title: t('user_balance_table_from'),
+                className: 'table_icon provider_icon',
+                align: 'left',
+                width: '144px',
+                render: record => {
+                    return (
+                        <Tooltip className="cursor-pointer flex " placement="top" title={record.from}>
+                            <a href={`${BTTCSCAN_ADDRESS}${record.from}`}>
+                                <Truncate end={5} start={6} className={' theme-link'}>
+                                    {record.from}
+                                </Truncate>
+                            </a>
+                        </Tooltip>
+                    );
+                },
+            },
+            {
+                title: t('user_balance_table_to'),
+                key: 'to',
+                align: 'left',
+                width: '144px',
+                className: 'send_receive ',
+                render: record => {
+                    return (
+                        <Tooltip className="cursor-pointer flex " placement="top" title={record.to}>
+                            <a href={`${BTTCSCAN_ADDRESS}${record.to}`}>
+                                <Truncate end={5} start={6} className={' theme-link'}>
+                                    {record.to}
+                                </Truncate>
+                            </a>
+                        </Tooltip>
+                    );
+                },
+            },
+            {
+                title: t('user_balance_table_value'),
+                key: 'value',
+                align: 'left',
+                className: 'send_receive font-gilroymedium fs-14  whitespace-nowrap',
+                render: record => {
+                    let balance = record?.value.split(' ')[0] || ''
+                    return <div className="flex items-center  font-gilroymedium fs-14">{formatPreciseNumber(balance)}</div>;
+                },
+            },
+            {
+                title: t('user_balance_table_hash'),
+                key: 'hash',
+                align: 'left',
+                width: '144px',
+                className: 'send_receive font-gilroymedium fs-14',
+                render: record => {
+                    return (
+                        <Tooltip className="cursor-pointer flex " placement="top" title={record.hash}>
+                            <a href={`${BTTCSCAN_ADDRESS}${record.hash}`}>
+                                <Truncate end={5} start={6} className={' theme-link'}>
+                                    {record.hash}
+                                </Truncate>
+                            </a>
+                        </Tooltip>
+                    );
+                },
+            },
+            {
+                title: t('user_balance_table_pay_time'),
+                key: 'paytime',
+                align: 'left',
+                className: 'send_receive font-gilroymedium fs-14',
+                render: record => {
+                    return (
+                        <div className="flex items-center  font-gilroymedium fs-14">
+                            {moment.unix(record.pay_time).utcOffset(480).format('YYYY-MM-DD HH:mm:ss')}
+                        </div>
+                    );
+                },
+            },
+        ];
+    }
+
+    return (
+        <CommonModal visible={showModal} onCancel={closeModal} width={800}>
+            <div className={'common-modal-wrapper theme-bg'}>
+                <header className="common-modal-header theme-text-main mb-2">{t('user_pay_history')}</header>
+                <main className="mb-4 text-xs font-medium mb-4 theme-text-sub-info">
+                    {t('user_pay_history_desc')}
+                </main>
+                <Spin spinning={loading}>
+                    <div className="card-border pb-30-px">
+                        <Table
+                            className={`nowrap transactions-table ${
+                                color === 'light' ? 'table-page-content-light' : 'table-page-content-dark'
+                            }`}
+                            rowKey={record => `${record.hash}`}
+                            columns={initColumn()}
+                            dataSource={dataList}
+                            loading={loading}
+                            scroll={{ y: 270, x: true }}
+                            pagination={{
+                                pageSize: 10,
+                                total: total,
+                                showTotal: total => `Total:${total}`,
+                                simple: true,
+                                className: 'flex table-pagination-total',
+                            }}
+                        />
+                    </div>
+                </Spin>
+            </div>
+        </CommonModal>
+    );
+}

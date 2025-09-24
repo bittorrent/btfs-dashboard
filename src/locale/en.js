@@ -455,8 +455,8 @@ const en_US = {
         re_enter_password_placeholder: "Re-enter password",
         enter_password_placeholder: "Please enter password",
 
-        check_private_key: "View private key",
-        check_private_key_desc: "The private key provides full access to your node and assets. Please ensure that the private key is not leaked to others.",
+        check_private_key: "Identity Verification",
+        check_private_key_desc: "Please enter your login password to verify your identity",
         check_private_key_input: "Enter login password to continue.",
         check_private_key_input_placeholder: "Please enter password.",
 
@@ -509,7 +509,93 @@ const en_US = {
         file_blacklist_desc: 'Add the CIDs of the content to be blacklisted here, one per line.',
         file_blacklist_desc2: 'Content listed in the blacklist will be inaccessible via the BTFSGateway (default port 8080).',
         file_blacklist_cid_placeholder:'No file blacklist has been added yet.',
-        lock_success:'Account Locked Successfully'
+        lock_success:'Account Locked Successfully',
+
+        //v4.0.1
+
+        "added_files": "Added Files",
+        "auto_renew_files": "Uploaded Files",
+        "auto_renew_file_cid": "File CID",
+        "auto_renew_file_filesize": "File Size",
+        "auto_renew_file_uploaded_time": "Upload Time",
+        "auto_renew_file_sp": "Storage Provider",
+        "auto_renew_status": "Auto Renew Status",
+        "auto_renew_file_more_info": "More Info",
+        "auto_renew_operation": "Actions",
+        "disable_auto_renew": "Disable Auto Renew",
+        "enable_auto_renew": "Enable Auto Renew",
+        "disable_auto_renew_desc": "After disabling, files will no longer renew automatically",
+        "enable_auto_renew_desc": "After enabling, files will renew automatically",
+        "enable": "Enable",
+        "disable": "Disable",
+        "view": "View",
+        "renew_file_info": "File Info",
+        "renew_file_info_desc": "File details",
+        "On": "On",
+        "Off": "Off",
+        "all": "All",
+        "auto_renew_on": "Auto Renew On",
+        "auto_renew_off": "Auto Renew Off",
+
+        "proxy": "Proxy Mode",
+        "enable_proxy_mode": "Enable Proxy Mode",
+        "proxy_service_price": "Proxy Service Price",
+        "unit_day": "Day",
+        "proxy_upload": "Proxy Upload",
+        "user_balance": "User Balance",
+        "start_proxy_service": "Start Proxy Service",
+        "start_proxy_service_desc": "Once enabled, this node can handle other users' upload requests in proxy mode",
+        "start_service_confirm": "Enable",
+        "close_proxy_service": "Stop Proxy Service",
+        "close_proxy_service_desc": "Once disabled, this node will no longer provide proxy upload services",
+        "close_service_confirm": "Disable",
+        "change_price_modal": "Change Price",
+        "change_price_modal_desc": "You can customize the proxy upload service price. It is recommended to set slightly higher than the BTFS network storage price",
+
+        "enter_new_price_placeholder": "Enter price",
+        "new_price_validate_pattern": "Invalid price format",
+        "price_validate_min": "Price cannot be lower than BTFS network storage price",
+        "price_validate_max": "Price is set too high",
+        "price_validate_integer": "Price must be an integer",
+        "default_price": "Use Default Price",
+
+        "proxy_upload_table_address": "Address",
+        "proxy_upload_table_cid": "File CID",
+        "proxy_upload_table_filesize": "File Size",
+        "proxy_upload_table_fees": "Fees",
+        "proxy_upload_table_unitprice": "Unit Price",
+        "proxy_upload_table_view": "Details",
+        "proxy_file_info": "Proxy Upload Info",
+        "proxy_file_info_desc": "Details of this proxy upload record",
+
+        "user_balance_table_address": "Address",
+        "user_balance_table_balance": "Balance",
+        "user_balance_table_deposit_history": "Deposit Records",
+        "user_balance_table_from": "From",
+        "user_balance_table_to": "To",
+        "user_balance_table_value": "Amount",
+        "user_balance_table_hash": "Hash",
+        "user_pay_history": "Deposit History",
+        "user_pay_history_desc": "All deposit history for this user",
+
+        set_renew_on_fail: 'Failed to enable auto renew',
+        set_renew_off_fail: 'Failed to disable auto renew',
+        set_renew_on_success: 'Auto renew enabled successfully',
+        set_renew_off_success: 'Auto renew disabled successfully',
+
+        set_proxy_on_success: 'Proxy service enabled successfully',
+        set_proxy_on_fail: 'Failed to enable proxy service',
+        set_proxy_off_success: 'Proxy service disabled successfully',
+        set_proxy_off_fail: 'Failed to disable proxy service',
+
+        change_price_success: 'Proxy service price updated successfully',
+        change_price_fail: 'Failed to update proxy service price',
+
+
+        user_balance_table_pay_time:'Pay Time',
+        proxy_upload_table_created_time:'Create Time',
+        enable_proxy_mode_desc:"Once enabled, this node will handle other users' upload requests in proxy mode."
+
 
 
 };

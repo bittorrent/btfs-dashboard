@@ -1,7 +1,9 @@
 import moment from 'moment';
 import Cookies from 'js-cookie';
 import { PRECISION } from 'utils/constants.js';
-const crypto = require('crypto');
+// const crypto = require('crypto');
+
+const CryptoJS = require('crypto-js');
 
 export const PiB = 1024.0 * 1024.0 * 1024.0 * 1024.0 * 1024.0;
 export const TiB = 1024.0 * 1024.0 * 1024.0 * 1024.0;
@@ -118,11 +120,36 @@ function formatDecimalBalance(balance) {
     }
 }
 
+export function switchBalanceUnit2(balance, precision = PRECISION) {
+    let num = 0;
+    precision = parseFloat(precision);
+    balance = balance / precision;
+    // handle big number
+    if (balance / B > 1) {
+        num = balance / B
+        return num + ' B ';
+    }
+    if (balance / M > 1) {
+        num = balance / M;
+        return num + ' M ';
+    }
+
+    // handle small number
+    if (balance === 0) {
+        return '0';
+    }
+
+    // if (balance < 1) {
+    //     return (balance);
+    // }
+
+    return balance + ' ';
+}
+
 export function switchBalanceUnit(balance, precision = PRECISION) {
     let num = 0;
     precision = parseFloat(precision);
     balance = balance / precision;
-
     // handle big number
     if (balance / B > 1) {
         num = formatNumber(balance / B, 2);
@@ -166,9 +193,24 @@ export function ceilLatency(str) {
     }
 }
 
+// export function toThousands(num) {
+//     if (num === null) return '--';
+//     return (num || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+// }
+
 export function toThousands(num) {
-    if (num === null) return '--';
-    return (num || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+    if (num === null || num === '-') return '-';
+    const numStr = (num || 0).toString();
+    const decimalIndex = numStr.indexOf('.');
+    let integerPart = numStr;
+    let decimalPart = '';
+
+    if (decimalIndex !== -1) {
+        integerPart = numStr.substring(0, decimalIndex);
+        decimalPart = numStr.substring(decimalIndex);
+    }
+    const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return formattedInteger + decimalPart;
 }
 
 export function getTimes(date) {
@@ -265,23 +307,78 @@ export function sortListByDate(data, sortKey) {
     const list = data.map(item => {
         item[sortKey + '_time'] = moment(item[sortKey], 'YYYY-MM-DD HH:mm:ss');
         return item;
-    });
-
+    })
     const res = list.sort(function (a, b) {
         return b[sortKey + '_time'] - a[sortKey + '_time'];
     });
     return res;
 }
 
-export function aseEncode(data, password) {
-    const cipher = crypto.createCipher('aes-256-cbc', password);
-    let crypted = cipher.update(data, 'utf-8', 'hex');
-    crypted += cipher.final('hex');
-    return crypted;
+export function sortList(data, sortKey) {
+    const res = data.sort(function (a, b) {
+        // return a[sortKey] - b[sortKey];
+        return b[sortKey] - a[sortKey];
+    });
+    return res;
 }
+
+// 0bea1a4ac0d6e0dde98b07e104695c42
+function evpBytesToKey(password, keySize, ivSize) {
+    const derived = CryptoJS.lib.WordArray.create();
+    let digest = CryptoJS.lib.WordArray.create();
+
+    while (derived.sigBytes < (keySize + ivSize) * 4) {
+        const md5 = CryptoJS.algo.MD5.create();
+        if (digest.sigBytes > 0) {
+            md5.update(digest);
+        }
+        md5.update(password);
+        digest = md5.finalize();
+
+        derived.concat(digest);
+    }
+
+    derived.sigBytes = (keySize + ivSize) * 4;
+
+    return {
+        key: CryptoJS.lib.WordArray.create(derived.words.slice(0, keySize), keySize * 4),
+        iv: CryptoJS.lib.WordArray.create(derived.words.slice(keySize, keySize + ivSize), ivSize * 4),
+    };
+}
+
+export function aseEncode(data, password) {
+    const { key, iv } = evpBytesToKey(CryptoJS.enc.Utf8.parse(password), 8, 4); // 256位密钥需要8个字，128位IV需要4个字
+
+    const encrypted = CryptoJS.AES.encrypt(data, key, {
+        iv: iv,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7,
+    });
+
+    return encrypted.ciphertext.toString(CryptoJS.enc.Hex);
+}
+
+// export function aseEncode(data, password) {
+//     const cipher = crypto.createCipher('aes-256-cbc', password);
+//     let crypted = cipher.update(data, 'utf-8', 'hex');
+//     crypted += cipher.final('hex');
+//     return crypted;
+// }
 
 export function setCookies(key, value, expiresTime) {
     let seconds = expiresTime;
     let expires = new Date(new Date() * 1 + seconds * 1000);
     return Cookies.set(key, value, { expires: expires });
+}
+
+
+
+export function formatPreciseNumber(str) {
+    if (str.includes('.')) {
+        // 处理小数
+        let [integer, decimal] = str.split('.');
+        decimal = decimal.replace(/0+$/, ''); // 移除小数部分末尾的0
+        return decimal ? `${integer}.${decimal}` : integer;
+    }
+    return str;
 }

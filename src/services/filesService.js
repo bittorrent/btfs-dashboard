@@ -345,3 +345,43 @@ export const addFileBlackList = async (arg,batch) => {
 };
 
 
+
+export const getRenewList = async (arg) => {
+    try {
+        let data = await Client10.getRenewList(arg);
+        return data;
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+
+export const disableRenew = async (arg) => {
+    try {
+        let data = await Client10.disableRenew(arg);
+        return data;
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+export const enableRenew = async (arg) => {
+    try {
+        let data = await Client10.enableRenew(arg);
+        return data;
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+
+export const getRenewInfo = async (arg) => {
+    try {
+        let data = await Client10.getRenewInfo(arg);
+        return data;
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+
