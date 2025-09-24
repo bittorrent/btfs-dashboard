@@ -18,13 +18,13 @@ export default function Settings(props) {
     };
     return (
         <>
-            <div className="">
+            <div className="flex flex-col"  style={{ height: 'calc(100vh - 3rem)' }}>
                 <ProxySettings color={theme} />
                 <Tabs
                     defaultActiveKey="1"
                     activeKey={activeKey}
                     onChange={changeActiveKey}
-                    className="mb-4 common-card theme-bg theme-text-main file-tab-content">
+                    className="mb-4 common-card theme-bg theme-text-main file-tab-content flex-auto">
                     <Tabs.TabPane tab={t('proxy_upload')} key="1" className="w-full">
                         <ProxyUploadTable  color={theme} activeKey={activeKey}/>
                     </Tabs.TabPane>

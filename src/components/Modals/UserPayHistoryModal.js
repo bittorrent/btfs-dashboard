@@ -118,7 +118,7 @@ export default function UserPayHistoryModal({ color }) {
                 title: t('user_balance_table_value'),
                 key: 'value',
                 align: 'left',
-                className: 'send_receive font-gilroymedium fs-14  whitespace-nowrap',
+                className: 'send_receive font-gilroymedium fs-14  theme-text-main  whitespace-nowrap',
                 render: record => {
                     let balance = record?.value.split(' ')[0] || ''
                     return <div className="flex items-center  font-gilroymedium fs-14">{formatPreciseNumber(balance)}</div>;
@@ -146,7 +146,7 @@ export default function UserPayHistoryModal({ color }) {
                 title: t('user_balance_table_pay_time'),
                 key: 'paytime',
                 align: 'left',
-                className: 'send_receive font-gilroymedium fs-14',
+                className: 'send_receive font-gilroymedium  theme-text-main fs-14',
                 render: record => {
                     return (
                         <div className="flex items-center  font-gilroymedium fs-14">
@@ -168,7 +168,7 @@ export default function UserPayHistoryModal({ color }) {
                 <Spin spinning={loading}>
                     <div className="card-border pb-30-px">
                         <Table
-                            className={`nowrap transactions-table ${
+                            className={`nowrap transactions-table  custom-scrollbar ${
                                 color === 'light' ? 'table-page-content-light' : 'table-page-content-dark'
                             }`}
                             rowKey={record => `${record.hash}`}

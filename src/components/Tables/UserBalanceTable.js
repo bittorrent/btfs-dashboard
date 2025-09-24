@@ -116,7 +116,7 @@ function UserBalanceTable({ bttcAddr, vaultAddr, color ,activeKey}) {
         <>
             <div className="card-border pb-30-px">
                 <Table
-                    className={`nowrap transactions-table ${
+                    className={`nowrap transactions-table  custom-scrollbar ${
                         color === 'light' ? 'table-page-content-light' : 'table-page-content-dark'
                     }`}
                     rowKey={record => `${record.address}`}
@@ -124,7 +124,8 @@ function UserBalanceTable({ bttcAddr, vaultAddr, color ,activeKey}) {
                     dataSource={dataList}
                     loading={listLoading}
                     // pagination={false}
-                    scroll={{ y: 270 ,x: 'max-content'}}
+                    // scroll={{ y: 270 ,x: 'max-content'}}
+                    scroll={{ y: 'calc(100vh - 450px)', x: 'max-content'  }}
                     pagination={{
                         pageSize: 10,
                         total: total,
