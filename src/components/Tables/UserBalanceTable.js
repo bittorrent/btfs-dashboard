@@ -39,7 +39,7 @@ function UserBalanceTable({ bttcAddr, vaultAddr, color ,activeKey}) {
                         item.balancenum = item?.balance.split(' ')[0] || ''
                         return item;
                     })
-                const resSort = sortList(res, 'balancenum');
+                const resSort = sortList(list, 'balancenum');
                 setDataList(resSort);
                 setTotal(res.length)
             }
