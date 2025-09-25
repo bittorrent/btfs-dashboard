@@ -642,7 +642,7 @@
 
 .table-page-content-light {
     .ant-table {
-        height: 300px
+        // height: 300px
     }
 
     .ant-table-tbody>tr>td,
@@ -682,4 +682,86 @@
 
 .table-file-list .common-table-body-td {
     padding: 0 1rem;
+}
+
+
+
+.custom-scrollbar {
+
+    /* 全局表格滚动条样式 */
+    .ant-table-body::-webkit-scrollbar {
+        width: 3px;
+        height: 3px;
+        display: block;
+    }
+
+    .ant-table-body::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+    }
+
+    .ant-table-body::-webkit-scrollbar-thumb {
+        background: #cdcdcd;
+        border-radius: 4px;
+    }
+
+    .ant-table-body::-webkit-scrollbar-thumb:hover {
+        background: #b1b0b0;
+    }
+
+    .ant-table-body::-webkit-scrollbar-corner {
+        background: #f1f1f1;
+    }
+
+    /* 修复滚动条不显示的问题 */
+    .ant-table-container {
+        overflow: auto !important;
+    }
+
+    .ant-table-body {
+        overflow: auto !important;
+    }
+
+    /* 确保滚动条可见 */
+    .ant-table-scroll .ant-table-body {
+        overflow: auto !important;
+    }
+
+    /* 如果被隐藏了，强制显示 */
+    .ant-table-body::-webkit-scrollbar {
+        display: block !important;
+        width: 3px !important;
+    }
+
+    // .ant-table-body::-webkit-scrollbar-thumb {
+    //     background: #bfbfbf !important;
+    //     border-radius: 4px !important;
+    // }
+
+    // .ant-table-body::-webkit-scrollbar-track {
+    //     background: #f1f1f1 !important;
+    // }
+
+}
+
+
+
+.custom-scrollbar.table-page-content-dark {
+    .ant-table-body::-webkit-scrollbar-track {
+        background: #2d2d2d;
+        border-radius: 4px;
+    }
+
+    .ant-table-body::-webkit-scrollbar-thumb {
+        background: #414141;
+        border-radius: 4px;
+    }
+
+    .ant-table-body::-webkit-scrollbar-thumb:hover {
+        background: #3e3e3e;
+    }
+
+    .ant-table-body::-webkit-scrollbar-corner {
+        background: #2d2d2d;
+    }
 }

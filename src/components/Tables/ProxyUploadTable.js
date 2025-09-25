@@ -129,7 +129,7 @@ function ProxyUploadTable({ bttcAddr, vaultAddr, color, activeKey }) {
                 title: t('proxy_upload_table_created_time'),
                 key: 'paytime',
                 align: 'left',
-                className: 'send_receive font-gilroymedium fs-14',
+                className: 'send_receive font-gilroymedium  theme-text-main fs-14',
                 render: record => {
                     return (
                         <div className="flex items-center  font-gilroymedium fs-14">
@@ -163,7 +163,7 @@ function ProxyUploadTable({ bttcAddr, vaultAddr, color, activeKey }) {
         <>
             <div className="card-border pb-30-px">
                 <Table
-                    className={`nowrap transactions-table ${
+                    className={`nowrap transactions-table custom-scrollbar ${
                         color === 'light' ? 'table-page-content-light' : 'table-page-content-dark'
                     }`}
                     rowKey={record => `${record.cid}`}
@@ -171,7 +171,8 @@ function ProxyUploadTable({ bttcAddr, vaultAddr, color, activeKey }) {
                     dataSource={dataList}
                     loading={listLoading}
                     // pagination={false}
-                    scroll={{ y: 270, x: 'max-content' }}
+                    scroll={{ y: 'calc(100vh - 450px)', x: 'max-content'  }}
+                    // scroll={{ y: 'auto', x: 'max-content' }}
                     pagination={{
                         pageSize: 10,
                         total: total,

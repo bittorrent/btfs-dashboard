@@ -11,6 +11,8 @@ import { getUserBlance } from 'services/proxyService';
 import {formatPreciseNumber} from 'utils/BTFSUtil';
 import UserPayHistoryModal from 'components/Modals/UserPayHistoryModal';
 
+import { sortList } from 'utils/BTFSUtil';
+
 function UserBalanceTable({ bttcAddr, vaultAddr, color ,activeKey}) {
     const [listLoading, setListLoading] = useState(true);
     const [dataList, setDataList] = useState([]);
@@ -33,7 +35,12 @@ function UserBalanceTable({ bttcAddr, vaultAddr, color ,activeKey}) {
                 return;
             }
             if (res && res.length) {
-                setDataList(res);
+                  const list = res.map(item => {
+                        item.balancenum = item?.balance.split(' ')[0] || ''
+                        return item;
+                    })
+                const resSort = sortList(list, 'balancenum');
+                setDataList(resSort);
                 setTotal(res.length)
             }
             setListLoading(false);
@@ -75,11 +82,11 @@ function UserBalanceTable({ bttcAddr, vaultAddr, color ,activeKey}) {
                 align: 'left',
                 className: 'send_receive ',
                 render: record => {
-                    let balance = record?.balance.split(' ')[0] || ''
+                    // let balance = record?.balance.split(' ')[0] || ''
                     // let balance = record?.balance.replace("(BTT)", "") || ''
                     return (
                         <div className="flex items-center theme-text-main  font-gilroymedium fs-14">
-                            { formatPreciseNumber(balance)}
+                            { formatPreciseNumber(record.balancenum)}
                         </div>
                     );
                 },
@@ -109,15 +116,16 @@ function UserBalanceTable({ bttcAddr, vaultAddr, color ,activeKey}) {
         <>
             <div className="card-border pb-30-px">
                 <Table
-                    className={`nowrap transactions-table ${
+                    className={`nowrap transactions-table  custom-scrollbar ${
                         color === 'light' ? 'table-page-content-light' : 'table-page-content-dark'
                     }`}
-                    rowKey={record => `${record.cid}`}
+                    rowKey={record => `${record.address}`}
                     columns={initColumn()}
                     dataSource={dataList}
                     loading={listLoading}
                     // pagination={false}
-                    scroll={{ y: 270 ,x: 'max-content'}}
+                    // scroll={{ y: 270 ,x: 'max-content'}}
+                    scroll={{ y: 'calc(100vh - 450px)', x: 'max-content'  }}
                     pagination={{
                         pageSize: 10,
                         total: total,
